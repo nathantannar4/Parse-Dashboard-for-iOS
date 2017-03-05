@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "94C6AA895443BC6FEE2C76F96847DB11AFCD707E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "94C6AA895443BC6FEE2C76F96847DB11AFCD707E" : 9223372036854775807,
+    "369015F9C5D1FD569D4F36968A83A6F57BB00CBB" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2B90832B-3983-4061-806F-B871972E4CA5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "94C6AA895443BC6FEE2C76F96847DB11AFCD707E" : "Parse%20Dashboard%20for%20iOS\/",
+    "369015F9C5D1FD569D4F36968A83A6F57BB00CBB" : "NTComponents\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Parse Dashboard for iOS",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Parse Dashboard for iOS.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nathantannar4\/NTComponents.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "369015F9C5D1FD569D4F36968A83A6F57BB00CBB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nathantannar4\/Parse-Dashboard-for-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "94C6AA895443BC6FEE2C76F96847DB11AFCD707E"
+    }
+  ]
+}

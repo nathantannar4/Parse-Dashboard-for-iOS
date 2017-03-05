@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		387520A11E664F8100CAAA88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387520A01E664F8100CAAA88 /* AppDelegate.swift */; };
+		387520A31E664F8100CAAA88 /* ServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387520A21E664F8100CAAA88 /* ServerViewController.swift */; };
+		387520A91E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 387520A71E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodeld */; };
+		387520AB1E664F8100CAAA88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 387520AA1E664F8100CAAA88 /* Assets.xcassets */; };
+		387520AE1E664F8100CAAA88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 387520AC1E664F8100CAAA88 /* LaunchScreen.storyboard */; };
+		38B20E801E6685E600DD71AC /* Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B20E7F1E6685E600DD71AC /* Parse.swift */; };
+		38B20E841E66A17C00DD71AC /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B20E831E66A17C00DD71AC /* SchemaViewController.swift */; };
+		38B20E881E66C3D200DD71AC /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B20E871E66C3D200DD71AC /* TableViewController.swift */; };
+		38B20E8A1E66C96C00DD71AC /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B20E891E66C96C00DD71AC /* ObjectViewController.swift */; };
+		38B20E8E1E69564900DD71AC /* QuerySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B20E8D1E69564900DD71AC /* QuerySelectionViewController.swift */; };
+		38B20E921E6BD99500DD71AC /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B20E911E6BD99500DD71AC /* AppInfoViewController.swift */; };
+		38B20E961E6BD9FD00DD71AC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 38B20E951E6BD9FD00DD71AC /* LICENSE */; };
+		38B20E981E6BDA9000DD71AC /* Parse.gif in Resources */ = {isa = PBXBuildFile; fileRef = 38B20E971E6BDA9000DD71AC /* Parse.gif */; };
+		A5F836F5F4E0AFD7CAFF4AC6 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC8301BEE3879A0D0B9BD6C /* Pods_Parse_Dashboard_for_iOS.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3875209D1E664F8100CAAA88 /* Parse Dashboard for iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Parse Dashboard for iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		387520A01E664F8100CAAA88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		387520A21E664F8100CAAA88 /* ServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerViewController.swift; sourceTree = "<group>"; };
+		387520A81E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Parse_Dashboard_for_iOS.xcdatamodel; sourceTree = "<group>"; };
+		387520AA1E664F8100CAAA88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		387520AD1E664F8100CAAA88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		387520AF1E664F8100CAAA88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38B20E7F1E6685E600DD71AC /* Parse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parse.swift; sourceTree = "<group>"; };
+		38B20E831E66A17C00DD71AC /* SchemaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
+		38B20E871E66C3D200DD71AC /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		38B20E891E66C96C00DD71AC /* ObjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
+		38B20E8D1E69564900DD71AC /* QuerySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuerySelectionViewController.swift; sourceTree = "<group>"; };
+		38B20E911E6BD99500DD71AC /* AppInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoViewController.swift; sourceTree = "<group>"; };
+		38B20E931E6BD9B500DD71AC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		38B20E951E6BD9FD00DD71AC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		38B20E971E6BDA9000DD71AC /* Parse.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Parse.gif; sourceTree = "<group>"; };
+		56B0321A8E52568EE56D511F /* Pods-Parse Dashboard for iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		94E7063F5C0876FB208EAA93 /* Pods-Parse Dashboard for iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.release.xcconfig"; sourceTree = "<group>"; };
+		EAC8301BEE3879A0D0B9BD6C /* Pods_Parse_Dashboard_for_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Parse_Dashboard_for_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3875209A1E664F8100CAAA88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5F836F5F4E0AFD7CAFF4AC6 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		387520941E664F8100CAAA88 = {
+			isa = PBXGroup;
+			children = (
+				38B20E931E6BD9B500DD71AC /* README.md */,
+				38B20E951E6BD9FD00DD71AC /* LICENSE */,
+				3875209F1E664F8100CAAA88 /* Parse Dashboard for iOS */,
+				3875209E1E664F8100CAAA88 /* Products */,
+				826702590A22C669AE8CAA32 /* Pods */,
+				7961998305C214F1C656FD0D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		3875209E1E664F8100CAAA88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3875209D1E664F8100CAAA88 /* Parse Dashboard for iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3875209F1E664F8100CAAA88 /* Parse Dashboard for iOS */ = {
+			isa = PBXGroup;
+			children = (
+				387520A01E664F8100CAAA88 /* AppDelegate.swift */,
+				38B20E911E6BD99500DD71AC /* AppInfoViewController.swift */,
+				387520A21E664F8100CAAA88 /* ServerViewController.swift */,
+				38B20E831E66A17C00DD71AC /* SchemaViewController.swift */,
+				38B20E871E66C3D200DD71AC /* TableViewController.swift */,
+				38B20E891E66C96C00DD71AC /* ObjectViewController.swift */,
+				38B20E8D1E69564900DD71AC /* QuerySelectionViewController.swift */,
+				38B20E7F1E6685E600DD71AC /* Parse.swift */,
+				387520AA1E664F8100CAAA88 /* Assets.xcassets */,
+				38B20E971E6BDA9000DD71AC /* Parse.gif */,
+				387520AC1E664F8100CAAA88 /* LaunchScreen.storyboard */,
+				387520AF1E664F8100CAAA88 /* Info.plist */,
+				387520A71E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodeld */,
+			);
+			path = "Parse Dashboard for iOS";
+			sourceTree = "<group>";
+		};
+		7961998305C214F1C656FD0D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EAC8301BEE3879A0D0B9BD6C /* Pods_Parse_Dashboard_for_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		826702590A22C669AE8CAA32 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				56B0321A8E52568EE56D511F /* Pods-Parse Dashboard for iOS.debug.xcconfig */,
+				94E7063F5C0876FB208EAA93 /* Pods-Parse Dashboard for iOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3875209C1E664F8100CAAA88 /* Parse Dashboard for iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 387520B21E664F8100CAAA88 /* Build configuration list for PBXNativeTarget "Parse Dashboard for iOS" */;
+			buildPhases = (
+				F93A5E59F21C3EFC12C8C16D /* [CP] Check Pods Manifest.lock */,
+				387520991E664F8100CAAA88 /* Sources */,
+				3875209A1E664F8100CAAA88 /* Frameworks */,
+				3875209B1E664F8100CAAA88 /* Resources */,
+				3C9923AECE5536DD55D5DC72 /* [CP] Embed Pods Frameworks */,
+				D853F8691E5911CC97C2E5AC /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Parse Dashboard for iOS";
+			productName = "Parse Dashboard for iOS";
+			productReference = 3875209D1E664F8100CAAA88 /* Parse Dashboard for iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		387520951E664F8100CAAA88 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Nathan Tannar";
+				TargetAttributes = {
+					3875209C1E664F8100CAAA88 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 9EUCWD26TP;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 387520981E664F8100CAAA88 /* Build configuration list for PBXProject "Parse Dashboard for iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 387520941E664F8100CAAA88;
+			productRefGroup = 3875209E1E664F8100CAAA88 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3875209C1E664F8100CAAA88 /* Parse Dashboard for iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3875209B1E664F8100CAAA88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38B20E981E6BDA9000DD71AC /* Parse.gif in Resources */,
+				38B20E961E6BD9FD00DD71AC /* LICENSE in Resources */,
+				387520AE1E664F8100CAAA88 /* LaunchScreen.storyboard in Resources */,
+				387520AB1E664F8100CAAA88 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C9923AECE5536DD55D5DC72 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D853F8691E5911CC97C2E5AC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F93A5E59F21C3EFC12C8C16D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		387520991E664F8100CAAA88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38B20E8E1E69564900DD71AC /* QuerySelectionViewController.swift in Sources */,
+				38B20E881E66C3D200DD71AC /* TableViewController.swift in Sources */,
+				387520A31E664F8100CAAA88 /* ServerViewController.swift in Sources */,
+				38B20E8A1E66C96C00DD71AC /* ObjectViewController.swift in Sources */,
+				387520A11E664F8100CAAA88 /* AppDelegate.swift in Sources */,
+				38B20E841E66A17C00DD71AC /* SchemaViewController.swift in Sources */,
+				38B20E801E6685E600DD71AC /* Parse.swift in Sources */,
+				38B20E921E6BD99500DD71AC /* AppInfoViewController.swift in Sources */,
+				387520A91E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		387520AC1E664F8100CAAA88 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				387520AD1E664F8100CAAA88 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		387520B01E664F8100CAAA88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		387520B11E664F8100CAAA88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		387520B31E664F8100CAAA88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56B0321A8E52568EE56D511F /* Pods-Parse Dashboard for iOS.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9EUCWD26TP;
+				INFOPLIST_FILE = "Parse Dashboard for iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.nathantannar.Parse-Dashboard-for-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		387520B41E664F8100CAAA88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94E7063F5C0876FB208EAA93 /* Pods-Parse Dashboard for iOS.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9EUCWD26TP;
+				INFOPLIST_FILE = "Parse Dashboard for iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.nathantannar.Parse-Dashboard-for-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		387520981E664F8100CAAA88 /* Build configuration list for PBXProject "Parse Dashboard for iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				387520B01E664F8100CAAA88 /* Debug */,
+				387520B11E664F8100CAAA88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		387520B21E664F8100CAAA88 /* Build configuration list for PBXNativeTarget "Parse Dashboard for iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				387520B31E664F8100CAAA88 /* Debug */,
+				387520B41E664F8100CAAA88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		387520A71E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				387520A81E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodel */,
+			);
+			currentVersion = 387520A81E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodel */;
+			path = Parse_Dashboard_for_iOS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 387520951E664F8100CAAA88 /* Project object */;
+}

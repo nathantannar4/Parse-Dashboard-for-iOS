@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ParseServer" representedClassName="ParseServer" syncable="YES" codeGenerationType="class">
+        <attribute name="applicationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icon" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="masterKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serverUrl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Query" representedClassName="Query" syncable="YES" codeGenerationType="class">
+        <attribute name="constraint" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keys" optional="YES" attributeType="Transformable" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ParseServer" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Query" positionX="-54" positionY="27" width="128" height="75"/>
+    </elements>
+</model>
