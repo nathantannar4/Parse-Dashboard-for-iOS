@@ -29,6 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navBar.setBackgroundImage(UIImage(), for: .default)
         navBar.shadowImage = UIImage()
         
+        let toolbar = UIToolbar.appearance()
+        toolbar.isTranslucent = false
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+        
         // Initialize the window
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.backgroundColor = UIColor.white

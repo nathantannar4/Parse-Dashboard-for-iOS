@@ -14,7 +14,7 @@ class ClassViewController: UITableViewController {
     var parseClass: ParseClass?
     var objects = [ParseObject]()
     var previewKeys = ["objectId", "createdAt", "updatedAt"]
-    var query: String = "limit=1000"
+    var query = "limit=1000&order=-updatedAt"
     
     convenience init(parseClass: ParseClass) {
         self.init()
@@ -37,23 +37,55 @@ class ClassViewController: UITableViewController {
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(loadObjects), for: .valueChanged)
         tableView.refreshControl = refreshControl
-        navigationItem.rightBarButtonItem = { () -> UIBarButtonItem in
-            let button = UIBarButtonItem(image: UIImage(named: "Filter")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(self.setPreferredCellLabels(sender:)))
-            button.tintColor = Color.Defaults.tint
-            return button
-        }()
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addObject)), UIBarButtonItem(image: UIImage(named: "Filter"), style: .plain, target: self, action: #selector(setPreferredCellLabels(sender:)))]
         
         loadObjects()
+        
+        if parseClass!.name! == "_Installation" {
+            
+            navigationController?.toolbar.barTintColor = Color(r: 114, g: 111, b: 133)
+            navigationController?.toolbar.tintColor = .white
+            var items = [UIBarButtonItem]()
+            items.append(
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            )
+            let pushItem: UIBarButtonItem = {
+                let containView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+                label.text = "Send Push Notification"
+                label.textColor = .white
+                label.font = Font.Defaults.content
+                label.textAlignment = .right
+                containView.addSubview(label)
+                let imageview = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
+                imageview.image = UIImage(named: "Push")
+                imageview.contentMode = .scaleAspectFit
+                containView.addSubview(imageview)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sendPushNotification))
+                containView.addGestureRecognizer(tapGesture)
+                return UIBarButtonItem(customView: containView)
+            }()
+            items.append(pushItem)
+            setToolbarItems(items, animated: true)
+            navigationController?.isToolbarHidden = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isToolbarHidden = true
     }
     
     func loadObjects() {
         objects.removeAll()
         tableView.reloadSections([0], with: .automatic)
-        Parse.fetch(endpoint: "/classes/" + parseClass!.name, query: "?" + query) { (json) in
+        Parse.get(endpoint: "/classes/" + parseClass!.name!, query: "?" + query) { (json) in
             guard let results = json["results"] as? [[String: AnyObject]] else {
-                Toast(text: "Unexpected Results").show(duration: 2.0)
-                self.setTitleView(title: self.parseClass?.name, subtitle: "0 Objects")
-                self.tableView.refreshControl?.endRefreshing()
+                DispatchQueue.main.async {
+                    Toast(text: "Unexpected Results", color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                    self.setTitleView(title: self.parseClass?.name, subtitle: "0 Objects")
+                    self.tableView.refreshControl?.endRefreshing()
+                }
                 return
             }
             self.objects = results.map({ (dictionary) -> ParseObject in
@@ -67,6 +99,77 @@ class ClassViewController: UITableViewController {
                 self.setTitleView(title: self.parseClass!.name, subtitle: String(results.count) + " Objects")
             }
         }
+    }
+    
+    func addObject() {
+        let alertController = UIAlertController(title: "Create Object", message: nil, preferredStyle: .alert)
+        alertController.view.tintColor = Color.Defaults.tint
+        
+        let saveAction = UIAlertAction(title: "Create", style: .default, handler: {
+            alert -> Void in
+            
+            let body = alertController.textFields?[0].text
+            Parse.post(endpoint: "/classes/" + self.parseClass!.name!, body: body, completion: { (response, json, success) in
+                DispatchQueue.main.async {
+                    Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                    if success {
+                        print(json)
+                        let object = ParseObject(json)
+                        self.objects.insert(object, at: 0)
+                        self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                    }
+                }
+            })
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "POST Body"
+        }
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func sendPushNotification() {
+        let alertController = UIAlertController(title: "Push Notification", message: "To current query results", preferredStyle: .alert)
+        alertController.view.tintColor = Color.Defaults.tint
+        
+        let saveAction = UIAlertAction(title: "Send", style: .default, handler: {
+            alert -> Void in
+            
+            let message = alertController.textFields![0].text!
+            
+            let userIds = self.objects.map({ (object) -> String in
+                let dict = object.json
+                guard let user = dict["user"] as? [String : AnyObject] else {
+                    return String()
+                }
+                return user["objectId"] as! String
+            })
+            // where={"user":{"$inQuery":{"className":"_User","where":{"objectId":{"$in":["zaAqYBP8X9"]}}}}}
+            
+            let body = "{\"where\":{\"user\":{\"$inQuery\":{\"className\":\"_User\",\"where\":{\"objectId\":{\"$in\":\(userIds)}}}}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
+            print(body)
+            Parse.post(endpoint: "/push", body: body) { (response, json, success) in
+                DispatchQueue.main.async {
+                    Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 44).show(duration: 2.0)
+                }
+            }
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Message"
+        }
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     func setPreferredCellLabels(sender: AnyObject) {
@@ -107,6 +210,40 @@ class ClassViewController: UITableViewController {
         let vc = ObjectViewController(objects[indexPath.row], parseClass: parseClass!)
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
+            
+            let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+            alertController.view.tintColor = Color.Defaults.tint
+            
+            let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                alert -> Void in
+                Parse.delete(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.objects[indexPath.row].id, completion: { (response, code, success) in
+                    DispatchQueue.main.async {
+                        Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                        if success {
+                            self.objects.remove(at: indexPath.row)
+                            self.setTitleView(title: self.parseClass!.name, subtitle: String(self.objects.count) + " Objects")
+                            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                        }
+                    }
+                })
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(saveAction)
+            self.present(alertController, animated: true, completion: nil)
+        })
+        
+        return [deleteAction]
+    }
 }
 
 extension ClassViewController: UIPopoverPresentationControllerDelegate {
@@ -130,102 +267,6 @@ extension ClassViewController: TableQueryDelegate {
         } else {
             self.previewKeys = previewKeys
             tableView.reloadData()
-        }
-    }
-}
-class ObjectPreviewCell: UITableViewCell {
-    
-    var object: ParseObject? {
-        set {
-            guard let object = newValue else { return }
-            guard let keys = self.previewKeys else { return }
-            if keys.count >= 1 {
-                objectIdLabel.text = object.keys.index(of: keys[0]) != nil ? String(describing: object.values[object.keys.index(of: keys[0])!]) : "<NSNull>"
-                if keys.count >= 2 {
-                    createdAtLabel.text = object.keys.index(of: keys[1]) != nil ? String(describing: object.values[object.keys.index(of: keys[1])!]) : "<NSNull>"
-                    if keys.count >= 3 {
-                        updatedAtLabel.text = object.keys.index(of: keys[2]) != nil ? String(describing: object.values[object.keys.index(of: keys[2])!]) : "<NSNull>"
-                    } else {
-                        updatedAtLabel.text = String(describing: object.updatedAt)
-                    }
-                } else {
-                    createdAtLabel.text = String(describing: object.createdAt)
-                    updatedAtLabel.text = String(describing: object.updatedAt)
-                }
-            } else {
-                objectIdLabel.text = object.id
-                createdAtLabel.text = String(describing: object.createdAt)
-                updatedAtLabel.text = String(describing: object.updatedAt)
-            }
-        }
-        get {
-            return nil
-        }
-    }
-    var previewKeys: [String]?
-    
-    let colorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 3
-        return view
-    }()
-    
-    let objectIdLabel: UILabel = {
-        let label = NTLabel(type: .subtitle)
-        label.textColor = .black
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    let createdAtLabel: UILabel = {
-        let label = NTLabel(type: .content)
-        label.textColor = .black
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    let updatedAtLabel: UILabel = {
-        let label = NTLabel(type: .content)
-        label.textColor = .black
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    // MARK: - Initalizers
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        selectionStyle = .none
-        backgroundColor = Color(r: 102, g: 99, b: 122)
-        
-        addSubview(colorView)
-        addSubview(objectIdLabel)
-        addSubview(createdAtLabel)
-        addSubview(updatedAtLabel)
-        
-        colorView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 5, leftConstant: 12, bottomConstant: 5, rightConstant: 12, widthConstant: 0, heightConstant: 0)
-        
-        objectIdLabel.anchor(colorView.topAnchor, left: colorView.leftAnchor, bottom: createdAtLabel.topAnchor, right: colorView.rightAnchor, topConstant: 8, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
-        
-        createdAtLabel.anchor(objectIdLabel.bottomAnchor, left: objectIdLabel.leftAnchor, bottom: updatedAtLabel.topAnchor, right: objectIdLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        updatedAtLabel.anchor(createdAtLabel.bottomAnchor, left: objectIdLabel.leftAnchor, bottom: colorView.bottomAnchor, right: objectIdLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        if selected {
-            colorView.backgroundColor = UIColor.white.withAlphaComponent(0.75)
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.colorView.backgroundColor = .white
-            }
         }
     }
 }

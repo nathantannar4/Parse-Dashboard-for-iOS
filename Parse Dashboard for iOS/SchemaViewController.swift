@@ -28,6 +28,8 @@ class SchemaViewController: UITableViewController {
         tableView.contentInset.bottom = 10
         tableView.backgroundColor = Color(r: 21, g: 156, b: 238)
         tableView.separatorStyle = .none
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSchema))
+        
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(loadSchemas), for: .valueChanged)
@@ -40,33 +42,55 @@ class SchemaViewController: UITableViewController {
         schemas.removeAll()
         tableView.reloadSections([0], with: .automatic)
         tableView.refreshControl?.beginRefreshing()
-        Parse.fetch(endpoint: "/schemas") { (json) in
+        Parse.get(endpoint: "/schemas") { (json) in
             guard let results = json["results"] as? [[String: AnyObject]] else {
-                Toast(text: "Unexpected Results, is your URL correct?").show(duration: 3.0)
-                self.tableView.refreshControl?.endRefreshing()
+                DispatchQueue.main.async {
+                    Toast(text: "Unexpected Results, is your URL correct?", color: Color(r: 30, g: 59, b: 77), height: 50).show(duration: 3.0)
+                    self.tableView.refreshControl?.endRefreshing()
+                }
                 return
             }
             for result in results {
-                
-                var fields: [String: AnyObject]?
-                var permissions: [String: AnyObject]?
-                var name: String?
-                for parseClass in result {
-                    if parseClass.key == "fields" {
-                        fields = parseClass.value as? [String: AnyObject]
-                    } else if parseClass.key == "classLevelPermissions" {
-                        permissions = parseClass.value as? [String: AnyObject]
-                    } else if parseClass.key == "className" {
-                        name = "\(parseClass.value)"
-                    }
-                }
-                self.schemas.append(ParseClass(name: name, fields: fields, permissions: permissions))
+                self.schemas.append(ParseClass(result))
             }
             DispatchQueue.main.async {
                 self.tableView.reloadSections([0], with: .automatic)
                 self.tableView.refreshControl?.endRefreshing()
             }
         }
+    }
+    
+    func addSchema() {
+        let alertController = UIAlertController(title: "Create Class", message: nil, preferredStyle: .alert)
+        alertController.view.tintColor = Color.Defaults.tint
+        
+        let saveAction = UIAlertAction(title: "Create", style: .default, handler: {
+            alert -> Void in
+            
+            guard let schemaClassname = alertController.textFields![0].text else { return }
+            Parse.post(endpoint: "/schemas/" + schemaClassname, completion: { (response, json, success) in
+                DispatchQueue.main.async {
+                    Toast(text: response, color: Color(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
+                    if success {
+                        let schema = ParseClass(json)
+                        DispatchQueue.main.async {
+                            self.schemas.insert(schema, at: 0)
+                            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                        }
+                    }
+                }
+            })
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Classname"
+        }
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - UITableViewDatasource
@@ -94,50 +118,33 @@ class SchemaViewController: UITableViewController {
         let vc = ClassViewController(parseClass: schemas[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
     }
-}
-
-class ParseClassCell: UITableViewCell {
     
-    var parseClass: ParseClass? {
-        set {
-            guard let parseClass = newValue else { return }
-            nameLabel.text = parseClass.name
-        }
-        get {
-            return nil
-        }
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    let colorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Color(r: 14, g: 105, b: 160)
-        view.layer.cornerRadius = 3
-        return view
-    }()
-    
-    let nameLabel: NTLabel = {
-        let label = NTLabel(type: .title)
-        label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.1
-        return label
-    }()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        selectionStyle = .none
-        backgroundColor = Color(r: 21, g: 156, b: 238)
+        let detailAction = UITableViewRowAction(style: .default, title: "Details", handler: { action, indexpath in
+            let detailVC = SchemaDetailViewController(self.schemas[indexPath.row])
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        })
+        detailAction.backgroundColor = Color(r: 14, g: 105, b: 160)
         
-        addSubview(colorView)
-        addSubview(nameLabel)
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
+            let classname = self.schemas[indexPath.row].name
+            Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
+                DispatchQueue.main.async {
+                    Toast(text: response, color: Color(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
+                    if success {
+                        self.schemas.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            })
+        })
         
-        colorView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 5, leftConstant: 12, bottomConstant: 5, rightConstant: 12, widthConstant: 0, heightConstant: 0)
         
-        nameLabel.anchor(colorView.topAnchor, left: colorView.leftAnchor, bottom: colorView.bottomAnchor, right: colorView.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 5, rightConstant: 8, widthConstant: 0, heightConstant: 0)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return [deleteAction, detailAction]
     }
 }

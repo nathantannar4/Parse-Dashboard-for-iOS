@@ -175,6 +175,7 @@ class ServerViewController: UITableViewController {
             
             let actionSheetController: UIAlertController = UIAlertController(title: nil, message: "Edit Server", preferredStyle: .actionSheet)
             actionSheetController.view.tintColor = Color.Defaults.tint
+            actionSheetController.view.backgroundColor = .white
             
             let configAction: UIAlertAction = UIAlertAction(title: "Configuration", style: .default) { action -> Void in
                 self.editServer(indexPath)
@@ -195,16 +196,29 @@ class ServerViewController: UITableViewController {
         editAction.backgroundColor = Color.Defaults.tint
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            context.delete(self.servers[indexPath.row])
-            do {
-                try context.save()
-            } catch {
-                Toast(text: "Could not delete server from core data").show(duration: 2.0)
-            }
             
-            self.servers.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+            alertController.view.tintColor = Color.Defaults.tint
+            
+            let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                alert -> Void in
+                
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                context.delete(self.servers[indexPath.row])
+                do {
+                    try context.save()
+                } catch {
+                    Toast(text: "Could not delete server from core data").show(duration: 2.0)
+                }
+                
+                self.servers.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(saveAction)
+            self.present(alertController, animated: true, completion: nil)
         })
         
         return [deleteAction, editAction]
@@ -263,95 +277,5 @@ class PreviewPresentationController: UIPresentationController {
         let containerFrame = self.containerView!.frame
         let rect = CGRect(x: 12, y: containerFrame.height / 8, width: containerFrame.width - 24, height: containerFrame.height * 3 / 4)
         return rect
-    }
-}
-
-class ServerCell: UITableViewCell {
-    
-    var server: ParseServer? {
-        didSet {
-            guard let server = self.server else { return }
-            nameLabel.text = server.name
-            if let imageData = server.icon as? Data {
-                iconImageView.image = UIImage(data: imageData)
-            }
-            applicationIDLabel.text = server.applicationId
-            serverURLLabel.text = server.serverUrl
-        }
-    }
-    
-    let colorView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Color(r: 25, g: 48, b: 64)
-        view.layer.cornerRadius = 3
-        return view
-    }()
-    
-    let iconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = Color(r: 30, g: 59, b: 77)
-        imageView.layer.cornerRadius = 3
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    
-    let nameLabel: NTLabel = {
-        let label = NTLabel(type: .title)
-        label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.1
-        return label
-    }()
-    
-    let applicationIDLabel: NTLabel = {
-        let label = NTLabel(type: .content)
-        label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.1
-        return label
-    }()
-    
-    let serverURLLabel: NTLabel = {
-        let label = NTLabel(type: .content)
-        label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.1
-        return label
-    }()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        selectionStyle = .none
-        backgroundColor = Color(r: 30, g: 59, b: 77)
-        
-        addSubview(colorView)
-        addSubview(iconImageView)
-        addSubview(nameLabel)
-        addSubview(applicationIDLabel)
-        addSubview(serverURLLabel)
-        
-        colorView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 10, leftConstant: 12, bottomConstant: 10, rightConstant: 12, widthConstant: 0, heightConstant: 0)
-        
-        iconImageView.anchor(colorView.topAnchor, left: colorView.leftAnchor, bottom: colorView.bottomAnchor, right: nil, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 0, widthConstant: 64, heightConstant: 0)
-        
-        nameLabel.anchor(colorView.topAnchor, left: iconImageView.rightAnchor, bottom: nil, right: colorView.rightAnchor, topConstant: 8, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
-        
-        applicationIDLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nameLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        serverURLLabel.anchor(applicationIDLabel.bottomAnchor, left: applicationIDLabel.leftAnchor, bottom: nil, right: applicationIDLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        if selected {
-            colorView.backgroundColor = Color(r: 21, g: 156, b: 238)
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.colorView.backgroundColor = Color(r: 25, g: 48, b: 64)
-            }
-        }
     }
 }

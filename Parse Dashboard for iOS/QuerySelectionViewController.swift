@@ -56,9 +56,7 @@ class QuerySelectionViewController: UITableViewController {
         do {
             savedQueries = try context.fetch(request)
         } catch {
-            let toast = Toast(text: "Could not load saved queries from Core Data", button: nil, color: Color(r: 114, g: 111, b: 133), height: 44)
-            toast.dismissOnTap = true
-            toast.show(navigationController?.view, duration: 2.0)
+            Toast(text: "Could not load saved queries from Core Data", color: Color(r: 114, g: 111, b: 133), height: 50).show(navigationController?.view, duration: 2.0)
         }
     }
     
@@ -147,8 +145,8 @@ class QuerySelectionViewController: UITableViewController {
             } else if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "HelpCell", for: indexPath)  as! HelpCell
                 cell.title = "Help"
-                cell.leftText = ["$lt", "$lte", "$gt", "$gte", "$ne", "$in", "$nin", "$exists", "$select", "$dontSelect\n", "$all", "$regex", "order", "limit\n", "skip\n", "keys\n", "include\n", "&"]
-                cell.rightText = ["Less Than", "Less Than Or Equal To", "Greater Than", "Greater Than Or Equal To", "Not Equal To", "Contained In", "Not Contained in", "A value is set for the key", "Match key value to query result", "Ignore keys with value equal to query result", "Contains all of the given values", "Match regular expression", "Specify a field to sort by", "Limit the number of objects returned by the query", "Use with limit to paginate through results", "Restrict the fields returned by the query", "Use on Pointer columns to return the full object", "Append constraints"]
+                cell.leftText = ["$lt", "$lte", "$gt", "$gte", "$ne", "$in", "$inQuery", "$nin", "$exists", "$select", "$dontSelect\n", "$all", "$regex", "order", "limit\n", "skip\n", "keys\n", "include\n", "&"]
+                cell.rightText = ["Less Than", "Less Than Or Equal To", "Greater Than", "Greater Than Or Equal To", "Not Equal To", "Contained In", "Contained in query results", "Not Contained in", "A value is set for the key", "Match key value to query result", "Ignore keys with value equal to query result", "Contains all of the given values", "Match regular expression", "Specify a field to sort by", "Limit the number of objects returned by the query", "Use with limit to paginate through results", "Restrict the fields returned by the query", "Use on Pointer columns to return the full object", "Append constraints"]
                 return cell
             }
         }
@@ -184,9 +182,7 @@ class QuerySelectionViewController: UITableViewController {
                 cell.accessoryType = .none
             } else {
                 if selectedKeys.count >= 3 {
-                    let toast = Toast(text: "Max preview of 3 keys", button: nil, color: Color(r: 114, g: 111, b: 133), height: 44)
-                    toast.dismissOnTap = true
-                    toast.show(navigationController?.view, duration: 2.0)
+                    Toast(text: "Max preview of 3 keys", color: Color(r: 114, g: 111, b: 133), height: 50).show(navigationController?.view, duration: 2.0)
                 } else {
                     selectedKeys.insert(keys[indexPath.row], at: 0)
                     cell.accessoryType = .checkmark
@@ -219,9 +215,7 @@ class QuerySelectionViewController: UITableViewController {
             do {
                 try context.save()
             } catch {
-                let toast = Toast(text: "Could not delete server from core data", button: nil, color: Color(r: 114, g: 111, b: 133), height: 44)
-                toast.dismissOnTap = true
-                toast.show(self.navigationController?.view, duration: 2.0)
+                Toast(text: "Could not delete server from core data", color: Color(r: 114, g: 111, b: 133), height: 50).show(self.navigationController?.view, duration: 2.0)
             }
             
             self.savedQueries.remove(at: indexPath.row)
@@ -247,73 +241,3 @@ extension QuerySelectionViewController: UITextViewDelegate {
         return true
     }
 }
-
-class HelpCell: UITableViewCell {
-    
-    var title: String? {
-        didSet {
-            titleLabel.text = self.title
-        }
-    }
-    var leftText: [String]! {
-        didSet {
-            var text = String()
-            for item in self.leftText {
-                text.append(item)
-                text.append("\n")
-            }
-            leftTextView.text = text
-        }
-    }
-    var rightText: [String]! {
-        didSet {
-            var text = String()
-            for item in self.rightText {
-                text.append(item)
-                text.append("\n")
-            }
-            rightTextView.text = text
-        }
-    }
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textColor = Color.Defaults.tint
-        label.font = Font.Defaults.subtitle
-        return label
-    }()
-    
-    let leftTextView: NTTextView = {
-        let textView = NTTextView()
-        textView.isEditable = false
-        textView.textColor = Color.darkGray
-        return textView
-    }()
-    
-    let rightTextView: NTTextView = {
-        let textView = NTTextView()
-        textView.isEditable = false
-        textView.textColor = Color.darkGray
-        return textView
-    }()
-    
-    // MARK: - Initalizers
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        selectionStyle = .none
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(leftTextView)
-        contentView.addSubview(rightTextView)
-        
-        titleLabel.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: leftTextView.topAnchor, right: contentView.rightAnchor, topConstant: 8, leftConstant: 12, bottomConstant: 0, rightConstant: 2, widthConstant: 0, heightConstant: 0)
-        leftTextView.anchor(titleLabel.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 7, bottomConstant: 0, rightConstant: 0, widthConstant: 85, heightConstant: 0)
-        rightTextView.anchor(titleLabel.bottomAnchor, left: leftTextView.rightAnchor, bottom: contentView.bottomAnchor, right: titleLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
