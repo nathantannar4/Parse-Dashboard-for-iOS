@@ -35,7 +35,7 @@ class Parse {
         
         guard let url = URL(string: urlString + filterString + encodedQuery) else {
             DispatchQueue.main.async {
-                Toast(text: "Invalid server URL").show(duration: 1.0)
+                NTToast(text: "Invalid server URL").show(duration: 1.0)
             }
             return
         }
@@ -65,7 +65,7 @@ class Parse {
         
         guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
             DispatchQueue.main.async {
-                Toast(text: "Invalid server URL").show(duration: 1.0)
+                NTToast(text: "Invalid server URL").show(duration: 1.0)
             }
             return
         }
@@ -115,13 +115,13 @@ class Parse {
         let name = key + ".jpg"
         guard let url = URL(string: self.config!.serverUrl! + "/files/" + name) else {
             DispatchQueue.main.async {
-                Toast(text: "Invalid server URL").show(duration: 1.0)
+                NTToast(text: "Invalid server URL").show(duration: 1.0)
             }
             return
         }
         print(url)
         DispatchQueue.main.async {
-            Toast(text: "Uploading File", color: Color(r: 21, g: 156, b: 238), height: 50).show(duration: 5.0)
+            NTToast(text: "Uploading File", color: UIColor(r: 21, g: 156, b: 238), height: 50).show(duration: 5.0)
         }
         var request = URLRequest(url: url)
         request.setValue(self.config?.applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -179,7 +179,7 @@ class Parse {
         
         guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
             DispatchQueue.main.async {
-                Toast(text: "Invalid server URL").show(duration: 1.0)
+                NTToast(text: "Invalid server URL").show(duration: 1.0)
             }
             return
         }
@@ -228,7 +228,7 @@ class Parse {
         
         guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
             DispatchQueue.main.async {
-                Toast(text: "Invalid server URL").show(duration: 1.0)
+                NTToast(text: "Invalid server URL").show(duration: 1.0)
             }
             return
         }

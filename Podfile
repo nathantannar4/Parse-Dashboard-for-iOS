@@ -7,7 +7,6 @@ target 'Parse Dashboard for iOS' do
     use_frameworks!
     
     pod 'NTComponents', :path => '~/Documents/NTComponents'
-    #pod 'NTComponents/MaterialIcons', :path => '~/Documents/NTComponents'
     
     pod 'Parse'
 end

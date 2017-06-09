@@ -26,10 +26,10 @@ class SchemaDetailViewController: UITableViewController {
         super.viewDidLoad()
         
         setTitleView(title: parseClass.name, subtitle: "Class")
-        view.backgroundColor = Color(r: 14, g: 105, b: 160)
+        view.backgroundColor = UIColor(r: 14, g: 105, b: 160)
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = 10
-        tableView.backgroundColor = Color(r: 14, g: 105, b: 160)
+        tableView.backgroundColor = UIColor(r: 14, g: 105, b: 160)
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
@@ -57,19 +57,19 @@ class SchemaDetailViewController: UITableViewController {
     func deleteClass() {
         Parse.delete(endpoint: "/schemas/" + parseClass!.name!, completion: { (response, code, success) in
             DispatchQueue.main.async {
-                Toast(text: response, color: Color(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
+                NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
                 if success {
                     let _ = self.navigationController?.popViewController(animated: true)
                 } else if code == 255 {
                     let alertController = UIAlertController(title: "Delete class and objects?", message: "This cannot be undone", preferredStyle: .alert)
-                    alertController.view.tintColor = Color.Defaults.tint
+                    alertController.view.tintColor = Color.Default.Tint.View
                     
                     let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
                         alert -> Void in
                         Parse.get(endpoint: "/classes/" + self.parseClass!.name!) { (json) in
                             guard let results = json["results"] as? [[String: AnyObject]] else {
                                 DispatchQueue.main.async {
-                                    Toast(text: "Unexpected Results", color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                                    NTToast(text: "Unexpected Results", color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
                                 }
                                 return
                             }
@@ -77,7 +77,7 @@ class SchemaDetailViewController: UITableViewController {
                                 Parse.delete(endpoint: "/classes/" + self.parseClass!.name! + "/" + (result["objectId"] as! String), completion: { (response, code, success) in
                                     if !success {
                                         DispatchQueue.main.async {
-                                            Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 50).show()
+                                            NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show()
                                         }
                                     }
                                 })
@@ -165,7 +165,7 @@ class SchemaDetailViewController: UITableViewController {
             
             
         })
-        editAction.backgroundColor = Color.Defaults.tint
+        editAction.backgroundColor = Color.Default.Tint.View
        
         return [editAction]
     }

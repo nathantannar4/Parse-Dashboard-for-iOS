@@ -9,7 +9,7 @@
 import UIKit
 import NTComponents
 
-class SchemaViewController: UITableViewController {
+class SchemaViewController: NTTableViewController {
     
     var server: ParseServer?
     var schemas = [ParseClass]()
@@ -23,29 +23,29 @@ class SchemaViewController: UITableViewController {
         super.viewDidLoad()
         
         setTitleView(title: server!.name!.isEmpty ? server?.applicationId : server?.name, subtitle: "Classes")
-        view.backgroundColor = Color(r: 21, g: 156, b: 238)
+        view.backgroundColor = UIColor(r: 21, g: 156, b: 238)
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = 10
-        tableView.backgroundColor = Color(r: 21, g: 156, b: 238)
+        tableView.backgroundColor = UIColor(r: 21, g: 156, b: 238)
         tableView.separatorStyle = .none
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSchema))
         
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .white
-        refreshControl.addTarget(self, action: #selector(loadSchemas), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
-        loadSchemas()
+        handleRefresh()
     }
     
-    func loadSchemas() {
+    override func handleRefresh() {
         schemas.removeAll()
         tableView.reloadSections([0], with: .automatic)
         tableView.refreshControl?.beginRefreshing()
         Parse.get(endpoint: "/schemas") { (json) in
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
-                    Toast(text: "Unexpected Results, is your URL correct?", color: Color(r: 30, g: 59, b: 77), height: 50).show(duration: 3.0)
+                    NTToast(text: "Unexpected Results, is your URL correct?", color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 3.0)
                     self.tableView.refreshControl?.endRefreshing()
                 }
                 return
@@ -62,7 +62,7 @@ class SchemaViewController: UITableViewController {
     
     func addSchema() {
         let alertController = UIAlertController(title: "Create Class", message: nil, preferredStyle: .alert)
-        alertController.view.tintColor = Color.Defaults.tint
+        alertController.view.tintColor = Color.Default.Tint.View
         
         let saveAction = UIAlertAction(title: "Create", style: .default, handler: {
             alert -> Void in
@@ -70,7 +70,7 @@ class SchemaViewController: UITableViewController {
             guard let schemaClassname = alertController.textFields![0].text else { return }
             Parse.post(endpoint: "/schemas/" + schemaClassname, completion: { (response, json, success) in
                 DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
+                    NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
                     if success {
                         let schema = ParseClass(json)
                         DispatchQueue.main.async {
@@ -119,31 +119,36 @@ class SchemaViewController: UITableViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let detailAction = UITableViewRowAction(style: .default, title: "Details", handler: { action, indexpath in
             let detailVC = SchemaDetailViewController(self.schemas[indexPath.row])
             self.navigationController?.pushViewController(detailVC, animated: true)
         })
-        detailAction.backgroundColor = Color(r: 14, g: 105, b: 160)
+        detailAction.backgroundColor = UIColor(r: 14, g: 105, b: 160)
         
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
-            let classname = self.schemas[indexPath.row].name
-            Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
-                DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
-                    if success {
-                        self.schemas.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { action, indexpath in
+            
+            let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
+            alert.onConfirm = {
+                let classname = self.schemas[indexPath.row].name
+                Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
+                    DispatchQueue.main.async {
+                        NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
+                        if success {
+                            self.schemas.remove(at: indexPath.row)
+                            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                        }
                     }
-                }
-            })
+                })
+            }
+            alert.show(self, sender: nil)
         })
-        
+        deleteAction.backgroundColor = Color.Default.Status.Danger
         
         return [deleteAction, detailAction]
     }

@@ -25,10 +25,10 @@ class ClassViewController: UITableViewController {
         super.viewDidLoad()
         
         setTitleView(title: parseClass?.name)
-        view.backgroundColor = Color(r: 102, g: 99, b: 122)
+        view.backgroundColor = UIColor(r: 102, g: 99, b: 122)
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = 10
-        tableView.backgroundColor = Color(r: 102, g: 99, b: 122)
+        tableView.backgroundColor = UIColor(r: 102, g: 99, b: 122)
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -43,7 +43,7 @@ class ClassViewController: UITableViewController {
         
         if parseClass!.name! == "_Installation" {
             
-            navigationController?.toolbar.barTintColor = Color(r: 114, g: 111, b: 133)
+            navigationController?.toolbar.barTintColor = UIColor(r: 114, g: 111, b: 133)
             navigationController?.toolbar.tintColor = .white
             var items = [UIBarButtonItem]()
             items.append(
@@ -54,7 +54,7 @@ class ClassViewController: UITableViewController {
                 let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
                 label.text = "Send Push Notification"
                 label.textColor = .white
-                label.font = Font.Defaults.content
+                label.font = Font.Default.Body
                 label.textAlignment = .right
                 containView.addSubview(label)
                 let imageview = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
@@ -82,7 +82,7 @@ class ClassViewController: UITableViewController {
         Parse.get(endpoint: "/classes/" + parseClass!.name!, query: "?" + query) { (json) in
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
-                    Toast(text: "Unexpected Results", color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                    NTToast(text: "Unexpected Results", color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
                     self.setTitleView(title: self.parseClass?.name, subtitle: "0 Objects")
                     self.tableView.refreshControl?.endRefreshing()
                 }
@@ -103,7 +103,7 @@ class ClassViewController: UITableViewController {
     
     func addObject() {
         let alertController = UIAlertController(title: "Create Object", message: nil, preferredStyle: .alert)
-        alertController.view.tintColor = Color.Defaults.tint
+        alertController.view.tintColor = Color.Default.Tint.View
         
         let saveAction = UIAlertAction(title: "Create", style: .default, handler: {
             alert -> Void in
@@ -111,7 +111,7 @@ class ClassViewController: UITableViewController {
             let body = alertController.textFields?[0].text
             Parse.post(endpoint: "/classes/" + self.parseClass!.name!, body: body, completion: { (response, json, success) in
                 DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                    NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
                     if success {
                         print(json)
                         let object = ParseObject(json)
@@ -136,7 +136,7 @@ class ClassViewController: UITableViewController {
     
     func sendPushNotification() {
         let alertController = UIAlertController(title: "Push Notification", message: "To current query results", preferredStyle: .alert)
-        alertController.view.tintColor = Color.Defaults.tint
+        alertController.view.tintColor = Color.Default.Tint.View
         
         let saveAction = UIAlertAction(title: "Send", style: .default, handler: {
             alert -> Void in
@@ -156,7 +156,7 @@ class ClassViewController: UITableViewController {
             print(body)
             Parse.post(endpoint: "/push", body: body) { (response, json, success) in
                 DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 44).show(duration: 2.0)
+                    NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 44).show(duration: 2.0)
                 }
             }
         })
@@ -201,7 +201,7 @@ class ClassViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ObjectPreviewCell", for: indexPath) as! ObjectPreviewCell
         cell.previewKeys = previewKeys
         cell.object = objects[indexPath.row]
-        cell.backgroundColor = ((indexPath.row % 2) == 0) ? Color(r: 102, g: 99, b: 122) : Color(r: 114, g: 111, b: 133)
+        cell.backgroundColor = ((indexPath.row % 2) == 0) ? UIColor(r: 102, g: 99, b: 122) : UIColor(r: 114, g: 111, b: 133)
         return cell
     }
 
@@ -218,15 +218,11 @@ class ClassViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
-            
-            let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
-            alertController.view.tintColor = Color.Defaults.tint
-            
-            let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-                alert -> Void in
+            let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
+            alert.onConfirm = {
                 Parse.delete(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.objects[indexPath.row].id, completion: { (response, code, success) in
                     DispatchQueue.main.async {
-                        Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                        NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
                         if success {
                             self.objects.remove(at: indexPath.row)
                             self.setTitleView(title: self.parseClass!.name, subtitle: String(self.objects.count) + " Objects")
@@ -234,13 +230,10 @@ class ClassViewController: UITableViewController {
                         }
                     }
                 })
-            })
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-            alertController.addAction(cancelAction)
-            alertController.addAction(saveAction)
-            self.present(alertController, animated: true, completion: nil)
+            }
+            alert.show(self, sender: nil)
         })
+        deleteAction.backgroundColor = Color.Default.Status.Danger
         
         return [deleteAction]
     }

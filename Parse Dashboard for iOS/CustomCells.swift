@@ -14,7 +14,7 @@ class ServerCell: UITableViewCell {
         didSet {
             guard let server = self.server else { return }
             nameLabel.text = server.name
-            if let imageData = server.icon as? Data {
+            if let imageData = server.icon as Data?  {
                 iconImageView.image = UIImage(data: imageData)
             }
             applicationIDLabel.text = server.applicationId
@@ -24,14 +24,14 @@ class ServerCell: UITableViewCell {
     
     let colorView: UIView = {
         let view = UIView()
-        view.backgroundColor = Color(r: 25, g: 48, b: 64)
+        view.backgroundColor = UIColor(r: 25, g: 48, b: 64)
         view.layer.cornerRadius = 3
         return view
     }()
     
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = Color(r: 30, g: 59, b: 77)
+        imageView.backgroundColor = UIColor(r: 30, g: 59, b: 77)
         imageView.layer.cornerRadius = 3
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -39,7 +39,7 @@ class ServerCell: UITableViewCell {
     }()
     
     let nameLabel: NTLabel = {
-        let label = NTLabel(type: .title)
+        let label = NTLabel(style: .title)
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.1
@@ -47,7 +47,7 @@ class ServerCell: UITableViewCell {
     }()
     
     let applicationIDLabel: NTLabel = {
-        let label = NTLabel(type: .content)
+        let label = NTLabel(style: .body)
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.1
@@ -55,7 +55,7 @@ class ServerCell: UITableViewCell {
     }()
     
     let serverURLLabel: NTLabel = {
-        let label = NTLabel(type: .content)
+        let label = NTLabel(style: .body)
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.1
@@ -66,7 +66,7 @@ class ServerCell: UITableViewCell {
         super.layoutSubviews()
         
         selectionStyle = .none
-        backgroundColor = Color(r: 30, g: 59, b: 77)
+        backgroundColor = UIColor(r: 30, g: 59, b: 77)
         
         addSubview(colorView)
         addSubview(iconImageView)
@@ -89,10 +89,10 @@ class ServerCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         if selected {
-            colorView.backgroundColor = Color(r: 21, g: 156, b: 238)
+            colorView.backgroundColor = UIColor(r: 21, g: 156, b: 238)
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.colorView.backgroundColor = Color(r: 25, g: 48, b: 64)
+                self.colorView.backgroundColor = UIColor(r: 25, g: 48, b: 64)
             }
         }
     }
@@ -112,13 +112,13 @@ class ParseClassCell: UITableViewCell {
     
     let colorView: UIView = {
         let view = UIView()
-        view.backgroundColor = Color(r: 14, g: 105, b: 160)
+        view.backgroundColor = UIColor(r: 14, g: 105, b: 160)
         view.layer.cornerRadius = 3
         return view
     }()
     
     let nameLabel: NTLabel = {
-        let label = NTLabel(type: .title)
+        let label = NTLabel(style: .title)
         label.textColor = .white
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.1
@@ -129,7 +129,7 @@ class ParseClassCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
-        backgroundColor = Color(r: 21, g: 156, b: 238)
+        backgroundColor = UIColor(r: 21, g: 156, b: 238)
         
         addSubview(colorView)
         addSubview(nameLabel)
@@ -175,22 +175,22 @@ class HelpCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textColor = Color.Defaults.tint
-        label.font = Font.Defaults.subtitle
+        label.textColor = Color.Default.Tint.View
+        label.font = Font.Default.Subtitle
         return label
     }()
     
     let leftTextView: NTTextView = {
         let textView = NTTextView()
         textView.isEditable = false
-        textView.textColor = Color.darkGray
+        textView.textColor = UIColor.darkGray
         return textView
     }()
     
     let rightTextView: NTTextView = {
         let textView = NTTextView()
         textView.isEditable = false
-        textView.textColor = Color.darkGray
+        textView.textColor = UIColor.darkGray
         return textView
     }()
     
@@ -229,8 +229,8 @@ class ObjectColumnCell: UITableViewCell {
     
     let keyLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Color.Defaults.tint
-        label.font = Font.Defaults.subtitle
+        label.textColor = Color.Default.Tint.View
+        label.font = Font.Default.Subtitle
         return label
     }()
     
@@ -250,7 +250,7 @@ class ObjectColumnCell: UITableViewCell {
         
         keyLabel.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: valueTextView.topAnchor, right: contentView.rightAnchor, topConstant: 8, leftConstant: 12, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 0)
         
-        valueTextView.anchor(keyLabel.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 7, bottomConstant: 8, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        valueTextView.anchor(keyLabel.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 12, bottomConstant: 8, rightConstant: 12, widthConstant: 0, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -297,21 +297,21 @@ class ObjectPreviewCell: UITableViewCell {
     }()
     
     let objectIdLabel: UILabel = {
-        let label = NTLabel(type: .subtitle)
+        let label = NTLabel(style: .subtitle)
         label.textColor = .black
         label.numberOfLines = 0
         return label
     }()
     
     let createdAtLabel: UILabel = {
-        let label = NTLabel(type: .content)
+        let label = NTLabel(style: .body)
         label.textColor = .black
         label.numberOfLines = 0
         return label
     }()
     
     let updatedAtLabel: UILabel = {
-        let label = NTLabel(type: .content)
+        let label = NTLabel(style: .body)
         label.textColor = .black
         label.numberOfLines = 0
         return label
@@ -322,7 +322,7 @@ class ObjectPreviewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
-        backgroundColor = Color(r: 102, g: 99, b: 122)
+        backgroundColor = UIColor(r: 102, g: 99, b: 122)
         
         addSubview(colorView)
         addSubview(objectIdLabel)

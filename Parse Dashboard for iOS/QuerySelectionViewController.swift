@@ -32,13 +32,13 @@ class QuerySelectionViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Color(r: 114, g: 111, b: 133)
-        tableView.backgroundColor = Color(r: 114, g: 111, b: 133)
+        view.backgroundColor = UIColor(r: 114, g: 111, b: 133)
+        tableView.backgroundColor = UIColor(r: 114, g: 111, b: 133)
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.register(HelpCell.self, forCellReuseIdentifier: "HelpCell")
-        navigationController?.popoverPresentationController?.backgroundColor = Color(r: 114, g: 111, b: 133)
-        navigationController?.navigationBar.barTintColor = Color(r: 114, g: 111, b: 133)
+        navigationController?.popoverPresentationController?.backgroundColor = UIColor(r: 114, g: 111, b: 133)
+        navigationController?.navigationBar.barTintColor = UIColor(r: 114, g: 111, b: 133)
         navigationController?.navigationBar.tintColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Save"), style: .plain, target: self, action: #selector(didSaveQuery))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply", style: .done, target: self, action: #selector(didApplyQuery))
@@ -56,7 +56,7 @@ class QuerySelectionViewController: UITableViewController {
         do {
             savedQueries = try context.fetch(request)
         } catch {
-            Toast(text: "Could not load saved queries from Core Data", color: Color(r: 114, g: 111, b: 133), height: 50).show(navigationController?.view, duration: 2.0)
+            NTToast(text: "Could not load saved queries from Core Data", color: UIColor(r: 114, g: 111, b: 133), height: 50).show(navigationController?.view, duration: 2.0)
         }
     }
     
@@ -100,9 +100,9 @@ class QuerySelectionViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UITableViewHeaderFooterView()
-        header.contentView.backgroundColor = Color(r: 102, g: 99, b: 122)
+        header.contentView.backgroundColor = UIColor(r: 102, g: 99, b: 122)
         header.textLabel?.textColor = .white
-        header.textLabel?.font = Font.Defaults.subtitle
+        header.textLabel?.font = Font.Default.Subtitle
         return header
     }
 
@@ -123,18 +123,18 @@ class QuerySelectionViewController: UITableViewController {
         if indexPath.section == 0 {
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
             cell.textLabel?.text = savedQueries[indexPath.row].constraint
-            cell.textLabel?.font = Font.Defaults.content
+            cell.textLabel?.font = Font.Default.Body
             cell.textLabel?.numberOfLines = 0
             if let keys = savedQueries[indexPath.row].keys as? [String] {
                 cell.detailTextLabel?.text = String(describing: keys)
             }
-            cell.detailTextLabel?.textColor = Color.darkGray
-            cell.detailTextLabel?.font = Font.Defaults.content
+            cell.detailTextLabel?.textColor = UIColor.darkGray
+            cell.detailTextLabel?.font = Font.Default.Body
             return cell
         } else if indexPath.section == 1 {
             
             if indexPath.row == 0 {
-                let cell = NTTextInputCell()
+                let cell = TextInputCell()
                 cell.textInput.autocapitalizationType = .none
                 cell.textInput.autocorrectionType = .no
                 cell.textInput.returnKeyType = .done
@@ -151,10 +151,10 @@ class QuerySelectionViewController: UITableViewController {
             }
         }
         let cell = UITableViewCell()
-        cell.tintColor = Color.Defaults.tint
+        cell.tintColor = Color.Default.Tint.View
         cell.textLabel?.text = keys[indexPath.row]
-        cell.textLabel?.font = Font.Defaults.content
-        cell.textLabel?.textColor = Color.darkGray
+        cell.textLabel?.font = Font.Default.Body
+        cell.textLabel?.textColor = UIColor.darkGray
         if selectedKeys.contains(keys[indexPath.row]) {
             cell.accessoryType = .checkmark
         }
@@ -170,7 +170,7 @@ class QuerySelectionViewController: UITableViewController {
                 self.delegate?.parseQuery(didChangeWith: query.constraint ?? String(), previewKeys: query.keys as? [String] ?? [])
             })
         } else if indexPath.section == 1 && indexPath.row == 0 {
-            if let cell = tableView.cellForRow(at: indexPath) as? NTTextInputCell {
+            if let cell = tableView.cellForRow(at: indexPath) as? TextInputCell {
                 cell.textInput.becomeFirstResponder()
             }
         } else if indexPath.section == 2 {
@@ -182,7 +182,7 @@ class QuerySelectionViewController: UITableViewController {
                 cell.accessoryType = .none
             } else {
                 if selectedKeys.count >= 3 {
-                    Toast(text: "Max preview of 3 keys", color: Color(r: 114, g: 111, b: 133), height: 50).show(navigationController?.view, duration: 2.0)
+                    NTToast(text: "Max preview of 3 keys", color: UIColor(r: 114, g: 111, b: 133), height: 50).show(navigationController?.view, duration: 2.0)
                 } else {
                     selectedKeys.insert(keys[indexPath.row], at: 0)
                     cell.accessoryType = .checkmark
@@ -207,7 +207,7 @@ class QuerySelectionViewController: UITableViewController {
             self.tableView.reloadRows(at: [indexPath, IndexPath(row: 0, section: 1)], with: .none)
             self.tableView.reloadSections([2], with: .none)
         })
-        editAction.backgroundColor = Color.Defaults.tint
+        editAction.backgroundColor = Color.Default.Tint.View
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -215,7 +215,7 @@ class QuerySelectionViewController: UITableViewController {
             do {
                 try context.save()
             } catch {
-                Toast(text: "Could not delete server from core data", color: Color(r: 114, g: 111, b: 133), height: 50).show(self.navigationController?.view, duration: 2.0)
+                NTToast(text: "Could not delete server from core data", color: UIColor(r: 114, g: 111, b: 133), height: 50).show(self.navigationController?.view, duration: 2.0)
             }
             
             self.savedQueries.remove(at: indexPath.row)
@@ -239,5 +239,37 @@ extension QuerySelectionViewController: UITextViewDelegate {
             return false
         }
         return true
+    }
+}
+
+class TextInputCell: UITableViewCell {
+    
+    var delegate: UITextViewDelegate? {
+        get {
+            return textInput.delegate
+        }
+        set {
+            textInput.delegate = newValue
+        }
+    }
+    
+    let textInput: NTTextView = {
+        let textView = NTTextView()
+        return textView
+    }()
+    
+    convenience init() {
+        self.init(style: UITableViewCellStyle.default, reuseIdentifier: "inputCell")
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        addSubview(textInput)
+        textInput.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 2, leftConstant: 16, bottomConstant: 2, rightConstant: 16, widthConstant: 0, heightConstant: 0)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

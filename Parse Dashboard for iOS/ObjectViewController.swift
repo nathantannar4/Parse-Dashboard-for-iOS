@@ -28,10 +28,10 @@ class ObjectViewController: UITableViewController {
         super.viewDidLoad()
         
         setTitleView(title: parseClass.name, subtitle: "Object")
-        view.backgroundColor = Color(r: 114, g: 111, b: 133)
+        view.backgroundColor = UIColor(r: 114, g: 111, b: 133)
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = (parseClass.name! == "_User") ? 0 : 10
-        tableView.backgroundColor = Color(r: 114, g: 111, b: 133)
+        tableView.backgroundColor = UIColor(r: 114, g: 111, b: 133)
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
@@ -46,7 +46,7 @@ class ObjectViewController: UITableViewController {
         
         if parseClass.name! == "_User" {
             
-            navigationController?.toolbar.barTintColor = Color(r: 114, g: 111, b: 133)
+            navigationController?.toolbar.barTintColor = UIColor(r: 114, g: 111, b: 133)
             navigationController?.toolbar.tintColor = .white
             var items = [UIBarButtonItem]()
             items.append(
@@ -57,7 +57,7 @@ class ObjectViewController: UITableViewController {
                 let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
                 label.text = "Send Push Notification"
                 label.textColor = .white
-                label.font = Font.Defaults.content
+                label.font = Font.Default.Body
                 label.textAlignment = .right
                 containView.addSubview(label)
                 let imageview = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
@@ -91,13 +91,13 @@ class ObjectViewController: UITableViewController {
     
     func deleteObject() {
         let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
-        alertController.view.tintColor = Color.Defaults.tint
+        alertController.view.tintColor = Color.Default.Tint.View
         
         let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             alert -> Void in
             Parse.delete(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id) { (response, code, success) in
                 DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                    NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
                     if success {
                         let _ = self.navigationController?.popViewController(animated: true)
                     }
@@ -113,7 +113,7 @@ class ObjectViewController: UITableViewController {
     
     func sendPushNotification() {
         let alertController = UIAlertController(title: "Push Notification", message: "To " + (object.json["username"] as! String), preferredStyle: .alert)
-        alertController.view.tintColor = Color.Defaults.tint
+        alertController.view.tintColor = Color.Default.Tint.View
         
         let saveAction = UIAlertAction(title: "Send", style: .default, handler: {
             alert -> Void in
@@ -122,7 +122,7 @@ class ObjectViewController: UITableViewController {
             let body = "{\"where\":{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"\(self.object.id)\"}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
             Parse.post(endpoint: "/push", body: body) { (response, json, success) in
                 DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                    NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
                 }
             }
         })
@@ -190,7 +190,7 @@ class ObjectViewController: UITableViewController {
                     let stringValue = String(describing: dict).replacingOccurrences(of: "[", with: " ").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "\n")
                     pointerCell.value = stringValue as AnyObject
                     pointerCell.valueTextView.layer.cornerRadius = 3
-                    pointerCell.valueTextView.layer.backgroundColor = Color(r: 102, g: 99, b: 122).cgColor
+                    pointerCell.valueTextView.layer.backgroundColor = UIColor(r: 102, g: 99, b: 122).cgColor
                     pointerCell.valueTextView.textColor = .white
                     pointerCell.valueTextView.isUserInteractionEnabled = false
                     return pointerCell
@@ -239,19 +239,20 @@ class ObjectViewController: UITableViewController {
                         let imageVC = ImageViewController(url, filename: name, parseClass: self.parseClass, key: object.keys[indexPath.row], objectId: object.id)
                         let navVC = NTNavigationController(rootViewController: imageVC)
                         navVC.modalPresentationStyle = .custom
-                        navVC.transitioningDelegate = self
+                        let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
+                        navVC.transitioningDelegate = delegate
                         navVC.view.layer.cornerRadius = 12
                         navVC.view.clipsToBounds = true
                         present(navVC, animated: true, completion: nil)
                     }
                     if type == "Pointer" {
                         let cell = tableView.cellForRow(at: indexPath) as! ObjectColumnCell
-                        cell.valueTextView.layer.backgroundColor = Color(r: 114, g: 111, b: 133).cgColor
+                        cell.valueTextView.layer.backgroundColor = UIColor(r: 114, g: 111, b: 133).cgColor
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            cell.valueTextView.layer.backgroundColor = Color(r: 102, g: 99, b: 122).cgColor
+                            cell.valueTextView.layer.backgroundColor = UIColor(r: 102, g: 99, b: 122).cgColor
                         }
                         guard let className = dict["className"] as? String, let objectId = dict["objectId"] as? String else {
-                            Toast.genericErrorMessage()
+                            NTToast.genericErrorMessage()
                             return
                         }
                         Parse.get(endpoint: "/classes/" + className + "/" + objectId, completion: { (objectJson) in
@@ -297,7 +298,8 @@ class ObjectViewController: UITableViewController {
                             let imageVC = ImageViewController(url, filename: name, parseClass: self.parseClass, key: key, objectId: self.object.id)
                             let navVC = NTNavigationController(rootViewController: imageVC)
                             navVC.modalPresentationStyle = .custom
-                            navVC.transitioningDelegate = self
+                            let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
+                            navVC.transitioningDelegate = delegate
                             navVC.view.layer.cornerRadius = 12
                             navVC.view.clipsToBounds = true
                             self.present(navVC, animated: true, completion: {
@@ -309,7 +311,8 @@ class ObjectViewController: UITableViewController {
                     let imageVC = ImageViewController(String(), filename: String(), parseClass: self.parseClass, key: key, objectId: self.object.id)
                     let navVC = NTNavigationController(rootViewController: imageVC)
                     navVC.modalPresentationStyle = .custom
-                    navVC.transitioningDelegate = self
+                    let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
+                    navVC.transitioningDelegate = delegate
                     navVC.view.layer.cornerRadius = 12
                     navVC.view.clipsToBounds = true
                     self.present(navVC, animated: true, completion: {
@@ -318,7 +321,7 @@ class ObjectViewController: UITableViewController {
                 }
             } else if type == "String" {
                 let alertController = UIAlertController(title: key, message: type, preferredStyle: .alert)
-                alertController.view.tintColor = Color.Defaults.tint
+                alertController.view.tintColor = Color.Default.Tint.View
                 
                 let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
                     alert -> Void in
@@ -326,7 +329,7 @@ class ObjectViewController: UITableViewController {
                     guard let newValue = alertController.textFields![0].text else { return }
                     let body = "{\"" + key + "\":\"" + newValue + "\"}"
                     Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
-                        Toast(text: response, color: Color(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                        NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
                         if success {
                             self.object.values[indexPath.row] = newValue as AnyObject
                             self.tableView.reloadRows(at: [indexPath], with: .none)
@@ -345,7 +348,7 @@ class ObjectViewController: UITableViewController {
                 self.present(alertController, animated: true, completion: nil)
             } else if type == "Number" {
                 let alertController = UIAlertController(title: key, message: type, preferredStyle: .alert)
-                alertController.view.tintColor = Color.Defaults.tint
+                alertController.view.tintColor = Color.Default.Tint.View
                 
                 let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
                     alert -> Void in
@@ -353,7 +356,7 @@ class ObjectViewController: UITableViewController {
                     guard let newValue = alertController.textFields![0].text else { return }
                     let body = "{\"" + key + "\":" + newValue + "}"
                     Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
-                        Toast(text: response, color: Color(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                        NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
                         if success {
                             self.object.values[indexPath.row] = newValue as AnyObject
                             self.tableView.reloadRows(at: [indexPath], with: .none)
@@ -377,13 +380,13 @@ class ObjectViewController: UITableViewController {
                 
             }
         })
-        editAction.backgroundColor = Color.Defaults.tint
+        editAction.backgroundColor = Color.Default.Tint.View
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
             let body = "{\"" + self.object.keys[indexPath.row] + "\":null}"
             Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object!.id, body: body, completion: { (response, json, success) in
                 DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                    NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
                     if success {
                         self.object.updatedAt = json["updatedAt"] as! String
                         let index = self.object.keys.index(of: "updatedAt")!
@@ -400,12 +403,3 @@ class ObjectViewController: UITableViewController {
 }
 
 
-extension ObjectViewController: UIViewControllerTransitioningDelegate {
-    
-    // MARK: - UIViewControllerTransitioningDelegate
-    
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        
-        return PreviewPresentationController(presentedViewController: presented, presenting: presenting)
-    }
-}

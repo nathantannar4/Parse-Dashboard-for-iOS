@@ -41,8 +41,8 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Color(r: 14, g: 105, b: 160)
-        navigationController?.navigationBar.barTintColor = Color(r: 21, g: 156, b: 238)
+        view.backgroundColor = UIColor(r: 14, g: 105, b: 160)
+        navigationController?.navigationBar.barTintColor = UIColor(r: 21, g: 156, b: 238)
         navigationController?.navigationBar.tintColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"), style: .plain, target: self, action: #selector(dismissInfo))
         navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "Save"), style: .plain, target: self, action: #selector(saveImage)), UIBarButtonItem(image: UIImage(named: "Upload"), style: .plain, target: self, action: #selector(presentImagePicker))]
@@ -67,9 +67,9 @@ class ImageViewController: UIViewController {
         PHPhotoLibrary.shared().performChanges({ PHAssetChangeRequest.creationRequestForAsset(from: image)},completionHandler: { success, error in
             DispatchQueue.main.async {
                 if success {
-                    Toast(text: "Saved to camera roll", color: Color(r: 21, g: 156, b: 238), height: 50).show(self.navigationController?.view, duration: 2.0)
+                    NTToast(text: "Saved to camera roll", color: UIColor(r: 21, g: 156, b: 238), height: 50).show(self.navigationController?.view, duration: 2.0)
                 } else {
-                    Toast(text: "Error saving to camera roll", color: Color(r: 21, g: 156, b: 238), height: 50).show(self.navigationController?.view, duration: 2.0)
+                    NTToast(text: "Error saving to camera roll", color: UIColor(r: 21, g: 156, b: 238), height: 50).show(self.navigationController?.view, duration: 2.0)
                 }
             }
         })
@@ -83,11 +83,7 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
     
     func presentImagePicker() {
         self.navigationController?.view.layer.cornerRadius = 0
-        let picker = UIImagePickerController()
-        picker.view.tintColor = Color.Defaults.tint
-        picker.navigationController?.navigationBar.tintColor = Color.Defaults.navigationBarTint
-        picker.navigationController?.navigationBar.barTintColor = Color.Defaults.navigationBarBackground
-        picker.navigationController?.navigationBar.isTranslucent = false
+        let picker = NTImagePickerController()
         picker.delegate = self
         picker.sourceType = .photoLibrary
         picker.allowsEditing = false
@@ -98,12 +94,12 @@ extension ImageViewController: UIImagePickerControllerDelegate, UINavigationCont
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             guard let imageData = UIImageJPEGRepresentation(image, 1) else {
-                Toast.genericErrorMessage()
+                NTToast.genericErrorMessage()
                 return
             }
             Parse.post(filename: filename , classname:  self.parseClass!.name!, key: self.key, objectId: self.objectId, imageData: imageData, completion: { (response, json, success) in
                 DispatchQueue.main.async {
-                    Toast(text: response, color: Color(r: 21, g: 156, b: 238), height: 50).show(self.navigationController?.view, duration: 2.0)
+                    NTToast(text: response, color: UIColor(r: 21, g: 156, b: 238), height: 50).show(self.navigationController?.view, duration: 2.0)
                     print(json)
                     self.imageView.contentMode = .scaleAspectFit
                     self.imageView.image = image
@@ -127,16 +123,6 @@ extension ImageViewController: UIGestureRecognizerDelegate {
             return false
         }
         return true
-    }
-}
-
-extension ImageViewController: UIViewControllerTransitioningDelegate {
-    
-    // MARK: - UIViewControllerTransitioningDelegate
-    
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        
-        return PreviewPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 

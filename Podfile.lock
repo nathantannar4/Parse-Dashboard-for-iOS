@@ -1,7 +1,7 @@
 PODS:
   - Bolts/Tasks (1.8.4)
-  - NTComponents (0.0.1)
-  - Parse (1.14.2):
+  - NTComponents (0.0.6)
+  - Parse (1.14.4):
     - Bolts/Tasks (~> 1.8)
 
 DEPENDENCIES:
@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  NTComponents: 4e6f1beb20cab66fe1e796d918b3b6f61986a7d0
-  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
+  NTComponents: a6f9187b2d73b860bea4138f73cfc4860c433957
+  Parse: b0aa91d2c435e53d4a9af26e741e014c9b35c42e
 
-PODFILE CHECKSUM: c895b135c950aba1e5f929f0f95725d4a45ec3aa
+PODFILE CHECKSUM: 034b1e902dd605bcccae000a2f964bd086839f62
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1

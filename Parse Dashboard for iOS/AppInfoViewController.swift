@@ -13,7 +13,7 @@ class AppInfoViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.barTintColor = Color.Defaults.tint
+        navigationController?.navigationBar.barTintColor = Color.Default.Tint.View
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share"), style: .plain, target: self, action: #selector(shareApp(sender:)))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"), style: .plain, target: self, action: #selector(dismissInfo))
@@ -70,15 +70,15 @@ class AppInfoViewController: UITableViewController {
         switch indexPath.row {
         case 0:
             cell.textLabel?.text = "Parse Dashboard for iOS"
-            cell.textLabel?.font = Font.Defaults.subtitle.withSize(18)
+            cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
             separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, bottom: nil, right: cell.textLabel?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
         case 1:
-            cell.textLabel?.text = "Parse Dashboard for iOS is a standalone dashboard for managing your Parse apps while you are on the go!\n\nBased off of the original Parse Dashboard we all know and love."
-            cell.textLabel?.textColor = Color.darkGray
-            cell.textLabel?.font = Font.Defaults.content.withSize(15)
+            cell.textLabel?.text = "Parse Dashboard for iOS is a standalone dashboard for managing your Parse apps while you are on the go! Edit, create and delete data from your MongoDB. View and upload new image files.\n\nBased off of the original Parse Dashboard we all know and love."
+            cell.textLabel?.textColor = UIColor.darkGray
+            cell.textLabel?.font = Font.Default.Body.withSize(15)
         case 2:
             let imageView = UIImageView(image: UIImage(named: "Dashboard"))
             imageView.contentMode = .scaleToFill
@@ -88,15 +88,15 @@ class AppInfoViewController: UITableViewController {
             imageView.fillSuperview()
         case 3:
             cell.textLabel?.text = "Data Security"
-            cell.textLabel?.font = Font.Defaults.subtitle.withSize(18)
+            cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
             separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, bottom: nil, right: cell.textLabel?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
         case 4:
             cell.textLabel?.text = "Privacy and data protection is important. Know that your Parse Server's application ID and master key are only stored on your devices core data."
-            cell.textLabel?.textColor = Color.darkGray
-            cell.textLabel?.font = Font.Defaults.content.withSize(15)
+            cell.textLabel?.textColor = UIColor.darkGray
+            cell.textLabel?.font = Font.Default.Body.withSize(15)
         default:
             break
         }

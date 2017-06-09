@@ -19,10 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Color.Defaults.buttonTint = Color(r: 37, g: 158, b: 235)
-        Color.Defaults.tint = Color(r: 37, g: 158, b: 235)
-        Color.Defaults.navigationBarTint = Color(r: 37, g: 158, b: 235)
-        Color.Defaults.navigationBarBackground = .white
+        Color.Default.Tint.Button = UIColor(r: 37, g: 158, b: 235)
+        Color.Default.Tint.View = UIColor(r: 37, g: 158, b: 235)
+        Color.Default.Tint.NavigationBar = UIColor(r: 37, g: 158, b: 235)
+        Color.Default.Background.NavigationBar = .white
+        
+        Font.Default.Title = Font.Roboto.Medium.withSize(15)
+        Font.Default.Subtitle = Font.Roboto.Regular
+        Font.Default.Body = Font.Roboto.Regular.withSize(13)
         
         let navBar = UINavigationBar.appearance()
         navBar.isTranslucent = false

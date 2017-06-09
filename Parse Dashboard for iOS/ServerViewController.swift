@@ -22,7 +22,7 @@ class ServerViewController: UITableViewController {
         navigationItem.titleView = UIImageView(image: UIImage(named: "Logo")?.scale(to: 40))
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = 10
-        tableView.backgroundColor = Color(r: 30, g: 59, b: 77)
+        tableView.backgroundColor = UIColor(r: 30, g: 59, b: 77)
         tableView.separatorStyle = .none
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addServer))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info"), style: .plain, target: self, action: #selector(showAppInfo))
@@ -37,7 +37,7 @@ class ServerViewController: UITableViewController {
         do {
             servers = try context.fetch(request)
         } catch {
-            Toast(text: "Could not load servers from Core Data").show(duration: 1.0)
+            NTToast(text: "Could not load servers from Core Data").show(duration: 1.0)
         }
         tableView.reloadData()
     }
@@ -45,7 +45,8 @@ class ServerViewController: UITableViewController {
     func showAppInfo() {
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
         navVC.modalPresentationStyle = .custom
-        navVC.transitioningDelegate = self
+        let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
+        navVC.transitioningDelegate = delegate
         navVC.view.layer.cornerRadius = 12
         navVC.view.clipsToBounds = true
         present(navVC, animated: true, completion: nil)
@@ -55,7 +56,7 @@ class ServerViewController: UITableViewController {
     
     func addServer() {
         let alertController = UIAlertController(title: "Add Server", message: nil, preferredStyle: .alert)
-        alertController.view.tintColor = Color.Defaults.tint
+        alertController.view.tintColor = Color.Default.Tint.View
         
         let saveAction = UIAlertAction(title: "Add", style: .default, handler: {
             alert -> Void in
@@ -93,7 +94,7 @@ class ServerViewController: UITableViewController {
     
     func editServer(_ indexPath: IndexPath) {
         let alertController = UIAlertController(title: "Configuration", message: "Edit", preferredStyle: .alert)
-        alertController.view.tintColor = Color.Defaults.tint
+        alertController.view.tintColor = Color.Default.Tint.View
         
         let parseServerObject = self.servers[indexPath.row]
         
@@ -173,53 +174,44 @@ class ServerViewController: UITableViewController {
         
         let editAction = UITableViewRowAction(style: .default, title: " Edit ", handler: { action, indexpath in
             
-            let actionSheetController: UIAlertController = UIAlertController(title: nil, message: "Edit Server", preferredStyle: .actionSheet)
-            actionSheetController.view.tintColor = Color.Defaults.tint
-            actionSheetController.view.backgroundColor = .white
-            
-            let configAction: UIAlertAction = UIAlertAction(title: "Configuration", style: .default) { action -> Void in
-                self.editServer(indexPath)
-            }
-            actionSheetController.addAction(configAction)
-            
-            let iconAction: UIAlertAction = UIAlertAction(title: "Icon", style: .default) { action -> Void in
-                self.indexPathForSelectedRow = indexPath
-                self.presentImagePicker()
-            }
-            actionSheetController.addAction(iconAction)
-            
-            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel)
-            actionSheetController.addAction(cancelAction)
-            
-            self.present(actionSheetController, animated: true, completion: nil)
+            var actions = [NTActionSheetItem]()
+            actions.append(
+                NTActionSheetItem(title: "Configuration", action: {
+                    self.editServer(indexPath)
+                })
+            )
+            actions.append(
+                NTActionSheetItem(title: "Icon", action: {
+                    self.indexPathForSelectedRow = indexPath
+                    self.presentImagePicker()
+                })
+            )
+            actions.append(
+                NTActionSheetItem(title: "Dismiss", action: nil)
+            )
+            let actionSheet = NTActionSheetViewController(title: "Edit Server", subtitle: nil, actions: actions)
+            actionSheet.show(self, sender: nil)
         })
-        editAction.backgroundColor = Color.Defaults.tint
+        editAction.backgroundColor = Color.Default.Tint.View
         
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { action, indexpath in
             
-            let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
-            alertController.view.tintColor = Color.Defaults.tint
-            
-            let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-                alert -> Void in
-                
+            let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
+            alert.onConfirm = {
                 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                 context.delete(self.servers[indexPath.row])
                 do {
                     try context.save()
                 } catch {
-                    Toast(text: "Could not delete server from core data").show(duration: 2.0)
+                    NTToast(text: "Could not delete server from core data").show(duration: 2.0)
                 }
-                
+
                 self.servers.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
-            })
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-            alertController.addAction(cancelAction)
-            alertController.addAction(saveAction)
-            self.present(alertController, animated: true, completion: nil)
+            }
+            alert.show(self, sender: nil)
         })
+        deleteAction.backgroundColor = Color.Default.Status.Danger
         
         return [deleteAction, editAction]
     }
@@ -230,11 +222,7 @@ extension ServerViewController: UIImagePickerControllerDelegate, UINavigationCon
     // MARK: UIImagePickerControllerDelegate
     
     func presentImagePicker() {
-        let picker = UIImagePickerController()
-        picker.view.tintColor = Color.Defaults.tint
-        picker.navigationController?.navigationBar.tintColor = Color.Defaults.navigationBarTint
-        picker.navigationController?.navigationBar.barTintColor = Color.Defaults.navigationBarBackground
-        picker.navigationController?.navigationBar.isTranslucent = false
+        let picker = NTImagePickerController()
         picker.delegate = self
         picker.sourceType = .photoLibrary
         picker.allowsEditing = false
@@ -250,32 +238,12 @@ extension ServerViewController: UIImagePickerControllerDelegate, UINavigationCon
             do {
                 try context.save()
             } catch {
-                Toast(text: "Could not save icon to core data").show(duration: 2.0)
+                NTToast(text: "Could not save icon to core data").show(duration: 2.0)
             }
             picker.dismiss(animated: true, completion: {
                 self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         }
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-extension ServerViewController: UIViewControllerTransitioningDelegate {
-    
-    // MARK: - UIViewControllerTransitioningDelegate
-    
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        
-        return PreviewPresentationController(presentedViewController: presented, presenting: presenting)
-    }
-}
-
-class PreviewPresentationController: UIPresentationController {
-    
-    // Custom frame for presentation of the view controller
-    override var frameOfPresentedViewInContainerView : CGRect {
-        let containerFrame = self.containerView!.frame
-        let rect = CGRect(x: 12, y: containerFrame.height / 8, width: containerFrame.width - 24, height: containerFrame.height * 3 / 4)
-        return rect
     }
 }
