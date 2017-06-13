@@ -90,11 +90,8 @@ class ObjectViewController: UITableViewController {
     }
     
     func deleteObject() {
-        let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
-        alertController.view.tintColor = Color.Default.Tint.View
-        
-        let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-            alert -> Void in
+        let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
+        alert.onConfirm = {
             Parse.delete(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id) { (response, code, success) in
                 DispatchQueue.main.async {
                     NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
@@ -103,12 +100,8 @@ class ObjectViewController: UITableViewController {
                     }
                 }
             }
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
-        present(alertController, animated: true, completion: nil)
+        }
+        alert.show(self, sender: nil)
     }
     
     func sendPushNotification() {
@@ -284,6 +277,7 @@ class ObjectViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let editAction = UITableViewRowAction(style: .default, title: " Edit ", handler: { action, indexpath in
+            self.tableView.setEditing(false, animated: true)
             
             let value = self.object.values[indexPath.row]
             let key = self.object.keys[indexPath.row]
@@ -329,10 +323,12 @@ class ObjectViewController: UITableViewController {
                     guard let newValue = alertController.textFields![0].text else { return }
                     let body = "{\"" + key + "\":\"" + newValue + "\"}"
                     Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
-                        NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
-                        if success {
-                            self.object.values[indexPath.row] = newValue as AnyObject
-                            self.tableView.reloadRows(at: [indexPath], with: .none)
+                        DispatchQueue.main.async {
+                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            if success {
+                                self.object.values[indexPath.row] = newValue as AnyObject
+                                self.tableView.reloadRows(at: [indexPath], with: .none)
+                            }
                         }
                     })
                 })
@@ -343,6 +339,7 @@ class ObjectViewController: UITableViewController {
                 
                 alertController.addTextField { (textField : UITextField!) -> Void in
                     textField.placeholder = value as? String
+                    textField.text = value as? String
                 }
                 
                 self.present(alertController, animated: true, completion: nil)
@@ -356,10 +353,14 @@ class ObjectViewController: UITableViewController {
                     guard let newValue = alertController.textFields![0].text else { return }
                     let body = "{\"" + key + "\":" + newValue + "}"
                     Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
-                        NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
-                        if success {
-                            self.object.values[indexPath.row] = newValue as AnyObject
-                            self.tableView.reloadRows(at: [indexPath], with: .none)
+                        
+                        DispatchQueue.main.async {
+                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            if success {
+                                
+                                self.object.values[indexPath.row] = newValue as AnyObject
+                                self.tableView.reloadRows(at: [indexPath], with: .none)
+                            }
                         }
                     })
                 })
@@ -370,6 +371,7 @@ class ObjectViewController: UITableViewController {
                 
                 alertController.addTextField { (textField : UITextField!) -> Void in
                     textField.text = value as? String
+                    textField.placeholder = value as? String
                     textField.keyboardType = .numberPad
                 }
                 
@@ -378,6 +380,47 @@ class ObjectViewController: UITableViewController {
                 
             } else if type == "Boolean" {
                 
+                let alertController = UIAlertController(title: key, message: type, preferredStyle: .alert)
+                alertController.view.tintColor = Color.Default.Tint.View
+                
+                let trueAction = UIAlertAction(title: "True", style: .default, handler: {
+                    alert -> Void in
+                    
+                    let body = "{\"" + key + "\":" + "true" + "}"
+                    Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
+                        
+                        DispatchQueue.main.async {
+                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            if success {
+                                
+                                self.object.values[indexPath.row] = true as AnyObject
+                                self.tableView.reloadRows(at: [indexPath], with: .none)
+                            }
+                        }
+                    })
+                })
+                
+                let falseAction = UIAlertAction(title: "False", style: .default, handler: {
+                    alert -> Void in
+                    
+                    let body = "{\"" + key + "\":" + "false" + "}"
+                    Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
+                        
+                        DispatchQueue.main.async {
+                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            if success {
+                                
+                                self.object.values[indexPath.row] = false as AnyObject
+                                self.tableView.reloadRows(at: [indexPath], with: .none)
+                            }
+                        }
+                    })
+                })
+                
+                alertController.addAction(falseAction)
+                alertController.addAction(trueAction)
+                
+                self.present(alertController, animated: true, completion: nil)
             }
         })
         editAction.backgroundColor = Color.Default.Tint.View

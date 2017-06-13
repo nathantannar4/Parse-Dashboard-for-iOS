@@ -18,9 +18,9 @@ class AppInfoViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Share"), style: .plain, target: self, action: #selector(shareApp(sender:)))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"), style: .plain, target: self, action: #selector(dismissInfo))
         tableView.estimatedRowHeight = 80
+        tableView.contentInset.bottom = 60
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorStyle = .none
-        tableView.bounces = false
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissInfo))
         tapGesture.delegate = self

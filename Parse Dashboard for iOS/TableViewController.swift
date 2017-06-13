@@ -95,9 +95,9 @@ class ClassViewController: UITableViewController {
                 self.tableView.reloadSections([0], with: .automatic)
                 self.tableView.refreshControl?.endRefreshing()
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.executeAfter(0.5, closure: {
                 self.setTitleView(title: self.parseClass!.name, subtitle: String(results.count) + " Objects")
-            }
+            })
         }
     }
     

@@ -172,8 +172,23 @@ class ServerViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let editAction = UITableViewRowAction(style: .default, title: " Edit ", handler: { action, indexpath in
+        let duplicateAction = UITableViewRowAction(style: .default, title: " Copy ", handler: { action, indexpath in
             
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            let parseServerObject = NSManagedObject(entity: ParseServer.entity(), insertInto: context)
+            parseServerObject.setValue(self.servers[indexPath.row].name, forKey: "name")
+            parseServerObject.setValue(self.servers[indexPath.row].applicationId, forKey: "applicationId")
+            parseServerObject.setValue(self.servers[indexPath.row].masterKey, forKey: "masterKey")
+            parseServerObject.setValue(self.servers[indexPath.row].serverUrl, forKey: "serverUrl")
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            self.servers.append(parseServerObject as! ParseServer)
+            self.tableView.insertRows(at: [IndexPath(row: self.servers.count - 1, section: 0)], with: .fade)
+            
+        })
+        duplicateAction.backgroundColor = Color.Default.Tint.View.darker(by: 10)
+        
+        let editAction = UITableViewRowAction(style: .default, title: " Edit ", handler: { action, indexpath in
+            self.tableView.setEditing(false, animated: true)
             var actions = [NTActionSheetItem]()
             actions.append(
                 NTActionSheetItem(title: "Configuration", action: {
@@ -213,7 +228,7 @@ class ServerViewController: UITableViewController {
         })
         deleteAction.backgroundColor = Color.Default.Status.Danger
         
-        return [deleteAction, editAction]
+        return [deleteAction, editAction, duplicateAction]
     }
 }
 

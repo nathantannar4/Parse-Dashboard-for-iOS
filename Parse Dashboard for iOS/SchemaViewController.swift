@@ -13,6 +13,7 @@ class SchemaViewController: NTTableViewController {
     
     var server: ParseServer?
     var schemas = [ParseClass]()
+    var toast: NTToast?
     
     convenience init(server: ParseServer) {
         self.init()
@@ -28,7 +29,7 @@ class SchemaViewController: NTTableViewController {
         tableView.contentInset.bottom = 10
         tableView.backgroundColor = UIColor(r: 21, g: 156, b: 238)
         tableView.separatorStyle = .none
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSchema))
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSchema)), UIBarButtonItem(image: UIImage(named: "Info"), style: .plain, target: self, action: #selector(showServerInfo))]
         
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .white
@@ -56,6 +57,30 @@ class SchemaViewController: NTTableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadSections([0], with: .automatic)
                 self.tableView.refreshControl?.endRefreshing()
+                self.tableView.contentInset.top = 10
+            }
+        }
+    }
+    
+    func showServerInfo() {
+        if toast?.currentState == .visible {
+            toast?.dismiss()
+            return
+        }
+        Parse.get(endpoint: "/serverInfo/") { (info) in
+//            let object = ParseObject(info)
+//            let detailVC = ObjectViewController(object, parseClass: ParseClass(name: "Server Info"))
+//            detailVC.setTitleView(title: self.server?.name ?? "API", subtitle: "Server Info")
+//            DispatchQueue.main.async {
+//                self.navigationController?.pushViewController(detailVC, animated: true)
+//                detailVC.navigationItem.rightBarButtonItems = []
+//                detailVC.tableView.refreshControl = nil
+//            }
+            DispatchQueue.main.async {
+                self.toast = NTToast(text: "Server Info", color: UIColor(r: 30, g: 59, b: 77).withAlpha(newAlpha: 0.9), height: self.tableView.bounds.height)
+                self.toast?.label.text = String(describing: info)
+                self.toast?.dismissOnTap = false
+                self.toast?.show(self.view, duration: nil)
             }
         }
     }
@@ -132,7 +157,7 @@ class SchemaViewController: NTTableViewController {
         detailAction.backgroundColor = UIColor(r: 14, g: 105, b: 160)
         
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { action, indexpath in
-            
+            self.tableView.setEditing(false, animated: true)
             let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
             alert.onConfirm = {
                 let classname = self.schemas[indexPath.row].name
@@ -142,6 +167,45 @@ class SchemaViewController: NTTableViewController {
                         if success {
                             self.schemas.remove(at: indexPath.row)
                             self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                        } else if code == 255 {
+                            let alertController = UIAlertController(title: "Delete class and objects?", message: "This cannot be undone", preferredStyle: .alert)
+                            alertController.view.tintColor = Color.Default.Tint.View
+                            
+                            let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                                alert -> Void in
+                                Parse.get(endpoint: "/classes/" + self.schemas[indexPath.row].name!) { (json) in
+                                    guard let results = json["results"] as? [[String: AnyObject]] else {
+                                        DispatchQueue.main.async {
+                                            NTToast(text: "Unexpected Results", color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                                        }
+                                        return
+                                    }
+                                    for result in results {
+                                        Parse.delete(endpoint: "/classes/" + self.schemas[indexPath.row].name! + "/" + (result["objectId"] as! String), completion: { (response, code, success) in
+                                            if !success {
+                                                DispatchQueue.main.async {
+                                                    NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show()
+                                                }
+                                            }
+                                        })
+                                    }
+                                    Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
+                                        DispatchQueue.main.async {
+                                            NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
+                                            if success {
+                                                self.schemas.remove(at: indexPath.row)
+                                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                                            }
+                                        }
+                                    })
+                                }
+                            })
+                            
+                            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                            alertController.addAction(cancelAction)
+                            alertController.addAction(saveAction)
+                            
+                            self.present(alertController, animated: true, completion: nil)
                         }
                     }
                 })
