@@ -8,4 +8,6 @@
 
 # Ignore pods
 /Pods
+Parse\ Dashboard\ for\ iOS\.xcodeproj/project\.xcworkspace/xcuserdata/nathantannar\.xcuserdatad/UserInterfaceState\.xcuserstate
 
+\.DS_Store

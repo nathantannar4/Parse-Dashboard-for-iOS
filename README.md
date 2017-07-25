@@ -1,13 +1,14 @@
+![Banner](/Parse\ Dashboard\ for\ iOS/Parse.gif?raw=true)
+
 # Parse-Dashboard-for-iOS
 
 Parse Dashboard for iOS is a standalone dashboard for managing your Parse apps while you are on the go! Edit, create and delete data from your MongoDB. View and upload new image files. Based off of the original Parse Dashboard we all know and love
 
 ## Screenshots
-![Servers](/Screenshots/Servers.png?raw=true)
-![Schemas](/Screenshots/Schemas.png?raw=true)
-![Class](/Screenshots/Class.png?raw=true)
-![Query](/Screenshots/Query.png?raw=true)
-![Object](/Screenshots/Object.png?raw=true)
+
+<img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Servers.png?raw=true" width="242" height="432"> <img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Schemas.png?raw=true" width="242" height="432">
+<img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Class.png?raw=true" width="242" height="432"> <img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Query.png?raw=true" width="242" height="432">
+<img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Object.png?raw=true" width="242" height="432">
 
 ## Author
 
