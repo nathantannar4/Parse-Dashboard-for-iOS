@@ -1,4 +1,4 @@
-![Banner](/Parse\ Dashboard\ for\ iOS/Parse.gif?raw=true)
+![Banner](/Parse-Dashboard-for-iOS/Parse.gif?raw=true)
 
 # Parse-Dashboard-for-iOS
 
@@ -6,9 +6,9 @@ Parse Dashboard for iOS is a standalone dashboard for managing your Parse apps w
 
 ## Screenshots
 
-<img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Servers.png?raw=true" width="242" height="432"> <img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Schemas.png?raw=true" width="242" height="432">
-<img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Class.png?raw=true" width="242" height="432"> <img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Query.png?raw=true" width="242" height="432">
-<img src="https://github.com/nathantannar4/NTComponents/raw/master/Screenshots/Object.png?raw=true" width="242" height="432">
+<img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/raw/master/Screenshots/Servers.png?raw=true" width="242" height="432"> <img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/raw/master/Screenshots/Schemas.png?raw=true" width="242" height="432">
+<img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/raw/master/Screenshots/Class.png?raw=true" width="242" height="432"> <img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/raw/master/Screenshots/Query.png?raw=true" width="242" height="432">
+<img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/raw/master/Screenshots/Object.png?raw=true" width="242" height="432">
 
 ## Author
 
