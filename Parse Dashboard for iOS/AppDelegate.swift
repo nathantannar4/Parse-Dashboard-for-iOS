@@ -2,17 +2,32 @@
 //  AppDelegate.swift
 //  Parse Dashboard for iOS
 //
-//  Created by Nathan Tannar on 2/28/17.
-//  Copyright © 2017 Nathan Tannar. All rights reserved.
+//  Copyright © 2017 Nathan Tannar.
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+//  Created by Nathan Tannar on 8/30/17.
 //
 
 import UIKit
 import NTComponents
-import Parse
 import CoreData
-import Fabric
-import Answers
-import Crashlytics
 
 
 @UIApplicationMain
@@ -23,32 +38,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Color.Default.Tint.Button = UIColor(r: 37, g: 158, b: 235)
-        Color.Default.Tint.View = UIColor(r: 37, g: 158, b: 235)
-        Color.Default.Tint.NavigationBar = UIColor(r: 37, g: 158, b: 235)
-        Color.Default.Background.NavigationBar = .white
-        
-        Font.Default.Title = Font.Roboto.Medium.withSize(15)
-        Font.Default.Subtitle = Font.Roboto.Regular
-        Font.Default.Body = Font.Roboto.Regular.withSize(13)
-        
-        let navBar = UINavigationBar.appearance()
-        navBar.isTranslucent = false
-        navBar.setBackgroundImage(UIImage(), for: .default)
-        navBar.shadowImage = UIImage()
-        
-        let toolbar = UIToolbar.appearance()
-        toolbar.isTranslucent = false
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+//        Color.Default.Tint.Button = UIColor(r: 37, g: 158, b: 235)
+//        Color.Default.Tint.View = UIColor(r: 37, g: 158, b: 235)
+//        Color.Default.Tint.NavigationBar = UIColor(r: 37, g: 158, b: 235)
+//        Color.Default.Background.NavigationBar = .white
+//        
+//        Font.Default.Title = Font.Roboto.Medium.withSize(15)
+//        Font.Default.Subtitle = Font.Roboto.Regular
+//        Font.Default.Body = Font.Roboto.Regular.withSize(13)
+//        
+//        let navBar = UINavigationBar.appearance()
+//        navBar.isTranslucent = false
+//        navBar.setBackgroundImage(UIImage(), for: .default)
+//        navBar.shadowImage = UIImage()
+//        
+//        let toolbar = UIToolbar.appearance()
+//        toolbar.isTranslucent = false
+//        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
+//        toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
         
         // Initialize the window
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.backgroundColor = UIColor.white
-        self.window!.rootViewController = NTNavigationController(rootViewController: ServerViewController())
-        self.window!.makeKeyAndVisible()
+        self.window?.backgroundColor = UIColor.white
+        self.window?.rootViewController = UINavigationController(rootViewController: ServerViewController())
+        self.window?.makeKeyAndVisible()
         
-        Fabric.with([Crashlytics.self, Answers.self])
+        // Fabric Setup
+//        Fabric.with([Crashlytics.self, Answers.self])
         
         return true
     }
