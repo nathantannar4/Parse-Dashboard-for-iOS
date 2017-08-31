@@ -77,7 +77,7 @@ class SchemaViewController: NTTableViewController {
 //                detailVC.tableView.refreshControl = nil
 //            }
             DispatchQueue.main.async {
-                self.toast = NTToast(text: "Server Info", color: UIColor(r: 30, g: 59, b: 77).withAlpha(newAlpha: 0.9), height: self.tableView.bounds.height)
+                self.toast = NTToast(text: "Server Info", color: UIColor(r: 30, g: 59, b: 77).withAlpha(0.9), height: self.tableView.bounds.height)
                 self.toast?.label.text = String(describing: info)
                 self.toast?.dismissOnTap = false
                 self.toast?.show(self.view, duration: nil)

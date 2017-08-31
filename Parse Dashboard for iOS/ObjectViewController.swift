@@ -231,11 +231,6 @@ class ObjectViewController: UITableViewController {
                         let name = dict["name"] as! String
                         let imageVC = ImageViewController(url, filename: name, parseClass: self.parseClass, key: object.keys[indexPath.row], objectId: object.id)
                         let navVC = NTNavigationController(rootViewController: imageVC)
-                        navVC.modalPresentationStyle = .custom
-                        let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
-                        navVC.transitioningDelegate = delegate
-                        navVC.view.layer.cornerRadius = 12
-                        navVC.view.clipsToBounds = true
                         present(navVC, animated: true, completion: nil)
                     }
                     if type == "Pointer" {
@@ -291,11 +286,6 @@ class ObjectViewController: UITableViewController {
                             let name = dict["name"] as! String
                             let imageVC = ImageViewController(url, filename: name, parseClass: self.parseClass, key: key, objectId: self.object.id)
                             let navVC = NTNavigationController(rootViewController: imageVC)
-                            navVC.modalPresentationStyle = .custom
-                            let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
-                            navVC.transitioningDelegate = delegate
-                            navVC.view.layer.cornerRadius = 12
-                            navVC.view.clipsToBounds = true
                             self.present(navVC, animated: true, completion: {
                                 imageVC.presentImagePicker()
                             })
@@ -304,11 +294,6 @@ class ObjectViewController: UITableViewController {
                 } else {
                     let imageVC = ImageViewController(String(), filename: String(), parseClass: self.parseClass, key: key, objectId: self.object.id)
                     let navVC = NTNavigationController(rootViewController: imageVC)
-                    navVC.modalPresentationStyle = .custom
-                    let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
-                    navVC.transitioningDelegate = delegate
-                    navVC.view.layer.cornerRadius = 12
-                    navVC.view.clipsToBounds = true
                     self.present(navVC, animated: true, completion: {
                         imageVC.presentImagePicker()
                     })

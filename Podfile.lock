@@ -1,22 +1,22 @@
 PODS:
   - Bolts/Tasks (1.8.4)
-  - NTComponents (0.0.6)
-  - Parse (1.14.4):
+  - NTComponents (0.0.7)
+  - Parse (1.15.1):
     - Bolts/Tasks (~> 1.8)
 
 DEPENDENCIES:
-  - NTComponents (from `~/Documents/NTComponents`)
+  - NTComponents (from `~/Documents/Active iOS Projects/NTComponents`)
   - Parse
 
 EXTERNAL SOURCES:
   NTComponents:
-    :path: "~/Documents/NTComponents"
+    :path: "~/Documents/Active iOS Projects/NTComponents"
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  NTComponents: a6f9187b2d73b860bea4138f73cfc4860c433957
-  Parse: b0aa91d2c435e53d4a9af26e741e014c9b35c42e
+  NTComponents: 04edeaa545613f866314dedd1e48a14cfbd0a615
+  Parse: b7a77b20b8a6dede8058da1e2b339593578ce158
 
-PODFILE CHECKSUM: 46fa267b8f5d2d7a6f97d02fbc14ccee062733a1
+PODFILE CHECKSUM: febf2be07647de8277d10485e8fae12def37b0b9
 
 COCOAPODS: 1.2.1

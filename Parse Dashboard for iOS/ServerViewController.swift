@@ -15,6 +15,7 @@ class ServerViewController: UITableViewController {
     
     var servers: [ParseServer] = []
     var indexPathForSelectedRow: IndexPath?
+    var transition = ScaleBackTransitionAnimator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +46,7 @@ class ServerViewController: UITableViewController {
     func showAppInfo() {
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
         navVC.modalPresentationStyle = .custom
-        let delegate = NTSwipeableTransitioningDelegate(fromViewController: self, toViewController: navVC)
-        navVC.transitioningDelegate = delegate
+        navVC.transitioningDelegate = self
         navVC.view.layer.cornerRadius = 12
         navVC.view.clipsToBounds = true
         present(navVC, animated: true, completion: nil)
@@ -191,18 +191,18 @@ class ServerViewController: UITableViewController {
             self.tableView.setEditing(false, animated: true)
             var actions = [NTActionSheetItem]()
             actions.append(
-                NTActionSheetItem(title: "Configuration", action: {
+                NTActionSheetItem(title: "Configuration", icon: nil, action: {
                     self.editServer(indexPath)
                 })
             )
             actions.append(
-                NTActionSheetItem(title: "Icon", action: {
+                NTActionSheetItem(title: "Icon", icon: nil, action: {
                     self.indexPathForSelectedRow = indexPath
                     self.presentImagePicker()
                 })
             )
             actions.append(
-                NTActionSheetItem(title: "Dismiss", action: nil)
+                NTActionSheetItem(title: "Dismiss", icon: nil, action: nil)
             )
             let actionSheet = NTActionSheetViewController(title: "Edit Server", subtitle: nil, actions: actions)
             actionSheet.show(self, sender: nil)
@@ -229,6 +229,19 @@ class ServerViewController: UITableViewController {
         deleteAction.backgroundColor = Color.Default.Status.Danger
         
         return [deleteAction, editAction, duplicateAction]
+    }
+}
+
+extension ServerViewController: UIViewControllerTransitioningDelegate {
+    
+    // MARK: - Transition
+    
+    open func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
+    }
+    
+    open func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return transition
     }
 }
 

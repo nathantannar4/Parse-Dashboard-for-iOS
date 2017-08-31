@@ -10,6 +10,10 @@ import UIKit
 import NTComponents
 import Parse
 import CoreData
+import Fabric
+import Answers
+import Crashlytics
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.white
         self.window!.rootViewController = NTNavigationController(rootViewController: ServerViewController())
         self.window!.makeKeyAndVisible()
+        
+        Fabric.with([Crashlytics.self, Answers.self])
         
         return true
     }
