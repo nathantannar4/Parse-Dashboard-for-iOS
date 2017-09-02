@@ -67,19 +67,23 @@ class ClassViewController: UITableViewController, QueryDelegate {
     // MARK: - Data Refresh
     
     func loadObjects() {
+        
         if tableView.refreshControl?.isRefreshing == true {
+            self.tableView.refreshControl?.endRefreshing()
             return
         }
+        
         if !objects.isEmpty {
             objects.removeAll()
             tableView.deleteSections([0], with: .top)
         }
+        
         Parse.get(endpoint: "/classes/" + schema.name!, query: "?" + query) { (json) in
+            self.tableView.refreshControl?.endRefreshing()
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
                     NTToast(text: "Unexpected Results", color: .darkPurpleAccent, height: 50).show(duration: 2.0)
                     self.setTitleView(title: self.schema.name, subtitle: "0 Objects")
-                    self.tableView.refreshControl?.endRefreshing()
                 }
                 return
             }
@@ -87,7 +91,6 @@ class ClassViewController: UITableViewController, QueryDelegate {
             if !self.objects.isEmpty {
                 DispatchQueue.main.async {
                     self.tableView.insertSections([0], with: .top)
-                    self.tableView.refreshControl?.endRefreshing()
                 }
             }
             DispatchQueue.executeAfter(0.5, closure: {

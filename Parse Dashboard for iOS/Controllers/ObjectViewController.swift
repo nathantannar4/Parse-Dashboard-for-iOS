@@ -73,11 +73,17 @@ class ObjectViewController: UITableViewController {
     // MARK: - Object Refresh
     
     func refreshObject() {
+        
+        if tableView.refreshControl?.isRefreshing == true {
+            self.tableView.refreshControl?.endRefreshing()
+            return
+        }
+        
         Parse.get(endpoint: "/classes/" + object.schema.name! + "/" + object.id) { (json) in
+            self.tableView.refreshControl?.endRefreshing()
             DispatchQueue.main.async {
                 self.object = PFObject(json, self.object.schema)
                 self.tableView.reloadData()
-                self.tableView.refreshControl?.endRefreshing()
             }
         }
     }

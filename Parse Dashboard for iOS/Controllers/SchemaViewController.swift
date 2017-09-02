@@ -59,19 +59,22 @@ class SchemaViewController: UITableViewController {
     // MARK: - Data Refresh
     
     func loadSchemas() {
+        
         if tableView.refreshControl?.isRefreshing == true {
+            self.tableView.refreshControl?.endRefreshing()
             return
         }
+        
         if !schemas.isEmpty {
             schemas.removeAll()
             tableView.deleteSections([0], with: .top)
         }
-        tableView.refreshControl?.beginRefreshing()
+        
         Parse.get(endpoint: "/schemas") { (json) in
+            self.tableView.refreshControl?.endRefreshing()
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
                     NTToast(text: "Unexpected Results, is your URL correct?", color: .lightBlueAccent, height: 50).show(duration: 3.0)
-                    self.tableView.refreshControl?.endRefreshing()
                 }
                 return
             }
@@ -79,7 +82,6 @@ class SchemaViewController: UITableViewController {
             if !self.schemas.isEmpty {
                 DispatchQueue.main.async {
                     self.tableView.insertSections([0], with: .top)
-                    self.tableView.refreshControl?.endRefreshing()
                 }
             }
         }
