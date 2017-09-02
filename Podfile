@@ -7,5 +7,7 @@ target 'Parse Dashboard for iOS' do
     use_frameworks!
     
     pod 'NTComponents', :path => '~/Documents/Active iOS Projects/NTComponents'
-    pod 'Parse'
+    pod 'Fabric'
+    pod 'Crashlytics'
+    
 end

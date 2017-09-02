@@ -1,22 +1,26 @@
 PODS:
-  - Bolts/Tasks (1.8.4)
+  - Crashlytics (3.8.5):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.12)
   - NTComponents (0.0.7)
-  - Parse (1.15.1):
-    - Bolts/Tasks (~> 1.8)
+  - TwitterCore (3.0.0)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - NTComponents (from `~/Documents/Active iOS Projects/NTComponents`)
-  - Parse
+  - TwitterCore
 
 EXTERNAL SOURCES:
   NTComponents:
     :path: "~/Documents/Active iOS Projects/NTComponents"
 
 SPEC CHECKSUMS:
-  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
+  Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
   NTComponents: 04edeaa545613f866314dedd1e48a14cfbd0a615
-  Parse: b7a77b20b8a6dede8058da1e2b339593578ce158
+  TwitterCore: 8ce250be1eb34633a0e6acc89520d4165ec52c10
 
-PODFILE CHECKSUM: febf2be07647de8277d10485e8fae12def37b0b9
+PODFILE CHECKSUM: 651a692c56740f0d4a68fa35024770e1d3683e47
 
 COCOAPODS: 1.2.1
