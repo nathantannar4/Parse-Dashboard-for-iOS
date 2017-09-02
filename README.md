@@ -1,4 +1,4 @@
-<img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/blob/master/Screenshots/AppStore.png?raw=true" width="100" height="60">
+<img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/blob/master/Screenshots/AppStore.png?raw=true" height="75">
 
 # Parse-Dashboard-for-iOS
 
@@ -14,7 +14,3 @@ Parse Dashboard for iOS is a standalone dashboard for managing your Parse apps w
 
 <img src="https://nathantannar.me/NTComponents/NTComponents/Assets/Nathan.png" width="75" height="75">
 Nathan Tannar - https://nathantannar.me
-
-## NTComponents
-
-[https://github.com/nathantannar4/NTComponents](https://github.com/nathantannar4/NTComponents)
