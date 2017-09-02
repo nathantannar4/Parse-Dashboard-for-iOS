@@ -197,63 +197,71 @@ class SchemaViewController: UITableViewController {
 //            let detailVC = SchemaDetailViewController(self.schemas[indexPath.row])
 //            self.navigationController?.pushViewController(detailVC, animated: true)
         })
-        detailAction.backgroundColor = UIColor(r: 14, g: 105, b: 160)
+        detailAction.backgroundColor = .lightBlueAccent
         
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { action, indexpath in
+            
             self.tableView.setEditing(false, animated: true)
-            let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
-            alert.onConfirm = {
-                let classname = self.schemas[indexPath.row].name
-                Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
-                    DispatchQueue.main.async {
-                        NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
-                        if success {
-                            self.schemas.remove(at: indexPath.row)
-                            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                        } else if code == 255 {
-                            let alertController = UIAlertController(title: "Delete class and objects?", message: "This cannot be undone", preferredStyle: .alert)
-                            alertController.view.tintColor = Color.Default.Tint.View
-                            
-                            let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-                                alert -> Void in
-                                Parse.get(endpoint: "/classes/" + self.schemas[indexPath.row].name!) { (json) in
-                                    guard let results = json["results"] as? [[String: AnyObject]] else {
-                                        DispatchQueue.main.async {
-                                            NTToast(text: "Unexpected Results", color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+            
+            let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+            let actions = [
+                UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                    
+                    let classname = self.schemas[indexPath.row].name
+                    Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
+                        DispatchQueue.main.async {
+                            NTToast(text: response, color: .darkBlueBackground, height: 50).show(duration: 2.0)
+                            if success {
+                                self.schemas.remove(at: indexPath.row)
+                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                            } else if code == 255 {
+                                let alertController = UIAlertController(title: "Delete class and objects?", message: "This cannot be undone", preferredStyle: .alert)
+                                alertController.view.tintColor = Color.Default.Tint.View
+                                
+                                let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                                    alert -> Void in
+                                    Parse.get(endpoint: "/classes/" + self.schemas[indexPath.row].name!) { (json) in
+                                        guard let results = json["results"] as? [[String: AnyObject]] else {
+                                            DispatchQueue.main.async {
+                                                NTToast(text: "Unexpected Results", color: .darkPurpleAccent, height: 50).show(duration: 2.0)
+                                            }
+                                            return
                                         }
-                                        return
-                                    }
-                                    for result in results {
-                                        Parse.delete(endpoint: "/classes/" + self.schemas[indexPath.row].name! + "/" + (result["objectId"] as! String), completion: { (response, code, success) in
-                                            if !success {
-                                                DispatchQueue.main.async {
-                                                    NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show()
+                                        for result in results {
+                                            Parse.delete(endpoint: "/classes/" + self.schemas[indexPath.row].name! + "/" + (result["objectId"] as! String), completion: { (response, code, success) in
+                                                if !success {
+                                                    DispatchQueue.main.async {
+                                                        NTToast(text: response, color: .darkPurpleAccent, height: 50).show()
+                                                    }
+                                                }
+                                            })
+                                        }
+                                        Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
+                                            DispatchQueue.main.async {
+                                                NTToast(text: response, color: .darkBlueBackground, height: 50).show(duration: 2.0)
+                                                if success {
+                                                    self.schemas.remove(at: indexPath.row)
+                                                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
                                                 }
                                             }
                                         })
                                     }
-                                    Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
-                                        DispatchQueue.main.async {
-                                            NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
-                                            if success {
-                                                self.schemas.remove(at: indexPath.row)
-                                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                                            }
-                                        }
-                                    })
-                                }
-                            })
-                            
-                            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-                            alertController.addAction(cancelAction)
-                            alertController.addAction(saveAction)
-                            
-                            self.present(alertController, animated: true, completion: nil)
+                                })
+                                
+                                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                                alertController.addAction(cancelAction)
+                                alertController.addAction(saveAction)
+                                
+                                self.present(alertController, animated: true, completion: nil)
+                            }
                         }
-                    }
-                })
-            }
-            alert.show(self, sender: nil)
+                    })
+                    
+                }),
+                UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
+                ]
+            actions.forEach { alertController.addAction($0) }
+            self.present(alertController, animated: true, completion: nil)
         })
         deleteAction.backgroundColor = Color.Default.Status.Danger
         

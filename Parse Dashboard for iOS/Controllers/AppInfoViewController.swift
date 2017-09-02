@@ -31,7 +31,7 @@ class AppInfoViewController: UITableViewController {
     
     private func setupNavigationBar() {
         
-        title = "About"
+        setTitleView(title: "About")
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "Share"),
                             style: .plain,

@@ -269,20 +269,27 @@ class ClassViewController: UITableViewController, QueryDelegate {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
-            let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
-            alert.onConfirm = {
-                Parse.delete(endpoint: "/classes/" + self.schema.name! + "/" + self.objects[indexPath.row].id, completion: { (response, code, success) in
-                    DispatchQueue.main.async {
-                        NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
-                        if success {
-                            self.objects.remove(at: indexPath.row)
-                            self.setTitleView(title: self.schema.name, subtitle: String(self.objects.count) + " Objects")
-                            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+            let actions = [
+                UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                    
+                    Parse.delete(endpoint: "/classes/" + self.schema.name! + "/" + self.objects[indexPath.row].id, completion: { (response, code, success) in
+                        DispatchQueue.main.async {
+                            NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
+                            if success {
+                                self.objects.remove(at: indexPath.row)
+                                self.setTitleView(title: self.schema.name, subtitle: String(self.objects.count) + " Objects")
+                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                            }
                         }
-                    }
-                })
-            }
-            alert.show(self, sender: nil)
+                    })
+                    
+                }),
+                UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
+                ]
+            actions.forEach { alertController.addAction($0) }
+            self.present(alertController, animated: true, completion: nil)
         })
         deleteAction.backgroundColor = Color.Default.Status.Danger
         

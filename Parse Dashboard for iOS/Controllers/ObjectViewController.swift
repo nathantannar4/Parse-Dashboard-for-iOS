@@ -150,18 +150,25 @@ class ObjectViewController: UITableViewController {
     // MARK: - User Actions
     
     func deleteObject() {
-        let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
-        alert.onConfirm = {
-            Parse.delete(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id) { (response, code, success) in
-                DispatchQueue.main.async {
-                    NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
-                    if success {
-                        let _ = self.navigationController?.popViewController(animated: true)
+        
+        let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+        let actions = [
+            UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                
+                Parse.delete(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id) { (response, code, success) in
+                    DispatchQueue.main.async {
+                        NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
+                        if success {
+                            let _ = self.navigationController?.popViewController(animated: true)
+                        }
                     }
                 }
-            }
-        }
-        alert.show(self, sender: nil)
+                
+            }),
+            UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
+            ]
+        actions.forEach { alertController.addAction($0) }
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func toggleView(sender: UIBarButtonItem) {
@@ -283,6 +290,7 @@ class ObjectViewController: UITableViewController {
                         let name = dict["name"] as! String
                         let imageVC = FileViewController(url, _filename: name, _schema: self.object.schema, _key: object.keys[indexPath.row], _objectId: object.id)
                         let navVC = NTNavigationController(rootViewController: imageVC)
+                        navVC.modalTransitionStyle = .crossDissolve
                         present(navVC, animated: true, completion: nil)
                     }
                     if type == "Pointer" {
@@ -343,6 +351,7 @@ class ObjectViewController: UITableViewController {
                             let name = dict["name"] as! String
                             let imageVC = FileViewController(url, _filename: name, _schema: self.object.schema, _key: key, _objectId: self.object.id)
                             let navVC = NTNavigationController(rootViewController: imageVC)
+                            navVC.modalTransitionStyle = .crossDissolve
                             self.present(navVC, animated: true, completion: {
                                 imageVC.presentImagePicker()
                             })
@@ -466,7 +475,7 @@ class ObjectViewController: UITableViewController {
                 self.present(alertController, animated: true, completion: nil)
             }
         })
-        editAction.backgroundColor = Color.Default.Tint.View
+        editAction.backgroundColor = .darkPurpleAccent
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
             let body = "{\"" + self.object.keys[indexPath.row] + "\":null}"

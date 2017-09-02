@@ -46,6 +46,8 @@ class QueryViewController: UITableViewController, UITextViewDelegate {
     
     var savedQueries: [Query] = []
     
+    // MARK: - Initialization
+    
     init(_ schma: PFSchema, selectedKeys: [String], query: String) {
         schema = schma
         super.init(nibName: nil, bundle: nil)

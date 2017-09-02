@@ -810,11 +810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/QueryViewController.swift"
-            timestampString = "525895755.309472"
+            timestampString = "526024800.257439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "init(_:selectedKeys:query:)"
             landmarkType = "7">
          </BreakpointContent>

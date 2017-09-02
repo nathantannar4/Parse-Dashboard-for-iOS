@@ -97,13 +97,15 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
         let saveAction = UIAlertAction(title: "Add", style: .default, handler: {
             alert -> Void in
             
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+                return
+            }
             let parseServerObject = NSManagedObject(entity: ParseServerConfig.entity(), insertInto: context)
             parseServerObject.setValue(alertController.textFields![0].text, forKey: "name")
             parseServerObject.setValue(alertController.textFields![1].text, forKey: "applicationId")
             parseServerObject.setValue(alertController.textFields![2].text, forKey: "masterKey")
             parseServerObject.setValue(alertController.textFields![3].text, forKey: "serverUrl")
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
             if let config = parseServerObject as? ParseServerConfig {
                 self.servers.append(config)
                 self.tableView.insertRows(at: [IndexPath(row: self.servers.count - 1, section: 0)], with: .fade)
@@ -200,7 +202,10 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
         
         let duplicateAction = UITableViewRowAction(style: .default, title: " Copy ", handler: { action, indexpath in
             
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            self.tableView.setEditing(false, animated: true)
+            guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+                return
+            }
             let parseServerObject = NSManagedObject(entity: ParseServerConfig.entity(), insertInto: context)
             parseServerObject.setValue(self.servers[indexPath.row].name, forKey: "name")
             parseServerObject.setValue(self.servers[indexPath.row].applicationId, forKey: "applicationId")
@@ -209,48 +214,50 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
             self.servers.append(parseServerObject as! ParseServerConfig)
             self.tableView.insertRows(at: [IndexPath(row: self.servers.count - 1, section: 0)], with: .fade)
-            
         })
         duplicateAction.backgroundColor = .lightBlueAccent
         
         let editAction = UITableViewRowAction(style: .default, title: " Edit ", handler: { action, indexpath in
             self.tableView.setEditing(false, animated: true)
-            var actions = [NTActionSheetItem]()
-            actions.append(
-                NTActionSheetItem(title: "Configuration", icon: nil, action: {
+            
+            let actionSheetController = UIAlertController(title: "Edit", message: nil, preferredStyle: .actionSheet)
+            let actions = [
+                UIAlertAction(title: "Configuration", style: .default, handler: { _ in
                     self.editServer(at: indexPath)
-                })
-            )
-            actions.append(
-                NTActionSheetItem(title: "Icon", icon: nil, action: {
+                }),
+                UIAlertAction(title: "Icon", style: .default, handler: { _ in
                     self.indexPathForSelectedRow = indexPath
                     self.presentImagePicker()
-                })
-            )
-            actions.append(
-                NTActionSheetItem(title: "Dismiss", icon: nil, action: nil)
-            )
-            let actionSheet = NTActionSheetViewController(title: "Edit Server", subtitle: nil, actions: actions)
-            actionSheet.show(self, sender: nil)
+                }),
+                UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
+            ]
+            actions.forEach { actionSheetController.addAction($0) }
+            self.present(actionSheetController, animated: true, completion: nil)
         })
         editAction.backgroundColor = .lightBlueBackground
         
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { action, indexpath in
             
-            let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
-            alert.onConfirm = {
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-                context.delete(self.servers[indexPath.row])
-                do {
-                    try context.save()
-                } catch {
-                    NTToast(text: "Could not delete server from core data").show(duration: 2.0)
-                }
-                
-                self.servers.remove(at: indexPath.row)
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-            alert.show(self, sender: nil)
+            let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+            let actions = [
+                UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                    guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+                        return
+                    }
+                    context.delete(self.servers[indexPath.row])
+                    do {
+                        try context.save()
+                    } catch {
+                        NTToast(text: "Could not delete server from core data").show(duration: 2.0)
+                    }
+                    
+                    self.servers.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                }),
+                UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
+            ]
+            actions.forEach { alertController.addAction($0) }
+            self.present(alertController, animated: true, completion: nil)
         })
         deleteAction.backgroundColor = Color.Default.Status.Danger
         

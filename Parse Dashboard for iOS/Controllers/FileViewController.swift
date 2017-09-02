@@ -28,7 +28,9 @@
 import NTComponents
 import Photos
 
-class FileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class FileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    // MARK: - Properties
     
     private var schema: PFSchema
     private var key: String
@@ -68,9 +70,22 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .darkBlueBackground
-        navigationController?.navigationBar.barTintColor = .darkBlueAccent
-        navigationController?.navigationBar.tintColor = .white
+        setupView()
+        setupNavigationBar()
+    }
+    
+    // MARK: - Setup
+    
+    private func setupView() {
+        
+        view.backgroundColor = .darkPurpleAccent
+        view.addSubview(imageView)
+        imageView.fillSuperview()
+    }
+    
+    private func setupNavigationBar() {
+        
+        setTitleView(title: "File View")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"),
                                                            style: .plain,
                                                            target: self,
@@ -85,16 +100,9 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                             target: self,
                             action: #selector(FileViewController.presentImagePicker))
         ]
-        
-        
-        view.addSubview(imageView)
-        imageView.fillSuperview()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissInfo))
-        tapGesture.delegate = self
-        let window = (UIApplication.shared.delegate as! AppDelegate).window
-        window?.addGestureRecognizer(tapGesture)
     }
+    
+    // MARK: - User Actions
     
     func dismissInfo() {
         dismiss(animated: true, completion: nil)
@@ -144,16 +152,5 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
             picker.dismiss(animated: true, completion: nil)
         }
-    }
-    
-    // MARK: - UIGestureRecognizerDelegate
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        
-        let point = touch.location(in: nil)
-        guard let frame = navigationController?.view.frame else {
-            return true
-        }
-        return !frame.contains(point)
     }
 }
