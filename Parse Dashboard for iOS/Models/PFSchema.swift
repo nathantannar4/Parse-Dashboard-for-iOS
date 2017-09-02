@@ -1,5 +1,5 @@
 //
-//  UIColor+Extensions.swift
+//  PFSchema.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,38 +22,42 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 8/30/17.
+//  Created by Nathan Tannar on 8/31/17.
 //
 
-import UIKit
-
-extension UIColor {
+class PFSchema {
     
-    static var darkBlueAccent: UIColor {
-        return UIColor(r: 25, g: 48, b: 64)
+    var name: String?
+    var fields: [String : AnyObject]?
+    var permissions: [String : AnyObject]?
+    
+    let json: [String : AnyObject]?
+    
+    init(name: String) {
+        self.name = name
+        self.fields = nil
+        self.permissions = nil
+        self.json = nil
     }
     
-    static var darkBlueBackground: UIColor {
-        return UIColor(r: 30, g: 59, b: 77)
+    init(_ result: [String : AnyObject]) {
+        
+        self.json = result
+        
+        for parseClass in result {
+            if parseClass.key == "fields" {
+                self.fields = parseClass.value as? [String: AnyObject]
+            } else if parseClass.key == "classLevelPermissions" {
+                self.permissions = parseClass.value as? [String: AnyObject]
+            } else if parseClass.key == "className" {
+                self.name = "\(parseClass.value)"
+            }
+        }
     }
     
-    static var lightBlueAccent: UIColor {
-        return UIColor(r: 14, g: 105, b: 160)
-    }
-    
-    static var lightBlueBackground: UIColor {
-        return UIColor(r: 21, g: 156, b: 238)
-    }
-    
-    static var logoTint: UIColor {
-        return UIColor(r: 37, g: 158, b: 235)
-    }
-    
-    static var darkPurpleBackground: UIColor {
-        return UIColor(r: 102, g: 99, b: 122)
-    }
-    
-    static var darkPurpleAccent: UIColor {
-        return UIColor(r: 114, g: 111, b: 133)
+    func typeForField(_ field: String?) -> String? {
+        guard let field = field else { return nil }
+        guard let dict = fields?[field] as? [String : AnyObject] else { return nil }
+        return dict["type"] as? String
     }
 }

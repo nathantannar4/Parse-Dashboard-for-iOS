@@ -38,29 +38,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-//        Color.Default.Tint.Button = UIColor(r: 37, g: 158, b: 235)
-//        Color.Default.Tint.View = UIColor(r: 37, g: 158, b: 235)
-//        Color.Default.Tint.NavigationBar = UIColor(r: 37, g: 158, b: 235)
-//        Color.Default.Background.NavigationBar = .white
-//        
-//        Font.Default.Title = Font.Roboto.Medium.withSize(15)
-//        Font.Default.Subtitle = Font.Roboto.Regular
-//        Font.Default.Body = Font.Roboto.Regular.withSize(13)
-//        
-//        let navBar = UINavigationBar.appearance()
-//        navBar.isTranslucent = false
-//        navBar.setBackgroundImage(UIImage(), for: .default)
-//        navBar.shadowImage = UIImage()
-//        
-//        let toolbar = UIToolbar.appearance()
-//        toolbar.isTranslucent = false
-//        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
-//        toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+        Color.Default.Tint.NavigationBar = .logoTint
+        Color.Default.Background.NavigationBar = .white
+
+        Font.Default.Title = Font.Roboto.Medium.withSize(15)
+        Font.Default.Subtitle = Font.Roboto.Regular
+        Font.Default.Body = Font.Roboto.Regular.withSize(13)
         
         // Initialize the window
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = UIColor.white
-        self.window?.rootViewController = UINavigationController(rootViewController: ServerViewController())
+        self.window?.rootViewController = NTNavigationController(rootViewController: ServerViewController())
         self.window?.makeKeyAndVisible()
         
         // Fabric Setup

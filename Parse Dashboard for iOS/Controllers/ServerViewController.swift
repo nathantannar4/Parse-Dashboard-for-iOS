@@ -26,32 +26,36 @@
 //
 
 import UIKit
+import CoreData
+import NTComponents
 
-class ServerViewController: UIViewController {
+class ServerViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    private var servers = [ParseServer]()
+    // MARK: - Properties
+    
+    private var servers = [ParseServerConfig]()
+    private var indexPathForSelectedRow: IndexPath?
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         setupTableView()
         setupNavigationBar()
+        loadServers()
     }
     
-    // MARK: - Data Storage
+    // MARK: - Data Refresh
     
     func loadServers() {
-        guard let context = (UIApplication.shared.delegate as? AppDelegate).persistentContainer.viewContext else {
+        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
             return
         }
-        let request: NSFetchRequest<ParseServer> = ParseServer.fetchRequest()
+        let request: NSFetchRequest<ParseServerConfig> = ParseServerConfig.fetchRequest()
         do {
             servers = try context.fetch(request)
-        } catch {
-            NTToast(text: "Could not load servers from Core Data").show(duration: 1.0)
-        }
+        } catch {}
         tableView.reloadData()
     }
     
@@ -63,17 +67,28 @@ class ServerViewController: UIViewController {
         tableView.contentInset.bottom = 10
         tableView.backgroundColor = .darkBlueBackground
         tableView.separatorStyle = .none
+        tableView.register(ServerCell.self, forCellReuseIdentifier: ServerCell.reuseIdentifier)
     }
     
     private func setupNavigationBar() {
         
         navigationItem.titleView = UIImageView(image: UIImage(named: "Logo")?.scale(to: 40))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ServerViewController.addServer))
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info"), style: .plain, target: self, action: #selector(ServerViewController.showAppInfo))
-        navigationController?.navigationBar.setDefaultShadow()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                            target: self,
+                                                            action: #selector(ServerViewController.addServer))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info"),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(ServerViewController.showAppInfo))
     }
     
     // MARK: - User Actions
+    
+    func showAppInfo() {
+        
+        let navVC = NTNavigationController(rootViewController: AppInfoViewController())
+        present(navVC, animated: true, completion: nil)
+    }
     
     func addServer() {
         let alertController = UIAlertController(title: "Add Server", message: nil, preferredStyle: .alert)
@@ -83,37 +98,29 @@ class ServerViewController: UIViewController {
             alert -> Void in
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            let parseServerObject = NSManagedObject(entity: ParseServer.entity(), insertInto: context)
+            let parseServerObject = NSManagedObject(entity: ParseServerConfig.entity(), insertInto: context)
             parseServerObject.setValue(alertController.textFields![0].text, forKey: "name")
             parseServerObject.setValue(alertController.textFields![1].text, forKey: "applicationId")
             parseServerObject.setValue(alertController.textFields![2].text, forKey: "masterKey")
             parseServerObject.setValue(alertController.textFields![3].text, forKey: "serverUrl")
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
-            self.servers.append(parseServerObject as! ParseServer)
-            self.tableView.insertRows(at: [IndexPath(row: self.servers.count - 1, section: 0)], with: .fade)
+            if let config = parseServerObject as? ParseServerConfig {
+                self.servers.append(config)
+                self.tableView.insertRows(at: [IndexPath(row: self.servers.count - 1, section: 0)], with: .fade)
+            }
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         alertController.addAction(cancelAction)
         alertController.addAction(saveAction)
         
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "App Name"
+        for placeholder in ["App Name", "Application ID", "Master Key", "Server URL"] {
+            alertController.addTextField { $0.placeholder = placeholder }
         }
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Application ID"
-        }
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Master Key"
-        }
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Server URL"
-        }
-        
         present(alertController, animated: true, completion: nil)
     }
     
-    func editServer(_ indexPath: IndexPath) {
+    func editServer(at indexPath: IndexPath) {
         let alertController = UIAlertController(title: "Configuration", message: "Edit", preferredStyle: .alert)
         alertController.view.tintColor = Color.Default.Tint.View
         
@@ -154,14 +161,10 @@ class ServerViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func toggleSwitch(sender: UISwitch) {
-        
-    }
-    
     // MARK: - UITableViewDatasource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return servers.count > 0 ? 1 : 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -169,7 +172,7 @@ class ServerViewController: UIViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = ServerCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.reuseIdentifier, for: indexPath) as! ServerCell
         cell.server = servers[indexPath.row]
         return cell
         
@@ -179,12 +182,14 @@ class ServerViewController: UIViewController {
         return 100
     }
     
+    // MARK: - UITableViewDelegate
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let server = servers[indexPath.row]
-        Parse.initialize(with: server)
-        let vc = SchemaViewController(server: server)
-        navigationController?.pushViewController(vc, animated: true)
+        let config = servers[indexPath.row]
+        Parse.initialize(config)
+        let viewController = SchemaViewController(config)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -196,24 +201,24 @@ class ServerViewController: UIViewController {
         let duplicateAction = UITableViewRowAction(style: .default, title: " Copy ", handler: { action, indexpath in
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            let parseServerObject = NSManagedObject(entity: ParseServer.entity(), insertInto: context)
+            let parseServerObject = NSManagedObject(entity: ParseServerConfig.entity(), insertInto: context)
             parseServerObject.setValue(self.servers[indexPath.row].name, forKey: "name")
             parseServerObject.setValue(self.servers[indexPath.row].applicationId, forKey: "applicationId")
             parseServerObject.setValue(self.servers[indexPath.row].masterKey, forKey: "masterKey")
             parseServerObject.setValue(self.servers[indexPath.row].serverUrl, forKey: "serverUrl")
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
-            self.servers.append(parseServerObject as! ParseServer)
+            self.servers.append(parseServerObject as! ParseServerConfig)
             self.tableView.insertRows(at: [IndexPath(row: self.servers.count - 1, section: 0)], with: .fade)
             
         })
-        duplicateAction.backgroundColor = Color.Default.Tint.View.darker(by: 10)
+        duplicateAction.backgroundColor = .lightBlueAccent
         
         let editAction = UITableViewRowAction(style: .default, title: " Edit ", handler: { action, indexpath in
             self.tableView.setEditing(false, animated: true)
             var actions = [NTActionSheetItem]()
             actions.append(
                 NTActionSheetItem(title: "Configuration", icon: nil, action: {
-                    self.editServer(indexPath)
+                    self.editServer(at: indexPath)
                 })
             )
             actions.append(
@@ -228,7 +233,7 @@ class ServerViewController: UIViewController {
             let actionSheet = NTActionSheetViewController(title: "Edit Server", subtitle: nil, actions: actions)
             actionSheet.show(self, sender: nil)
         })
-        editAction.backgroundColor = Color.Default.Tint.View
+        editAction.backgroundColor = .lightBlueBackground
         
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { action, indexpath in
             
@@ -251,9 +256,6 @@ class ServerViewController: UIViewController {
         
         return [deleteAction, editAction, duplicateAction]
     }
-}
-
-extension ServerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: UIImagePickerControllerDelegate
     
@@ -268,7 +270,9 @@ extension ServerViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let indexPath = indexPathForSelectedRow else { return }
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+                return
+            }
             let imageData = UIImageJPEGRepresentation(image, 1)
             self.servers[indexPath.row].setValue(imageData, forKey: "icon")
             do {

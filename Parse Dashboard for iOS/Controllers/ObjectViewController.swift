@@ -2,8 +2,27 @@
 //  ObjectViewController.swift
 //  Parse Dashboard for iOS
 //
-//  Created by Nathan Tannar on 3/1/17.
-//  Copyright © 2017 Nathan Tannar. All rights reserved.
+//  Copyright © 2017 Nathan Tannar.
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+//  Created by Nathan Tannar on 8/31/17.
 //
 
 import UIKit
@@ -11,42 +30,96 @@ import NTComponents
 
 class ObjectViewController: UITableViewController {
     
-    var parseClass: ParseClass!
-    var object: ParseObject!
+    // MARK: - Properties
+    
     enum ViewStyle {
         case json, formatted
     }
-    var viewStyle = ViewStyle.formatted
     
-    convenience init(_ object: ParseObject, parseClass: ParseClass) {
-        self.init()
-        self.object = object
-        self.parseClass = parseClass
+    private var object: PFObject
+    private var viewStyle = ViewStyle.formatted
+    
+    // MARK: - Initialization
+    
+    init(_ obj: PFObject) {
+        object = obj
+        super.init(nibName: nil, bundle: nil)
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTitleView(title: parseClass.name, subtitle: "Object")
-        view.backgroundColor = UIColor(r: 114, g: 111, b: 133)
+        setupTableView()
+        setupNavigationBar()
+        setupToolbar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(true, animated: animated)
+    }
+    
+    // MARK: - Object Refresh
+    
+    func refreshObject() {
+        Parse.get(endpoint: "/classes/" + object.schema.name! + "/" + object.id) { (json) in
+            DispatchQueue.main.async {
+                self.object = PFObject(json, self.object.schema)
+                self.tableView.reloadData()
+                self.tableView.refreshControl?.endRefreshing()
+            }
+        }
+    }
+    
+    // MARK: - Setup
+    
+    private func setupTableView() {
+        
         tableView.contentInset.top = 10
-        tableView.contentInset.bottom = (parseClass.name! == "_User") ? 0 : 10
-        tableView.backgroundColor = UIColor(r: 114, g: 111, b: 133)
+        tableView.contentInset.bottom = (object.schema.name == "_User") ? 0 : 10
+        tableView.backgroundColor = .darkPurpleAccent
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
-        tableView.register(ObjectColumnCell.self, forCellReuseIdentifier: "ObjectColumnCell")
+        tableView.register(FieldCell.self, forCellReuseIdentifier: FieldCell.reuseIdentifier)
         tableView.tableFooterView = UIView()
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "Json"), style: .plain, target: self, action: #selector(toggleView(sender:))), UIBarButtonItem(image: UIImage(named: "Delete"), style: .plain, target: self, action: #selector(deleteObject))]
         
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .white
-        refreshControl.addTarget(self, action: #selector(refreshObject), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(ObjectViewController.refreshObject), for: .valueChanged)
         tableView.refreshControl = refreshControl
+    }
+    
+    private func setupNavigationBar() {
         
-        if parseClass.name! == "_User" {
-            
-            navigationController?.toolbar.barTintColor = UIColor(r: 114, g: 111, b: 133)
+        setTitleView(title: object.schema.name, subtitle: "Object")
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "Json"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(ObjectViewController.toggleView(sender:))),
+            UIBarButtonItem(image: UIImage(named: "Delete"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(ObjectViewController.deleteObject))
+        ]
+    }
+    
+    private func setupToolbar() {
+        
+        if object.schema.name == "_User" {
+            navigationController?.toolbar.barTintColor = .darkPurpleAccent
             navigationController?.toolbar.tintColor = .white
             var items = [UIBarButtonItem]()
             items.append(
@@ -64,7 +137,7 @@ class ObjectViewController: UITableViewController {
                 imageview.image = UIImage(named: "Push")
                 imageview.contentMode = .scaleAspectFit
                 containView.addSubview(imageview)
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sendPushNotification))
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ObjectViewController.sendPushNotification))
                 containView.addGestureRecognizer(tapGesture)
                 return UIBarButtonItem(customView: containView)
             }()
@@ -73,28 +146,15 @@ class ObjectViewController: UITableViewController {
             navigationController?.isToolbarHidden = false
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.isToolbarHidden = true
-    }
-    
-    func refreshObject() {
-        Parse.get(endpoint: "/classes/" + parseClass.name! + "/" + object.id) { (json) in
-            DispatchQueue.main.async {
-                self.object = ParseObject(json)
-                self.tableView.reloadData()
-                self.tableView.refreshControl?.endRefreshing()
-            }
-        }
-    }
+   
+    // MARK: - User Actions
     
     func deleteObject() {
         let alert = NTAlertViewController(title: "Are you sure?", subtitle: "This cannot be undone", type: .isDanger)
         alert.onConfirm = {
-            Parse.delete(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id) { (response, code, success) in
+            Parse.delete(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id) { (response, code, success) in
                 DispatchQueue.main.async {
-                    NTToast(text: response, color: UIColor(r: 114, g: 111, b: 133), height: 50).show(duration: 2.0)
+                    NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
                     if success {
                         let _ = self.navigationController?.popViewController(animated: true)
                     }
@@ -102,33 +162,6 @@ class ObjectViewController: UITableViewController {
             }
         }
         alert.show(self, sender: nil)
-    }
-    
-    func sendPushNotification() {
-        let alertController = UIAlertController(title: "Push Notification", message: "To " + (object.json["username"] as! String), preferredStyle: .alert)
-        alertController.view.tintColor = Color.Default.Tint.View
-        
-        let saveAction = UIAlertAction(title: "Send", style: .default, handler: {
-            alert -> Void in
-            
-            let message = alertController.textFields![0].text!
-            let body = "{\"where\":{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"\(self.object.id)\"}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
-            Parse.post(endpoint: "/push", body: body) { (response, json, success) in
-                DispatchQueue.main.async {
-                    NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
-                }
-            }
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
-        
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Message"
-        }
-        
-        present(alertController, animated: true, completion: nil)
     }
     
     func toggleView(sender: UIBarButtonItem) {
@@ -142,6 +175,29 @@ class ObjectViewController: UITableViewController {
             viewStyle = .json
             tableView.reloadSections([0], with: .automatic)
         }
+    }
+    
+    func sendPushNotification() {
+        let alertController = UIAlertController(title: "Push Notification", message: "To " + (object.json["username"] as! String), preferredStyle: .alert)
+        alertController.view.tintColor = Color.Default.Tint.View
+        
+        let saveAction = UIAlertAction(title: "Send", style: .default, handler: {
+            alert -> Void in
+            
+            let message = alertController.textFields![0].text!
+            let body = "{\"where\":{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"\(self.object.id)\"}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
+            Parse.post(endpoint: "/push", body: body) { (response, json, success) in
+                DispatchQueue.main.async {
+                    NTToast(text: response, color: .darkPurpleBackground, height: 44).show(duration: 2.0)
+                }
+            }
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        alertController.addTextField { $0.placeholder = "Message" }
+        present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - UITableViewDatasource
@@ -159,36 +215,32 @@ class ObjectViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ObjectColumnCell", for: indexPath) as! ObjectColumnCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: FieldCell.reuseIdentifier, for: indexPath) as! FieldCell
         let key = object.keys[indexPath.row]
         cell.key = key
         
         if viewStyle == .formatted {
             
             let value = object.values[indexPath.row]
-
-            if let type = self.parseClass.typeForField(key) {
+            
+            if let type = self.object.schema.typeForField(key) {
                 if type == "File", let dict = value as? [String : AnyObject] {
                     // File Type
-                    let imageFileCell = ObjectColumnCell()
-                    imageFileCell.key = object.keys[indexPath.row]
-                    imageFileCell.value = dict["name"]
-                    imageFileCell.valueTextView.isUserInteractionEnabled = false
-                    imageFileCell.selectionStyle = .default
-                    return imageFileCell
+                    cell.value = dict["name"]
+                    cell.valueTextView.isUserInteractionEnabled = false
+                    cell.selectionStyle = .default
+                    return cell
                 } else if type == "Pointer", let dict = value as? [String : AnyObject] {
                     // Pointer
-                    let pointerCell = ObjectColumnCell()
-                    pointerCell.key = object.keys[indexPath.row]
                     let stringValue = String(describing: dict).replacingOccurrences(of: "[", with: " ").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "\n")
-                    pointerCell.value = stringValue as AnyObject
-                    pointerCell.valueTextView.layer.cornerRadius = 3
-                    pointerCell.valueTextView.layer.backgroundColor = UIColor(r: 102, g: 99, b: 122).cgColor
-                    pointerCell.valueTextView.textColor = .white
-                    pointerCell.valueTextView.isUserInteractionEnabled = false
-                    return pointerCell
+                    cell.value = stringValue as AnyObject
+                    cell.valueTextView.layer.cornerRadius = 3
+                    cell.valueTextView.layer.backgroundColor = UIColor(r: 102, g: 99, b: 122).cgColor
+                    cell.valueTextView.textColor = .white
+                    cell.valueTextView.isUserInteractionEnabled = false
+                    return cell
                 } else if type == "Boolean", let booleanValue = value as? Bool {
-                    // Boolean Data Type
+                    // Boolean
                     cell.value = (booleanValue ? "True" : "False") as AnyObject
                     return cell
                 } else if type == "String" {
@@ -229,15 +281,17 @@ class ObjectViewController: UITableViewController {
                     if type == "File" {
                         let url = dict["url"] as! String
                         let name = dict["name"] as! String
-                        let imageVC = ImageViewController(url, filename: name, parseClass: self.parseClass, key: object.keys[indexPath.row], objectId: object.id)
+                        let imageVC = FileViewController(url, _filename: name, _schema: self.object.schema, _key: object.keys[indexPath.row], _objectId: object.id)
                         let navVC = NTNavigationController(rootViewController: imageVC)
                         present(navVC, animated: true, completion: nil)
                     }
                     if type == "Pointer" {
-                        let cell = tableView.cellForRow(at: indexPath) as! ObjectColumnCell
-                        cell.valueTextView.layer.backgroundColor = UIColor(r: 114, g: 111, b: 133).cgColor
+                        guard let cell = tableView.cellForRow(at: indexPath) as? FieldCell else {
+                            return
+                        }
+                        cell.valueTextView.layer.backgroundColor = UIColor.darkPurpleAccent.cgColor
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            cell.valueTextView.layer.backgroundColor = UIColor(r: 102, g: 99, b: 122).cgColor
+                            cell.valueTextView.layer.backgroundColor = UIColor.darkPurpleBackground.cgColor
                         }
                         guard let className = dict["className"] as? String, let objectId = dict["objectId"] as? String else {
                             NTToast.genericErrorMessage()
@@ -246,9 +300,9 @@ class ObjectViewController: UITableViewController {
                         Parse.get(endpoint: "/classes/" + className + "/" + objectId, completion: { (objectJson) in
                             Parse.get(endpoint: "/schemas/" + className, completion: { (classJson) in
                                 DispatchQueue.main.async {
-                                    let object = ParseObject(objectJson)
-                                    let parseClass = ParseClass(classJson)
-                                    let vc = ObjectViewController(object, parseClass: parseClass)
+                                    let schema = PFSchema(classJson)
+                                    let object = PFObject(objectJson, schema)
+                                    let vc = ObjectViewController(object)
                                     self.navigationController?.pushViewController(vc, animated: true)
                                 }
                             })
@@ -261,7 +315,10 @@ class ObjectViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if viewStyle == .formatted {
-            if object.keys[indexPath.row] == "objectId" || object.keys[indexPath.row] == "createdAt" || object.keys[indexPath.row] ==  "updatedAt" || object.keys[indexPath.row] == "ACL" {
+            if object.keys[indexPath.row] == .objectId ||
+                object.keys[indexPath.row] == .createdAt ||
+                object.keys[indexPath.row] ==  .updatedAt ||
+                object.keys[indexPath.row] == .acl {
                 return false
             }
             return true
@@ -276,7 +333,7 @@ class ObjectViewController: UITableViewController {
             
             let value = self.object.values[indexPath.row]
             let key = self.object.keys[indexPath.row]
-            guard let type = self.parseClass.typeForField(key) else { return }
+            guard let type = self.object.schema.typeForField(key) else { return }
             
             if type == "File" {
                 if let dict = value as? [String : AnyObject] {
@@ -284,7 +341,7 @@ class ObjectViewController: UITableViewController {
                         if type == "File" {
                             let url = dict["url"] as! String
                             let name = dict["name"] as! String
-                            let imageVC = ImageViewController(url, filename: name, parseClass: self.parseClass, key: key, objectId: self.object.id)
+                            let imageVC = FileViewController(url, _filename: name, _schema: self.object.schema, _key: key, _objectId: self.object.id)
                             let navVC = NTNavigationController(rootViewController: imageVC)
                             self.present(navVC, animated: true, completion: {
                                 imageVC.presentImagePicker()
@@ -292,7 +349,7 @@ class ObjectViewController: UITableViewController {
                         }
                     }
                 } else {
-                    let imageVC = ImageViewController(String(), filename: String(), parseClass: self.parseClass, key: key, objectId: self.object.id)
+                    let imageVC = FileViewController(String(), _filename: String(), _schema: self.object.schema, _key: key, _objectId: self.object.id)
                     let navVC = NTNavigationController(rootViewController: imageVC)
                     self.present(navVC, animated: true, completion: {
                         imageVC.presentImagePicker()
@@ -307,9 +364,9 @@ class ObjectViewController: UITableViewController {
                     
                     guard let newValue = alertController.textFields![0].text else { return }
                     let body = "{\"" + key + "\":\"" + newValue + "\"}"
-                    Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
+                    Parse.put(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
                         DispatchQueue.main.async {
-                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            NTToast(text: response, color: .darkPurpleBackground, height: 44).show(duration: 2.0)
                             if success {
                                 self.object.values[indexPath.row] = newValue as AnyObject
                                 self.tableView.reloadRows(at: [indexPath], with: .none)
@@ -337,10 +394,10 @@ class ObjectViewController: UITableViewController {
                     
                     guard let newValue = alertController.textFields![0].text else { return }
                     let body = "{\"" + key + "\":" + newValue + "}"
-                    Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
+                    Parse.put(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
                         
                         DispatchQueue.main.async {
-                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            NTToast(text: response, color: .darkPurpleBackground, height: 44).show(duration: 2.0)
                             if success {
                                 
                                 self.object.values[indexPath.row] = newValue as AnyObject
@@ -354,13 +411,14 @@ class ObjectViewController: UITableViewController {
                 alertController.addAction(cancelAction)
                 alertController.addAction(saveAction)
                 
-                alertController.addTextField { (textField : UITextField!) -> Void in
-                    textField.text = value as? String
-                    textField.placeholder = value as? String
-                    textField.keyboardType = .numberPad
+                alertController.addTextField {
+                    $0.text = value as? String
+                    $0.placeholder = value as? String
+                    $0.keyboardType = .numberPad
                 }
                 
                 self.present(alertController, animated: true, completion: nil)
+                
             } else if type == "Date" {
                 
             } else if type == "Boolean" {
@@ -372,10 +430,10 @@ class ObjectViewController: UITableViewController {
                     alert -> Void in
                     
                     let body = "{\"" + key + "\":" + "true" + "}"
-                    Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
+                    Parse.put(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
                         
                         DispatchQueue.main.async {
-                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            NTToast(text: response, color: .darkPurpleBackground, height: 44).show(duration: 2.0)
                             if success {
                                 
                                 self.object.values[indexPath.row] = true as AnyObject
@@ -389,10 +447,10 @@ class ObjectViewController: UITableViewController {
                     alert -> Void in
                     
                     let body = "{\"" + key + "\":" + "false" + "}"
-                    Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
+                    Parse.put(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
                         
                         DispatchQueue.main.async {
-                            NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                            NTToast(text: response, color: .darkPurpleBackground, height: 44).show(duration: 2.0)
                             if success {
                                 
                                 self.object.values[indexPath.row] = false as AnyObject
@@ -412,14 +470,14 @@ class ObjectViewController: UITableViewController {
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
             let body = "{\"" + self.object.keys[indexPath.row] + "\":null}"
-            Parse.put(endpoint: "/classes/" + self.parseClass!.name! + "/" + self.object!.id, body: body, completion: { (response, json, success) in
+            Parse.put(endpoint: "/classes/" + self.object.schema.name! + "/" + self.object.id, body: body, completion: { (response, json, success) in
                 DispatchQueue.main.async {
-                    NTToast(text: response, color: UIColor(r: 102, g: 99, b: 122), height: 44).show(duration: 2.0)
+                    NTToast(text: response, color: .darkPurpleBackground, height: 44).show(duration: 2.0)
                     if success {
-                        self.object.updatedAt = json["updatedAt"] as! String
-                        let index = self.object.keys.index(of: "updatedAt")!
-                        self.object.values[index] = json["updatedAt"]!
-                        self.object.values[indexPath.row] = "<null>" as AnyObject
+                        self.object.updatedAt = json[.updatedAt] as! String
+                        let index = self.object.keys.index(of: .updatedAt)!
+                        self.object.values[index] = json[.updatedAt]!
+                        self.object.values[indexPath.row] = String.undefined as AnyObject
                         self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0), indexPath], with: .none)
                     }
                 }
@@ -429,5 +487,3 @@ class ObjectViewController: UITableViewController {
         return [deleteAction, editAction]
     }
 }
-
-

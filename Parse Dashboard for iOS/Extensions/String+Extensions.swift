@@ -1,5 +1,5 @@
 //
-//  UIColor+Extensions.swift
+//  String+Extensions.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,38 +22,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 8/30/17.
+//  Created by Nathan Tannar on 8/31/17.
 //
 
 import UIKit
+import Foundation
 
-extension UIColor {
+extension String {
     
-    static var darkBlueAccent: UIColor {
-        return UIColor(r: 25, g: 48, b: 64)
+    static var objectId: String {
+        return "objectId"
     }
     
-    static var darkBlueBackground: UIColor {
-        return UIColor(r: 30, g: 59, b: 77)
+    static var createdAt: String {
+        return "objectId"
     }
     
-    static var lightBlueAccent: UIColor {
-        return UIColor(r: 14, g: 105, b: 160)
+    static var updatedAt: String {
+        return "objectId"
     }
     
-    static var lightBlueBackground: UIColor {
-        return UIColor(r: 21, g: 156, b: 238)
+    static var undefined: String {
+        return "<undefined>"
     }
     
-    static var logoTint: UIColor {
-        return UIColor(r: 37, g: 158, b: 235)
-    }
-    
-    static var darkPurpleBackground: UIColor {
-        return UIColor(r: 102, g: 99, b: 122)
-    }
-    
-    static var darkPurpleAccent: UIColor {
-        return UIColor(r: 114, g: 111, b: 133)
+    static var acl: String {
+        return "ACL"
     }
 }

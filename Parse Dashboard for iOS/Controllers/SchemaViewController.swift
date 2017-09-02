@@ -2,88 +2,135 @@
 //  SchemaViewController.swift
 //  Parse Dashboard for iOS
 //
-//  Created by Nathan Tannar on 2/28/17.
-//  Copyright © 2017 Nathan Tannar. All rights reserved.
+//  Copyright © 2017 Nathan Tannar.
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+//  Created by Nathan Tannar on 8/30/17.
 //
 
 import UIKit
 import NTComponents
 
-class SchemaViewController: NTTableViewController {
+class SchemaViewController: UITableViewController {
     
-    var server: ParseServer?
-    var schemas = [ParseClass]()
-    var toast: NTToast?
+    // MARK: - Properties
     
-    convenience init(server: ParseServer) {
-        self.init()
-        self.server = server
+    private var server: ParseServerConfig
+    private var schemas = [PFSchema]()
+    
+    // MARK: - Initialization
+    
+    init(_ config: ParseServerConfig) {
+        server = config
+        super.init(nibName: nil, bundle: nil)
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTitleView(title: server!.name!.isEmpty ? server?.applicationId : server?.name, subtitle: "Classes")
-        view.backgroundColor = UIColor(r: 21, g: 156, b: 238)
-        tableView.contentInset.top = 10
-        tableView.contentInset.bottom = 10
-        tableView.backgroundColor = UIColor(r: 21, g: 156, b: 238)
-        tableView.separatorStyle = .none
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSchema)), UIBarButtonItem(image: UIImage(named: "Info"), style: .plain, target: self, action: #selector(showServerInfo))]
-        
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .white
-        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
-        tableView.refreshControl = refreshControl
-        
-        handleRefresh()
+        setupTableView()
+        setupNavigationBar()
+        loadSchemas()
     }
     
-    override func handleRefresh() {
-        schemas.removeAll()
-        tableView.reloadSections([0], with: .automatic)
+    // MARK: - Data Refresh
+    
+    func loadSchemas() {
+        if tableView.refreshControl?.isRefreshing == true {
+            return
+        }
+        if !schemas.isEmpty {
+            schemas.removeAll()
+            tableView.deleteSections([0], with: .top)
+        }
         tableView.refreshControl?.beginRefreshing()
         Parse.get(endpoint: "/schemas") { (json) in
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
-                    NTToast(text: "Unexpected Results, is your URL correct?", color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 3.0)
+                    NTToast(text: "Unexpected Results, is your URL correct?", color: .lightBlueAccent, height: 50).show(duration: 3.0)
                     self.tableView.refreshControl?.endRefreshing()
                 }
                 return
             }
-            for result in results {
-                self.schemas.append(ParseClass(result))
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadSections([0], with: .automatic)
-                self.tableView.refreshControl?.endRefreshing()
-                self.tableView.contentInset.top = 10
+            self.schemas = results.map { return PFSchema($0) }
+            if !self.schemas.isEmpty {
+                DispatchQueue.main.async {
+                    self.tableView.insertSections([0], with: .top)
+                    self.tableView.refreshControl?.endRefreshing()
+                }
             }
         }
     }
     
-    func showServerInfo() {
-        if toast?.currentState == .visible {
-            toast?.dismiss()
-            return
-        }
-        Parse.get(endpoint: "/serverInfo/") { (info) in
-//            let object = ParseObject(info)
-//            let detailVC = ObjectViewController(object, parseClass: ParseClass(name: "Server Info"))
-//            detailVC.setTitleView(title: self.server?.name ?? "API", subtitle: "Server Info")
-//            DispatchQueue.main.async {
-//                self.navigationController?.pushViewController(detailVC, animated: true)
-//                detailVC.navigationItem.rightBarButtonItems = []
-//                detailVC.tableView.refreshControl = nil
-//            }
-            DispatchQueue.main.async {
-                self.toast = NTToast(text: "Server Info", color: UIColor(r: 30, g: 59, b: 77).withAlpha(0.9), height: self.tableView.bounds.height)
-                self.toast?.label.text = String(describing: info)
-                self.toast?.dismissOnTap = false
-                self.toast?.show(self.view, duration: nil)
-            }
-        }
+    // MARK: - Setup
+    
+    private func setupTableView() {
+        
+        tableView.contentInset.top = 10
+        tableView.contentInset.bottom = 10
+        tableView.backgroundColor = .lightBlueBackground
+        tableView.separatorStyle = .none
+        tableView.register(ClassCell.self, forCellReuseIdentifier: ClassCell.reuseIdentifier)
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(self.loadSchemas), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
+    
+    private func setupNavigationBar() {
+        
+        setTitleView(title: server.name!.isEmpty ? server.applicationId : server.name, subtitle: "Classes")
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSchema))]
+        // UIBarButtonItem(image: UIImage(named: "Info"), style: .plain, target: self, action: #selector(showServerInfo))
+    }
+    
+//    func showServerInfo() {
+//        if toast?.currentState == .visible {
+//            toast?.dismiss()
+//            return
+//        }
+//        Parse.get(endpoint: "/serverInfo/") { (info) in
+//            //            let object = ParseObject(info)
+//            //            let detailVC = ObjectViewController(object, parseClass: Schema(name: "Server Info"))
+//            //            detailVC.setTitleView(title: self.server?.name ?? "API", subtitle: "Server Info")
+//            //            DispatchQueue.main.async {
+//            //                self.navigationController?.pushViewController(detailVC, animated: true)
+//            //                detailVC.navigationItem.rightBarButtonItems = []
+//            //                detailVC.tableView.refreshControl = nil
+//            //            }
+//            DispatchQueue.main.async {
+//                self.toast = NTToast(text: "Server Info", color: UIColor(r: 30, g: 59, b: 77).withAlpha(0.9), height: self.tableView.bounds.height)
+//                self.toast?.label.text = String(describing: info)
+//                self.toast?.dismissOnTap = false
+//                self.toast?.show(self.view, duration: nil)
+//            }
+//        }
+//    }
+    
+    // MARK: - User Actions
     
     func addSchema() {
         let alertController = UIAlertController(title: "Create Class", message: nil, preferredStyle: .alert)
@@ -97,7 +144,7 @@ class SchemaViewController: NTTableViewController {
                 DispatchQueue.main.async {
                     NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
                     if success {
-                        let schema = ParseClass(json)
+                        let schema = PFSchema(json)
                         DispatchQueue.main.async {
                             self.schemas.insert(schema, at: 0)
                             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
@@ -110,18 +157,14 @@ class SchemaViewController: NTTableViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         alertController.addAction(cancelAction)
         alertController.addAction(saveAction)
-        
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Classname"
-        }
-        
+        alertController.addTextField { $0.placeholder = "Classname" }
         present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - UITableViewDatasource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return schemas.count > 0 ? 1 : 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -129,8 +172,8 @@ class SchemaViewController: NTTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = ParseClassCell()
-        cell.parseClass = schemas[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: ClassCell.reuseIdentifier, for: indexPath) as! ClassCell
+        cell.schema = schemas[indexPath.row]
         return cell
     }
     
@@ -140,19 +183,19 @@ class SchemaViewController: NTTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = ClassViewController(parseClass: schemas[indexPath.row])
-        navigationController?.pushViewController(vc, animated: true)
+        let viewController = ClassViewController(schemas[indexPath.row])
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let detailAction = UITableViewRowAction(style: .default, title: "Details", handler: { action, indexpath in
-            let detailVC = SchemaDetailViewController(self.schemas[indexPath.row])
-            self.navigationController?.pushViewController(detailVC, animated: true)
+//            let detailVC = SchemaDetailViewController(self.schemas[indexPath.row])
+//            self.navigationController?.pushViewController(detailVC, animated: true)
         })
         detailAction.backgroundColor = UIColor(r: 14, g: 105, b: 160)
         
@@ -217,3 +260,4 @@ class SchemaViewController: NTTableViewController {
         return [deleteAction, detailAction]
     }
 }
+

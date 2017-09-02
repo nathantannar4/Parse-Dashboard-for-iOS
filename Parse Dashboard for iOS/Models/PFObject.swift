@@ -1,5 +1,5 @@
 //
-//  UIColor+Extensions.swift
+//  PFObject.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,38 +22,42 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 8/30/17.
+//  Created by Nathan Tannar on 8/31/17.
 //
 
-import UIKit
+import Foundation
 
-extension UIColor {
+class PFObject {
     
-    static var darkBlueAccent: UIColor {
-        return UIColor(r: 25, g: 48, b: 64)
-    }
+    var id: String
+    var createdAt: String
+    var updatedAt: String
     
-    static var darkBlueBackground: UIColor {
-        return UIColor(r: 30, g: 59, b: 77)
-    }
+    var keys: [String]
+    var values: [AnyObject]
     
-    static var lightBlueAccent: UIColor {
-        return UIColor(r: 14, g: 105, b: 160)
-    }
+    var json: [String : AnyObject]
     
-    static var lightBlueBackground: UIColor {
-        return UIColor(r: 21, g: 156, b: 238)
-    }
+    var schema: PFSchema
     
-    static var logoTint: UIColor {
-        return UIColor(r: 37, g: 158, b: 235)
-    }
-    
-    static var darkPurpleBackground: UIColor {
-        return UIColor(r: 102, g: 99, b: 122)
-    }
-    
-    static var darkPurpleAccent: UIColor {
-        return UIColor(r: 114, g: 111, b: 133)
+    init(_ dictionary: [String : AnyObject], _ schma: PFSchema) {
+        
+        self.json = dictionary
+        self.schema = schma
+        
+        self.id = (dictionary["objectId"] as? String) ?? .undefined
+        
+        let createdAt = (dictionary["createdAt"] as? String) ?? .undefined
+        self.createdAt = createdAt
+        self.updatedAt = (dictionary["updatedAt"] as? String) ?? .undefined
+        
+        self.keys = []
+        self.values = []
+        
+        for dict in dictionary {
+            self.keys.append(dict.key)
+            self.values.append(dict.value)
+        }
     }
 }
+
