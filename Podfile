@@ -8,7 +8,6 @@ target 'Parse Dashboard for iOS' do
     
     pod 'NTComponents', :path => '~/Documents/Active iOS Projects/NTComponents'
     pod 'Fabric'
-    pod 'Answers'
     pod 'Crashlytics'
     
 end

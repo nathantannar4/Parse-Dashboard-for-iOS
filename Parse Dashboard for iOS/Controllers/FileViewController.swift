@@ -111,7 +111,9 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func saveImage() {
         guard let image = imageView.image else { return }
         if image == UIImage(named: "File") { return }
+        UIApplication.shared.beginIgnoringInteractionEvents()
         PHPhotoLibrary.shared().performChanges( { PHAssetChangeRequest.creationRequestForAsset(from: image) },completionHandler: { success, error in
+            UIApplication.shared.endIgnoringInteractionEvents()
             DispatchQueue.main.async {
                 if success {
                     NTToast(text: "Saved to camera roll", color: .lightBlueBackground, height: 50).show(self.navigationController?.view, duration: 2.0)
