@@ -87,6 +87,7 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     func showAppInfo() {
         
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
+        navVC.modalTransitionStyle = .flipHorizontal
         present(navVC, animated: true, completion: nil)
     }
     

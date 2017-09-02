@@ -47,10 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Font.Default.Body = Font.Roboto.Regular.withSize(13)
         
         // Initialize the window
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.backgroundColor = UIColor.white
-        self.window?.rootViewController = NTNavigationController(rootViewController: ServerViewController())
-        self.window?.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = UIColor.white.darker(by: 10)
+        window?.rootViewController = NTNavigationController(rootViewController: ServerViewController())
+        window?.makeKeyAndVisible()
         
         // Fabric Setup
         Fabric.with([Crashlytics.self, Answers.self])
