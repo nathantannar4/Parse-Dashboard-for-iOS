@@ -35,11 +35,11 @@ extension String {
     }
     
     static var createdAt: String {
-        return "objectId"
+        return "createdAt"
     }
     
     static var updatedAt: String {
-        return "objectId"
+        return "updatedAt"
     }
     
     static var undefined: String {

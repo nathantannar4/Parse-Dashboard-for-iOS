@@ -167,7 +167,7 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     // MARK: - UITableViewDatasource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return servers.count > 0 ? 1 : 0
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -233,6 +233,7 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
                 UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
             ]
             actions.forEach { actionSheetController.addAction($0) }
+            actionSheetController.popoverPresentationController?.sourceView = self.navigationItem.titleView
             self.present(actionSheetController, animated: true, completion: nil)
         })
         editAction.backgroundColor = .lightBlueBackground

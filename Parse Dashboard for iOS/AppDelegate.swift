@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        Color.Default.Tint.View = .logoTint
         Color.Default.Tint.NavigationBar = .logoTint
         Color.Default.Background.NavigationBar = .white
 

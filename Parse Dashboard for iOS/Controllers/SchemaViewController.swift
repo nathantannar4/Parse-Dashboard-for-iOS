@@ -144,12 +144,16 @@ class SchemaViewController: UITableViewController {
             guard let schemaClassname = alertController.textFields![0].text else { return }
             Parse.post(endpoint: "/schemas/" + schemaClassname, completion: { (response, json, success) in
                 DispatchQueue.main.async {
-                    NTToast(text: response, color: UIColor(r: 30, g: 59, b: 77), height: 50).show(duration: 2.0)
+                    NTToast(text: response, color: .darkBlueBackground, height: 50).show(duration: 2.0)
                     if success {
                         let schema = PFSchema(json)
                         DispatchQueue.main.async {
                             self.schemas.insert(schema, at: 0)
-                            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                            if self.schemas.count == 1 {
+                                self.tableView.insertSections([0], with: .top)
+                            } else {
+                                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
+                            }
                         }
                     }
                 }

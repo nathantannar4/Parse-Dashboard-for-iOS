@@ -179,7 +179,11 @@ class ClassViewController: UITableViewController, QueryDelegate {
                         print(json)
                         let object = PFObject(json, self.schema)
                         self.objects.insert(object, at: 0)
-                        self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                        if self.objects.count == 1 {
+                            self.tableView.insertSections([0], with: .top)
+                        } else {
+                            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
+                        }
                     }
                 }
             })

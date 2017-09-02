@@ -57,12 +57,11 @@ class ObjectViewController: UITableViewController {
         
         setupTableView()
         setupNavigationBar()
-        setupToolbar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setToolbarHidden(false, animated: animated)
+        setupToolbar()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,7 +93,7 @@ class ObjectViewController: UITableViewController {
         
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = (object.schema.name == "_User") ? 0 : 10
-        tableView.backgroundColor = .darkPurpleAccent
+        tableView.backgroundColor = .darkPurpleBackground
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
@@ -248,7 +247,7 @@ class ObjectViewController: UITableViewController {
                     let stringValue = String(describing: dict).replacingOccurrences(of: "[", with: " ").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "\n")
                     cell.value = stringValue as AnyObject
                     cell.valueTextView.layer.cornerRadius = 3
-                    cell.valueTextView.layer.backgroundColor = UIColor(r: 102, g: 99, b: 122).cgColor
+                    cell.valueTextView.layer.backgroundColor = UIColor.darkPurpleBackground.cgColor
                     cell.valueTextView.textColor = .white
                     cell.valueTextView.isUserInteractionEnabled = false
                     return cell
@@ -481,7 +480,7 @@ class ObjectViewController: UITableViewController {
                 self.present(alertController, animated: true, completion: nil)
             }
         })
-        editAction.backgroundColor = .darkPurpleAccent
+        editAction.backgroundColor = Color.Default.Tint.View
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
             let body = "{\"" + self.object.keys[indexPath.row] + "\":null}"
