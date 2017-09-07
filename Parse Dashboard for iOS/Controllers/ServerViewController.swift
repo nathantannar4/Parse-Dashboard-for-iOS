@@ -28,6 +28,8 @@
 import UIKit
 import CoreData
 import NTComponents
+import Fabric
+import Crashlytics
 
 class ServerViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -44,6 +46,7 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
         setupTableView()
         setupNavigationBar()
         loadServers()
+        checkIfAppIsNew()
     }
     
     // MARK: - Data Refresh
@@ -61,10 +64,25 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     
     // MARK: - Setup
     
+    private func checkIfAppIsNew() {
+        
+        let appIsNew = (UserDefaults.standard.value(forKey: .appIsNew) as? Bool) ?? true
+        if appIsNew {
+            let alert = UIAlertController(title: nil, message: "Tap the Parse logo to read about how your privacy is protected and where to find this Open Source project.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { alert in
+                UserDefaults.standard.set(false, forKey: .appIsNew)
+            }))
+            alert.view.tintColor = .logoTint
+            present(alert, animated: true, completion: nil)
+        }
+        
+    
+    }
+    
     private func setupTableView() {
         
         tableView.contentInset.top = 10
-        tableView.contentInset.bottom = 10
+        tableView.contentInset.bottom = 30
         tableView.backgroundColor = .darkBlueBackground
         tableView.separatorStyle = .none
         tableView.register(ServerCell.self, forCellReuseIdentifier: ServerCell.reuseIdentifier)
@@ -72,14 +90,32 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     
     private func setupNavigationBar() {
         
-        navigationItem.titleView = UIImageView(image: UIImage(named: "Logo")?.scale(to: 40))
+        setupTitleView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(ServerViewController.addServer))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Info"),
-                                                           style: .plain,
-                                                           target: self,
-                                                           action: #selector(ServerViewController.showAppInfo))
+    }
+    
+    private func setupTitleView() {
+        
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
+        let logoButton = NTButton()
+        logoButton.layer.cornerRadius = 3
+        logoButton.trackTouchLocation = false
+        logoButton.ripplePercent = 1.1
+        logoButton.image = UIImage(named: "Logo")?.scale(to: 40)
+        logoButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        logoButton.addTarget(self, action: #selector(ServerViewController.showAppInfo), for: .touchUpInside)
+        logoButton.adjustsImageWhenHighlighted = false
+        logoButton.titleFont = Font.Default.Title
+        logoButton.setTitle("Parse Dashboard for iOS", for: .normal)
+        logoButton.setTitleColor(.black, for: .normal)
+        logoButton.titleEdgeInsets.left = 10
+        logoButton.titleEdgeInsets.right = -10
+        logoButton.contentHorizontalAlignment = .left
+        titleView.addSubview(logoButton)
+        logoButton.anchor(titleView.topAnchor, left: titleView.leftAnchor, bottom: titleView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        navigationItem.titleView = titleView
     }
     
     // MARK: - User Actions
@@ -87,7 +123,6 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     func showAppInfo() {
         
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
-        navVC.modalTransitionStyle = .flipHorizontal
         present(navVC, animated: true, completion: nil)
     }
     
@@ -110,6 +145,7 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
             if let config = parseServerObject as? ParseServerConfig {
                 self.servers.append(config)
                 self.tableView.insertRows(at: [IndexPath(row: self.servers.count - 1, section: 0)], with: .fade)
+                Answers.logContentView(withName: "Server Added", contentType: nil, contentId: nil, customAttributes: nil)
             }
         })
         
@@ -294,6 +330,15 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
             })
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+// MARK: - UIPopoverPresentationControllerDelegate
+
+extension ServerViewController: UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
 }
 

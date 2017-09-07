@@ -41,10 +41,10 @@ class FieldCell: UITableViewCell {
             keyLabel.text = self.key
         }
     }
-    var value: AnyObject? {
+    var value: Any? {
         didSet {
             guard let value = self.value else { return }
-            valueTextView.text = "\(value)"
+            valueTextView.text = String(describing: value)
         }
     }
     
@@ -59,6 +59,13 @@ class FieldCell: UITableViewCell {
         let textView = NTTextView()
         textView.isEditable = false
         return textView
+    }()
+    
+    let separatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     // MARK: - Initialization
@@ -79,14 +86,17 @@ class FieldCell: UITableViewCell {
     
     private func addSubviews() {
         
-        contentView.addSubview(keyLabel)
-        contentView.addSubview(valueTextView)
+        addSubview(separatorLine)
+        addSubview(keyLabel)
+        addSubview(valueTextView)
     }
     
     private func setupConstraints() {
         
-        keyLabel.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: valueTextView.topAnchor, right: contentView.rightAnchor, topConstant: 8, leftConstant: 12, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 0)
+        separatorLine.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, heightConstant: 0.5)
         
-        valueTextView.anchor(keyLabel.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 12, bottomConstant: 8, rightConstant: 12, widthConstant: 0, heightConstant: 0)
+        keyLabel.anchor(topAnchor, left: leftAnchor, bottom: valueTextView.topAnchor, right: rightAnchor, topConstant: 8, leftConstant: 12, bottomConstant: 6, rightConstant: 12, widthConstant: 0, heightConstant: 0)
+        
+        valueTextView.anchor(keyLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 6, leftConstant: 12, bottomConstant: 8, rightConstant: 12, widthConstant: 0, heightConstant: 0)
     }
 }

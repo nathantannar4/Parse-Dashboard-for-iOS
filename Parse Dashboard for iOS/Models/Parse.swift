@@ -32,6 +32,10 @@ class Parse {
     
     private static var config: ParseServerConfig?
     
+    class func current() -> ParseServerConfig? {
+        return Parse.config
+    }
+    
     class func initialize(_ config: ParseServerConfig) {
         self.config = config
     }
@@ -66,6 +70,7 @@ class Parse {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
+            
             if error != nil {
                 print(error.debugDescription)
                 completion([:])
@@ -73,12 +78,18 @@ class Parse {
             }
             do {
                 guard let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String : AnyObject] else { return }
-                completion(json)
+                if let error = json["error"] as? String {
+                    DispatchQueue.main.async {
+                        NTToast(text: error, color: .darkPurpleAccent).show(duration: 1.0)
+                    }
+                } else {
+                    completion(json)
+                }
             } catch let error as NSError{
                 print(error.debugDescription)
                 completion([:])
             }
-            }.resume()
+        }.resume()
     }
     
     class func post(endpoint: String, body: String? = String(), completion: @escaping (String, [String : AnyObject], Bool) -> ()) {
@@ -127,7 +138,7 @@ class Parse {
             } catch let error as NSError {
                 completion(error.debugDescription, [:], false)
             }
-            }.resume()
+        }.resume()
     }
     
     class func post(filename: String, classname: String, key: String, objectId: String, imageData: Data, completion: @escaping (String, [String : AnyObject], Bool) -> ()) {

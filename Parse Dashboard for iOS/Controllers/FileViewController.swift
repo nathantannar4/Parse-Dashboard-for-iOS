@@ -85,7 +85,7 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     private func setupNavigationBar() {
         
-        setTitleView(title: "File View")
+        setTitleView(title: key, subtitle: "File View")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"),
                                                            style: .plain,
                                                            target: self,
@@ -143,7 +143,7 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 NTToast.genericErrorMessage()
                 return
             }
-            Parse.post(filename: self.filename , classname:  self.schema.name!, key: self.key, objectId: self.objectId, imageData: imageData, completion: { (response, json, success) in
+            Parse.post(filename: self.filename , classname:  self.schema.name, key: self.key, objectId: self.objectId, imageData: imageData, completion: { (response, json, success) in
                 DispatchQueue.main.async {
                     NTToast(text: response, color: .lightBlueBackground, height: 50).show(self.navigationController?.view, duration: 2.0)
                     print(json)

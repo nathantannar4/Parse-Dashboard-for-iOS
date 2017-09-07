@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "Facebook_Parse_Logo.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "JSON_fcffff_50.png",
       "scale" : "2x"
     },
     {

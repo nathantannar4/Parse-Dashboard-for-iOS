@@ -60,14 +60,9 @@ class SchemaViewController: UITableViewController {
     
     func loadSchemas() {
         
-        if tableView.refreshControl?.isRefreshing == true {
-            self.tableView.refreshControl?.endRefreshing()
-            return
-        }
-        
         if !schemas.isEmpty {
             schemas.removeAll()
-            tableView.deleteSections([0], with: .top)
+            tableView.deleteSections([0], with: .none)
         }
         
         Parse.get(endpoint: "/schemas") { (json) in
@@ -92,7 +87,7 @@ class SchemaViewController: UITableViewController {
     private func setupTableView() {
         
         tableView.contentInset.top = 10
-        tableView.contentInset.bottom = 10
+        tableView.contentInset.bottom = 30
         tableView.backgroundColor = .lightBlueBackground
         tableView.separatorStyle = .none
         tableView.register(ClassCell.self, forCellReuseIdentifier: ClassCell.reuseIdentifier)
@@ -105,32 +100,29 @@ class SchemaViewController: UITableViewController {
     private func setupNavigationBar() {
         
         setTitleView(title: server.name!.isEmpty ? server.applicationId : server.name, subtitle: "Classes")
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSchema))]
-        // UIBarButtonItem(image: UIImage(named: "Info"), style: .plain, target: self, action: #selector(showServerInfo))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add,
+                            target: self,
+                            action: #selector(addSchema)),
+            UIBarButtonItem(image: UIImage(named: "Info"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(showServerInfo))
+        ]
     }
     
-//    func showServerInfo() {
-//        if toast?.currentState == .visible {
-//            toast?.dismiss()
-//            return
-//        }
-//        Parse.get(endpoint: "/serverInfo/") { (info) in
-//            //            let object = ParseObject(info)
-//            //            let detailVC = ObjectViewController(object, parseClass: Schema(name: "Server Info"))
-//            //            detailVC.setTitleView(title: self.server?.name ?? "API", subtitle: "Server Info")
-//            //            DispatchQueue.main.async {
-//            //                self.navigationController?.pushViewController(detailVC, animated: true)
-//            //                detailVC.navigationItem.rightBarButtonItems = []
-//            //                detailVC.tableView.refreshControl = nil
-//            //            }
-//            DispatchQueue.main.async {
-//                self.toast = NTToast(text: "Server Info", color: UIColor(r: 30, g: 59, b: 77).withAlpha(0.9), height: self.tableView.bounds.height)
-//                self.toast?.label.text = String(describing: info)
-//                self.toast?.dismissOnTap = false
-//                self.toast?.show(self.view, duration: nil)
-//            }
-//        }
-//    }
+    func showServerInfo() {
+        
+        Parse.get(endpoint: "/serverInfo/") { (info) in
+
+            DispatchQueue.main.async {
+                let server = PFServer(info) 
+                let viewController = ServerDetailViewController(server)
+                viewController.title = self.title
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+        }
+    }
     
     // MARK: - User Actions
     
@@ -200,8 +192,8 @@ class SchemaViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let detailAction = UITableViewRowAction(style: .default, title: "Details", handler: { action, indexpath in
-//            let detailVC = SchemaDetailViewController(self.schemas[indexPath.row])
-//            self.navigationController?.pushViewController(detailVC, animated: true)
+            let viewController = SchemaDetailViewController(self.schemas[indexPath.row])
+            self.navigationController?.pushViewController(viewController, animated: true)
         })
         detailAction.backgroundColor = .lightBlueAccent
         
@@ -214,19 +206,19 @@ class SchemaViewController: UITableViewController {
                 UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                     
                     let classname = self.schemas[indexPath.row].name
-                    Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
+                    Parse.delete(endpoint: "/schemas/" + classname, completion: { (response, code, success) in
                         DispatchQueue.main.async {
                             NTToast(text: response, color: .darkBlueBackground, height: 50).show(duration: 2.0)
                             if success {
                                 self.schemas.remove(at: indexPath.row)
-                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                                self.tableView.deleteRows(at: [indexPath], with: .top)
                             } else if code == 255 {
                                 let alertController = UIAlertController(title: "Delete class and objects?", message: "This cannot be undone", preferredStyle: .alert)
                                 alertController.view.tintColor = Color.Default.Tint.View
                                 
                                 let saveAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
                                     alert -> Void in
-                                    Parse.get(endpoint: "/classes/" + self.schemas[indexPath.row].name!) { (json) in
+                                    Parse.get(endpoint: "/classes/" + self.schemas[indexPath.row].name) { (json) in
                                         guard let results = json["results"] as? [[String: AnyObject]] else {
                                             DispatchQueue.main.async {
                                                 NTToast(text: "Unexpected Results", color: .darkPurpleAccent, height: 50).show(duration: 2.0)
@@ -234,7 +226,7 @@ class SchemaViewController: UITableViewController {
                                             return
                                         }
                                         for result in results {
-                                            Parse.delete(endpoint: "/classes/" + self.schemas[indexPath.row].name! + "/" + (result["objectId"] as! String), completion: { (response, code, success) in
+                                            Parse.delete(endpoint: "/classes/" + self.schemas[indexPath.row].name + "/" + (result["objectId"] as! String), completion: { (response, code, success) in
                                                 if !success {
                                                     DispatchQueue.main.async {
                                                         NTToast(text: response, color: .darkPurpleAccent, height: 50).show()
@@ -242,12 +234,12 @@ class SchemaViewController: UITableViewController {
                                                 }
                                             })
                                         }
-                                        Parse.delete(endpoint: "/schemas/" + classname!, completion: { (response, code, success) in
+                                        Parse.delete(endpoint: "/schemas/" + classname, completion: { (response, code, success) in
                                             DispatchQueue.main.async {
                                                 NTToast(text: response, color: .darkBlueBackground, height: 50).show(duration: 2.0)
                                                 if success {
                                                     self.schemas.remove(at: indexPath.row)
-                                                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                                                    self.tableView.deleteRows(at: [indexPath], with: .top)
                                                 }
                                             }
                                         })

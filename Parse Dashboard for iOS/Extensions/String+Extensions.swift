@@ -49,4 +49,40 @@ extension String {
     static var acl: String {
         return "ACL"
     }
+    
+    static var relation: String {
+        return "Relation"
+    }
+    
+    static var pointer: String {
+        return "Pointer"
+    }
+    
+    static var file: String {
+        return "File"
+    }
+    
+    static var boolean: String {
+        return "Boolean"
+    }
+    
+    static var string: String {
+        return "String"
+    }
+    
+    static var array: String {
+        return "Array"
+    }
+    
+    static var number: String {
+        return "Number"
+    }
+    
+    static var date: String {
+        return "Date"
+    }
+    
+    static var appIsNew: String {
+        return "appIsNew"
+    }
 }

@@ -32,10 +32,11 @@ class ClassViewController: UITableViewController, QueryDelegate {
     
     // MARK: - Properties
     
+    var query = "limit=1000&order=-updatedAt"
+    
     private var schema: PFSchema
     private var objects = [PFObject]()
     private var previewKeys = ["objectId", "createdAt", "updatedAt"]
-    private var query = "limit=1000&order=-updatedAt"
     
     // MARK: - Initialization
     
@@ -67,18 +68,13 @@ class ClassViewController: UITableViewController, QueryDelegate {
     // MARK: - Data Refresh
     
     func loadObjects() {
-        
-        if tableView.refreshControl?.isRefreshing == true {
-            self.tableView.refreshControl?.endRefreshing()
-            return
-        }
-        
+      
         if !objects.isEmpty {
             objects.removeAll()
-            tableView.deleteSections([0], with: .top)
+            tableView.deleteSections([0], with: .none)
         }
         
-        Parse.get(endpoint: "/classes/" + schema.name!, query: "?" + query) { (json) in
+        Parse.get(endpoint: "/classes/" + schema.name, query: "?" + query) { (json) in
             self.tableView.refreshControl?.endRefreshing()
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
@@ -104,7 +100,7 @@ class ClassViewController: UITableViewController, QueryDelegate {
     private func setupTableView() {
         
         tableView.contentInset.top = 10
-        tableView.contentInset.bottom = 10
+        tableView.contentInset.bottom = 30
         tableView.backgroundColor = .darkPurpleBackground
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 80
@@ -132,7 +128,7 @@ class ClassViewController: UITableViewController, QueryDelegate {
     
     private func setupToolbar() {
         
-        if schema.name! == "_Installation" {
+        if schema.name == "_Installation" {
             
             navigationController?.toolbar.barTintColor = .darkPurpleAccent
             navigationController?.toolbar.tintColor = .white
@@ -172,13 +168,14 @@ class ClassViewController: UITableViewController, QueryDelegate {
             alert -> Void in
             
             let body = alertController.textFields?[0].text
-            Parse.post(endpoint: "/classes/" + self.schema.name!, body: body, completion: { (response, json, success) in
+            Parse.post(endpoint: "/classes/" + self.schema.name, body: body, completion: { (response, json, success) in
                 DispatchQueue.main.async {
                     NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
                     if success {
                         print(json)
                         let object = PFObject(json, self.schema)
                         self.objects.insert(object, at: 0)
+                        self.setTitleView(title: self.schema.name, subtitle: String(self.objects.count) + " Objects")
                         if self.objects.count == 1 {
                             self.tableView.insertSections([0], with: .top)
                         } else {
@@ -281,13 +278,13 @@ class ClassViewController: UITableViewController, QueryDelegate {
             let actions = [
                 UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                     
-                    Parse.delete(endpoint: "/classes/" + self.schema.name! + "/" + self.objects[indexPath.row].id, completion: { (response, code, success) in
+                    Parse.delete(endpoint: "/classes/" + self.schema.name + "/" + self.objects[indexPath.row].id, completion: { (response, code, success) in
                         DispatchQueue.main.async {
                             NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
                             if success {
                                 self.objects.remove(at: indexPath.row)
                                 self.setTitleView(title: self.schema.name, subtitle: String(self.objects.count) + " Objects")
-                                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                                self.tableView.deleteRows(at: [indexPath], with: .top)
                             }
                         }
                     })

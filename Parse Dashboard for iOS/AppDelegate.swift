@@ -39,22 +39,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Set defaults for NTComponents
         Color.Default.Tint.View = .logoTint
         Color.Default.Tint.NavigationBar = .logoTint
         Color.Default.Background.NavigationBar = .white
 
         Font.Default.Title = Font.Roboto.Medium.withSize(15)
-        Font.Default.Subtitle = Font.Roboto.Regular
+        Font.Default.Subtitle = Font.Roboto.Regular.withSize(14)
         Font.Default.Body = Font.Roboto.Regular.withSize(13)
         
         // Initialize the window
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white.darker(by: 10)
-        window?.rootViewController = NTNavigationController(rootViewController: ServerViewController())
-        window?.makeKeyAndVisible()
+        
+        
+        let appIsNew = (UserDefaults.standard.value(forKey: .appIsNew) as? Bool) ?? true
+        if appIsNew {
+            window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+            window?.makeKeyAndVisible()
+        } else {
+            window?.rootViewController = NTNavigationController(rootViewController: ServerViewController())
+            window?.makeKeyAndVisible()
+        }
         
         // Fabric Setup
         Fabric.with([Crashlytics.self, Answers.self])
+        Answers.logLogin(withMethod: String(describing: Date()), success: nil, customAttributes: nil)
         
         return true
     }

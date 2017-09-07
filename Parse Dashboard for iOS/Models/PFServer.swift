@@ -1,5 +1,5 @@
 //
-//  PFObject.swift
+//  PFServer.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,53 +22,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 8/31/17.
+//  Created by Nathan Tannar on 9/5/17.
 //
 
 import Foundation
 
-class PFObject {
-    
-    var id: String
-    var createdAt: String
-    var updatedAt: String
+class PFServer {
     
     var keys: [String]
-    var values: [Any]
-    
+    var values: [AnyObject]
     var json: [String : AnyObject]
     
-    var schema: PFSchema
-    
-    init(_ dictionary: [String : AnyObject], _ schma: PFSchema) {
+    init(_ dictionary: [String : AnyObject]) {
         
         self.json = dictionary
-        self.schema = schma
-        
-        self.id = (dictionary["objectId"] as? String) ?? .undefined
-        
-        let createdAt = (dictionary["createdAt"] as? String) ?? .undefined
-        self.createdAt = createdAt
-        self.updatedAt = (dictionary["updatedAt"] as? String) ?? createdAt
-        
         self.keys = []
         self.values = []
         
-        self.keys.append(.objectId)
-        self.values.append(self.id)
-        
-        self.keys.append(.createdAt)
-        self.values.append(createdAt)
-        
-        self.keys.append(.updatedAt)
-        self.values.append(self.updatedAt)
-        
         for dict in dictionary {
-            if dict.key != .objectId && dict.key != .createdAt && dict.key != .updatedAt {
+            if dict.key == "features", let dict = dict.value as? [String:AnyObject] {
+                for subdict in dict {
+                    self.keys.append(subdict.key)
+                    self.values.append(subdict.value)
+                }
+            } else {
                 self.keys.append(dict.key)
                 self.values.append(dict.value)
             }
         }
     }
 }
-

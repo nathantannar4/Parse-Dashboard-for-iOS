@@ -111,7 +111,7 @@ class AppInfoViewController: UITableViewController {
             cell.addSubview(separatorView)
             separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, bottom: nil, right: cell.textLabel?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
         case 2:
-            cell.textLabel?.text = "Parse Dashboard for iOS is a standalone dashboard for managing your Parse apps while you are on the go! Edit, create and delete data from your MongoDB. View and upload new image files.\n\nBased off of the original Parse Dashboard we all know and love."
+            cell.textLabel?.text = "A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
             cell.textLabel?.textColor = .darkGray
             cell.textLabel?.font = Font.Default.Body.withSize(16)
         case 3:

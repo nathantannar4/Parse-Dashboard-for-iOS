@@ -27,7 +27,7 @@
 
 class PFSchema {
     
-    var name: String?
+    var name: String
     var fields: [String : AnyObject]?
     var permissions: [String : AnyObject]?
     
@@ -49,10 +49,14 @@ class PFSchema {
                 self.fields = parseClass.value as? [String: AnyObject]
             } else if parseClass.key == "classLevelPermissions" {
                 self.permissions = parseClass.value as? [String: AnyObject]
-            } else if parseClass.key == "className" {
-                self.name = "\(parseClass.value)"
             }
         }
+        
+        guard let className = result["className"] as? String else {
+            fatalError()
+        }
+        
+        name = className
     }
     
     func typeForField(_ field: String?) -> String? {

@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "NT Logo White.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "parse-1.png",
       "scale" : "2x"
     },
     {
