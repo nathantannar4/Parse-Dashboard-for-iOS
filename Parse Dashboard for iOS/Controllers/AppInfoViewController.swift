@@ -6,7 +6,9 @@
 //  Copyright © 2017 Nathan Tannar. All rights reserved.
 //
 
+import UIKit
 import NTComponents
+import Social
 
 class AppInfoViewController: UITableViewController {
     
@@ -64,17 +66,43 @@ class AppInfoViewController: UITableViewController {
     }
     
     func shareApp(sender: UIBarButtonItem) {
-        let shareText = "Hey! Check out this awesome mobile Parse Dashboard client for iOS!"
-        let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
-        activityVC.excludedActivityTypes = [
-            UIActivityType.print,
-            UIActivityType.assignToContact,
-            UIActivityType.addToReadingList,
-            UIActivityType.postToFlickr,
-            UIActivityType.postToVimeo,
-            UIActivityType.postToTencentWeibo
+        
+        let shareText = "Hey! Check out this awesome mobile Parse Dashboard client for iOS! https://itunes.apple.com/ca/app/parse-dashboard/id1212141622"
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let actions = [
+            UIAlertAction(title: "Share on Facebook", style: .default, handler: { _ in
+                
+                guard let facebookSheet = SLComposeViewController(forServiceType: SLServiceTypeFacebook) else { return }
+                facebookSheet.setInitialText(shareText)
+                self.present(facebookSheet, animated: true, completion: nil)
+            }),
+            UIAlertAction(title: "Share on Twitter", style: .default, handler: { _ in
+                
+                guard let twitterSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter) else { return }
+                twitterSheet.setInitialText(shareText)
+                self.present(twitterSheet, animated: true, completion: nil)
+            }),
+            UIAlertAction(title: "More Options", style: .default, handler: { _ in
+                
+                let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
+                activityVC.excludedActivityTypes = [
+                    UIActivityType.print,
+                    UIActivityType.assignToContact,
+                    UIActivityType.addToReadingList,
+                    UIActivityType.postToFlickr,
+                    UIActivityType.postToVimeo,
+                    UIActivityType.postToTencentWeibo
+                ]
+                self.present(activityVC, animated: true, completion: nil)
+            }),
+            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         ]
-        present(activityVC, animated: true, completion: nil)
+        actions.forEach { actionSheet.addAction($0) }
+        actionSheet.modalPresentationStyle = .popover
+        actionSheet.popoverPresentationController?.permittedArrowDirections = .up
+        actionSheet.popoverPresentationController?.barButtonItem = sender
+        present(actionSheet, animated: true, completion: nil)
     }
     
     // MARK: - UITableViewDatasource

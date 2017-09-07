@@ -1,11 +1,15 @@
 PODS:
   - Crashlytics (3.8.6):
     - Fabric (~> 1.6.3)
+  - EggRating (0.1.2):
+    - RateView
   - Fabric (1.6.13)
   - NTComponents (0.0.7)
+  - RateView (1.2)
 
 DEPENDENCIES:
   - Crashlytics
+  - EggRating
   - Fabric
   - NTComponents (from `~/Documents/Active iOS Projects/NTComponents`)
 
@@ -15,9 +19,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
+  EggRating: 633703d4be5c9938bfee58208966d75995f2cc21
   Fabric: 2fb5676bc811af011a04513451f463dac6803206
   NTComponents: 04edeaa545613f866314dedd1e48a14cfbd0a615
+  RateView: d4d12e9bb76dc23a77a56f4e5c5fb530a3f3f998
 
-PODFILE CHECKSUM: d4a715e27f71c8237fd1978dae7f27c6fe560912
+PODFILE CHECKSUM: ce4e047f745c9ac221f868ae4b0175a4987a7f0c
 
 COCOAPODS: 1.2.1

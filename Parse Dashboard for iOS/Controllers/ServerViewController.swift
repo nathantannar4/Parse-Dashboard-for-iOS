@@ -30,6 +30,7 @@ import CoreData
 import NTComponents
 import Fabric
 import Crashlytics
+import EggRating
 
 class ServerViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -47,6 +48,13 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
         setupNavigationBar()
         loadServers()
         checkIfAppIsNew()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        EggRating.delegate = self
+        EggRating.promptRateUsIfNeeded(viewController: self)
     }
     
     // MARK: - Data Refresh
@@ -72,11 +80,9 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { alert in
                 UserDefaults.standard.set(false, forKey: .appIsNew)
             }))
-            alert.view.tintColor = .logoTint
+            alert.view.tintColor = .darkBlueBackground
             present(alert, animated: true, completion: nil)
         }
-        
-    
     }
     
     private func setupTableView() {
@@ -123,6 +129,7 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     func showAppInfo() {
         
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
+        navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)
     }
     
@@ -333,12 +340,24 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     }
 }
 
-// MARK: - UIPopoverPresentationControllerDelegate
+// MARK: - EggRatingDelegate
 
-extension ServerViewController: UIPopoverPresentationControllerDelegate {
+extension ServerViewController: EggRatingDelegate {
     
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
+    func didRate(rating: Double) {
+        Answers.logRating(rating as NSNumber, contentName: nil, contentType: nil, contentId: nil, customAttributes: nil)
+    }
+    
+    func didRateOnAppStore() {
+        Answers.logRating(nil, contentName: "Did rate on app store", contentType: nil, contentId: nil, customAttributes: nil)
+    }
+    
+    func didIgnoreToRate() {
+        Answers.logRating(nil, contentName: "Ignored Rating", contentType: nil, contentId: nil, customAttributes: nil)
+    }
+    
+    func didIgnoreToRateOnAppStore() {
+        Answers.logRating(nil, contentName: "Ignored Rating on App Store", contentType: nil, contentId: nil, customAttributes: nil)
     }
 }
 
