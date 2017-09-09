@@ -52,7 +52,7 @@ class WelcomeViewController: UIViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
             label.font = Font.Default.Title.withSize(40)
         } else {
-            label.font = Font.Default.Title.withSize(40)
+            label.font = Font.Default.Title.withSize(24)
         }
         label.textColor = .white
         label.textAlignment = .center
