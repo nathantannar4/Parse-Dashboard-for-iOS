@@ -46,7 +46,6 @@ class PFObject {
         self.schema = schma
         
         self.id = (dictionary["objectId"] as? String) ?? .undefined
-        
         let createdAt = (dictionary["createdAt"] as? String) ?? .undefined
         self.createdAt = createdAt
         self.updatedAt = (dictionary["updatedAt"] as? String) ?? createdAt
@@ -63,12 +62,19 @@ class PFObject {
         self.keys.append(.updatedAt)
         self.values.append(self.updatedAt)
         
-        for dict in dictionary {
-            if dict.key != .objectId && dict.key != .createdAt && dict.key != .updatedAt {
-                self.keys.append(dict.key)
-                self.values.append(dict.value)
+        if let fields = schma.fields {
+            
+            for (key, _) in fields {
+                if key != .objectId && key != .createdAt && key != .updatedAt && key != .acl {
+                    self.keys.append(key)
+                    let value = dictionary[key] ?? String.undefined as AnyObject
+                    self.values.append(value)
+                }
             }
         }
+        
+        self.keys.append(.acl)
+        self.values.append(dictionary[.acl] ?? String.undefined as AnyObject)
     }
 }
 
