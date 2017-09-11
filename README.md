@@ -2,14 +2,6 @@
 
 ### 1000+ Downlaods and Counting!
 
-{::nomarkdown}
-
-<!-- HTML CODE-->
-<iframe src="https://ghbtns.com/github-btn.html?user=nathantannar4&repo=Parse-Dashboard-for-iOS&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px">
-</iframe>
-
-{:/}
-
 # Parse Dashboard for iOS
 
 A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.
