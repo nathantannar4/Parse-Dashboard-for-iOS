@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         EggRating.itunesId = "1212141622"
         EggRating.minRatingToAppStore = 3
         EggRating.starFillColor = .logoTint
-        EggRating.starBorderColor = .clear
+        EggRating.starBorderColor = .logoTint
         EggRating.daysUntilPrompt = 3
         
         // Fabric Setup

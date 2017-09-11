@@ -32,9 +32,24 @@ import Fabric
 import Crashlytics
 import EggRating
 
-class ServerViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ServerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - Properties
+    
+    private let donateButton: NTButton = {
+        let button = NTButton()
+        button.title = "Donate"
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            button.titleFont = Font.Roboto.Medium.withSize(36)
+        } else {
+            button.titleFont = Font.Roboto.Medium.withSize(18)
+        }
+        button.backgroundColor = .darkBlueAccent
+        button.tintColor = .white
+        return button
+    }()
+    
+    private let tableView = UITableView()
     
     private var servers = [ParseServerConfig]()
     private var indexPathForSelectedRow: IndexPath?
@@ -46,6 +61,7 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
         
         setupTableView()
         setupNavigationBar()
+        setupDonateButton()
         loadServers()
         checkIfAppIsNew()
     }
@@ -87,8 +103,12 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     
     private func setupTableView() {
         
+        view.addSubview(tableView)
+        tableView.fillSuperview()
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.contentInset.top = 10
-        tableView.contentInset.bottom = 30
+        tableView.contentInset.bottom = 90
         tableView.backgroundColor = .darkBlueBackground
         tableView.separatorStyle = .none
         tableView.register(ServerCell.self, forCellReuseIdentifier: ServerCell.reuseIdentifier)
@@ -124,11 +144,30 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
         navigationItem.titleView = titleView
     }
     
+    private func setupDonateButton() {
+        
+        view.addSubview(donateButton)
+        donateButton.addTarget(self, action: #selector(ServerViewController.showDonateInfo), for: .touchUpInside)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            donateButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 120)
+        } else {
+            donateButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 60)
+        }
+    }
+    
     // MARK: - User Actions
     
     func showAppInfo() {
         
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
+        navVC.modalPresentationStyle = .formSheet
+        present(navVC, animated: true, completion: nil)
+    }
+    
+    func showDonateInfo() {
+        
+        let navVC = NTNavigationController(rootViewController: DonateViewController())
         navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)
     }
@@ -209,28 +248,28 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
     
     // MARK: - UITableViewDatasource
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return servers.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.reuseIdentifier, for: indexPath) as! ServerCell
         cell.server = servers[indexPath.row]
         return cell
         
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
     // MARK: - UITableViewDelegate
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let config = servers[indexPath.row]
         Parse.initialize(config)
@@ -238,11 +277,11 @@ class ServerViewController: UITableViewController, UIImagePickerControllerDelega
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let duplicateAction = UITableViewRowAction(style: .default, title: " Copy ", handler: { action, indexpath in
             

@@ -137,7 +137,7 @@ class AppInfoViewController: UITableViewController {
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, bottom: nil, right: cell.textLabel?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
         case 2:
             cell.textLabel?.text = "A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
             cell.textLabel?.textColor = .darkGray
@@ -148,7 +148,7 @@ class AppInfoViewController: UITableViewController {
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, bottom: nil, right: cell.textLabel?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
         case 4:
             cell.textLabel?.text = "Privacy and data protection is important. Know that your Parse Server's application ID and master key are only stored on your devices core data."
             cell.textLabel?.textColor = .darkGray
@@ -159,7 +159,7 @@ class AppInfoViewController: UITableViewController {
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, bottom: nil, right: cell.textLabel?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
         case 6:
             cell.textLabel?.text = "Interested in viewing the code for this app? This app is open source! Tap the GitHub logo to view the repo."
             cell.textLabel?.textColor = .darkGray
