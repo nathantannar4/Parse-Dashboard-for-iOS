@@ -226,7 +226,7 @@ open class UIWebViewController: UIViewController, UIWebViewDelegate, UISearchBar
     // MARK: - UIScrollView
     
     open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard var frame = navigationController?.navigationBar.frame else {
+        guard var frame = navigationController?.navigationBar.frame, !webView.isLoading else {
             return
         }
         let size = frame.size.height - 21
