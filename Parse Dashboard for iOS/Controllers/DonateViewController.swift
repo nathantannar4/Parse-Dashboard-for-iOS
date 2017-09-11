@@ -30,7 +30,7 @@ import NTComponents
 import StoreKit
 import EggRating
 
-class DonateViewController: UITableViewController {
+class SupportViewController: UITableViewController {
     
     // MARK: - Properties
 
@@ -42,15 +42,22 @@ class DonateViewController: UITableViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        tableView.contentInset.top = 10 
+        setupTableView()
+        setupNavigationBar()
+        
+        IAPHandler.shared.fetchAvailableProducts()
+    }
+    
+    private func setupTableView() {
+        
+        tableView.contentInset.top = 10
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 60
-        setupNavigationBar()
     }
     
     private func setupNavigationBar() {
         
-        setTitleView(title: "Donate", subtitle: "To the Developer")
+        setTitleView(title: "Support", subtitle: "and Donations")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"),
                                                            style: .plain,
                                                            target: self,
@@ -111,16 +118,17 @@ class DonateViewController: UITableViewController {
             cell.textLabel?.font = Font.Default.Body.withSize(16)
             cell.selectionStyle = .none
         case 1:
-            cell.textLabel?.text = "Donation Tiers"
+            cell.textLabel?.text = "Make a Donation"
             cell.textLabel?.font = Font.Default.Subtitle.withSize(24)
             cell.selectionStyle = .none
+            cell.imageView?.image = UIImage(named: "Coins")?.scale(to: 30)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.imageView?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
         case 2:
             cell.imageView?.image = UIImage(named: "Coffee")?.withRenderingMode(.alwaysTemplate)
-            cell.textLabel?.text = "Coffee"
+            cell.textLabel?.text = "Buy me a Coffee"
             cell.detailTextLabel?.text = "$2.99"
             cell.imageView?.tintColor = .logoTint
             cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
@@ -128,7 +136,7 @@ class DonateViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
         case 3:
             cell.imageView?.image = UIImage(named: "Beer")?.withRenderingMode(.alwaysTemplate)
-            cell.textLabel?.text = "Beer"
+            cell.textLabel?.text = "Buy me a Beer"
             cell.detailTextLabel?.text = "$5.99"
             cell.imageView?.tintColor = .darkPurpleAccent
             cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
@@ -136,7 +144,7 @@ class DonateViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
         case 4:
             cell.imageView?.image = UIImage(named: "Meal")?.withRenderingMode(.alwaysTemplate)
-            cell.textLabel?.text = "Coffee"
+            cell.textLabel?.text = "By me dinner"
             cell.detailTextLabel?.text = "$9.99"
             cell.imageView?.tintColor = .darkPurpleBackground
             cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
@@ -146,10 +154,11 @@ class DonateViewController: UITableViewController {
             cell.textLabel?.text = "Other Ways to Support"
             cell.textLabel?.font = Font.Default.Subtitle.withSize(24)
             cell.selectionStyle = .none
+            cell.imageView?.image = UIImage(named: "Support")?.scale(to: 30)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.imageView?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
         case 6:
             cell.textLabel?.text = "Rate on the App Store"
             cell.textLabel?.font = Font.Default.Subtitle.withSize(16)

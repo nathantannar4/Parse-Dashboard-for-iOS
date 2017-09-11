@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialize the window
         window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
         
         let appIsNew = (UserDefaults.standard.value(forKey: .appIsNew) as? Bool) ?? true
         if appIsNew {

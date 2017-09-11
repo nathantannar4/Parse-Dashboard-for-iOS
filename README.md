@@ -2,7 +2,13 @@
 
 ### 1000+ Downlaods and Counting!
 
-<iframe src="https://ghbtns.com/github-btn.html?user=nathantannar4&repo=Parse-Dashboard-for-iOS&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+{::nomarkdown}
+
+<!-- HTML CODE-->
+<iframe src="https://ghbtns.com/github-btn.html?user=nathantannar4&repo=Parse-Dashboard-for-iOS&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px">
+</iframe>
+
+{:/}
 
 # Parse Dashboard for iOS
 

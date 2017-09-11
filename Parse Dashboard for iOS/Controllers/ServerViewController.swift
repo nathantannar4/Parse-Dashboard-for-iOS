@@ -36,9 +36,9 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     
     // MARK: - Properties
     
-    private let donateButton: NTButton = {
+    private let supportButton: NTButton = {
         let button = NTButton()
-        button.title = "Donate"
+        button.title = "  Support"
         if UIDevice.current.userInterfaceIdiom == .pad {
             button.titleFont = Font.Roboto.Medium.withSize(36)
         } else {
@@ -46,6 +46,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         }
         button.backgroundColor = .darkBlueAccent
         button.tintColor = .white
+        button.image = UIImage(named: "Applause")?.scale(to: 36)
         return button
     }()
     
@@ -61,7 +62,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         
         setupTableView()
         setupNavigationBar()
-        setupDonateButton()
+        setupSupportButton()
         loadServers()
         checkIfAppIsNew()
     }
@@ -144,15 +145,15 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         navigationItem.titleView = titleView
     }
     
-    private func setupDonateButton() {
+    private func setupSupportButton() {
         
-        view.addSubview(donateButton)
-        donateButton.addTarget(self, action: #selector(ServerViewController.showDonateInfo), for: .touchUpInside)
+        view.addSubview(supportButton)
+        supportButton.addTarget(self, action: #selector(ServerViewController.showDonateInfo), for: .touchUpInside)
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            donateButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 120)
+            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 120)
         } else {
-            donateButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 60)
+            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 60)
         }
     }
     
@@ -167,7 +168,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     
     func showDonateInfo() {
         
-        let navVC = NTNavigationController(rootViewController: DonateViewController())
+        let navVC = NTNavigationController(rootViewController: SupportViewController())
         navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)
     }

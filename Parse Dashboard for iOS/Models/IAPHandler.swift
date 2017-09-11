@@ -58,6 +58,7 @@ class IAPHandler: NSObject {
     fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
     fileprivate var iapProducts = [SKProduct]()
+    fileprivate var iapPrices = [String]()
     
     var purchaseStatusBlock: ((IAPHandlerAlertType) -> Void)?
     
@@ -98,7 +99,6 @@ class IAPHandler: NSObject {
         
         // Put here your IAP Products ID's
         let identifiers = NSSet(array: productIDs) as! Set<String>
-        print(identifiers)
         productsRequest = SKProductsRequest(productIdentifiers: identifiers)
         productsRequest.delegate = self
         productsRequest.start()
@@ -112,6 +112,7 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver {
     func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
         
         iapProducts = response.products
+        iapPrices = []
         print(iapProducts)
         for product in iapProducts {
             let numberFormatter = NumberFormatter()
@@ -119,6 +120,7 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver {
             numberFormatter.numberStyle = .currency
             numberFormatter.locale = product.priceLocale
             let price1Str = numberFormatter.string(from: product.price)
+            iapPrices.append(price1Str)
             print(product.localizedDescription + "\nfor just \(price1Str!)")
         }
     }
