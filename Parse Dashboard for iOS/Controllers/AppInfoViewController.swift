@@ -25,7 +25,7 @@ class AppInfoViewController: UITableViewController {
     
     private func setupTableView() {
         
-        tableView.estimatedRowHeight = 80
+        tableView.estimatedRowHeight = 60
         tableView.contentInset.bottom = 60
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorStyle = .none
@@ -134,10 +134,11 @@ class AppInfoViewController: UITableViewController {
         case 1:
             cell.textLabel?.text = "Parse Dashboard for iOS"
             cell.textLabel?.font = Font.Default.Subtitle.withSize(24)
+            cell.imageView?.image = UIImage(named: "Logo")?.scale(to: 44)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.textLabel?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.imageView?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
         case 2:
             cell.textLabel?.text = "A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
             cell.textLabel?.textColor = .darkGray

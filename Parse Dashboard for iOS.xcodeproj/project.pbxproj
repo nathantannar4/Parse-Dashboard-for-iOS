@@ -67,6 +67,7 @@
 		382A66361F64C1C30017CF9F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		382A66381F64C51A0017CF9F /* DonateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DonateViewController.swift; path = Controllers/DonateViewController.swift; sourceTree = "<group>"; };
 		382A663A1F64CBFB0017CF9F /* IAPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAPHandler.swift; path = Models/IAPHandler.swift; sourceTree = "<group>"; };
+		382A66821F677F070017CF9F /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		385493651F5FB690003903DA /* ServerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerDetailViewController.swift; path = Controllers/ServerDetailViewController.swift; sourceTree = "<group>"; };
 		385493671F5FB6A7003903DA /* SchemaDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchemaDetailViewController.swift; path = Controllers/SchemaDetailViewController.swift; sourceTree = "<group>"; };
 		3854936A1F5FBAA7003903DA /* PFServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PFServer.swift; path = Models/PFServer.swift; sourceTree = "<group>"; };
@@ -168,6 +169,7 @@
 			children = (
 				38B20E931E6BD9B500DD71AC /* README.md */,
 				38B20E951E6BD9FD00DD71AC /* LICENSE */,
+				382A66821F677F070017CF9F /* .travis.yml */,
 				3875209F1E664F8100CAAA88 /* Parse Dashboard for iOS */,
 				3875209E1E664F8100CAAA88 /* Products */,
 				826702590A22C669AE8CAA32 /* Pods */,

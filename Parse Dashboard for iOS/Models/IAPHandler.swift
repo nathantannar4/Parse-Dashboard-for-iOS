@@ -119,9 +119,10 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver {
             numberFormatter.formatterBehavior = .behavior10_4
             numberFormatter.numberStyle = .currency
             numberFormatter.locale = product.priceLocale
-            let price1Str = numberFormatter.string(from: product.price)
-            iapPrices.append(price1Str)
-            print(product.localizedDescription + "\nfor just \(price1Str!)")
+            if let price1Str = numberFormatter.string(from: product.price) {
+                iapPrices.append(price1Str)
+                print(product.localizedDescription + "\nfor just \(price1Str)")
+            }
         }
     }
     

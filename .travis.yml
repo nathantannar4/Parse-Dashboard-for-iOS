@@ -1,0 +1,6 @@
+language: objective-c
+xcode_workspace: "Parse Dashboard for iOS.xcworkspace"
+xcode_scheme: "Parse Dashboard for iOS"
+osx_image: xcode8.1
+
+pod install
