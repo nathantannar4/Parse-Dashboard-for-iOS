@@ -57,8 +57,9 @@ class IAPHandler: NSObject {
     fileprivate var productIDs = [IAPProductId.tier1.rawValue, IAPProductId.tier2.rawValue, IAPProductId.tier3.rawValue]
     fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
-    fileprivate var iapProducts = [SKProduct]()
-    fileprivate var iapPrices = [String]()
+    
+    var iapProducts = [SKProduct]()
+    var iapPrices = [String]()
     
     var purchaseStatusBlock: ((IAPHandlerAlertType) -> Void)?
     
@@ -77,7 +78,23 @@ class IAPHandler: NSObject {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
-
+            
+            print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
+            productID = product.productIdentifier
+        } else {
+            purchaseStatusBlock?(.disabled)
+        }
+    }
+    
+    func purchase(atIndex index: Int) {
+        
+        if canMakePurchases() {
+            
+            let product = iapProducts[index]
+            let payment = SKPayment(product: product)
+            SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().add(payment)
+            
             print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
             productID = product.productIdentifier
         } else {
@@ -95,17 +112,17 @@ class IAPHandler: NSObject {
     
     // MARK: - FETCH AVAILABLE IAP PRODUCTS
     
-    func fetchAvailableProducts(){
+    func fetchAvailableProducts(delegate: SKProductsRequestDelegate){
         
         // Put here your IAP Products ID's
         let identifiers = NSSet(array: productIDs) as! Set<String>
         productsRequest = SKProductsRequest(productIdentifiers: identifiers)
-        productsRequest.delegate = self
+        productsRequest.delegate = delegate
         productsRequest.start()
     }
 }
 
-extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver {
+extension IAPHandler: SKPaymentTransactionObserver {
     
     // MARK: - REQUEST IAP PRODUCTS
     
@@ -113,7 +130,6 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver {
         
         iapProducts = response.products
         iapPrices = []
-        print(iapProducts)
         for product in iapProducts {
             let numberFormatter = NumberFormatter()
             numberFormatter.formatterBehavior = .behavior10_4
@@ -138,14 +154,14 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver {
                 switch trans.transactionState {
                 case .purchased:
                     print("purchased")
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    SKPaymentQueue.default().finishTransaction(trans)
                     purchaseStatusBlock?(.purchased)
                 case .failed:
                     print("failed")
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    SKPaymentQueue.default().finishTransaction(trans)
                 case .restored:
                     print("restored")
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    SKPaymentQueue.default().finishTransaction(trans)
                 default:
                     break
                 }

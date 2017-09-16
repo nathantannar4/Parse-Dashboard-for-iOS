@@ -25,13 +25,16 @@
 //  Created by Nathan Tannar on 8/31/17.
 //
 
+import Foundation
+import SwiftyJSON
+
 class PFSchema {
     
     var name: String
     var fields: [String : AnyObject]?
     var permissions: [String : AnyObject]?
     
-    let json: [String : AnyObject]?
+    let json: JSON?
     
     init(name: String) {
         self.name = name
@@ -40,11 +43,11 @@ class PFSchema {
         self.json = nil
     }
     
-    init(_ result: [String : AnyObject]) {
+    init(_ dictionary: [String : AnyObject]) {
         
-        self.json = result
+        self.json = JSON(dictionary)
         
-        for parseClass in result {
+        for parseClass in dictionary {
             if parseClass.key == "fields" {
                 self.fields = parseClass.value as? [String: AnyObject]
             } else if parseClass.key == "classLevelPermissions" {
@@ -52,7 +55,7 @@ class PFSchema {
             }
         }
         
-        guard let className = result["className"] as? String else {
+        guard let className = dictionary["className"] as? String else {
             fatalError()
         }
         

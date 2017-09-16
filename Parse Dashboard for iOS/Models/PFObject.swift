@@ -26,6 +26,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class PFObject {
     
@@ -36,13 +37,13 @@ class PFObject {
     var keys: [String]
     var values: [Any]
     
-    var json: [String : AnyObject]
+    var json: JSON
     
     var schema: PFSchema
     
     init(_ dictionary: [String : AnyObject], _ schma: PFSchema) {
         
-        self.json = dictionary
+        self.json = JSON(dictionary)
         self.schema = schma
         
         self.id = (dictionary["objectId"] as? String) ?? .undefined

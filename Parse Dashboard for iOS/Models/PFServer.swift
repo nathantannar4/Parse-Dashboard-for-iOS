@@ -26,16 +26,17 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class PFServer {
     
     var keys: [String]
     var values: [AnyObject]
-    var json: [String : AnyObject]
+    var json: JSON
     
     init(_ dictionary: [String : AnyObject]) {
         
-        self.json = dictionary
+        self.json = JSON(dictionary)
         self.keys = []
         self.values = []
         

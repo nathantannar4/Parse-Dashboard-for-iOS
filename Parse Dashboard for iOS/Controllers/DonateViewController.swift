@@ -30,7 +30,7 @@ import NTComponents
 import StoreKit
 import EggRating
 
-class SupportViewController: UITableViewController {
+class SupportViewController: UITableViewController, SKProductsRequestDelegate {
     
     // MARK: - Properties
 
@@ -45,7 +45,7 @@ class SupportViewController: UITableViewController {
         setupTableView()
         setupNavigationBar()
         
-        IAPHandler.shared.fetchAvailableProducts()
+        IAPHandler.shared.fetchAvailableProducts(delegate: self)
     }
     
     private func setupTableView() {
@@ -76,8 +76,14 @@ class SupportViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         switch indexPath.row {
+        case 2, 3, 4:
+            IAPHandler.shared.purchase(atIndex: indexPath.row - 2)
         case 6:
-            EggRating.promptRateUs(viewController: self)
+            guard let url = URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=\(EggRating.itunesId)&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software") else {
+                return
+            }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
         case 7:
             guard let url = URL(string: "https://github.com/nathantannar4/Parse-Dashboard-for-iOS") else {
                 return
@@ -124,12 +130,12 @@ class SupportViewController: UITableViewController {
             cell.imageView?.image = UIImage(named: "Coins")?.scale(to: 30)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
-            cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.imageView?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
+            cell.contentView.addSubview(separatorView)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
         case 2:
             cell.imageView?.image = UIImage(named: "Coffee")?.withRenderingMode(.alwaysTemplate)
             cell.textLabel?.text = "Buy me a Coffee"
-            cell.detailTextLabel?.text = "$2.99"
+            cell.detailTextLabel?.text = IAPHandler.shared.iapPrices.count > 0 ? IAPHandler.shared.iapPrices[0] : nil
             cell.imageView?.tintColor = .logoTint
             cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
             cell.detailTextLabel?.font = Font.Default.Body.withSize(15)
@@ -137,7 +143,7 @@ class SupportViewController: UITableViewController {
         case 3:
             cell.imageView?.image = UIImage(named: "Beer")?.withRenderingMode(.alwaysTemplate)
             cell.textLabel?.text = "Buy me a Beer"
-            cell.detailTextLabel?.text = "$5.99"
+            cell.detailTextLabel?.text = IAPHandler.shared.iapPrices.count > 1 ? IAPHandler.shared.iapPrices[1] : nil
             cell.imageView?.tintColor = .darkPurpleAccent
             cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
             cell.detailTextLabel?.font = Font.Default.Body.withSize(15)
@@ -145,7 +151,7 @@ class SupportViewController: UITableViewController {
         case 4:
             cell.imageView?.image = UIImage(named: "Meal")?.withRenderingMode(.alwaysTemplate)
             cell.textLabel?.text = "By me dinner"
-            cell.detailTextLabel?.text = "$9.99"
+            cell.detailTextLabel?.text = IAPHandler.shared.iapPrices.count > 2 ? IAPHandler.shared.iapPrices[2] : nil
             cell.imageView?.tintColor = .darkPurpleBackground
             cell.textLabel?.font = Font.Default.Subtitle.withSize(18)
             cell.detailTextLabel?.font = Font.Default.Body.withSize(15)
@@ -157,8 +163,8 @@ class SupportViewController: UITableViewController {
             cell.imageView?.image = UIImage(named: "Support")?.scale(to: 30)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
-            cell.addSubview(separatorView)
-            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.imageView?.leftAnchor, right: cell.textLabel?.rightAnchor, heightConstant: 0.5)
+            cell.contentView.addSubview(separatorView)
+            separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
         case 6:
             cell.textLabel?.text = "Rate on the App Store"
             cell.textLabel?.font = Font.Default.Subtitle.withSize(16)
@@ -171,5 +177,32 @@ class SupportViewController: UITableViewController {
             break
         }
         return cell
+    }
+    
+    // MARK: - SKProductsRequestDelegate
+    
+    func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
+        
+        IAPHandler.shared.iapProducts.removeAll()
+        IAPHandler.shared.iapPrices.removeAll()
+        
+        let products = response.products.sorted { (a, b) -> Bool in
+            return a.price.decimalValue < b.price.decimalValue
+        }
+        
+        for product in products {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.formatterBehavior = .behavior10_4
+            numberFormatter.numberStyle = .currency
+            numberFormatter.locale = product.priceLocale
+            if let price1Str = numberFormatter.string(from: product.price) {
+                IAPHandler.shared.iapProducts.append(product)
+                IAPHandler.shared.iapPrices.append(price1Str)
+                print(product.localizedDescription + "\nfor just \(price1Str)")
+            }
+        }
+        
+        let indexPaths = [IndexPath(row: 2, section: 0), IndexPath(row: 3, section: 0), IndexPath(row: 4, section: 0)]
+        tableView.reloadRows(at: indexPaths, with: .none)
     }
 }
