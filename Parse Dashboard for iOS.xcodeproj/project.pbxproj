@@ -27,7 +27,6 @@
 		38074EE51F58FF97001F53FA /* PFSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EE41F58FF97001F53FA /* PFSchema.swift */; };
 		38074EE71F59063E001F53FA /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EE61F59063E001F53FA /* FileViewController.swift */; };
 		38074EE91F590E4B001F53FA /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EE81F590E4B001F53FA /* AppInfoViewController.swift */; };
-		382A66371F64C1C30017CF9F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 382A66361F64C1C30017CF9F /* StoreKit.framework */; };
 		382A66391F64C51A0017CF9F /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382A66381F64C51A0017CF9F /* DonateViewController.swift */; };
 		382A663B1F64CBFB0017CF9F /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382A663A1F64CBFB0017CF9F /* IAPHandler.swift */; };
 		385493661F5FB690003903DA /* ServerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385493651F5FB690003903DA /* ServerDetailViewController.swift */; };
@@ -40,6 +39,7 @@
 		387520AB1E664F8100CAAA88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 387520AA1E664F8100CAAA88 /* Assets.xcassets */; };
 		387520AE1E664F8100CAAA88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 387520AC1E664F8100CAAA88 /* LaunchScreen.storyboard */; };
 		38B20E961E6BD9FD00DD71AC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 38B20E951E6BD9FD00DD71AC /* LICENSE */; };
+		38DC721B1F6DDD4A00266088 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38DC721A1F6DDD4A00266088 /* StoreKit.framework */; };
 		A5F836F5F4E0AFD7CAFF4AC6 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC8301BEE3879A0D0B9BD6C /* Pods_Parse_Dashboard_for_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +64,6 @@
 		38074EE41F58FF97001F53FA /* PFSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PFSchema.swift; path = Models/PFSchema.swift; sourceTree = "<group>"; };
 		38074EE61F59063E001F53FA /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileViewController.swift; path = Controllers/FileViewController.swift; sourceTree = "<group>"; };
 		38074EE81F590E4B001F53FA /* AppInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppInfoViewController.swift; path = Controllers/AppInfoViewController.swift; sourceTree = "<group>"; };
-		382A66361F64C1C30017CF9F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		382A66381F64C51A0017CF9F /* DonateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DonateViewController.swift; path = Controllers/DonateViewController.swift; sourceTree = "<group>"; };
 		382A663A1F64CBFB0017CF9F /* IAPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAPHandler.swift; path = Models/IAPHandler.swift; sourceTree = "<group>"; };
 		385493651F5FB690003903DA /* ServerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerDetailViewController.swift; path = Controllers/ServerDetailViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 		387520AF1E664F8100CAAA88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38B20E931E6BD9B500DD71AC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38B20E951E6BD9FD00DD71AC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		38DC721A1F6DDD4A00266088 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		56B0321A8E52568EE56D511F /* Pods-Parse Dashboard for iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		94E7063F5C0876FB208EAA93 /* Pods-Parse Dashboard for iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EAC8301BEE3879A0D0B9BD6C /* Pods_Parse_Dashboard_for_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Parse_Dashboard_for_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,7 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5F836F5F4E0AFD7CAFF4AC6 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */,
-				382A66371F64C1C30017CF9F /* StoreKit.framework in Frameworks */,
+				38DC721B1F6DDD4A00266088 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +200,7 @@
 		7961998305C214F1C656FD0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				382A66361F64C1C30017CF9F /* StoreKit.framework */,
+				38DC721A1F6DDD4A00266088 /* StoreKit.framework */,
 				EAC8301BEE3879A0D0B9BD6C /* Pods_Parse_Dashboard_for_iOS.framework */,
 			);
 			name = Frameworks;
