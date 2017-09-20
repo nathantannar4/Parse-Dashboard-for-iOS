@@ -67,7 +67,7 @@ class ClassViewController: UITableViewController, QueryDelegate {
     
     // MARK: - Data Refresh
     
-    func loadObjects() {
+    @objc func loadObjects() {
       
         if !objects.isEmpty {
             objects.removeAll()
@@ -75,11 +75,12 @@ class ClassViewController: UITableViewController, QueryDelegate {
         }
         
         Parse.get(endpoint: "/classes/" + schema.name, query: "?" + query) { (json) in
-            self.tableView.refreshControl?.endRefreshing()
+            
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
                     NTToast(text: "Unexpected Results", color: .darkPurpleAccent, height: 50).show(duration: 2.0)
                     self.setTitleView(title: self.schema.name, subtitle: "0 Objects")
+                    self.tableView.refreshControl?.endRefreshing()
                 }
                 return
             }
@@ -87,6 +88,7 @@ class ClassViewController: UITableViewController, QueryDelegate {
             if !self.objects.isEmpty {
                 DispatchQueue.main.async {
                     self.tableView.insertSections([0], with: .top)
+                    self.tableView.refreshControl?.endRefreshing()
                 }
             }
             DispatchQueue.executeAfter(0.5, closure: {
@@ -160,7 +162,7 @@ class ClassViewController: UITableViewController, QueryDelegate {
     
     // MARK: - User Actions
     
-    func addObject() {
+    @objc func addObject() {
         let alertController = UIAlertController(title: "Create Object", message: nil, preferredStyle: .alert)
         alertController.view.tintColor = Color.Default.Tint.View
         
@@ -194,7 +196,7 @@ class ClassViewController: UITableViewController, QueryDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-    func sendPushNotification() {
+    @objc func sendPushNotification() {
         let alertController = UIAlertController(title: "Push Notification", message: "To current query results", preferredStyle: .alert)
         alertController.view.tintColor = Color.Default.Tint.View
         
@@ -204,11 +206,10 @@ class ClassViewController: UITableViewController, QueryDelegate {
             let message = alertController.textFields![0].text!
             
             let userIds = self.objects.map({ (object) -> String in
-                let dict = object.json
-                guard let user = dict["user"] as? [String : AnyObject] else {
+                guard let userID = object.json["user"].dictionary?["objectId"]?.stringValue else {
                     return String()
                 }
-                return user["objectId"] as! String
+                return userID
             })
             
             // Example: where={"user":{"$inQuery":{"className":"_User","where":{"objectId":{"$in":["zaAqYBP8X9"]}}}}}
@@ -228,7 +229,7 @@ class ClassViewController: UITableViewController, QueryDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-    func modifyQuery(sender: AnyObject) {
+    @objc func modifyQuery(sender: AnyObject) {
         
         let queryVC = QueryViewController(schema, selectedKeys: previewKeys, query: query)
         queryVC.delegate = self

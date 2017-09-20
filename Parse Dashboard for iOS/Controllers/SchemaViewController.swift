@@ -58,7 +58,7 @@ class SchemaViewController: UITableViewController {
     
     // MARK: - Data Refresh
     
-    func loadSchemas() {
+    @objc func loadSchemas() {
         
         if !schemas.isEmpty {
             schemas.removeAll()
@@ -66,9 +66,9 @@ class SchemaViewController: UITableViewController {
         }
         
         Parse.get(endpoint: "/schemas") { (json) in
-            self.tableView.refreshControl?.endRefreshing()
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
+                    self.tableView.refreshControl?.endRefreshing()
                     NTToast(text: "Unexpected Results, is your URL correct?", color: .lightBlueAccent, height: 50).show(duration: 3.0)
                 }
                 return
@@ -77,6 +77,7 @@ class SchemaViewController: UITableViewController {
             if !self.schemas.isEmpty {
                 DispatchQueue.main.async {
                     self.tableView.insertSections([0], with: .top)
+                    self.tableView.refreshControl?.endRefreshing()
                 }
             }
         }
@@ -111,7 +112,7 @@ class SchemaViewController: UITableViewController {
         ]
     }
     
-    func showServerInfo() {
+    @objc func showServerInfo() {
         
         Parse.get(endpoint: "/serverInfo/") { (info) in
 
@@ -126,7 +127,7 @@ class SchemaViewController: UITableViewController {
     
     // MARK: - User Actions
     
-    func addSchema() {
+    @objc func addSchema() {
         let alertController = UIAlertController(title: "Create Class", message: nil, preferredStyle: .alert)
         alertController.view.tintColor = Color.Default.Tint.View
         

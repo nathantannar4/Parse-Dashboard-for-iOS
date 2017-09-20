@@ -111,7 +111,7 @@ class QueryViewController: UITableViewController, UITextViewDelegate {
                                                             action: #selector(self.didApplyQuery))
     }
     
-    func didSaveQuery() {
+    @objc func didSaveQuery() {
         guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
             return
         }
@@ -126,7 +126,7 @@ class QueryViewController: UITableViewController, UITextViewDelegate {
         tableView.insertRows(at: [IndexPath(row: savedQueries.count - 1, section: 0)], with: .fade)
     }
     
-    func didApplyQuery() {
+    @objc func didApplyQuery() {
         dismiss(animated: true, completion: {
             self.delegate?.query(didChangeWith: self.query, previewKeys: self.selectedKeys)
         })

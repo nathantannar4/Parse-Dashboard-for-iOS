@@ -27,7 +27,7 @@
 		38074EE51F58FF97001F53FA /* PFSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EE41F58FF97001F53FA /* PFSchema.swift */; };
 		38074EE71F59063E001F53FA /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EE61F59063E001F53FA /* FileViewController.swift */; };
 		38074EE91F590E4B001F53FA /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EE81F590E4B001F53FA /* AppInfoViewController.swift */; };
-		382A66391F64C51A0017CF9F /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382A66381F64C51A0017CF9F /* DonateViewController.swift */; };
+		382A66391F64C51A0017CF9F /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382A66381F64C51A0017CF9F /* SupportViewController.swift */; };
 		382A663B1F64CBFB0017CF9F /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382A663A1F64CBFB0017CF9F /* IAPHandler.swift */; };
 		385493661F5FB690003903DA /* ServerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385493651F5FB690003903DA /* ServerDetailViewController.swift */; };
 		385493681F5FB6A7003903DA /* SchemaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385493671F5FB6A7003903DA /* SchemaDetailViewController.swift */; };
@@ -64,7 +64,7 @@
 		38074EE41F58FF97001F53FA /* PFSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PFSchema.swift; path = Models/PFSchema.swift; sourceTree = "<group>"; };
 		38074EE61F59063E001F53FA /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileViewController.swift; path = Controllers/FileViewController.swift; sourceTree = "<group>"; };
 		38074EE81F590E4B001F53FA /* AppInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppInfoViewController.swift; path = Controllers/AppInfoViewController.swift; sourceTree = "<group>"; };
-		382A66381F64C51A0017CF9F /* DonateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DonateViewController.swift; path = Controllers/DonateViewController.swift; sourceTree = "<group>"; };
+		382A66381F64C51A0017CF9F /* SupportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportViewController.swift; path = Controllers/SupportViewController.swift; sourceTree = "<group>"; };
 		382A663A1F64CBFB0017CF9F /* IAPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAPHandler.swift; path = Models/IAPHandler.swift; sourceTree = "<group>"; };
 		385493651F5FB690003903DA /* ServerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerDetailViewController.swift; path = Controllers/ServerDetailViewController.swift; sourceTree = "<group>"; };
 		385493671F5FB6A7003903DA /* SchemaDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchemaDetailViewController.swift; path = Controllers/SchemaDetailViewController.swift; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				3854936E1F6104D2003903DA /* WelcomeViewController.swift */,
-				382A66381F64C51A0017CF9F /* DonateViewController.swift */,
+				382A66381F64C51A0017CF9F /* SupportViewController.swift */,
 				38074EE81F590E4B001F53FA /* AppInfoViewController.swift */,
 				38074EC11F57B96A001F53FA /* ServerViewController.swift */,
 				385493651F5FB690003903DA /* ServerDetailViewController.swift */,
@@ -246,12 +246,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Nathan Tannar";
 				TargetAttributes = {
 					3875209C1E664F8100CAAA88 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 9EUCWD26TP;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
@@ -313,9 +314,18 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/EggRating/EggRating.framework",
+				"${BUILT_PRODUCTS_DIR}/NTComponents/NTComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/RateView/RateView.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EggRating.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NTComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RateView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -343,13 +353,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Parse Dashboard for iOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -375,7 +388,7 @@
 				385493681F5FB6A7003903DA /* SchemaDetailViewController.swift in Sources */,
 				38074EC21F57B96A001F53FA /* ServerViewController.swift in Sources */,
 				3800075C1F5A6F3300F4CF6C /* UIActivity+OpenInSafari.swift in Sources */,
-				382A66391F64C51A0017CF9F /* DonateViewController.swift in Sources */,
+				382A66391F64C51A0017CF9F /* SupportViewController.swift in Sources */,
 				38074EE71F59063E001F53FA /* FileViewController.swift in Sources */,
 				38074EE91F590E4B001F53FA /* AppInfoViewController.swift in Sources */,
 				38074EDD1F588D31001F53FA /* String+Extensions.swift in Sources */,
@@ -414,7 +427,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -422,7 +437,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -463,7 +482,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -471,7 +492,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -509,7 +534,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.nathantannar.Parse-Dashboard-for-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -526,7 +552,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.nathantannar.Parse-Dashboard-for-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

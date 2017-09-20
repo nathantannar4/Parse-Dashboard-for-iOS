@@ -104,11 +104,11 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     // MARK: - User Actions
     
-    func dismissInfo() {
+    @objc func dismissInfo() {
         dismiss(animated: true, completion: nil)
     }
     
-    func saveImage() {
+    @objc func saveImage() {
         guard let image = imageView.image else { return }
         if image == UIImage(named: "File") { return }
         UIApplication.shared.beginIgnoringInteractionEvents()
@@ -127,7 +127,7 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     // MARK: UIImagePickerControllerDelegate
     
-    func presentImagePicker() {
+    @objc func presentImagePicker() {
         self.navigationController?.view.layer.cornerRadius = 0
         let picker = NTImagePickerController()
         picker.delegate = self

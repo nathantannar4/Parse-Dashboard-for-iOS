@@ -60,7 +60,7 @@ class ServerDetailViewController: UITableViewController {
     
     // MARK: Data Refresh
     
-    func refreshClass() {
+    @objc func refreshClass() {
         
         if tableView.refreshControl?.isRefreshing == true {
             self.tableView.refreshControl?.endRefreshing()
@@ -112,7 +112,7 @@ class ServerDetailViewController: UITableViewController {
     
     // MARK: - User Actions
     
-    func toggleView(sender: UIBarButtonItem) {
+    @objc func toggleView(sender: UIBarButtonItem) {
         switch viewStyle {
         case .json:
             sender.image = UIImage(named: "Raw")

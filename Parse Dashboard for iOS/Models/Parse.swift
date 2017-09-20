@@ -48,8 +48,8 @@ class Parse {
         
         if let range = query.range(of: "where=") {
             // Json Encoding required
-            filterString = query.substring(to: range.lowerBound)
-            let json = query.substring(from: range.upperBound)
+            filterString = String(query.prefix(upTo: range.lowerBound))
+            let json = String(query.suffix(from: range.upperBound))
             if let encodedJson = json.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
                 encodedQuery = "where=" + encodedJson
             }

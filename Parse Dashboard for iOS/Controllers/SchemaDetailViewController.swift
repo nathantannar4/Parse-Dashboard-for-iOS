@@ -60,7 +60,7 @@ class SchemaDetailViewController: UITableViewController {
     
     // MARK: Data Refresh
     
-    func refreshClass() {
+    @objc func refreshClass() {
         
         Parse.get(endpoint: "/schemas/" + schema.name) { (json) in
             DispatchQueue.main.async {
@@ -107,7 +107,7 @@ class SchemaDetailViewController: UITableViewController {
     
     // MARK: - User Actions
     
-    func deleteClass() {
+    @objc func deleteClass() {
         Parse.delete(endpoint: "/schemas/" + schema.name, completion: { (response, code, success) in
             DispatchQueue.main.async {
                 NTToast(text: response, color: .darkPurpleAccent, height: 50).show(duration: 2.0)
@@ -150,7 +150,7 @@ class SchemaDetailViewController: UITableViewController {
         })
     }
     
-    func toggleView(sender: UIBarButtonItem) {
+    @objc func toggleView(sender: UIBarButtonItem) {
         switch viewStyle {
         case .json:
             sender.image = UIImage(named: "Raw")

@@ -1,5 +1,5 @@
 //
-//  DonateViewController.swift
+//  SupportViewController.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -61,12 +61,12 @@ class SupportViewController: UITableViewController, SKProductsRequestDelegate {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"),
                                                            style: .plain,
                                                            target: self,
-                                                           action: #selector(AppInfoViewController.dismissInfo))
+                                                           action: #selector(SupportViewController.dismissInfo))
     }
     
     // MARK: - User Actions
     
-    func dismissInfo() {
+    @objc func dismissInfo() {
         dismiss(animated: true, completion: nil)
     }
     

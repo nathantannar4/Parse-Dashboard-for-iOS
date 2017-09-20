@@ -50,6 +50,7 @@ class QueryInputCell: UITableViewCell {
         textView.autocapitalizationType = .none
         textView.autocorrectionType = .no
         textView.returnKeyType = .done
+        textView.keyboardType = .asciiCapable
         return textView
     }()
     

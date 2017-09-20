@@ -72,6 +72,16 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         
         EggRating.delegate = self
         EggRating.promptRateUsIfNeeded(viewController: self)
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
     }
     
     // MARK: - Data Refresh
@@ -117,32 +127,19 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     
     private func setupNavigationBar() {
         
-        setupTitleView()
+        if #available(iOS 11.0, *) {
+            title = "Parse Dashboard for iOS"
+            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.boldSystemFont(ofSize: 24)]
+        } else {
+            setTitleView(title: "Parse Dashboard for iOS", subtitle: nil, titleColor: .black, subtitleColor: nil)
+        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(ServerViewController.showAppInfo))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(ServerViewController.addServer))
-    }
-    
-    private func setupTitleView() {
-        
-        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
-        let logoButton = NTButton()
-        logoButton.layer.cornerRadius = 3
-        logoButton.trackTouchLocation = false
-        logoButton.ripplePercent = 1.1
-        logoButton.image = UIImage(named: "Logo")?.scale(to: 40)
-        logoButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        logoButton.addTarget(self, action: #selector(ServerViewController.showAppInfo), for: .touchUpInside)
-        logoButton.adjustsImageWhenHighlighted = false
-        logoButton.titleFont = Font.Default.Title
-        logoButton.setTitle("Parse Dashboard for iOS", for: .normal)
-        logoButton.setTitleColor(.black, for: .normal)
-        logoButton.titleEdgeInsets.left = 10
-        logoButton.titleEdgeInsets.right = -10
-        logoButton.contentHorizontalAlignment = .left
-        titleView.addSubview(logoButton)
-        logoButton.anchor(titleView.topAnchor, left: titleView.leftAnchor, bottom: titleView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        navigationItem.titleView = titleView
     }
     
     private func setupSupportButton() {
@@ -159,21 +156,21 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     
     // MARK: - User Actions
     
-    func showAppInfo() {
+    @objc func showAppInfo() {
         
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
         navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)
     }
     
-    func showDonateInfo() {
+    @objc func showDonateInfo() {
         
         let navVC = NTNavigationController(rootViewController: SupportViewController())
         navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)
     }
     
-    func addServer() {
+    @objc func addServer() {
         let alertController = UIAlertController(title: "Add Server", message: nil, preferredStyle: .alert)
         alertController.view.tintColor = Color.Default.Tint.View
         

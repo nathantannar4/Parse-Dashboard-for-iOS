@@ -17,7 +17,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   NTComponents:
-    :path: "~/Documents/Active iOS Projects/NTComponents"
+    :path: ~/Documents/Active iOS Projects/NTComponents
 
 SPEC CHECKSUMS:
   Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
@@ -27,6 +27,6 @@ SPEC CHECKSUMS:
   RateView: d4d12e9bb76dc23a77a56f4e5c5fb530a3f3f998
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 55651e05be6c7ac3a7e5103b370ffa774cf900ba
+PODFILE CHECKSUM: d4d800b6f39ecd1fe843dead07ff78309f4fc009
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

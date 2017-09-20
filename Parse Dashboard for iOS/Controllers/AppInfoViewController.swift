@@ -33,7 +33,13 @@ class AppInfoViewController: UITableViewController {
     
     private func setupNavigationBar() {
         
-        setTitleView(title: "About")
+        if #available(iOS 11.0, *) {
+            title = "About"
+            navigationController?.navigationBar.prefersLargeTitles = true
+        } else {
+            setTitleView(title: "About")
+        }
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "Share"),
                             style: .plain,
@@ -52,11 +58,11 @@ class AppInfoViewController: UITableViewController {
     
     // MARK: - User Actions
     
-    func dismissInfo() {
+    @objc func dismissInfo() {
         dismiss(animated: true, completion: nil)
     }
     
-    func openGitHubRepo() {
+    @objc func openGitHubRepo() {
         
         guard let url = URL(string: "https://github.com/nathantannar4/Parse-Dashboard-for-iOS") else {
             return
@@ -65,7 +71,7 @@ class AppInfoViewController: UITableViewController {
         navigationController?.pushViewController(webController, animated: true)
     }
     
-    func shareApp(sender: UIBarButtonItem) {
+    @objc func shareApp(sender: UIBarButtonItem) {
         
         let shareText = "Hey! Check out this awesome mobile Parse Dashboard client for iOS! https://itunes.apple.com/ca/app/parse-dashboard/id1212141622"
         

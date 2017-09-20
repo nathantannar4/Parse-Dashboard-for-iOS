@@ -11,5 +11,5 @@ target 'Parse Dashboard for iOS' do
     pod 'Crashlytics'
     pod 'EggRating'
     pod 'SwiftyJSON'
-    
+
 end

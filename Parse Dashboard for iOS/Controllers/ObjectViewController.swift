@@ -71,13 +71,13 @@ class ObjectViewController: UITableViewController {
     
     // MARK: - Object Refresh
     
-    func refreshObject() {
+    @objc func refreshObject() {
         
         Parse.get(endpoint: "/classes/" + object.schema.name + "/" + object.id) { (json) in
-            self.tableView.refreshControl?.endRefreshing()
             DispatchQueue.main.async {
                 self.object = PFObject(json, self.object.schema)
                 self.tableView.reloadData()
+                self.tableView.refreshControl?.endRefreshing()
             }
         }
     }
@@ -149,7 +149,7 @@ class ObjectViewController: UITableViewController {
    
     // MARK: - User Actions
     
-    func deleteObject() {
+    @objc func deleteObject() {
         
         let alertController = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
         let actions = [
@@ -171,7 +171,7 @@ class ObjectViewController: UITableViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func toggleView(sender: UIBarButtonItem) {
+    @objc func toggleView(sender: UIBarButtonItem) {
         switch viewStyle {
         case .json:
             sender.image = UIImage(named: "Raw")
@@ -184,8 +184,8 @@ class ObjectViewController: UITableViewController {
         }
     }
     
-    func sendPushNotification() {
-        let alertController = UIAlertController(title: "Push Notification", message: "To " + (object.json["username"] as! String), preferredStyle: .alert)
+    @objc func sendPushNotification() {
+        let alertController = UIAlertController(title: "Push Notification", message: "To " + (object.json["username"].stringValue), preferredStyle: .alert)
         alertController.view.tintColor = Color.Default.Tint.View
         
         let saveAction = UIAlertAction(title: "Send", style: .default, handler: {

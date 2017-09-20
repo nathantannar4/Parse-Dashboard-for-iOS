@@ -152,7 +152,7 @@ open class UIWebViewController: UIViewController, UIWebViewDelegate, UISearchBar
         return true
     }
     
-    open func handleShare(_ sender: UIBarButtonItem?) {
+    @objc open func handleShare(_ sender: UIBarButtonItem?) {
         
         guard let url = url else {
             return
@@ -209,14 +209,14 @@ open class UIWebViewController: UIViewController, UIWebViewDelegate, UISearchBar
     
     // MARK: - WebView Navigation
     
-    open func goBack(_ sender: UIBarButtonItem?) {
+    @objc open func goBack(_ sender: UIBarButtonItem?) {
         webView.goBack()
         if webView.canGoBack {
             updateBarButtonItems(1)
         }
     }
     
-    open func goForward(_ sender: UIBarButtonItem?) {
+    @objc open func goForward(_ sender: UIBarButtonItem?) {
         webView.goForward()
         if webView.canGoForward {
             updateBarButtonItems(1)
