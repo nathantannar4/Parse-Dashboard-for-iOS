@@ -1,8 +1,9 @@
 <img src="https://github.com/nathantannar4/Parse-Dashboard-for-iOS/blob/master/Screenshots/AppStore.png?raw=true" height="75">
 
-### 1000+ Downlaods and Counting!
+### 2000+ Downlaods and Counting!
 
 # Parse Dashboard for iOS
+> Updated to Swift 4 and iOS 11
 
 A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.
 

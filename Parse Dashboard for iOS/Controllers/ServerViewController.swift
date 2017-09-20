@@ -159,6 +159,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     @objc func showAppInfo() {
         
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
+        navVC.view.backgroundColor = .white
         navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)
     }
@@ -166,6 +167,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     @objc func showDonateInfo() {
         
         let navVC = NTNavigationController(rootViewController: SupportViewController())
+        navVC.view.backgroundColor = .white
         navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)
     }
