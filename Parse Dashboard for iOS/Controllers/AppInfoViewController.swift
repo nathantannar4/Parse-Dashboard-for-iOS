@@ -33,13 +33,7 @@ class AppInfoViewController: UITableViewController {
     
     private func setupNavigationBar() {
         
-        if #available(iOS 11.0, *) {
-            title = "About"
-            navigationController?.navigationBar.prefersLargeTitles = true
-        } else {
-            setTitleView(title: "About")
-        }
-        
+        setTitleView(title: "About")
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "Share"),
                             style: .plain,
@@ -67,8 +61,7 @@ class AppInfoViewController: UITableViewController {
         guard let url = URL(string: "https://github.com/nathantannar4/Parse-Dashboard-for-iOS") else {
             return
         }
-        let webController = UIWebViewController(url: url)
-        navigationController?.pushViewController(webController, animated: true)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     @objc func shareApp(sender: UIBarButtonItem) {

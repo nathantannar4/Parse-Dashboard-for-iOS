@@ -49,6 +49,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Font.Default.Subtitle = Font.Roboto.Regular.withSize(14)
         Font.Default.Body = Font.Roboto.Regular.withSize(13)
         
+        // iTunes Store Rating
+        EggRating.itunesId = "1212141622"
+        EggRating.minRatingToAppStore = 3
+        EggRating.starFillColor = .logoTint
+        EggRating.starBorderColor = .logoTint
+        EggRating.daysUntilPrompt = 3
+        
+        // Fabric Setup
+        Fabric.with([Crashlytics.self, Answers.self])
+        Answers.logLogin(withMethod: String(describing: Date()), success: nil, customAttributes: nil)
+        
         // Initialize the window
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
@@ -61,18 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = NTNavigationController(rootViewController: ServerViewController())
             window?.makeKeyAndVisible()
         }
-        
-        // iTunes Store Rating
-        EggRating.itunesId = "1212141622"
-        EggRating.minRatingToAppStore = 3
-        EggRating.starFillColor = .logoTint
-        EggRating.starBorderColor = .logoTint
-        EggRating.daysUntilPrompt = 3
-        
-        // Fabric Setup
-        Fabric.with([Crashlytics.self, Answers.self])
-        Answers.logLogin(withMethod: String(describing: Date()), success: nil, customAttributes: nil)
-        
         return true
     }
 

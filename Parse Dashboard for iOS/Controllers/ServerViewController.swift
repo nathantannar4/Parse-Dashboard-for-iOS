@@ -35,20 +35,20 @@ import EggRating
 class ServerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - Properties
-    
-    private let supportButton: NTButton = {
-        let button = NTButton()
-        button.title = "  Support"
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            button.titleFont = Font.Roboto.Medium.withSize(36)
-        } else {
-            button.titleFont = Font.Roboto.Medium.withSize(18)
-        }
-        button.backgroundColor = .darkBlueAccent
-        button.tintColor = .white
-        button.image = UIImage(named: "Applause")?.scale(to: 36)
-        return button
-    }()
+//    
+//    private let supportButton: NTButton = {
+//        let button = NTButton()
+//        button.title = "  Support"
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            button.titleFont = Font.Roboto.Medium.withSize(36)
+//        } else {
+//            button.titleFont = Font.Roboto.Medium.withSize(18)
+//        }
+//        button.backgroundColor = .darkBlueAccent
+//        button.tintColor = .white
+//        button.image = UIImage(named: "Applause")?.scale(to: 36)
+//        return button
+//    }()
     
     private let tableView = UITableView()
     
@@ -62,7 +62,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         
         setupTableView()
         setupNavigationBar()
-        setupSupportButton()
+//        setupSupportButton()
         loadServers()
         checkIfAppIsNew()
     }
@@ -71,17 +71,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidAppear(animated)
         
         EggRating.delegate = self
-        EggRating.promptRateUsIfNeeded(viewController: self)
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = false
-        }
+        EggRating.promptRateUsIfNeeded(in: self)
     }
     
     // MARK: - Data Refresh
@@ -127,12 +117,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     
     private func setupNavigationBar() {
         
-        if #available(iOS 11.0, *) {
-            title = "Parse Dashboard for iOS"
-            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.boldSystemFont(ofSize: 24)]
-        } else {
-            setTitleView(title: "Parse Dashboard for iOS", subtitle: nil, titleColor: .black, subtitleColor: nil)
-        }
+        setTitleView(title: "Parse Dashboard for iOS", subtitle: nil, titleColor: .black, subtitleColor: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
                                                            style: .plain,
                                                            target: self,
@@ -142,17 +127,17 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
                                                             action: #selector(ServerViewController.addServer))
     }
     
-    private func setupSupportButton() {
-        
-        view.addSubview(supportButton)
-        supportButton.addTarget(self, action: #selector(ServerViewController.showDonateInfo), for: .touchUpInside)
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 120)
-        } else {
-            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 60)
-        }
-    }
+//    private func setupSupportButton() {
+//
+//        view.addSubview(supportButton)
+//        supportButton.addTarget(self, action: #selector(ServerViewController.showDonateInfo), for: .touchUpInside)
+//
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 120)
+//        } else {
+//            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 60)
+//        }
+//    }
     
     // MARK: - User Actions
     

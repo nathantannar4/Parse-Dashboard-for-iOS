@@ -1,10 +1,10 @@
 PODS:
-  - Crashlytics (3.8.6):
-    - Fabric (~> 1.6.3)
-  - EggRating (0.1.2):
+  - Crashlytics (3.9.0):
+    - Fabric (~> 1.7.0)
+  - EggRating (0.1.4):
     - RateView
-  - Fabric (1.6.13)
-  - NTComponents (0.0.7)
+  - Fabric (1.7.0)
+  - NTComponents (1.0.0)
   - RateView (1.2)
   - SwiftyJSON (3.1.4)
 
@@ -20,10 +20,10 @@ EXTERNAL SOURCES:
     :path: ~/Documents/Active iOS Projects/NTComponents
 
 SPEC CHECKSUMS:
-  Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
-  EggRating: 633703d4be5c9938bfee58208966d75995f2cc21
-  Fabric: 2fb5676bc811af011a04513451f463dac6803206
-  NTComponents: 04edeaa545613f866314dedd1e48a14cfbd0a615
+  Crashlytics: 64aad5dd97249dd3ff94b979fea140144590cdd3
+  EggRating: 2f37fd55c04b99350b84a33d533f2e00cde898a9
+  Fabric: e6be012366472553807dada21243c5ab8d904151
+  NTComponents: b614b7ae590a00d35ca87d952d7823a0934b566f
   RateView: d4d12e9bb76dc23a77a56f4e5c5fb530a3f3f998
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 

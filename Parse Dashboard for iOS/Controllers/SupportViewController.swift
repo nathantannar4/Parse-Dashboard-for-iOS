@@ -33,8 +33,6 @@ import EggRating
 class SupportViewController: UITableViewController, SKProductsRequestDelegate {
     
     // MARK: - Properties
-
-    
     
     // MARK: - View Life Cycle
     
@@ -88,8 +86,7 @@ class SupportViewController: UITableViewController, SKProductsRequestDelegate {
             guard let url = URL(string: "https://github.com/nathantannar4/Parse-Dashboard-for-iOS") else {
                 return
             }
-            let webController = UIWebViewController(url: url)
-            navigationController?.pushViewController(webController, animated: true)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         default:
             break
         }

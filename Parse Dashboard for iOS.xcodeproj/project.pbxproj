@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3800075C1F5A6F3300F4CF6C /* UIActivity+OpenInSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3800075B1F5A6F3300F4CF6C /* UIActivity+OpenInSafari.swift */; };
-		3800075E1F5A7D4500F4CF6C /* UIWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3800075D1F5A7D4500F4CF6C /* UIWebViewController.swift */; };
 		38074EC21F57B96A001F53FA /* ServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EC11F57B96A001F53FA /* ServerViewController.swift */; };
 		38074EC71F57B9E6001F53FA /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EC61F57B9E6001F53FA /* UIColor+Extensions.swift */; };
 		38074EC91F57BB59001F53FA /* Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38074EC81F57BB59001F53FA /* Parse.swift */; };
@@ -44,8 +42,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3800075B1F5A6F3300F4CF6C /* UIActivity+OpenInSafari.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivity+OpenInSafari.swift"; sourceTree = "<group>"; };
-		3800075D1F5A7D4500F4CF6C /* UIWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWebViewController.swift; sourceTree = "<group>"; };
 		38074EC11F57B96A001F53FA /* ServerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerViewController.swift; path = Controllers/ServerViewController.swift; sourceTree = "<group>"; };
 		38074EC61F57B9E6001F53FA /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Extensions.swift"; path = "Extensions/UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		38074EC81F57BB59001F53FA /* Parse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parse.swift; path = Models/Parse.swift; sourceTree = "<group>"; };
@@ -147,7 +143,6 @@
 			children = (
 				38074EC61F57B9E6001F53FA /* UIColor+Extensions.swift */,
 				38074EDC1F588D31001F53FA /* String+Extensions.swift */,
-				3800075B1F5A6F3300F4CF6C /* UIActivity+OpenInSafari.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -156,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				387520AA1E664F8100CAAA88 /* Assets.xcassets */,
-				3800075D1F5A7D4500F4CF6C /* UIWebViewController.swift */,
 				387520AF1E664F8100CAAA88 /* Info.plist */,
 				387520A71E664F8100CAAA88 /* Parse_Dashboard_for_iOS.xcdatamodeld */,
 			);
@@ -379,7 +373,6 @@
 				38074EC91F57BB59001F53FA /* Parse.swift in Sources */,
 				38074ECD1F57C3B0001F53FA /* SchemaViewController.swift in Sources */,
 				382A663B1F64CBFB0017CF9F /* IAPHandler.swift in Sources */,
-				3800075E1F5A7D4500F4CF6C /* UIWebViewController.swift in Sources */,
 				387520A11E664F8100CAAA88 /* AppDelegate.swift in Sources */,
 				38074ED51F587394001F53FA /* ObjectCell.swift in Sources */,
 				3854936D1F5FD3A0003903DA /* ArrayViewController.swift in Sources */,
@@ -387,7 +380,6 @@
 				38074EC71F57B9E6001F53FA /* UIColor+Extensions.swift in Sources */,
 				385493681F5FB6A7003903DA /* SchemaDetailViewController.swift in Sources */,
 				38074EC21F57B96A001F53FA /* ServerViewController.swift in Sources */,
-				3800075C1F5A6F3300F4CF6C /* UIActivity+OpenInSafari.swift in Sources */,
 				382A66391F64C51A0017CF9F /* SupportViewController.swift in Sources */,
 				38074EE71F59063E001F53FA /* FileViewController.swift in Sources */,
 				38074EE91F590E4B001F53FA /* AppInfoViewController.swift in Sources */,
