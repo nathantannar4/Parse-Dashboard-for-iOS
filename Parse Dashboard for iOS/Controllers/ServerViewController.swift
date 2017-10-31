@@ -265,7 +265,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         
         if UIDevice.current.userInterfaceIdiom == .phone {
             vc.addDismissalBarButtonItem()
-            present(vc, animated: true, completion: nil)
+            present(container, animated: true, completion: nil)
         } else {
             splitViewController?.showDetailViewController(container, sender: nil)
         }
