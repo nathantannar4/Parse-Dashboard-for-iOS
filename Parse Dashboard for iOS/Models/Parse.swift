@@ -32,7 +32,11 @@ class Parse {
     
     private static var config: ParseServerConfig?
     
-    open weak static var container: UIControllerContainer?
+    open weak static var container: UIControllerContainer? {
+        didSet {
+            isConnectedToNetwork = true
+        }
+    }
     
     private static var isConnectedToNetwork = true
     

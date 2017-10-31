@@ -63,13 +63,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             
             let split = UISplitViewController()
+            split.view.backgroundColor = .white
             if UIDevice.current.userInterfaceIdiom == .phone {
-                split.viewControllers = [NTNavigationController(rootViewController: ServerViewController())]
+                let root = UINavigationController(rootViewController: ServerViewController())
+                root.navigationBar.isTranslucent = false
+                root.navigationBar.tintColor = .logoTint
+                if #available(iOS 11.0, *) {
+                    root.navigationBar.prefersLargeTitles = true
+                    root.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)]
+                }
+                split.viewControllers = [root]
             } else {
                 let blank = UIViewController()
                 blank.view.backgroundColor = .lightBlueBackground
                 blank.navigationItem.leftBarButtonItem = split.displayModeButtonItem
-                split.viewControllers = [NTNavigationController(rootViewController: ServerViewController()), NTNavigationController(rootViewController: blank)]
+                let root = UINavigationController(rootViewController: ServerViewController())
+                root.navigationBar.tintColor = .logoTint
+                root.navigationBar.isTranslucent = false
+                if #available(iOS 11.0, *) {
+                    root.navigationBar.prefersLargeTitles = true
+                    root.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)]
+                }
+                split.viewControllers = [root, UINavigationController(rootViewController: blank)]
             }
             
             split.preferredDisplayMode = .allVisible

@@ -139,7 +139,18 @@ class WelcomeViewController: UIViewController {
     
     @objc func getStarted() {
         
-        let vc = NTNavigationController(rootViewController: ServerViewController())
-        presentViewController(vc, from: .right, completion: nil)
+        let split = UISplitViewController()
+        split.view.backgroundColor = .white
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            split.viewControllers = [NTNavigationController(rootViewController: ServerViewController())]
+        } else {
+            let blank = UIViewController()
+            blank.view.backgroundColor = .lightBlueBackground
+            blank.navigationItem.leftBarButtonItem = split.displayModeButtonItem
+            split.viewControllers = [NTNavigationController(rootViewController: ServerViewController()), NTNavigationController(rootViewController: blank)]
+        }
+        
+        split.preferredDisplayMode = .allVisible
+        present(split, animated: false, completion: nil)
     }
 }

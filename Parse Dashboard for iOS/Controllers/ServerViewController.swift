@@ -34,23 +34,8 @@ import Crashlytics
 class ServerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - Properties
-//    
-//    private let supportButton: NTButton = {
-//        let button = NTButton()
-//        button.title = "  Support"
-//        if UIDevice.current.userInterfaceIdiom == .pad {
-//            button.titleFont = Font.Roboto.Medium.withSize(36)
-//        } else {
-//            button.titleFont = Font.Roboto.Medium.withSize(18)
-//        }
-//        button.backgroundColor = .darkBlueAccent
-//        button.tintColor = .white
-//        button.image = UIImage(named: "Applause")?.scale(to: 36)
-//        return button
-//    }()
     
     private let tableView = UITableView()
-    
     private var servers = [ParseServerConfig]()
     private var indexPathForSelectedRow: IndexPath?
     
@@ -61,7 +46,6 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         
         setupTableView()
         setupNavigationBar()
-//        setupSupportButton()
         loadServers()
         checkIfAppIsNew()
     }
@@ -109,7 +93,7 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
     
     private func setupNavigationBar() {
         
-        setTitleView(title: "Parse Dashboard for iOS", subtitle: nil, titleColor: .black, subtitleColor: nil)
+        title = "Parse Dashboard for iOS"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
                                                            style: .plain,
                                                            target: self,
@@ -119,31 +103,11 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
                                                             action: #selector(ServerViewController.addServer))
     }
     
-//    private func setupSupportButton() {
-//
-//        view.addSubview(supportButton)
-//        supportButton.addTarget(self, action: #selector(ServerViewController.showDonateInfo), for: .touchUpInside)
-//
-//        if UIDevice.current.userInterfaceIdiom == .pad {
-//            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 120)
-//        } else {
-//            supportButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 60)
-//        }
-//    }
-    
     // MARK: - User Actions
     
     @objc func showAppInfo() {
         
         let navVC = NTNavigationController(rootViewController: AppInfoViewController())
-        navVC.view.backgroundColor = .white
-        navVC.modalPresentationStyle = .formSheet
-        present(navVC, animated: true, completion: nil)
-    }
-    
-    @objc func showDonateInfo() {
-        
-        let navVC = NTNavigationController(rootViewController: SupportViewController())
         navVC.view.backgroundColor = .white
         navVC.modalPresentationStyle = .formSheet
         present(navVC, animated: true, completion: nil)

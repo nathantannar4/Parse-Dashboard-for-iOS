@@ -30,7 +30,6 @@
 		3828FDAF1FA8555A0062E32B /* UIControllerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828FDAA1FA855590062E32B /* UIControllerContainer.swift */; };
 		3828FDB01FA8555A0062E32B /* UIContainerTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828FDAB1FA8555A0062E32B /* UIContainerTabBar.swift */; };
 		3828FDB11FA8555A0062E32B /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828FDAC1FA8555A0062E32B /* UIView+AutoLayout.swift */; };
-		382A66391F64C51A0017CF9F /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382A66381F64C51A0017CF9F /* SupportViewController.swift */; };
 		382A663B1F64CBFB0017CF9F /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382A663A1F64CBFB0017CF9F /* IAPHandler.swift */; };
 		385493661F5FB690003903DA /* ServerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385493651F5FB690003903DA /* ServerDetailViewController.swift */; };
 		385493681F5FB6A7003903DA /* SchemaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385493671F5FB6A7003903DA /* SchemaDetailViewController.swift */; };
@@ -70,7 +69,6 @@
 		3828FDAA1FA855590062E32B /* UIControllerContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControllerContainer.swift; sourceTree = "<group>"; };
 		3828FDAB1FA8555A0062E32B /* UIContainerTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerTabBar.swift; sourceTree = "<group>"; };
 		3828FDAC1FA8555A0062E32B /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
-		382A66381F64C51A0017CF9F /* SupportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportViewController.swift; path = Controllers/SupportViewController.swift; sourceTree = "<group>"; };
 		382A663A1F64CBFB0017CF9F /* IAPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAPHandler.swift; path = Models/IAPHandler.swift; sourceTree = "<group>"; };
 		385493651F5FB690003903DA /* ServerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerDetailViewController.swift; path = Controllers/ServerDetailViewController.swift; sourceTree = "<group>"; };
 		385493671F5FB6A7003903DA /* SchemaDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SchemaDetailViewController.swift; path = Controllers/SchemaDetailViewController.swift; sourceTree = "<group>"; };
@@ -133,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				3854936E1F6104D2003903DA /* WelcomeViewController.swift */,
-				382A66381F64C51A0017CF9F /* SupportViewController.swift */,
 				38074EE81F590E4B001F53FA /* AppInfoViewController.swift */,
 				38074EC11F57B96A001F53FA /* ServerViewController.swift */,
 				385493651F5FB690003903DA /* ServerDetailViewController.swift */,
@@ -402,7 +399,6 @@
 				38074EC71F57B9E6001F53FA /* UIColor+Extensions.swift in Sources */,
 				385493681F5FB6A7003903DA /* SchemaDetailViewController.swift in Sources */,
 				38074EC21F57B96A001F53FA /* ServerViewController.swift in Sources */,
-				382A66391F64C51A0017CF9F /* SupportViewController.swift in Sources */,
 				38074EE71F59063E001F53FA /* FileViewController.swift in Sources */,
 				38074EE91F590E4B001F53FA /* AppInfoViewController.swift in Sources */,
 				38074EDD1F588D31001F53FA /* String+Extensions.swift in Sources */,
