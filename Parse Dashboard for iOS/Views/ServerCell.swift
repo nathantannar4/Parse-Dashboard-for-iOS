@@ -66,25 +66,25 @@ class ServerCell: UITableViewCell {
     
     let nameLabel: NTLabel = {
         let label = NTLabel(style: .title)
+        label.numberOfLines = 1
         label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.1
+        label.adjustsFontSizeToFitWidth = false
         return label
     }()
     
     let applicationIDLabel: NTLabel = {
         let label = NTLabel(style: .body)
         label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.1
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = false
         return label
     }()
     
     let serverURLLabel: NTLabel = {
         let label = NTLabel(style: .body)
         label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.1
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = false
         return label
     }()
     
@@ -129,7 +129,7 @@ class ServerCell: UITableViewCell {
         if selected {
             colorView.backgroundColor = UIColor(r: 21, g: 156, b: 238)
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.colorView.backgroundColor = UIColor(r: 25, g: 48, b: 64)
             }
         }

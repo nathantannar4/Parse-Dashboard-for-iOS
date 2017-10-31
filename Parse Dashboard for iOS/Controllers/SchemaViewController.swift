@@ -69,7 +69,6 @@ class SchemaViewController: UITableViewController {
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
                     self.tableView.refreshControl?.endRefreshing()
-                    NTToast(text: "Unexpected Results, is your URL correct?", color: .lightBlueAccent, height: 50).show(duration: 3.0)
                 }
                 return
             }
@@ -81,6 +80,11 @@ class SchemaViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        controllerContainer?.tabBar.collectionView.reloadData()
     }
     
     // MARK: - Setup
@@ -100,7 +104,8 @@ class SchemaViewController: UITableViewController {
     
     private func setupNavigationBar() {
         
-        setTitleView(title: server.name!.isEmpty ? server.applicationId : server.name, subtitle: "Classes")
+        title = "Schemas"
+        setTitleView(title: server.name!.isEmpty ? server.applicationId : server.name, subtitle: "Schemas")
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add,
                             target: self,
@@ -183,7 +188,9 @@ class SchemaViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let viewController = ClassViewController(schemas[indexPath.row])
-        navigationController?.pushViewController(viewController, animated: true)
+        let nav = NTNavigationController(rootViewController: viewController.withTitle(schemas[indexPath.row].name))
+        controllerContainer?.addViewController(nav, animated: true)
+        controllerContainer?.displayViewController(nav, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

@@ -372,8 +372,13 @@ class ObjectViewController: UITableViewController {
                                 DispatchQueue.main.async {
                                     let schema = PFSchema(classJson)
                                     let object = PFObject(objectJson, schema)
-                                    let viewController = ObjectViewController(object)
-                                    self.navigationController?.pushViewController(viewController, animated: true)
+                                    
+                                    let viewController = ClassViewController(schema)
+                                    let nav = NTNavigationController(rootViewController: viewController.withTitle(schema.name))
+                                    nav.pushViewController(ObjectViewController(object), animated: false)
+                                    
+                                    self.controllerContainer?.addViewController(nav, animated: true)
+                                    self.controllerContainer?.displayViewController(nav, animated: true)
                                 }
                             })
                         })
@@ -397,7 +402,10 @@ class ObjectViewController: UITableViewController {
                                     let schema = PFSchema(classJson)
                                     let viewController = ClassViewController(schema)
                                     viewController.query = query
-                                    self.navigationController?.pushViewController(viewController, animated: true)
+                                    
+                                    let nav = NTNavigationController(rootViewController: viewController.withTitle(schema.name))
+                                    self.controllerContainer?.addViewController(nav, animated: true)
+                                    self.controllerContainer?.displayViewController(nav, animated: true)
                                 }
                             })
                         }

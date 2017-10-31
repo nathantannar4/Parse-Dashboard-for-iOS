@@ -28,7 +28,6 @@
 import UIKit
 import NTComponents
 import StoreKit
-import EggRating
 
 class SupportViewController: UITableViewController, SKProductsRequestDelegate {
     
@@ -77,10 +76,11 @@ class SupportViewController: UITableViewController, SKProductsRequestDelegate {
         case 2, 3, 4:
             IAPHandler.shared.purchase(atIndex: indexPath.row - 2)
         case 6:
-            guard let url = URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=\(EggRating.itunesId)&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software") else {
-                return
-            }
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            break
+//            guard let url = URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=\(EggRating.itunesId)&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software") else {
+//                return
+//            }
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
             
         case 7:
             guard let url = URL(string: "https://github.com/nathantannar4/Parse-Dashboard-for-iOS") else {

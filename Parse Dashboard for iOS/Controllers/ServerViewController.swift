@@ -30,7 +30,6 @@ import CoreData
 import NTComponents
 import Fabric
 import Crashlytics
-import EggRating
 
 class ServerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -65,13 +64,6 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
 //        setupSupportButton()
         loadServers()
         checkIfAppIsNew()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        EggRating.delegate = self
-        EggRating.promptRateUsIfNeeded(in: self)
     }
     
     // MARK: - Data Refresh
@@ -258,8 +250,25 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.deselectRow(at: indexPath, animated: true)
         let config = servers[indexPath.row]
         Parse.initialize(config)
-        let viewController = SchemaViewController(config)
-        navigationController?.pushViewController(viewController, animated: true)
+        
+        let vc = SchemaViewController(config)
+        vc.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        
+        let nav = NTNavigationController(rootViewController: vc)
+        
+        let container = UIControllerContainer(viewControllers: [nav])
+        container.tabBar.backgroundColor = .darkBlueBackground
+        container.tabBar.activeTintColor = .white
+        container.tabBar.scrollIndicator.backgroundColor = .white
+        container.tabBarSizeLayout = .fixed(120)
+        Parse.container = container
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            vc.addDismissalBarButtonItem()
+            present(vc, animated: true, completion: nil)
+        } else {
+            splitViewController?.showDetailViewController(container, sender: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -363,25 +372,3 @@ class ServerViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-
-// MARK: - EggRatingDelegate
-
-extension ServerViewController: EggRatingDelegate {
-    
-    func didRate(rating: Double) {
-        Answers.logRating(rating as NSNumber, contentName: nil, contentType: nil, contentId: nil, customAttributes: nil)
-    }
-    
-    func didRateOnAppStore() {
-        Answers.logRating(nil, contentName: "Did rate on app store", contentType: nil, contentId: nil, customAttributes: nil)
-    }
-    
-    func didIgnoreToRate() {
-        Answers.logRating(nil, contentName: "Ignored Rating", contentType: nil, contentId: nil, customAttributes: nil)
-    }
-    
-    func didIgnoreToRateOnAppStore() {
-        Answers.logRating(nil, contentName: "Ignored Rating on App Store", contentType: nil, contentId: nil, customAttributes: nil)
-    }
-}
-

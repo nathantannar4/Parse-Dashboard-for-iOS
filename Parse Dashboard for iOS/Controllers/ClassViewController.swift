@@ -78,7 +78,6 @@ class ClassViewController: UITableViewController, QueryDelegate {
             
             guard let results = json["results"] as? [[String: AnyObject]] else {
                 DispatchQueue.main.async {
-                    NTToast(text: "Unexpected Results", color: .darkPurpleAccent, height: 50).show(duration: 2.0)
                     self.setTitleView(title: self.schema.name, subtitle: "0 Objects")
                     self.tableView.refreshControl?.endRefreshing()
                 }
@@ -116,7 +115,9 @@ class ClassViewController: UITableViewController, QueryDelegate {
     
     private func setupNavigationBar() {
         
+        title = schema.name
         setTitleView(title: schema.name)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: Icon.Delete?.scale(to: 30), style: .plain, target: self, action: #selector(ClassViewController.close))
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add,
                             target: self,
@@ -161,6 +162,10 @@ class ClassViewController: UITableViewController, QueryDelegate {
     }
     
     // MARK: - User Actions
+    
+    @objc func close() {
+        controllerContainer?.removeViewController(navigationController ?? self, animated: true)
+    }
     
     @objc func addObject() {
         let alertController = UIAlertController(title: "Create Object", message: nil, preferredStyle: .alert)
@@ -235,11 +240,15 @@ class ClassViewController: UITableViewController, QueryDelegate {
         queryVC.delegate = self
         
         let navVC = NTNavigationController(rootViewController: queryVC)
-        navVC.modalPresentationStyle = .popover
-        navVC.popoverPresentationController?.permittedArrowDirections = .up
-        navVC.popoverPresentationController?.delegate = self
-        navVC.popoverPresentationController?.sourceView = navigationItem.titleView
-        navVC.popoverPresentationController?.sourceRect = navigationItem.titleView!.bounds
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            navVC.modalPresentationStyle = .popover
+            navVC.popoverPresentationController?.permittedArrowDirections = .up
+            navVC.popoverPresentationController?.delegate = self
+            navVC.popoverPresentationController?.sourceView = navigationItem.titleView
+            navVC.popoverPresentationController?.sourceRect = navigationItem.titleView!.bounds
+        } else if UIDevice.current.userInterfaceIdiom == .pad {
+            navVC.modalPresentationStyle = .formSheet
+        }
         present(navVC, animated: true, completion: nil)
     }
     

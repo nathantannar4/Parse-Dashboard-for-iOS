@@ -32,6 +32,10 @@ class Parse {
     
     private static var config: ParseServerConfig?
     
+    open weak static var container: UIControllerContainer?
+    
+    private static var isConnectedToNetwork = true
+    
     class func current() -> ParseServerConfig? {
         return Parse.config
     }
@@ -40,7 +44,30 @@ class Parse {
         self.config = config
     }
     
+    class func isNetworkConnection() -> Bool {
+        
+        guard UIApplication.isConnectedToNetwork else {
+            if isConnectedToNetwork {
+                container?.trayView.backgroundColor = Color.Red.P500
+                container?.toastAlert(text: "No Network Connection", font: UIFont.boldSystemFont(ofSize: 15), duration: nil, completion: nil)
+                isConnectedToNetwork = false
+            }
+            return false
+        }
+        if !isConnectedToNetwork {
+            container?.trayView.backgroundColor = Color.Green.P500
+            container?.toastAlert(text: "Network Connection Restored", font: UIFont.boldSystemFont(ofSize: 15), duration: 1, completion: nil)
+            isConnectedToNetwork = true
+        }
+        return true
+    }
+    
     class func get(endpoint: String, query: String = String(), completion: @escaping ([String : AnyObject]) -> ()) {
+        
+        guard isNetworkConnection() else {
+            completion([:])
+            return
+        }
         
         let urlString = self.config!.serverUrl! + endpoint
         var filterString = query
@@ -94,6 +121,11 @@ class Parse {
     
     class func post(endpoint: String, body: String? = String(), completion: @escaping (String, [String : AnyObject], Bool) -> ()) {
         
+        guard isNetworkConnection() else {
+            completion("",[:], false)
+            return
+        }
+        
         guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
             DispatchQueue.main.async {
                 NTToast(text: "Invalid server URL").show(duration: 1.0)
@@ -142,6 +174,11 @@ class Parse {
     }
     
     class func post(filename: String, classname: String, key: String, objectId: String, imageData: Data, completion: @escaping (String, [String : AnyObject], Bool) -> ()) {
+        
+        guard isNetworkConnection() else {
+            completion("",[:], false)
+            return
+        }
         
         let name = key + ".jpg"
         guard let url = URL(string: self.config!.serverUrl! + "/files/" + name) else {
@@ -207,6 +244,11 @@ class Parse {
     
     class func put(endpoint: String, body: String = String(), data: Data? = nil, completion: @escaping (String, [String : AnyObject], Bool) -> ()) {
         
+        guard isNetworkConnection() else {
+            completion("",[:], false)
+            return
+        }
+        
         guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
             DispatchQueue.main.async {
                 NTToast(text: "Invalid server URL").show(duration: 1.0)
@@ -255,6 +297,11 @@ class Parse {
     }
     
     class func delete(endpoint: String, completion: @escaping (String, Int?, Bool) -> ()) {
+        
+        guard isNetworkConnection() else {
+            completion("", nil, false)
+            return
+        }
         
         guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
             DispatchQueue.main.async {

@@ -138,7 +138,7 @@ class ObjectCell: UITableViewCell {
         if selected {
             colorView.backgroundColor = UIColor.white.withAlphaComponent(0.75)
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.colorView.backgroundColor = .white
             }
         }

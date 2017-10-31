@@ -30,7 +30,6 @@ import NTComponents
 import CoreData
 import Fabric
 import Crashlytics
-import EggRating
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,13 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Font.Default.Subtitle = Font.Roboto.Regular.withSize(14)
         Font.Default.Body = Font.Roboto.Regular.withSize(13)
         
-        // iTunes Store Rating
-        EggRating.itunesId = "1212141622"
-        EggRating.minRatingToAppStore = 3
-        EggRating.starFillColor = .logoTint
-        EggRating.starBorderColor = .logoTint
-        EggRating.daysUntilPrompt = 3
-        
         // Fabric Setup
         Fabric.with([Crashlytics.self, Answers.self])
         Answers.logLogin(withMethod: String(describing: Date()), success: nil, customAttributes: nil)
@@ -69,7 +61,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
             window?.makeKeyAndVisible()
         } else {
-            window?.rootViewController = NTNavigationController(rootViewController: ServerViewController())
+            
+            let split = UISplitViewController()
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                split.viewControllers = [NTNavigationController(rootViewController: ServerViewController())]
+            } else {
+                let blank = UIViewController()
+                blank.view.backgroundColor = .lightBlueBackground
+                blank.navigationItem.leftBarButtonItem = split.displayModeButtonItem
+                split.viewControllers = [NTNavigationController(rootViewController: ServerViewController()), NTNavigationController(rootViewController: blank)]
+            }
+            
+            split.preferredDisplayMode = .allVisible
+            
+            window?.rootViewController = split
             window?.makeKeyAndVisible()
         }
         return true
