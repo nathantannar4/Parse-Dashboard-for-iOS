@@ -1,4 +1,4 @@
-[![Download on the App Store](./Screenshots/AppStore.png)](https://itunes.apple.com/us/app/parse-dashboard/id1212141622?ls=1&mt=8)
+Update: I did not renew my Developer Membership with Apple so this is no longer available on the App Store
 
 ## 2000+ Downloads, Three 5-Star Reviews
 
