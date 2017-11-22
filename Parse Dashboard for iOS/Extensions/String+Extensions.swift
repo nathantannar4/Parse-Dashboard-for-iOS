@@ -81,8 +81,4 @@ extension String {
     static var date: String {
         return "Date"
     }
-    
-    static var appIsNew: String {
-        return "appIsNew"
-    }
 }

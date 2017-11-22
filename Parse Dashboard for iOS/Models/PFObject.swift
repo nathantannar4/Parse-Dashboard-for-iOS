@@ -30,52 +30,43 @@ import SwiftyJSON
 
 class PFObject {
     
+    // MARK: - Properties
+    
     var id: String
-    var createdAt: String
-    var updatedAt: String
-    
-    var keys: [String]
-    var values: [Any]
-    
     var json: JSON
+    var createdAt = "createdAt: "
+    var updatedAt = "updatedAt: "
+    var schema: PFSchema?
     
-    var schema: PFSchema
+    var keys: [String] {
+        return Array(json.dictionaryValue.keys)
+    }
     
-    init(_ dictionary: [String : AnyObject], _ schma: PFSchema) {
+    // MARK: - Initialization
+    
+    init(_ dictionary: [String : AnyObject]) {
         
-        self.json = JSON(dictionary)
-        self.schema = schma
+        json = JSON(dictionary)
+        id = (dictionary[.objectId] as? String) ?? .undefined
+        let createdAtString = (dictionary[.createdAt] as? String) ?? .undefined
+        let updatedAtString = (dictionary[.updatedAt] as? String) ?? .undefined
         
-        self.id = (dictionary["objectId"] as? String) ?? .undefined
-        let createdAt = (dictionary["createdAt"] as? String) ?? .undefined
-        self.createdAt = createdAt
-        self.updatedAt = (dictionary["updatedAt"] as? String) ?? createdAt
-        
-        self.keys = []
-        self.values = []
-        
-        self.keys.append(.objectId)
-        self.values.append(self.id)
-        
-        self.keys.append(.createdAt)
-        self.values.append(createdAt)
-        
-        self.keys.append(.updatedAt)
-        self.values.append(self.updatedAt)
-        
-        if let fields = schma.fields {
-            
-            for (key, _) in fields {
-                if key != .objectId && key != .createdAt && key != .updatedAt && key != .acl {
-                    self.keys.append(key)
-                    let value = dictionary[key] ?? String.undefined as AnyObject
-                    self.values.append(value)
-                }
-            }
+        // Date Data Type
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        if let date = dateFormatter.date(from: createdAtString) {
+            createdAt += date.string(dateStyle: .medium, timeStyle: .short)
         }
-        
-        self.keys.append(.acl)
-        self.values.append(dictionary[.acl] ?? String.undefined as AnyObject)
+        if let date = dateFormatter.date(from: updatedAtString) {
+            updatedAt += date.string(dateStyle: .medium, timeStyle: .short)
+        }
+    }
+    
+    // MARK: - Methods
+    
+    func value(forKey key: String) -> Any? {
+        return json.dictionaryObject?[key]
     }
 }
 

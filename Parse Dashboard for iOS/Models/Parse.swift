@@ -25,320 +25,270 @@
 //  Created by Nathan Tannar on 8/30/17.
 //
 
-import Foundation
-import NTComponents
+import UIKit
+
+typealias PFResult = (success: Bool, error: String?)
+typealias PFCompletionBlock = (PFResult, [String:AnyObject]?) -> Void
 
 class Parse {
     
-    private static var config: ParseServerConfig?
+    static var shared = Parse()
     
-    open weak static var container: UIControllerContainer? {
-        didSet {
-            isConnectedToNetwork = true
-        }
+    private var serverURL: String = ""
+    private var applicationId: String = ""
+    private var masterKey: String = ""
+    
+    private init() {}
+    
+    func initialize(with config: ParseServerConfig) {
+        self.serverURL = config.serverUrl ?? String()
+        self.applicationId = config.applicationId ?? String()
+        self.masterKey = config.masterKey ?? String()
     }
     
-    private static var isConnectedToNetwork = true
-    
-    class func current() -> ParseServerConfig? {
-        return Parse.config
-    }
-    
-    class func initialize(_ config: ParseServerConfig) {
-        self.config = config
-    }
-    
-    class func isNetworkConnection() -> Bool {
+    func get(_ endpoint: String, query: String = "", completion: @escaping PFCompletionBlock) {
         
-        guard UIApplication.isConnectedToNetwork else {
-            if isConnectedToNetwork {
-                container?.trayView.backgroundColor = Color.Red.P500
-                container?.toastAlert(text: "No Network Connection", font: UIFont.boldSystemFont(ofSize: 15), duration: nil, completion: nil)
-                isConnectedToNetwork = false
-            }
-            return false
-        }
-        if !isConnectedToNetwork {
-            container?.trayView.backgroundColor = Color.Green.P500
-            container?.toastAlert(text: "Network Connection Restored", font: UIFont.boldSystemFont(ofSize: 15), duration: 1, completion: nil)
-            isConnectedToNetwork = true
-        }
-        return true
-    }
-    
-    class func get(endpoint: String, query: String = String(), completion: @escaping ([String : AnyObject]) -> ()) {
-        
-        guard isNetworkConnection() else {
-            completion([:])
-            return
+        guard UIApplication.shared.isConnectedToNetwork else {
+            return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        let urlString = self.config!.serverUrl! + endpoint
-        var filterString = query
-        var encodedQuery = String()
-        
+        var urlString = serverURL + endpoint
+
         if let range = query.range(of: "where=") {
             // Json Encoding required
-            filterString = String(query.prefix(upTo: range.lowerBound))
+            urlString += String(query.prefix(upTo: range.lowerBound))
             let json = String(query.suffix(from: range.upperBound))
-            if let encodedJson = json.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
-                encodedQuery = "where=" + encodedJson
+            if let encodedQuery = json.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+                urlString += ("where=" + encodedQuery)
             }
         }
         
-        print(urlString + filterString + encodedQuery)
-        
-        guard let url = URL(string: urlString + filterString + encodedQuery) else {
-            DispatchQueue.main.async {
-                NTToast(text: "Invalid server URL").show(duration: 1.0)
-            }
-            return
+        guard let url = URL(string: urlString) else {
+            return completion((false, "Invalid Server URL"), nil)
         }
-        
+
         var request = URLRequest(url: url)
-        request.setValue(self.config?.applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(self.config?.masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
+        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
-            if error != nil {
-                print(error.debugDescription)
-                completion([:])
+            guard let data = data, error == nil else {
+                DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
             do {
-                guard let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String : AnyObject] else { return }
-                if let error = json["error"] as? String {
-                    DispatchQueue.main.async {
-                        NTToast(text: error, color: .darkPurpleAccent).show(duration: 1.0)
-                    }
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
+                if let error = json?["error"] as? String {
+                    
+                    DispatchQueue.main.sync { completion((false, error), json) }
+                    
                 } else {
-                    completion(json)
+                    
+                    DispatchQueue.main.sync { completion((true, nil), json) }
                 }
-            } catch let error as NSError{
-                print(error.debugDescription)
-                completion([:])
+            } catch let error {
+                
+                DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
+                
             }
         }.resume()
     }
     
-    class func post(endpoint: String, body: String? = String(), completion: @escaping (String, [String : AnyObject], Bool) -> ()) {
+    func post(_ endpoint: String, body: String? = nil, completion: @escaping PFCompletionBlock) {
         
-        guard isNetworkConnection() else {
-            completion("",[:], false)
-            return
+        guard UIApplication.shared.isConnectedToNetwork else {
+            return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
-            DispatchQueue.main.async {
-                NTToast(text: "Invalid server URL").show(duration: 1.0)
-            }
-            return
+        guard let url = URL(string: serverURL + endpoint) else {
+            return completion((false, "Invalid Server URL"), nil)
         }
-        print(url)
+        
         var request = URLRequest(url: url)
-        request.setValue(self.config?.applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(self.config?.masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
+        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = body?.data(using: .utf8)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
-            if error != nil {
-                print(error.debugDescription)
-                completion(error!.localizedDescription, [:], false)
+            
+            guard let data = data, error == nil else {
+                DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
             do {
-                guard let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String : AnyObject] else {
-                    completion("Sorry, an unexpected error occurred", [:], false)
-                    return
-                }
+                guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject] else { return }
                 if let error = json["error"] as? String {
-                    completion(error, json, false)
+                    
+                    DispatchQueue.main.sync { completion((false, error), nil) }
+                    
                 } else {
-                    if let code = json["code"] as? Int {
-                        if code == 1 {
-                            completion(json["message"] as! String, json, false)
-                            return
-                        }
-                    } else if let result = json["result"] as? Bool {
-                        if !result {
-                            completion("Faild to send push", json, false)
-                            return
-                        }
+                    if let code = json["code"] as? Int, code == 1 {
+                        
+                        DispatchQueue.main.sync { completion((false, json["message"] as? String), json) }
+                        
                     } else {
-                        completion("Success", json, true)
+                        
+                        let result = json["result"] as? Bool ?? true
+                        DispatchQueue.main.sync { completion((result, nil), json) }
+                        
                     }
                 }
-            } catch let error as NSError {
-                completion(error.debugDescription, [:], false)
+            } catch let error {
+                DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
             }
         }.resume()
     }
     
-    class func post(filename: String, classname: String, key: String, objectId: String, imageData: Data, completion: @escaping (String, [String : AnyObject], Bool) -> ()) {
-        
-        guard isNetworkConnection() else {
-            completion("",[:], false)
-            return
+    func delete(_ endpoint: String, completion: @escaping PFCompletionBlock) {
+    
+        guard UIApplication.shared.isConnectedToNetwork else {
+            return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        let name = key + ".jpg"
-        guard let url = URL(string: self.config!.serverUrl! + "/files/" + name) else {
-            DispatchQueue.main.async {
-                NTToast(text: "Invalid server URL").show(duration: 1.0)
-            }
-            return
-        }
-
-        DispatchQueue.main.async {
-            NTToast(text: "Uploading File", color: UIColor(r: 21, g: 156, b: 238), height: 50).show(duration: 5.0)
+        guard let url = URL(string: serverURL + endpoint) else {
+            return completion((false, "Invalid Server URL"), nil)
         }
         
         var request = URLRequest(url: url)
-        request.setValue(self.config?.applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(self.config?.masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
+        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "DELETE"
+        URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
+            
+            guard let data = data, error == nil else {
+                DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
+                return
+            }
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
+                if let error = json?["error"] as? String {
+                    
+                    DispatchQueue.main.sync { completion((false, error), json) }
+                    
+                } else {
+                    
+                    DispatchQueue.main.sync { completion((true, nil), json) }
+                    
+                }
+            } catch let error {
+                DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
+            }
+        }.resume()
+    }
+
+    func post(filename: String, classname: String, key: String, objectId: String, imageData: Data, completion: @escaping PFCompletionBlock) {
+        
+        guard UIApplication.shared.isConnectedToNetwork else {
+            return completion((false, "Network Connection Unavailable"), nil)
+        }
+        
+        let name = key + ".jpg"
+        guard let url = URL(string: serverURL + "/files/" + name) else {
+            return completion((false, "Invalid Server URL"), nil)
+        }
+
+        var request = URLRequest(url: url)
+        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
         request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = imageData
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
-            if error != nil {
-                print(error.debugDescription)
-                completion(error!.localizedDescription, [:], false)
+            
+            guard let data = data, error == nil else {
+                DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
             do {
-                guard let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String : AnyObject] else {
-                    completion("Sorry, an unexpected error occurred", [:], false)
-                    return
-                }
-                if let error = json["error"] as? String {
-                    completion(error, json, false)
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
+                
+                if let error = json?["error"] as? String {
+                    
+                    DispatchQueue.main.sync { completion((false, error), json) }
+                    
                 } else {
-                    if let code = json["code"] as? Int {
-                        if code == 1 {
-                            completion(json["message"] as! String, json, false)
-                            return
-                        }
-                    } else if let result = json["result"] as? Bool {
-                        if !result {
-                            completion("Faild to upload image", json, false)
-                            return
-                        }
+                    if let code = json?["code"] as? Int, code == 1 {
+                        
+                        DispatchQueue.main.sync { completion((false, json?["message"] as? String), json) }
+                        
+                    } else if let result = json?["result"] as? Bool, !result {
+                        
+                        DispatchQueue.main.sync { completion((false, "Image Upload Failed"), json) }
+                        
                     } else {
                         var file: [String : String] = [:]
                         file["__type"] = "File"
-                        file["name"] = json["name"] as? String
-                        file["url"] = json["url"] as? String
+                        file["name"] = json?["name"] as? String
+                        file["url"] = json?["url"] as? String
                         let jsonObject: [String : [String : String]] = [key : file]
                         do {
                             let data = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions.prettyPrinted)
-                            Parse.put(endpoint: "/classes/" + classname + "/" + objectId, data: data, completion: { (response, json, success) in
-                                completion("Success", json, true)
-                            })
-                        } catch {}
+                            Parse.shared.put("/classes/\(classname)/\(objectId)", data: data, completion: completion)
+                            
+                        } catch let error {
+                            DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
+                        }
                     }
                 }
-            } catch let error as NSError {
-                completion(error.debugDescription, [:], false)
+            } catch let error {
+                DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
             }
         }.resume()
     }
     
-    class func put(endpoint: String, body: String = String(), data: Data? = nil, completion: @escaping (String, [String : AnyObject], Bool) -> ()) {
+    func put(_ endpoint: String, data: Data, completion: @escaping PFCompletionBlock) {
         
-        guard isNetworkConnection() else {
-            completion("",[:], false)
-            return
+        guard UIApplication.shared.isConnectedToNetwork else {
+            return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
-            DispatchQueue.main.async {
-                NTToast(text: "Invalid server URL").show(duration: 1.0)
-            }
-            return
+        guard let url = URL(string: serverURL + endpoint) else {
+            return completion((false, "Invalid Server URL"), nil)
         }
 
         var request = URLRequest(url: url)
-        request.setValue(self.config?.applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(self.config?.masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
+        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "PUT"
-        request.httpBody = data ?? body.data(using: .utf8)
+        request.httpBody = data
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
-            if error != nil {
-                print(error.debugDescription)
-                completion(error!.localizedDescription, [:], false)
+            
+            guard let data = data, error == nil else {
+                DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
             do {
-                guard let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String : AnyObject] else {
-                    completion("Sorry, an unexpected error occurred", [:], false)
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
+                
+                if let error = json?["error"] as? String {
+                    
+                    DispatchQueue.main.sync { completion((false, error), json) }
                     return
-                }
-                if let error = json["error"] as? String {
-                    completion(error, json, false)
+                    
                 } else {
-                    if let code = json["code"] as? Int {
-                        if code == 1 {
-                            completion(json["message"] as! String, json, false)
-                            return
-                        }
-                    } else if let result = json["result"] as? Bool {
-                        if !result {
-                            completion("Faild to send push", json, false)
-                            return
-                        }
+                    if let code = json?["code"] as? Int, code == 1 {
+                        
+                        DispatchQueue.main.sync { completion((false, json?["message"] as? String), json) }
+                        
+                    } else if let result = json?["result"] as? Bool, !result {
+                        
+                        DispatchQueue.main.sync { completion((false, "Failed to send push"), json) }
+                        
                     } else {
-                        completion("Success", json, true)
+                        
+                        DispatchQueue.main.sync { completion((true, nil), json) }
+
                     }
                 }
-            } catch let error as NSError {
-                completion(error.debugDescription, [:], false)
+            } catch let error {
+                DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
             }
         }.resume()
     }
     
-    class func delete(endpoint: String, completion: @escaping (String, Int?, Bool) -> ()) {
-        
-        guard isNetworkConnection() else {
-            completion("", nil, false)
-            return
-        }
-        
-        guard let url = URL(string: self.config!.serverUrl! + endpoint) else {
-            DispatchQueue.main.async {
-                NTToast(text: "Invalid server URL").show(duration: 1.0)
-            }
-            return
-        }
-        print(url)
-        var request = URLRequest(url: url)
-        request.setValue(self.config?.applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(self.config?.masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "DELETE"
-        URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
-            if error != nil {
-                print(error.debugDescription)
-                completion(error!.localizedDescription, (response as? HTTPURLResponse)?.statusCode, false)
-                return
-            }
-            do {
-                guard let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String : AnyObject] else {
-                    completion("Sorry, an unexpected error occurred", -1, false)
-                    return
-                }
-                if let error = json["error"] as? String {
-                    let code = json["code"] as? Int
-                    completion(error, code, false)
-                } else {
-                    completion("Success", 0, true)
-                }
-            } catch let error as NSError {
-                completion(error.debugDescription, error.code, false)
-            }
-        }.resume()
-    }
 }

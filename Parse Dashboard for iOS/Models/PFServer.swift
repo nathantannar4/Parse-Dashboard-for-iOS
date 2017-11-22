@@ -30,9 +30,13 @@ import SwiftyJSON
 
 class PFServer {
     
+    // MARK: - Properties
+    
     var keys: [String]
     var values: [AnyObject]
     var json: JSON
+    
+    // MARK: - Initialization
     
     init(_ dictionary: [String : AnyObject]) {
         
