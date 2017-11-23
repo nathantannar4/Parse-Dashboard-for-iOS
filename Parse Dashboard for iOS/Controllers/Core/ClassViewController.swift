@@ -136,6 +136,8 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     func addObject() {
         
         let alert = UIAlertController(title: "Create Object", message: nil, preferredStyle: .alert)
+        alert.configureView()
+        
         let saveAction = UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
             
             guard let classname = self?.schema.name, let body = alert.textFields?.first?.text else { return }
@@ -221,6 +223,8 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     func presentActions(for indexPath: IndexPath) {
         
         let actionSheet = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
+        actionSheet.configureView()
+        
         let actions = [
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 self?.deleteObject(at: indexPath)
@@ -235,6 +239,8 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     func deleteObject(at indexPath: IndexPath) {
         
         let alert = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+        alert.configureView()
+        
         let actions = [
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 

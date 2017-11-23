@@ -1,12 +1,19 @@
 PODS:
+  - DKImagePickerController (3.8.1):
+    - DKImagePickerController/Camera (= 3.8.1)
+    - DKImagePickerController/ImageManager (= 3.8.1)
+  - DKImagePickerController/Camera (3.8.1)
+  - DKImagePickerController/ImageManager (3.8.1)
   - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
+  - DKImagePickerController
   - SwiftyJSON
 
 SPEC CHECKSUMS:
+  DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 452bf79a520d2c07dbdc1cf5a44bbfaf00ee963d
+PODFILE CHECKSUM: 9251f2304d1aca97b598b9777f95b433cfa3262c
 
 COCOAPODS: 1.3.1

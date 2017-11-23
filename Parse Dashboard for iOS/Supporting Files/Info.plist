@@ -41,5 +41,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Add icons to servers</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Secure Usage of App</string>
 </dict>
 </plist>

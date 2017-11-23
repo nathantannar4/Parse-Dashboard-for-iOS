@@ -128,6 +128,7 @@ class SchemaDetailViewController: PFTableViewController {
     func deleteAllObjectsInSchema() {
         
         let alert = UIAlertController(title: "Warning: Class contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
+        alert.configureView()
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             

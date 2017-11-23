@@ -87,6 +87,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     
     private func setupTableView() {
         
+        tableView.scrollIndicatorInsets.bottom = 5
         tableView.backgroundColor = .darkPurpleBackground
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -278,6 +279,14 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
             let oldIndexPath = IndexPath(row: row, section: 2)
             guard oldIndexPath != indexPath, let cell = tableView.cellForRow(at: oldIndexPath) else { return }
             cell.accessoryType = .none
+        }
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 10 {
+            tableView.backgroundColor = .darkPurpleBackground
+        } else {
+            tableView.backgroundColor = .white
         }
     }
     

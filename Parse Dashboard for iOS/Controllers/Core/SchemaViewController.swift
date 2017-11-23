@@ -71,11 +71,11 @@ class SchemaViewController: PFCollectionViewController {
                 self?.refreshControl.endRefreshing()
                 return
             }
+            self?.refreshControl.endRefreshing()
             self?.schemas = results.map { return PFSchema($0) }
             if results.count > 0 {
                 self?.collectionView?.insertSections([0])
             }
-            self?.refreshControl.endRefreshing()
         }
     }
     
@@ -166,6 +166,8 @@ class SchemaViewController: PFCollectionViewController {
     func presentActions(for indexPath: IndexPath) {
         
         let actionSheet = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
+        actionSheet.configureView()
+        
         let actions = [
             UIAlertAction(title: "Details", style: .default, handler: { [weak self] _ in
                 self?.showSchemaDetails(at: indexPath)
@@ -184,6 +186,7 @@ class SchemaViewController: PFCollectionViewController {
     func addSchema() {
         
         let alert = UIAlertController(title: "Create Class", message: nil, preferredStyle: .alert)
+        alert.configureView()
         
         let createAction = UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
             
@@ -217,6 +220,8 @@ class SchemaViewController: PFCollectionViewController {
     func promptDeleteSchema(at indexPath: IndexPath) {
         
         let alert = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+        alert.configureView()
+        
         let actions = [
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 self?.deleteSchema(at: indexPath)
@@ -251,6 +256,7 @@ class SchemaViewController: PFCollectionViewController {
     func deleteAllObjectsInSchema(at indexPath: IndexPath) {
         
         let alert = UIAlertController(title: "Warning: Class contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
+        alert.configureView()
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             

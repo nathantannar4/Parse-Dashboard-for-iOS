@@ -37,7 +37,6 @@ class ClassCell: PFCollectionViewCell {
     
     var object: PFObject? {
         didSet {
-            topLabel.text = object?.id
             middleLabel.text = object?.createdAt
             bottomLabel.text = object?.updatedAt
         }
@@ -45,8 +44,12 @@ class ClassCell: PFCollectionViewCell {
     
     var searchKey: String? {
         didSet {
-            guard let searchKey = searchKey else { return }
-            topLabel.text = object?.value(forKey: searchKey) as? String
+            guard let searchKey = searchKey else {
+                topLabel.text = .undefined
+                return
+            }
+            guard let value = object?.value(forKey: searchKey) else { return }
+            topLabel.text = String(describing: value)
         }
     }
     
@@ -87,7 +90,7 @@ class ClassCell: PFCollectionViewCell {
         
         let stackView = UIStackView(arrangedSubviews: [topLabel, middleLabel, bottomLabel])
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fillProportionally
         contentView.addSubview(stackView)
         stackView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 4, leftConstant: 12, bottomConstant: 4, rightConstant: 12)
     }

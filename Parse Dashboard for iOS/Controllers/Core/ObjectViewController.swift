@@ -117,6 +117,8 @@ class ObjectViewController: PFTableViewController {
     func deleteObject() {
         
         let alert = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+        alert.configureView()
+        
         let actions = [
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 
@@ -274,7 +276,7 @@ class ObjectViewController: PFTableViewController {
                     }
                 }
             }
-            cell.value = value
+            cell.value = value ?? String.null
             return cell
         }
         cell.key = "JSON"
@@ -366,7 +368,7 @@ class ObjectViewController: PFTableViewController {
         if viewStyle == .formatted {
             
             guard let type = object.schema?.typeForField(object.keys[indexPath.row]) else { return false }
-            return (type == .file || type == .string || type ==  .number || type == .boolean)
+            return (type == .file || type == .string || type ==  .number || type == .boolean || type == .pointer)
                 && (object.keys[indexPath.row] != .objectId) && (object.keys[indexPath.row] != .createdAt) && (object.keys[indexPath.row] != .updatedAt)
         }
         return false
@@ -422,10 +424,11 @@ class ObjectViewController: PFTableViewController {
             } else if type == .string {
                 
                 let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
-
+                alert.configureView()
+                
                 let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
                     guard let newValue = alert.textFields?.first?.text else { return }
-                    let data = "{\"\(key)\":\(newValue)}".data(using: .utf8)
+                    let data = "{\"\(key)\":\"\(newValue)\"}".data(using: .utf8)
                     self?.updateField(with: data)
                 })
 
@@ -442,7 +445,8 @@ class ObjectViewController: PFTableViewController {
             } else if type == .number {
                 
                 let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
-
+                alert.configureView()
+                
                 let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
                     guard let newValue = alert.textFields?.first?.text else { return }
                     let data = "{\"\(key)\":\(newValue)}".data(using: .utf8)
@@ -467,6 +471,8 @@ class ObjectViewController: PFTableViewController {
             } else if type == .boolean {
 
                 let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
+                alert.configureView()
+                
                 let trueAction = UIAlertAction(title: "True", style: .default, handler: {
                     alert -> Void in
                     let data = "{\"\(key)\":true}".data(using: .utf8)
@@ -482,6 +488,36 @@ class ObjectViewController: PFTableViewController {
                 alert.addAction(falseAction)
                 alert.addAction(trueAction)
                 self?.present(alert, animated: true, completion: nil)
+                
+            } else if type == .pointer {
+                
+                guard let pointer = self?.object.schema?.fields?[key] as? [String:String] else {
+                    self?.handleError("Failed to parse schema for type")
+                    return
+                }
+                guard let classname = pointer["targetClass"] else { return }
+                
+                let alert = UIAlertController(title: key, message: "\(classname) Pointer", preferredStyle: .alert)
+                alert.configureView()
+                
+                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+                    guard let newValue = alert.textFields?.first?.text else { return }
+                    
+                    let data = "{\"\(key)\":{\"__type\":\"Pointer\", \"className\":\"\(classname)\", \"objectId\":\"\(newValue)\"}}".data(using: .utf8)
+                    self?.updateField(with: data)
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                alert.addAction(cancelAction)
+                alert.addAction(saveAction)
+                
+                alert.addTextField { (textField : UITextField!) -> Void in
+                    textField.placeholder = .objectId
+                    let currentPointer = self?.object.value(forKey: key) as? [String:String]
+                    textField.text = currentPointer?[.objectId]
+                }
+                self?.present(alert, animated: true, completion: nil)
+                
             }
         })
         editAction.backgroundColor = .logoTint
@@ -505,15 +541,11 @@ class ObjectViewController: PFTableViewController {
         guard let classname = self.object.schema?.name else { return }
         Parse.shared.put("/classes/\(classname)/\(object.id)", data: data, completion: { [weak self] (result, json) in
             
-            guard result.success, let json = json else {
+            guard result.success else {
                 self?.handleError(result.error)
                 return
             }
-            let schema = self?.object.schema
-            self?.object = PFObject(json)
-            self?.object.schema = schema
-            self?.tableView.reloadData()
-            self?.tableView.refreshControl?.endRefreshing()
+            self?.handleRefresh()
             self?.handleSuccess("Object Updated")
         })
     }

@@ -27,13 +27,13 @@
 
 import UIKit
 import CoreData
+import DKImagePickerController
 
 class ServersViewController: PFCollectionViewController {
     
     // MARK: - Properties
     
     private var servers = [ParseServerConfig]()
-    private var selectedIndexPath: IndexPath?
     private var context: NSManagedObjectContext? {
         return (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
     }
@@ -57,15 +57,126 @@ class ServersViewController: PFCollectionViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        title = "Parse Dashboard for iOS"
+        title = "Parse Dashboard"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(showInfo))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                                            target: self,
-                                                            action: #selector(addServer))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add,
+                            target: self,
+                            action: #selector(addServer))
+//            UIBarButtonItem(image: UIImage(named: "ic_lock")?.scale(to: 30),
+//                            style: .plain,
+//                            target: self,
+//                            action: #selector(toggleAuthRequired))
+        ]
     }
+    
+    // MARK: - Auth
+    
+//    private func authenticateUser() {
+//
+//        guard let isProtected = UserDefaults.standard.value(forKey: .isProtected) as? Bool else {
+//            promptAuthSetup(completion: { enabled in
+//                if enabled {
+//                    self.authenticateWithPassword(completion: { _ in })
+//                } else {
+//                    self.fetchServersFromCoreData()
+//                }
+//            })
+//            return
+//        }
+//        if isProtected {
+//            // Auth required
+//            if BioMetricAuthenticator.canAuthenticate() {
+//                authenticateWithBiometrics()
+//            } else {
+//                authenticateWithPassword(completion: { success in
+//                    if success {
+//                        self.fetchServersFromCoreData()
+//                    } else {
+//                        self.handleError("Incorrect Password")
+//                    }
+//                })
+//            }
+//        } else {
+//            // Auth not required
+//            fetchServersFromCoreData()
+//        }
+//    }
+//
+//    private func authenticateWithBiometrics() {
+//        BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", success: {
+//            self.fetchServersFromCoreData()
+//        }) { error in
+//            if error == .fallback || error == .biometryLockedout {
+//                self.au
+//            }
+//            self.handleError(error.message())
+//        }
+//    }
+//
+//    private func authenticateWithPassword(completion: @escaping (Bool)->Void) {
+//        let alert = UIAlertController(title: "Authentication", message: "Please enter your password", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+//            let password = alert.textFields?.first?.text
+//            completion(self.canAuthenticate(with: password))
+//        }))
+//        alert.addTextField {
+//            $0.placeholder = "Password"
+//            $0.isSecureTextEntry = true
+//        }
+//        present(alert, animated: true, completion: nil)
+//    }
+//
+//    private func promptAuthSetup(completion: ((Bool)->Void)?) {
+//        let alert = UIAlertController(title: "Security", message: "Do you want to enable server access authentication", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Disable", style: .destructive, handler: { _ in
+//            UserDefaults.standard.set(false, forKey: .isProtected)
+//            UserDefaults.standard.set(nil, forKey: .password)
+//            completion?(false)
+//        }))
+//        alert.addAction(UIAlertAction(title: "Enable", style: .default, handler: { _ in
+//            UserDefaults.standard.set(true, forKey: .isProtected)
+//            completion?(true)
+//        }))
+//        present(alert, animated: true, completion: nil)
+//    }
+//
+//    private func canAuthenticate(with password: String?) -> Bool {
+//        guard let password = password else { return false }
+//        guard let savedPassword = UserDefaults.standard.value(forKey: .password) as? String else {
+//            UserDefaults.standard.set(password, forKey: .password) // Set the initial password
+//            return canAuthenticate(with: password)
+//        }
+//        return password == savedPassword
+//    }
+//
+//    @objc
+//    private func toggleAuthRequired() {
+//        guard let isProtected = UserDefaults.standard.value(forKey: .isProtected) as? Bool else {
+//            authenticateUser()
+//            return
+//        }
+//        if isProtected {
+//            authenticateWithPassword(completion: { success in
+//                if success {
+//                    self.fetchServersFromCoreData()
+//                    self.promptAuthSetup(completion: nil)
+//                } else {
+//                    self.handleError("Incorrect Password")
+//                }
+//            })
+//        } else {
+//            if BioMetricAuthenticator.canAuthenticate() {
+//                authenticateWithBiometrics()
+//            } else {
+//                authenticateWithPassword(completion: { _ in })
+//            }
+//        }
+//    }
     
     // MARK: - UICollectionViewDataSource
     
@@ -106,6 +217,7 @@ class ServersViewController: PFCollectionViewController {
         let request: NSFetchRequest<ParseServerConfig> = ParseServerConfig.fetchRequest()
         do {
             servers = try context.fetch(request)
+            collectionView?.reloadData()
         } catch let error {
             handleError(error.localizedDescription)
         }
@@ -125,8 +237,10 @@ class ServersViewController: PFCollectionViewController {
     func presentActions(for indexPath: IndexPath) {
         
         let actionSheet = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
+        actionSheet.configureView()
+        
         let actions = [
-            UIAlertAction(title: "Copy", style: .default, handler: { [weak self] _ in
+            UIAlertAction(title: "Duplicate", style: .default, handler: { [weak self] _ in
                 self?.duplicateServer(at: indexPath)
             }),
             UIAlertAction(title: "Edit", style: .default, handler: { [weak self] _ in
@@ -148,73 +262,74 @@ class ServersViewController: PFCollectionViewController {
     @objc
     func addServer() {
         
-        let alertController = UIAlertController(title: "Add Server", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add Server", message: nil, preferredStyle: .alert)
+        alert.configureView()
         
-        let saveAction = UIAlertAction(title: "Add", style: .default, handler: {
-            alert -> Void in
+        let saveAction = UIAlertAction(title: "Add", style: .default, handler: { _ in
             
             guard let context = self.context else { return }
             let server = NSManagedObject(entity: ParseServerConfig.entity(), insertInto: context)
-            server.setValue(alertController.textFields![0].text, forKey: "name")
-            server.setValue(alertController.textFields![1].text, forKey: "applicationId")
-            server.setValue(alertController.textFields![2].text, forKey: "masterKey")
-            server.setValue(alertController.textFields![3].text, forKey: "serverUrl")
+            server.setValue(alert.textFields![0].text, forKey: "name")
+            server.setValue(alert.textFields![1].text, forKey: "applicationId")
+            server.setValue(alert.textFields![2].text, forKey: "masterKey")
+            server.setValue(alert.textFields![3].text, forKey: "serverUrl")
             (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
             if let config = server as? ParseServerConfig {
                 self.servers.append(config)
                 let indexPath = IndexPath(row: self.servers.count - 1, section: 0)
                 self.collectionView?.insertItems(at: [indexPath])
+                self.handleSuccess("Server Added")
             }
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alert.addAction(saveAction)
         
         for placeholder in ["App Name", "Application ID", "Master Key", "Server URL"] {
-            alertController.addTextField { $0.placeholder = placeholder }
+            alert.addTextField { $0.placeholder = placeholder }
         }
-        present(alertController, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     func editServer(at indexPath: IndexPath) {
         
-        let alertController = UIAlertController(title: "Configuration", message: "Edit", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Configuration", message: "Edit", preferredStyle: .alert)
+        alert.configureView()
+        
         let server = servers[indexPath.row]
         
-        let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
-            alert -> Void in
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { _ in
             
-            server.setValue(alertController.textFields![0].text, forKey: "name")
-            server.setValue(alertController.textFields![1].text, forKey: "applicationId")
-            server.setValue(alertController.textFields![2].text, forKey: "masterKey")
-            server.setValue(alertController.textFields![3].text, forKey: "serverUrl")
+            server.setValue(alert.textFields![0].text, forKey: "name")
+            server.setValue(alert.textFields![1].text, forKey: "applicationId")
+            server.setValue(alert.textFields![2].text, forKey: "masterKey")
+            server.setValue(alert.textFields![3].text, forKey: "serverUrl")
             (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
             self.collectionView?.reloadItems(at: [indexPath])
+            self.handleSuccess("Server Updated")
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alert.addAction(saveAction)
         
-        alertController.addTextField { (textField : UITextField!) -> Void in
+        alert.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "App Name"
             textField.text = server.name
         }
-        alertController.addTextField { (textField : UITextField!) -> Void in
+        alert.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Application ID"
             textField.text = server.applicationId
         }
-        alertController.addTextField { (textField : UITextField!) -> Void in
+        alert.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Master Key"
             textField.text = server.masterKey
         }
-        alertController.addTextField { (textField : UITextField!) -> Void in
+        alert.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "http://<url>:<port>/<path>"
             textField.text = server.serverUrl
         }
         
-        present(alertController, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     func duplicateServer(at indexPath: IndexPath) {
@@ -229,12 +344,15 @@ class ServersViewController: PFCollectionViewController {
             servers.append(server)
             let indexPath = IndexPath(row: servers.count - 1, section: 0)
             collectionView?.insertItems(at: [indexPath])
+            self.handleSuccess("Server Duplicated")
         }
     }
     
     func deleteServer(at indexPath: IndexPath) {
         
         let alert = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+        alert.configureView()
+        
         let actions = [
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 guard let context = self?.context, let server = self?.servers[indexPath.row] else { return }
@@ -253,38 +371,37 @@ class ServersViewController: PFCollectionViewController {
         actions.forEach { alert.addAction($0) }
         present(alert, animated: true, completion: nil)
     }
-}
-
-extension ServersViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    // MARK: UIImagePickerControllerDelegate
     
     func editIcon(at indexPath: IndexPath) {
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.sourceType = .photoLibrary
-        selectedIndexPath = indexPath
-        present(picker, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        guard let indexPath = selectedIndexPath else { return }
-        guard let context = context, let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
-        let imageData = UIImageJPEGRepresentation(image, 1)
-        servers[indexPath.row].setValue(imageData, forKey: "icon")
-        do {
-            try context.save()
-        } catch let error {
-            handleError(error.localizedDescription)
+        func saveSelection(of image: UIImage?) {
+            
+            guard let context = self.context else { return }
+            let imageData = image != nil ? UIImageJPEGRepresentation(image!, 1) : nil
+            self.servers[indexPath.row].setValue(imageData, forKey: "icon")
+            do {
+                try context.save()
+                self.collectionView?.reloadItems(at: [indexPath])
+            } catch let error {
+                self.handleError(error.localizedDescription)
+            }
         }
         
-        defer {
-            picker.dismiss(animated: true, completion: { [weak self] in
-                self?.collectionView?.reloadItems(at: [indexPath])
-                self?.selectedIndexPath = nil
+        let picker = DKImagePickerController()
+        picker.assetType = .allPhotos
+        picker.singleSelect = true
+        picker.autoCloseOnSingleSelect = false
+        picker.didSelectAssets = { assets in
+            guard let asset = assets.first else {
+                saveSelection(of: nil)
+                return
+            }
+            asset.fetchOriginalImageWithCompleteBlock({ image, _ in
+                saveSelection(of: image)
             })
         }
+        picker.navigationBar.isTranslucent = false
+        picker.navigationBar.tintColor = .logoTint
+        present(picker, animated: true, completion: nil)
     }
-    
 }

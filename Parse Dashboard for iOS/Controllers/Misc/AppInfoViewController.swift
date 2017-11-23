@@ -71,6 +71,8 @@ class AppInfoViewController: UITableViewController {
         let shareText = "Hey! Check out this awesome mobile Parse Dashboard client for iOS! https://itunes.apple.com/ca/app/parse-dashboard/id1212141622"
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.configureView()
+        
         let actions = [
             UIAlertAction(title: "Share on Facebook", style: .default, handler: { _ in
                 

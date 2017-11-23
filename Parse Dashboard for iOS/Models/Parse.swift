@@ -180,7 +180,7 @@ class Parse {
         }.resume()
     }
 
-    func post(filename: String, classname: String, key: String, objectId: String, imageData: Data, completion: @escaping PFCompletionBlock) {
+    func post(filename: String, classname: String, key: String, objectId: String, imageData: Data?, completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
             return completion((false, "Network Connection Unavailable"), nil)

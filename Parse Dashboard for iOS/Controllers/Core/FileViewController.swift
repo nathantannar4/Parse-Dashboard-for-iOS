@@ -27,8 +27,9 @@
 
 import UIKit
 import Photos
+import DKImagePickerController
 
-class FileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class FileViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -82,8 +83,8 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private func setupNavigationBar() {
         
         title = "File View"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close"),
-                                                           style: .plain,
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))
         navigationItem.rightBarButtonItems = [
@@ -142,25 +143,23 @@ class FileViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @objc
     func presentImagePicker() {
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.sourceType = .photoLibrary
-        picker.allowsEditing = false
+        
+        let picker = DKImagePickerController()
+        picker.assetType = .allPhotos
+        picker.singleSelect = true
+        picker.autoCloseOnSingleSelect = false
+        picker.didSelectAssets = { assets in
+            assets.first?.fetchOriginalImageWithCompleteBlock({ image, _ in
+                let imageData = image != nil ? UIImageJPEGRepresentation(image!, 1) : nil
+                Parse.shared.post(filename: self.filename , classname:  self.schema.name, key: self.key, objectId: self.objectId, imageData: imageData, completion: { [weak self] (result, json) in
+                    self?.imageView.contentMode = .scaleAspectFit
+                    self?.imageView.image = image
+                })
+            })
+        }
+        picker.navigationBar.isTranslucent = false
+        picker.navigationBar.tintColor = .logoTint
         present(picker, animated: true, completion: nil)
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        defer {
-            picker.dismiss(animated: true, completion: nil)
-        }
-        
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
-        guard let imageData = UIImageJPEGRepresentation(image, 1) else { return }
-        
-        Parse.shared.post(filename: self.filename , classname:  self.schema.name, key: self.key, objectId: self.objectId, imageData: imageData, completion: { [weak self] (result, json) in
-            self?.imageView.contentMode = .scaleAspectFit
-            self?.imageView.image = image
-        })
-    }
+
 }

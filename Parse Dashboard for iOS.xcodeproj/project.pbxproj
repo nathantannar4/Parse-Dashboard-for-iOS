@@ -47,6 +47,7 @@
 		38DE1D0C1FC5415000C49508 /* ServerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1D0B1FC5415000C49508 /* ServerDetailViewController.swift */; };
 		38DE1D0F1FC5453200C49508 /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1D0D1FC5453200C49508 /* FileViewController.swift */; };
 		38DE1D101FC5453200C49508 /* ArrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1D0E1FC5453200C49508 /* ArrayViewController.swift */; };
+		38F12D3E1FC696D300D3817D /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F12D3D1FC696D300D3817D /* UIAlertController+Extensions.swift */; };
 		F25ECBC77855B1F9E2419001 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DEF2EA353A95C2C89F0735 /* Pods_Parse_Dashboard_for_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,7 @@
 		38DE1D0B1FC5415000C49508 /* ServerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerDetailViewController.swift; sourceTree = "<group>"; };
 		38DE1D0D1FC5453200C49508 /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
 		38DE1D0E1FC5453200C49508 /* ArrayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayViewController.swift; sourceTree = "<group>"; };
+		38F12D3D1FC696D300D3817D /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		49DEF2EA353A95C2C89F0735 /* Pods_Parse_Dashboard_for_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Parse_Dashboard_for_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04CF76C16F215027BB1D481 /* Pods-Parse Dashboard for iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		E34E4B477BD41310F7A5DDF0 /* Pods-Parse Dashboard for iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,11 +149,11 @@
 		38028C9D1FC55C47003A4E95 /* CollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				38DE1D071FC516A700C49508 /* FieldCell.swift */,
 				3872C1F21FC3C8AA00EBD87F /* PFCollectionViewCell.swift */,
 				3872C1EE1FC3C84E00EBD87F /* ServerCell.swift */,
 				3872C20D1FC415AB00EBD87F /* SchemaCell.swift */,
 				38DE1CFB1FC4BB1B00C49508 /* ClassCell.swift */,
+				38DE1D071FC516A700C49508 /* FieldCell.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -219,6 +221,7 @@
 				3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */,
 				38DE1D031FC5149B00C49508 /* Date+Extensions.swift */,
 				3872C1DE1FC3BE2400EBD87F /* UIApplication+Extensions.swift */,
+				38F12D3D1FC696D300D3817D /* UIAlertController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -383,10 +386,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,6 +413,7 @@
 				3872C1F71FC3CC2000EBD87F /* UIImage+Extensions.swift in Sources */,
 				38DE1CFE1FC4C30E00C49508 /* InputTextView.swift in Sources */,
 				3872C1DC1FC3BCF600EBD87F /* Parse.swift in Sources */,
+				38F12D3E1FC696D300D3817D /* UIAlertController+Extensions.swift in Sources */,
 				38DE1D0F1FC5453200C49508 /* FileViewController.swift in Sources */,
 				38028CAA1FC56611003A4E95 /* SchemaDetailViewController.swift in Sources */,
 				38DE1D081FC516A700C49508 /* FieldCell.swift in Sources */,

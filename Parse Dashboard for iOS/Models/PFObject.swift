@@ -39,7 +39,17 @@ class PFObject {
     var schema: PFSchema?
     
     var keys: [String] {
-        return Array(json.dictionaryValue.keys)
+        if let schemaKeys = schema?.fields?.keys {
+            var keys = Array(schemaKeys)
+            if let index = keys.index(of: "className") {
+                keys.remove(at: index)
+            }
+            if let index = keys.index(of: "type") {
+                keys.remove(at: index)
+            }
+            return keys
+        }
+        return Array(json.dictionaryValue.keys) // Fallback on local keys
     }
     
     // MARK: - Initialization

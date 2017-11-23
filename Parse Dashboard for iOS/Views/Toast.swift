@@ -120,7 +120,7 @@ open class Toast: UIView {
         layoutRippleView()
         addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(Toast.didTap(gesture:))))
         actionButton.addTarget(self, action: #selector(Toast.didTapActionButton(button:)), for: .touchUpInside)
-        backgroundColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1)
+        backgroundColor = Alert.Defaults.Color.Success
     }
     
     private func layoutRippleView() {

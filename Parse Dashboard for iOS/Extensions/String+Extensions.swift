@@ -46,6 +46,10 @@ extension String {
         return "<undefined>"
     }
     
+    static var null: String {
+        return "<null>"
+    }
+    
     static var acl: String {
         return "ACL"
     }
@@ -81,4 +85,17 @@ extension String {
     static var date: String {
         return "Date"
     }
+    
+    static var isNew: String {
+        return "isNew"
+    }
+
+    static var isProtected: String {
+        return "isProtected"
+    }
+    
+    static var password: String {
+        return "password"
+    }
+
 }
