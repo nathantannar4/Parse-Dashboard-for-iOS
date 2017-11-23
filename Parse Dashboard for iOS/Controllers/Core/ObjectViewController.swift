@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import RMDateSelectionViewController
 
 class ObjectViewController: PFTableViewController {
     
@@ -368,7 +369,7 @@ class ObjectViewController: PFTableViewController {
         if viewStyle == .formatted {
             
             guard let type = object.schema?.typeForField(object.keys[indexPath.row]) else { return false }
-            return (type == .file || type == .string || type ==  .number || type == .boolean || type == .pointer)
+            return (type == .file || type == .string || type ==  .number || type == .boolean || type == .pointer || type == .date)
                 && (object.keys[indexPath.row] != .objectId) && (object.keys[indexPath.row] != .createdAt) && (object.keys[indexPath.row] != .updatedAt)
         }
         return false
@@ -467,6 +468,19 @@ class ObjectViewController: PFTableViewController {
             } else if type == .date {
                 
                 // TODO: Implement Later
+                let selectAction = RMAction<UIDatePicker>(title: "Select", style: .default, andHandler: { controller in
+                    let date = controller.contentView.date
+                    let dateString = date.stringify()
+                    print(dateString)
+                    let data = "{\"\(key)\":{\"__type\":\"Date\", \"iso\":\"\(dateString)\"}}".data(using: .utf8)
+                    self?.updateField(with: data)
+                })
+                let cancelAction = RMAction<UIDatePicker>(title: "Cancel", style: .destructive, andHandler: nil)
+                guard let datePicker = RMDateSelectionViewController(style: .white, title: key, message: type, select: selectAction, andCancel: cancelAction) else { return }
+                datePicker.disableMotionEffects = true
+                datePicker.disableBouncingEffects = true
+                datePicker.disableBlurEffects = true
+                self?.present(datePicker, animated: true, completion: nil)
 
             } else if type == .boolean {
 

@@ -96,7 +96,9 @@ public extension Date {
     
     
     func stringify() -> String {
-        let dateFormatter:DateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar.current
+        dateFormatter.timeZone = Calendar.current.timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         let strdt = dateFormatter.string(from: self as Date)
         if let dtDate = dateFormatter.date(from: strdt){
