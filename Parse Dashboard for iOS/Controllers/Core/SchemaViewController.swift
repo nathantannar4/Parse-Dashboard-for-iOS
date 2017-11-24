@@ -91,6 +91,7 @@ class SchemaViewController: PFCollectionViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
+        
         title = "Classes"
         definesPresentationContext = true
         if #available(iOS 11.0, *) {

@@ -104,9 +104,9 @@ class FileViewController: UIViewController {
     func loadDataFromUrl() {
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
+            DispatchQueue.main.async {
                 self?.imageView.image = UIImage(data: data)
-                self?.imageView.contentMode = .scaleAspectFit
+                self?.imageView.contentMode = .scaleAspectFill
             }
         }.resume()
     }
@@ -123,13 +123,11 @@ class FileViewController: UIViewController {
         
         guard let image = imageView.image else { return }
         if image == UIImage(named: "File") { return }
-        UIApplication.shared.beginIgnoringInteractionEvents()
         PHPhotoLibrary.shared().performChanges( { PHAssetChangeRequest.creationRequestForAsset(from: image) }, completionHandler: { success, error in
-            UIApplication.shared.endIgnoringInteractionEvents()
             DispatchQueue.main.async {
                 if success {
                     // "Saved to camera roll"
-                    Ping(text: "Saved to camera roll", style: .success).show(animated: true, duration: 3)
+                    Toast(text: "Saved to camera roll").present(self, animated: true, duration: 3)
                 } else {
                     // "Error saving to camera roll"
                     Ping(text: "Error saving to camera roll", style: .success).show(animated: true, duration: 3)
@@ -151,8 +149,13 @@ class FileViewController: UIViewController {
         picker.didSelectAssets = { assets in
             assets.first?.fetchOriginalImageWithCompleteBlock({ image, _ in
                 let imageData = image != nil ? UIImageJPEGRepresentation(image!, 1) : nil
+                Toast(text: "Uploading").present(self, animated: true, duration: 3)
                 Parse.shared.post(filename: self.filename , classname:  self.schema.name, key: self.key, objectId: self.objectId, imageData: imageData, completion: { [weak self] (result, json) in
-                    self?.imageView.contentMode = .scaleAspectFit
+                    guard result.success else {
+                        Ping(text: result.error ?? "Upload Failed", style: .success).show(animated: true, duration: 3)
+                        return
+                    }
+                    self?.imageView.contentMode = .scaleAspectFill
                     self?.imageView.image = image
                 })
             })

@@ -25,6 +25,8 @@
 //  Created by Nathan Tannar on 8/31/17.
 //
 
+// Appologies, this file is a mess
+
 import UIKit
 import RMDateSelectionViewController
 
@@ -57,6 +59,17 @@ class ObjectViewController: PFTableViewController {
         
         setupTableView()
         setupNavigationBar()
+        setupToolbar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(true, animated: animated)
     }
 
     // MARK: - Object Refresh
@@ -112,7 +125,62 @@ class ObjectViewController: PFTableViewController {
         ]
     }
     
+    private func setupToolbar() {
+        
+        if object.schema?.name == "_User" {
+            navigationController?.toolbar.barTintColor = .darkPurpleAccent
+            navigationController?.toolbar.tintColor = .white
+            var items = [UIBarButtonItem]()
+            items.append(
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            )
+            let pushItem: UIBarButtonItem = {
+                let containView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+                label.text = "Send Push Notification"
+                label.textColor = .white
+                label.font = UIFont.boldSystemFont(ofSize: 12)
+                label.textAlignment = .right
+                containView.addSubview(label)
+                let imageview = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
+                imageview.image = UIImage(named: "Push")
+                imageview.contentMode = .scaleAspectFit
+                containView.addSubview(imageview)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sendPushNotification))
+                containView.addGestureRecognizer(tapGesture)
+                return UIBarButtonItem(customView: containView)
+            }()
+            items.append(pushItem)
+            toolbarItems = items
+        }
+    }
+    
     // MARK: - User Actions
+    
+    @objc
+    func sendPushNotification() {
+        
+        let alert = UIAlertController(title: "Push Notification", message: "To: " + (object.json["username"].stringValue), preferredStyle: .alert)
+        alert.configureView()
+        
+        let saveAction = UIAlertAction(title: "Send", style: .default, handler: { _ in
+            
+            guard let message = alert.textFields?.first?.text else { return }
+            let body = "{\"where\":{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"\(self.object.id)\"}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
+            Parse.shared.post("/push", body: body, completion: { [weak self] (result, json) in
+                guard result.success else {
+                    self?.handleError(result.error)
+                    return
+                }
+                self?.handleSuccess("Push Notification Delivered")
+            })
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alert.addAction(saveAction)
+        alert.addTextField { $0.placeholder = "Payload Message" }
+        present(alert, animated: true, completion: nil)
+    }
     
     @objc
     func deleteObject() {
@@ -265,19 +333,19 @@ class ObjectViewController: PFTableViewController {
                     cell.valueTextView.isUserInteractionEnabled = false
                     return cell
                     
-                } else if type == .date, let stringValue = value as? String {
+                } else if type == .date, let iso = (value as? [String:String])?["iso"] ?? value as? String {
                     
                     // Date Data Type
                     let dateFormatter = DateFormatter()
                     dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                    if let date = dateFormatter.date(from: stringValue) {
+                    if let date = dateFormatter.date(from: iso) {
                         cell.value = date.string(dateStyle: .full, timeStyle: .full) 
                         return cell
                     }
                 }
             }
-            cell.value = value ?? String.null
+            cell.value = object.json.dictionaryValue[key] ?? String.null
             return cell
         }
         cell.key = "JSON"
@@ -367,10 +435,8 @@ class ObjectViewController: PFTableViewController {
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
         if viewStyle == .formatted {
-            
             guard let type = object.schema?.typeForField(object.keys[indexPath.row]) else { return false }
-            return (type == .file || type == .string || type ==  .number || type == .boolean || type == .pointer || type == .date)
-                && (object.keys[indexPath.row] != .objectId) && (object.keys[indexPath.row] != .createdAt) && (object.keys[indexPath.row] != .updatedAt)
+            return (type != .relation) && (object.keys[indexPath.row] != .objectId) && (object.keys[indexPath.row] != .createdAt) && (object.keys[indexPath.row] != .updatedAt)
         }
         return false
     }
@@ -529,6 +595,39 @@ class ObjectViewController: PFTableViewController {
                     textField.placeholder = .objectId
                     let currentPointer = self?.object.value(forKey: key) as? [String:String]
                     textField.text = currentPointer?[.objectId]
+                }
+                self?.present(alert, animated: true, completion: nil)
+                
+            } else {
+                
+                // Any other type is treated as a JSON object
+                
+                let value = self?.object.value(forKey: key) ?? []
+                guard let jsonData = try? JSONSerialization.data(withJSONObject: value, options: .prettyPrinted), let acl = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else {
+                    self?.handleError("JSON parse failed")
+                    return
+                }
+                
+                let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
+                alert.configureView()
+                
+                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+                    
+                    guard let newValue = alert.textFields?.first?.text else { return }
+                    print(newValue)
+                    print("{\"\(key)\":\(newValue)}")
+                    let data = "{\"\(key)\":\(newValue)}".data(using: .utf8)
+                    self?.updateField(with: data)
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                alert.addAction(cancelAction)
+                alert.addAction(saveAction)
+                
+                alert.addTextField { (textField : UITextField!) -> Void in
+                    textField.placeholder = .objectId
+                    textField.text = (acl as String).trimmingCharacters(in: .whitespacesAndNewlines)
+                    textField.heightAnchor.constraint(equalToConstant: 44).isActive = true
                 }
                 self?.present(alert, animated: true, completion: nil)
                 

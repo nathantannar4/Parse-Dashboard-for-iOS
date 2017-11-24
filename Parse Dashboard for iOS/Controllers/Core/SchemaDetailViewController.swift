@@ -189,10 +189,10 @@ class SchemaDetailViewController: PFTableViewController {
                 cell.value = schema.name
             case 1:
                 cell.key = "Permissions"
-                cell.value = schema.permissions
+                cell.value = schema.json?.dictionaryValue["classLevelPermissions"]
             case 2:
                 cell.key = "Fields"
-                cell.value = schema.fields 
+                cell.value = schema.json?.dictionaryValue["fields"]
             default:
                 break
             }

@@ -45,5 +45,10 @@
 	<string>Add icons to servers</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Secure Usage of App</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

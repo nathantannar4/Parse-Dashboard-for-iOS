@@ -230,6 +230,7 @@ class ServersViewController: PFCollectionViewController {
         let navigationController = UINavigationController(rootViewController: AppInfoViewController())
         navigationController.modalPresentationStyle = .formSheet
         navigationController.navigationBar.tintColor = .logoTint
+        navigationController.navigationBar.isTranslucent = false
         present(navigationController, animated: true, completion: nil)
     }
     

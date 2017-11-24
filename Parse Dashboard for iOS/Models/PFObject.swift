@@ -40,6 +40,7 @@ class PFObject {
     
     var keys: [String] {
         if let schemaKeys = schema?.fields?.keys {
+            // Local object will not contain keys for values that are undefined/null
             var keys = Array(schemaKeys)
             if let index = keys.index(of: "className") {
                 keys.remove(at: index)
@@ -47,9 +48,9 @@ class PFObject {
             if let index = keys.index(of: "type") {
                 keys.remove(at: index)
             }
-            return keys
+            return keys.sorted()
         }
-        return Array(json.dictionaryValue.keys) // Fallback on local keys
+        return Array(json.dictionaryValue.keys).sorted() // Fallback on local keys
     }
     
     // MARK: - Initialization
@@ -77,6 +78,20 @@ class PFObject {
     
     func value(forKey key: String) -> Any? {
         return json.dictionaryObject?[key]
+    }
+}
+
+extension Array where Element:Equatable {
+    func removeDuplicates() -> [Element] {
+        var result = [Element]()
+        
+        for value in self {
+            if result.contains(value) == false {
+                result.append(value)
+            }
+        }
+        
+        return result
     }
 }
 

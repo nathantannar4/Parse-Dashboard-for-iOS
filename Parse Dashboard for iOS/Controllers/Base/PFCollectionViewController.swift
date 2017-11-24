@@ -87,6 +87,12 @@ class PFCollectionViewController: UICollectionViewController, UICollectionViewDe
     
     // MARK: - Universal Helper Methods
     
+    func setTitleView(title: String, subtitle: String) {
+        let label = UILabel()
+        label.text = title + subtitle
+        navigationItem.titleView = label
+    }
+    
     func handleError(_ error: String?) {
         let error = error?.capitalized ?? "Unexpected Error"
         let ping = Ping(text: error, style: .danger)
