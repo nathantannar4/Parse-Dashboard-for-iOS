@@ -66,7 +66,20 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupToolbar()
         handleRefresh()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if schema.name == "_Installation" {
+            navigationController?.setToolbarHidden(false, animated: animated)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(true, animated: animated)
     }
     
     // MARK: - Data Refresh
@@ -130,7 +143,67 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         ]
     }
     
+    private func setupToolbar() {
+        
+        if schema.name == "_Installation" {
+            navigationController?.toolbar.barTintColor = .darkPurpleAccent
+            navigationController?.toolbar.tintColor = .white
+            var items = [UIBarButtonItem]()
+            items.append(
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            )
+            let pushItem: UIBarButtonItem = {
+                let containView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+                label.text = "Send Push Notification"
+                label.textColor = .white
+                label.font = UIFont.boldSystemFont(ofSize: 12)
+                label.textAlignment = .right
+                containView.addSubview(label)
+                let imageview = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
+                imageview.image = UIImage(named: "Push")
+                imageview.contentMode = .scaleAspectFit
+                containView.addSubview(imageview)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sendPushNotification))
+                containView.addGestureRecognizer(tapGesture)
+                return UIBarButtonItem(customView: containView)
+            }()
+            items.append(pushItem)
+            toolbarItems = items
+        }
+    }
+    
     // MARK: - User Actions
+    
+    @objc
+    func sendPushNotification() {
+        
+        let alert = UIAlertController(title: "Push Notification", message: "To: Devices Matching Current Query", preferredStyle: .alert)
+        alert.configureView()
+        
+        let saveAction = UIAlertAction(title: "Send", style: .default, handler: { _ in
+            
+            guard let message = alert.textFields?.first?.text else { return }
+            let userIds = self.objects.map {
+                return $0.json["user"].dictionary?["objectId"]?.stringValue ?? String()
+            }
+
+            // Example: where={"user":{"$inQuery":{"className":"_User","where":{"objectId":{"$in":["zaAqYBP8X9"]}}}}}
+            let body = "{\"where\":{\"user\":{\"$inQuery\":{\"className\":\"_User\",\"where\":{\"objectId\":{\"$in\":\(userIds)}}}}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
+            Parse.shared.post("/push", body: body, completion: { [weak self] (result, json) in
+                guard result.success else {
+                    self?.handleError(result.error)
+                    return
+                }
+                self?.handleSuccess("Push Notification Delivered")
+            })
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alert.addAction(saveAction)
+        alert.addTextField { $0.placeholder = "Payload Message" }
+        present(alert, animated: true, completion: nil)
+    }
     
     @objc
     func addObject() {

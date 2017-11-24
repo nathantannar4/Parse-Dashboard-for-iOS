@@ -64,12 +64,16 @@ class ObjectViewController: PFTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setToolbarHidden(false, animated: animated)
+        if object.schema?.name == "_User" {
+            navigationController?.setToolbarHidden(false, animated: animated)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setToolbarHidden(true, animated: animated)
+        if object.schema?.name == "_User" {
+            navigationController?.setToolbarHidden(true, animated: animated)
+        }
     }
 
     // MARK: - Object Refresh
