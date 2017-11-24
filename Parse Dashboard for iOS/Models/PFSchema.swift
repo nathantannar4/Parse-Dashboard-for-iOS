@@ -30,11 +30,14 @@ import SwiftyJSON
 
 class PFSchema {
     
+    // MARK: - Properties
+    
     var name: String
     var fields: [String : AnyObject]?
     var permissions: [String : AnyObject]?
-    
     let json: JSON?
+    
+    // MARK: - Initialization
     
     init(name: String) {
         self.name = name
@@ -61,6 +64,8 @@ class PFSchema {
         
         name = className
     }
+    
+    // MARK: - Methods
     
     func typeForField(_ field: String?) -> String? {
         guard let field = field else { return nil }

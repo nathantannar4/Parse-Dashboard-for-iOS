@@ -1,14 +1,15 @@
-# Pods for Parse Dashboard for iOS
-
-platform :ios, '9.1'
+# Uncomment the next line to define a global platform for your project
+platform :ios, '10.0'
 
 target 'Parse Dashboard for iOS' do
-    
-    use_frameworks!
-    
-    pod 'NTComponents', :path => '~/Documents/Active iOS Projects/NTComponents'
-    pod 'Fabric'
-    pod 'Crashlytics'
-    pod 'SwiftyJSON'
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Parse Dashboard for iOS
+  pod 'SwiftyJSON'
+  pod 'DKImagePickerController'
+  pod 'RMDateSelectionViewController'
+  # pod 'BiometricAuthentication'
+  
 
 end
