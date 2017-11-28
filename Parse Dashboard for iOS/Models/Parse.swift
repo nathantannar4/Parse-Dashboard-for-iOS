@@ -61,6 +61,8 @@ class Parse {
             if let encodedQuery = json.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
                 urlString += ("where=" + encodedQuery)
             }
+        } else {
+            urlString += query
         }
         
         guard let url = URL(string: urlString) else {
