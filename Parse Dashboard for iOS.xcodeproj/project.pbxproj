@@ -14,6 +14,8 @@
 		38028CA81FC5615A003A4E95 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA71FC5615A003A4E95 /* Alert.swift */; };
 		38028CAA1FC56611003A4E95 /* SchemaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */; };
 		3848CA0B1FC552560038A636 /* PFTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3848CA0A1FC552560038A636 /* PFTableViewController.swift */; };
+		3852AA791FDCC7D900D7B009 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3852AA781FDCC7D900D7B009 /* SupportViewController.swift */; };
+		3852AA7B1FDCC7E000D7B009 /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */; };
 		3872C1C71FC3BC6400EBD87F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1C61FC3BC6400EBD87F /* AppDelegate.swift */; };
 		3872C1CB1FC3BC6400EBD87F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3872C1CA1FC3BC6400EBD87F /* Assets.xcassets */; };
 		3872C1CE1FC3BC6400EBD87F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3872C1CC1FC3BC6400EBD87F /* LaunchScreen.storyboard */; };
@@ -59,6 +61,8 @@
 		38028CA71FC5615A003A4E95 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaDetailViewController.swift; sourceTree = "<group>"; };
 		3848CA0A1FC552560038A636 /* PFTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFTableViewController.swift; sourceTree = "<group>"; };
+		3852AA781FDCC7D900D7B009 /* SupportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
+		3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHandler.swift; sourceTree = "<group>"; };
 		3872C1C31FC3BC6400EBD87F /* Parse Dashboard for iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Parse Dashboard for iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3872C1C61FC3BC6400EBD87F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3872C1CA1FC3BC6400EBD87F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 			children = (
 				38028C981FC558A7003A4E95 /* WelcomeViewController.swift */,
 				38DE1D011FC511EF00C49508 /* AppInfoViewController.swift */,
+				3852AA781FDCC7D900D7B009 /* SupportViewController.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				38028CA71FC5615A003A4E95 /* Alert.swift */,
+				3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */,
 				3872C1D81FC3BCF600EBD87F /* Parse.swift */,
 				3872C1D51FC3BCF500EBD87F /* PFObject.swift */,
 				3872C1D71FC3BCF600EBD87F /* PFSchema.swift */,
@@ -426,8 +432,10 @@
 				3872C1F51FC3C91600EBD87F /* UIView+AutoLayout.swift in Sources */,
 				3872C20C1FC414E100EBD87F /* SchemaViewController.swift in Sources */,
 				3872C1E31FC3C08200EBD87F /* String+Extensions.swift in Sources */,
+				3852AA7B1FDCC7E000D7B009 /* IAPHandler.swift in Sources */,
 				3872C1EB1FC3C49900EBD87F /* ServersViewController.swift in Sources */,
 				38028CA51FC56145003A4E95 /* Ping.swift in Sources */,
+				3852AA791FDCC7D900D7B009 /* SupportViewController.swift in Sources */,
 				38DE1D021FC511EF00C49508 /* AppInfoViewController.swift in Sources */,
 				38DE1D041FC5149B00C49508 /* Date+Extensions.swift in Sources */,
 				3872C1D91FC3BCF600EBD87F /* PFObject.swift in Sources */,

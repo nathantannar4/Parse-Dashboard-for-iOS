@@ -65,118 +65,13 @@ class ServersViewController: PFCollectionViewController {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add,
                             target: self,
-                            action: #selector(addServer))
-//            UIBarButtonItem(image: UIImage(named: "ic_lock")?.scale(to: 30),
-//                            style: .plain,
-//                            target: self,
-//                            action: #selector(toggleAuthRequired))
+                            action: #selector(addServer)),
+            UIBarButtonItem(image: UIImage(named: "Support")?.scale(to: 30),
+                            style: .plain,
+                            target: self,
+                            action: #selector(showSupport))
         ]
     }
-    
-    // MARK: - Auth
-    
-//    private func authenticateUser() {
-//
-//        guard let isProtected = UserDefaults.standard.value(forKey: .isProtected) as? Bool else {
-//            promptAuthSetup(completion: { enabled in
-//                if enabled {
-//                    self.authenticateWithPassword(completion: { _ in })
-//                } else {
-//                    self.fetchServersFromCoreData()
-//                }
-//            })
-//            return
-//        }
-//        if isProtected {
-//            // Auth required
-//            if BioMetricAuthenticator.canAuthenticate() {
-//                authenticateWithBiometrics()
-//            } else {
-//                authenticateWithPassword(completion: { success in
-//                    if success {
-//                        self.fetchServersFromCoreData()
-//                    } else {
-//                        self.handleError("Incorrect Password")
-//                    }
-//                })
-//            }
-//        } else {
-//            // Auth not required
-//            fetchServersFromCoreData()
-//        }
-//    }
-//
-//    private func authenticateWithBiometrics() {
-//        BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", success: {
-//            self.fetchServersFromCoreData()
-//        }) { error in
-//            if error == .fallback || error == .biometryLockedout {
-//                self.au
-//            }
-//            self.handleError(error.message())
-//        }
-//    }
-//
-//    private func authenticateWithPassword(completion: @escaping (Bool)->Void) {
-//        let alert = UIAlertController(title: "Authentication", message: "Please enter your password", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-//            let password = alert.textFields?.first?.text
-//            completion(self.canAuthenticate(with: password))
-//        }))
-//        alert.addTextField {
-//            $0.placeholder = "Password"
-//            $0.isSecureTextEntry = true
-//        }
-//        present(alert, animated: true, completion: nil)
-//    }
-//
-//    private func promptAuthSetup(completion: ((Bool)->Void)?) {
-//        let alert = UIAlertController(title: "Security", message: "Do you want to enable server access authentication", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "Disable", style: .destructive, handler: { _ in
-//            UserDefaults.standard.set(false, forKey: .isProtected)
-//            UserDefaults.standard.set(nil, forKey: .password)
-//            completion?(false)
-//        }))
-//        alert.addAction(UIAlertAction(title: "Enable", style: .default, handler: { _ in
-//            UserDefaults.standard.set(true, forKey: .isProtected)
-//            completion?(true)
-//        }))
-//        present(alert, animated: true, completion: nil)
-//    }
-//
-//    private func canAuthenticate(with password: String?) -> Bool {
-//        guard let password = password else { return false }
-//        guard let savedPassword = UserDefaults.standard.value(forKey: .password) as? String else {
-//            UserDefaults.standard.set(password, forKey: .password) // Set the initial password
-//            return canAuthenticate(with: password)
-//        }
-//        return password == savedPassword
-//    }
-//
-//    @objc
-//    private func toggleAuthRequired() {
-//        guard let isProtected = UserDefaults.standard.value(forKey: .isProtected) as? Bool else {
-//            authenticateUser()
-//            return
-//        }
-//        if isProtected {
-//            authenticateWithPassword(completion: { success in
-//                if success {
-//                    self.fetchServersFromCoreData()
-//                    self.promptAuthSetup(completion: nil)
-//                } else {
-//                    self.handleError("Incorrect Password")
-//                }
-//            })
-//        } else {
-//            if BioMetricAuthenticator.canAuthenticate() {
-//                authenticateWithBiometrics()
-//            } else {
-//                authenticateWithPassword(completion: { _ in })
-//            }
-//        }
-//    }
     
     // MARK: - UICollectionViewDataSource
     
@@ -228,6 +123,15 @@ class ServersViewController: PFCollectionViewController {
     @objc
     func showInfo() {
         let navigationController = UINavigationController(rootViewController: AppInfoViewController())
+        navigationController.modalPresentationStyle = .formSheet
+        navigationController.navigationBar.tintColor = .logoTint
+        navigationController.navigationBar.isTranslucent = false
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc
+    func showSupport() {
+        let navigationController = UINavigationController(rootViewController: SupportViewController())
         navigationController.modalPresentationStyle = .formSheet
         navigationController.navigationBar.tintColor = .logoTint
         navigationController.navigationBar.isTranslucent = false
