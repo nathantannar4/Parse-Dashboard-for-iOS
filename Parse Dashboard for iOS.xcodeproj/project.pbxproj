@@ -13,6 +13,12 @@
 		38028CA61FC56145003A4E95 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA41FC56145003A4E95 /* Toast.swift */; };
 		38028CA81FC5615A003A4E95 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA71FC5615A003A4E95 /* Alert.swift */; };
 		38028CAA1FC56611003A4E95 /* SchemaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */; };
+		382BFF4F1FDE13E10050FF15 /* ServerConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */; };
+		382BFF521FDE15220050FF15 /* FormerInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */; };
+		382BFF551FDE15BC0050FF15 /* FormerFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382BFF531FDE15BC0050FF15 /* FormerFieldCell.swift */; };
+		382BFF561FDE15BC0050FF15 /* FormerImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382BFF541FDE15BC0050FF15 /* FormerImageCell.swift */; };
+		382BFF5A1FDE15FC0050FF15 /* FormerFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 382BFF581FDE15FB0050FF15 /* FormerFieldCell.xib */; };
+		382BFF5B1FDE15FC0050FF15 /* FormerImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 382BFF591FDE15FC0050FF15 /* FormerImageCell.xib */; };
 		3848CA0B1FC552560038A636 /* PFTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3848CA0A1FC552560038A636 /* PFTableViewController.swift */; };
 		3872C1C71FC3BC6400EBD87F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1C61FC3BC6400EBD87F /* AppDelegate.swift */; };
 		3872C1CB1FC3BC6400EBD87F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3872C1CA1FC3BC6400EBD87F /* Assets.xcassets */; };
@@ -58,6 +64,12 @@
 		38028CA41FC56145003A4E95 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		38028CA71FC5615A003A4E95 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaDetailViewController.swift; sourceTree = "<group>"; };
+		382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConfigViewController.swift; sourceTree = "<group>"; };
+		382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInputAccessoryView.swift; sourceTree = "<group>"; };
+		382BFF531FDE15BC0050FF15 /* FormerFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerFieldCell.swift; sourceTree = "<group>"; };
+		382BFF541FDE15BC0050FF15 /* FormerImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerImageCell.swift; sourceTree = "<group>"; };
+		382BFF581FDE15FB0050FF15 /* FormerFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormerFieldCell.xib; sourceTree = "<group>"; };
+		382BFF591FDE15FC0050FF15 /* FormerImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormerImageCell.xib; sourceTree = "<group>"; };
 		3848CA0A1FC552560038A636 /* PFTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFTableViewController.swift; sourceTree = "<group>"; };
 		3872C1C31FC3BC6400EBD87F /* Parse Dashboard for iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Parse Dashboard for iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3872C1C61FC3BC6400EBD87F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,8 +136,9 @@
 		38028C9B1FC558BC003A4E95 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				38DE1D0B1FC5415000C49508 /* ServerDetailViewController.swift */,
+				382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */,
 				3872C1EA1FC3C49900EBD87F /* ServersViewController.swift */,
+				38DE1D0B1FC5415000C49508 /* ServerDetailViewController.swift */,
 				3872C20B1FC414E100EBD87F /* SchemaViewController.swift */,
 				38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */,
 				38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */,
@@ -165,6 +178,17 @@
 				38DE1CF61FC4BAB700C49508 /* QueryInputCell.swift */,
 			);
 			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		382BFF571FDE15BF0050FF15 /* FormerCells */ = {
+			isa = PBXGroup;
+			children = (
+				382BFF531FDE15BC0050FF15 /* FormerFieldCell.swift */,
+				382BFF581FDE15FB0050FF15 /* FormerFieldCell.xib */,
+				382BFF541FDE15BC0050FF15 /* FormerImageCell.swift */,
+				382BFF591FDE15FC0050FF15 /* FormerImageCell.xib */,
+			);
+			path = FormerCells;
 			sourceTree = "<group>";
 		};
 		3872C1BA1FC3BC6400EBD87F = {
@@ -241,7 +265,9 @@
 			children = (
 				38028C9D1FC55C47003A4E95 /* CollectionViewCells */,
 				38028C9E1FC55C59003A4E95 /* TableViewCells */,
+				382BFF571FDE15BF0050FF15 /* FormerCells */,
 				38DE1CFD1FC4C30E00C49508 /* InputTextView.swift */,
+				382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */,
 				38028CA31FC56145003A4E95 /* Ping.swift */,
 				38028CA41FC56145003A4E95 /* Toast.swift */,
 			);
@@ -339,7 +365,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3872C1CB1FC3BC6400EBD87F /* Assets.xcassets in Resources */,
+				382BFF5B1FDE15FC0050FF15 /* FormerImageCell.xib in Resources */,
 				3872C1CE1FC3BC6400EBD87F /* LaunchScreen.storyboard in Resources */,
+				382BFF5A1FDE15FC0050FF15 /* FormerFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +415,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
+				"${BUILT_PRODUCTS_DIR}/Former/Former.framework",
 				"${BUILT_PRODUCTS_DIR}/RMActionController/RMActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/RMDateSelectionViewController/RMDateSelectionViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -394,6 +423,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Former.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMDateSelectionViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -421,6 +451,7 @@
 				38DE1D0F1FC5453200C49508 /* FileViewController.swift in Sources */,
 				38028CAA1FC56611003A4E95 /* SchemaDetailViewController.swift in Sources */,
 				38DE1D081FC516A700C49508 /* FieldCell.swift in Sources */,
+				382BFF521FDE15220050FF15 /* FormerInputAccessoryView.swift in Sources */,
 				3872C1DB1FC3BCF600EBD87F /* PFSchema.swift in Sources */,
 				38028CA01FC560FD003A4E95 /* UIDevice+Extensions.swift in Sources */,
 				3872C1F51FC3C91600EBD87F /* UIView+AutoLayout.swift in Sources */,
@@ -443,11 +474,14 @@
 				38028C991FC558A7003A4E95 /* WelcomeViewController.swift in Sources */,
 				3872C1E91FC3C42F00EBD87F /* Parse_Dashboard_for_iOS.xcdatamodeld in Sources */,
 				3872C1EF1FC3C84E00EBD87F /* ServerCell.swift in Sources */,
+				382BFF561FDE15BC0050FF15 /* FormerImageCell.swift in Sources */,
 				38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */,
 				3872C1C71FC3BC6400EBD87F /* AppDelegate.swift in Sources */,
+				382BFF551FDE15BC0050FF15 /* FormerFieldCell.swift in Sources */,
 				38DE1D101FC5453200C49508 /* ArrayViewController.swift in Sources */,
 				3872C20E1FC415AB00EBD87F /* SchemaCell.swift in Sources */,
 				38DE1D0C1FC5415000C49508 /* ServerDetailViewController.swift in Sources */,
+				382BFF4F1FDE13E10050FF15 /* ServerConfigViewController.swift in Sources */,
 				38DE1CF91FC4BAB700C49508 /* QueryInputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

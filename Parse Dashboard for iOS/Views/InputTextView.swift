@@ -1,6 +1,6 @@
 //
 //  InputTextView.swift
-//  InputBarAccessoryView
+//  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
 //

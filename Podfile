@@ -9,6 +9,7 @@ target 'Parse Dashboard for iOS' do
   pod 'SwiftyJSON'
   pod 'DKImagePickerController'
   pod 'RMDateSelectionViewController'
+  pod 'Former'
   # pod 'BiometricAuthentication'
   
 

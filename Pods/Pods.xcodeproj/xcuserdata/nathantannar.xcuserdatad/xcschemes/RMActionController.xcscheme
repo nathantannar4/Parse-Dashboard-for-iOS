@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EE81FA852BA4428979055A5BFC4014CC"
+               BlueprintIdentifier = "C82066E44E3C12748BA270EDD11FC9C7"
                BuildableName = "RMActionController.framework"
                BlueprintName = "RMActionController"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EE81FA852BA4428979055A5BFC4014CC"
+            BlueprintIdentifier = "C82066E44E3C12748BA270EDD11FC9C7"
             BuildableName = "RMActionController.framework"
             BlueprintName = "RMActionController"
             ReferencedContainer = "container:Pods.xcodeproj">

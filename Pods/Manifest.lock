@@ -4,6 +4,7 @@ PODS:
     - DKImagePickerController/ImageManager (= 3.8.1)
   - DKImagePickerController/Camera (3.8.1)
   - DKImagePickerController/ImageManager (3.8.1)
+  - Former (1.6.0)
   - RMActionController (1.3.1)
   - RMDateSelectionViewController (2.3.1):
     - RMActionController (~> 1.3.1)
@@ -11,15 +12,17 @@ PODS:
 
 DEPENDENCIES:
   - DKImagePickerController
+  - Former
   - RMDateSelectionViewController
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
+  Former: c3407c1d74f1b02014a7e8c6d7aa5bb4d1e5363b
   RMActionController: 535715be9f3d9eb96a838485370dcccee0dda597
   RMDateSelectionViewController: 1157d34245e6a1dda700e8a9c44417321d181951
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 5b720c88519b44e4c989dff1846e6b48e3d3b965
+PODFILE CHECKSUM: 4d0290ef4f91ae06269c7e80b3b25130a6d0d7d8
 
 COCOAPODS: 1.3.1
