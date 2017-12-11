@@ -33,7 +33,7 @@ class WelcomeViewController: UIViewController {
     
     var logoView: UIView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "Logo").withRenderingMode(.alwaysTemplate)
+        imageView.image = UIImage(named: "Logo")?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
         

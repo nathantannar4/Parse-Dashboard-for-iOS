@@ -34,15 +34,7 @@ class ServerConfigViewController: FormViewController {
     
     // MARK: - Properties
     
-    private var config: ParseServerConfig? {
-        didSet {
-            name = config?.name
-            applicationId = config?.applicationId
-            masterKey = config?.masterKey
-            serverUrl = config?.serverUrl
-            imageData = config?.icon
-        }
-    }
+    private var config: ParseServerConfig
     
     private var name: String?
     private var applicationId: String?
@@ -59,15 +51,25 @@ class ServerConfigViewController: FormViewController {
     // MARK: - Initialization
     
     init(config: ParseServerConfig) {
+        self.config = config
         super.init(nibName: nil, bundle: nil)
         title = "Edit Configuration"
-        self.config = config
+        name = config.name
+        applicationId = config.applicationId
+        masterKey = config.masterKey
+        serverUrl = config.serverUrl
+        imageData = config.icon
     }
     
     init() {
+        self.config = ParseServerConfig(entity: ParseServerConfig.entity(), insertInto: nil)
         super.init(nibName: nil, bundle: nil)
         title = "New Configuration"
-        self.config = ParseServerConfig(entity: ParseServerConfig.entity(), insertInto: nil)
+        name = config.name
+        applicationId = config.applicationId
+        masterKey = config.masterKey
+        serverUrl = config.serverUrl
+        imageData = config.icon
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -121,7 +123,7 @@ class ServerConfigViewController: FormViewController {
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Descriptor"
-                $0.text = self.config?.name
+                $0.text = self.name
             }.onTextChanged { [weak self] in
                 self?.name = $0
         }
@@ -131,7 +133,7 @@ class ServerConfigViewController: FormViewController {
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "X-Parse-Application-ID"
-                $0.text = self.config?.applicationId
+                $0.text = self.applicationId
             }.onTextChanged { [weak self] in
                 self?.applicationId = $0
         }
@@ -141,7 +143,7 @@ class ServerConfigViewController: FormViewController {
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "X-Parse-Master-Key"
-                $0.text = self.config?.masterKey
+                $0.text = self.masterKey
             }.onTextChanged { [weak self] in
                 self?.masterKey = $0
         }
@@ -151,7 +153,7 @@ class ServerConfigViewController: FormViewController {
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "http://<url>:<port>/<path>"
-                $0.text = self.config?.serverUrl
+                $0.text = self.serverUrl
             }.onTextChanged { [weak self] in
                 self?.serverUrl = $0
         }
@@ -183,7 +185,7 @@ class ServerConfigViewController: FormViewController {
     
     fileprivate lazy var imageRow: LabelRowFormer<FormerImageCell> = {
         LabelRowFormer<FormerImageCell>(instantiateType: .Nib(nibName: "FormerImageCell")) {
-            if let data = self.config?.icon {
+            if let data = self.imageData {
                 $0.iconView.image = UIImage(data: data)
             }
             }.configure {
@@ -221,7 +223,7 @@ class ServerConfigViewController: FormViewController {
     
     @objc
     func saveContext() {
-        guard isValid(), let config = config else { return }
+        guard isValid() else { return }
         config.name = name
         config.applicationId = applicationId
         config.masterKey = masterKey

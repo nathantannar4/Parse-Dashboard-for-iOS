@@ -32,7 +32,7 @@ class SupportViewController: UITableViewController, SKProductsRequestDelegate {
     
     // MARK: - Properties
 
-    let itunesID = ""
+    let itunesID = "1212141622"
     
     // MARK: - View Life Cycle
     
