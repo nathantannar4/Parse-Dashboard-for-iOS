@@ -58,18 +58,20 @@ class ServersViewController: PFCollectionViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         title = "Parse Dashboard"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
-                                                           style: .plain,
-                                                           target: self,
-                                                           action: #selector(showInfo))
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add,
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
+                            style: .plain,
                             target: self,
-                            action: #selector(addServer)),
-            UIBarButtonItem(image: UIImage(named: "Support")?.scale(to: 30),
+                            action: #selector(showInfo)),
+            UIBarButtonItem(image: UIImage(named: "Clap")?.scale(to: 36),
                             style: .plain,
                             target: self,
                             action: #selector(showSupport))
+        ]
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add,
+                            target: self,
+                            action: #selector(addServer))
         ]
     }
     
