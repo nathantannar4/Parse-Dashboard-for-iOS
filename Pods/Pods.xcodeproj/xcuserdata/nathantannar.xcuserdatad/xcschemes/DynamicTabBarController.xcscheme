@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A85101B2D8F83CBBC40FE5CD5A830086'
-               BlueprintName = 'DKImagePickerController'
+               BlueprintIdentifier = '6A0AE976BFDAD4016AC2E970806F41A5'
+               BlueprintName = 'DynamicTabBarController'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'DKImagePickerController.framework'>
+               BuildableName = 'DynamicTabBarController.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

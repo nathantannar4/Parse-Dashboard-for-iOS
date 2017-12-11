@@ -52,6 +52,7 @@ class PFCollectionViewController: UICollectionViewController, UICollectionViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         definesPresentationContext = true
+        configure()
         setupCollectionView()
         setupNavigationBar()
         NotificationCenter.default.addObserver(self, selector: #selector(handleRotate), name: .UIDeviceOrientationDidChange, object: nil)
@@ -60,20 +61,7 @@ class PFCollectionViewController: UICollectionViewController, UICollectionViewDe
     // MARK: - Setup
     
     func setupNavigationBar() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = .logoTint
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
-            NSAttributedStringKey.foregroundColor : UIColor.black
-        ]
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationController?.navigationBar.largeTitleTextAttributes = [
-                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
-                NSAttributedStringKey.foregroundColor : UIColor.black
-            ]
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
+        
     }
     
     func setupCollectionView() {

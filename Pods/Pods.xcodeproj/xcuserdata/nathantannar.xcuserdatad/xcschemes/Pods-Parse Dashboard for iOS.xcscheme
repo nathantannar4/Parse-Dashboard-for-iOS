@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0920"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AC136D02CC76C11259C0B7A6D93984E8"
+               BlueprintIdentifier = "65BB6E4EBC2F7312E129742811423C93"
                BuildableName = "Pods_Parse_Dashboard_for_iOS.framework"
                BlueprintName = "Pods-Parse Dashboard for iOS"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AC136D02CC76C11259C0B7A6D93984E8"
+            BlueprintIdentifier = "65BB6E4EBC2F7312E129742811423C93"
             BuildableName = "Pods_Parse_Dashboard_for_iOS.framework"
             BlueprintName = "Pods-Parse Dashboard for iOS"
             ReferencedContainer = "container:Pods.xcodeproj">

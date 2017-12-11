@@ -10,6 +10,7 @@ target 'Parse Dashboard for iOS' do
   pod 'DKImagePickerController'
   pod 'RMDateSelectionViewController'
   pod 'Former'
+  pod 'DynamicTabBarController'
   # pod 'BiometricAuthentication'
   
 

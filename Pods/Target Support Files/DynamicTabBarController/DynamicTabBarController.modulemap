@@ -1,0 +1,6 @@
+framework module DynamicTabBarController {
+  umbrella header "DynamicTabBarController-umbrella.h"
+
+  export *
+  module * { export * }
+}

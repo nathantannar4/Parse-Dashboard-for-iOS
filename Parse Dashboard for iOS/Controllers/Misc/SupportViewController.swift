@@ -28,11 +28,23 @@
 import UIKit
 import StoreKit
 
-class SupportViewController: UITableViewController, SKProductsRequestDelegate {
+class SupportViewController: UITableViewController {
     
     // MARK: - Properties
 
     let itunesID = "1212141622"
+    
+    // MARK: - Initialization
+    
+    init() {
+        super.init(style: .plain)
+        title = "Support"
+        tabBarItem = UITabBarItem(title: "Support", image: UIImage(named: "Clap")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Clap"))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - View Life Cycle
     
@@ -54,20 +66,7 @@ class SupportViewController: UITableViewController, SKProductsRequestDelegate {
     }
     
     private func setupNavigationBar() {
-        
-        title = "Support and Dontation"
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
-            NSAttributedStringKey.foregroundColor : UIColor.black
-        ]
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationController?.navigationBar.largeTitleTextAttributes = [
-                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
-                NSAttributedStringKey.foregroundColor : UIColor.black
-            ]
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
+        configure()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))
@@ -211,7 +210,10 @@ class SupportViewController: UITableViewController, SKProductsRequestDelegate {
         }
         return cell
     }
-    
+}
+
+extension SupportViewController: SKProductsRequestDelegate {
+
     // MARK: - SKProductsRequestDelegate
     
     func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {

@@ -1,5 +1,5 @@
 //
-//  PFTableViewController.swift
+//  MoreViewController.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,28 +22,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 11/21/17.
+//  Created by Nathan Tannar on 12/11/17.
 //
 
 import UIKit
+import DynamicTabBarController
 
-class PFTableViewController: UITableViewController {
+class MoreViewController: DynamicTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
-    }
-    
-    func handleError(_ error: String?) {
-        let error = error?.capitalized ?? "Unexpected Error"
-        let ping = Ping(text: error, style: .danger)
-        print(error)
-        ping.show(animated: true, duration: 3)
-    }
-    
-    func handleSuccess(_ message: String?) {
-        let message = message?.capitalized ?? "Success"
-        let toast = Toast(text: message)
-        toast.present(navigationController ?? self, animated: true, duration: 3)
+        tabBar.collectionView.reloadData()
+        tabBar.activeTintColor = .logoTint
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowRadius = 1
+        tabBar.layer.shadowOpacity = 1
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: 0.25)
     }
 }

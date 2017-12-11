@@ -67,21 +67,9 @@ class ServersViewController: PFCollectionViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         title = "Parse Dashboard"
-        navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
-                            style: .plain,
-                            target: self,
-                            action: #selector(showInfo)),
-            UIBarButtonItem(image: UIImage(named: "Clap")?.scale(to: 36),
-                            style: .plain,
-                            target: self,
-                            action: #selector(showSupport))
-        ]
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add,
-                            target: self,
-                            action: #selector(addServer))
-        ]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30), style: .plain, target: self, action: #selector(showMore))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addServer))
     }
     
     // MARK: - UICollectionViewDataSource
@@ -132,21 +120,15 @@ class ServersViewController: PFCollectionViewController {
     // MARK: - User Actions
     
     @objc
-    func showInfo() {
-        let navigationController = UINavigationController(rootViewController: AppInfoViewController())
-        navigationController.modalPresentationStyle = .formSheet
-        navigationController.navigationBar.tintColor = .logoTint
-        navigationController.navigationBar.isTranslucent = false
-        present(navigationController, animated: true, completion: nil)
-    }
-    
-    @objc
-    func showSupport() {
-        let navigationController = UINavigationController(rootViewController: SupportViewController())
-        navigationController.modalPresentationStyle = .formSheet
-        navigationController.navigationBar.tintColor = .logoTint
-        navigationController.navigationBar.isTranslucent = false
-        present(navigationController, animated: true, completion: nil)
+    func showMore() {
+        
+        let moreController = MoreViewController(viewControllers: [
+            UINavigationController(rootViewController: AppInfoViewController()),
+            UINavigationController(rootViewController: SupportViewController()),
+            UINavigationController(rootViewController: SettingsViewController())
+        ])
+        moreController.modalPresentationStyle = .formSheet
+        present(moreController, animated: true, completion: nil)
     }
     
     func presentActions(for indexPath: IndexPath) {
@@ -231,10 +213,9 @@ class ServersViewController: PFCollectionViewController {
     private func setupTutorial() {
         
         let actionsStack = [
-            TutorialAction(text: "Show your support by leaving a review or staring the GitHub repo!", sourceItem: navigationItem.leftBarButtonItems?.last),
-            TutorialAction(text: "Learn more about Parse Dashboard for iOS! See how your data is stored securely and where to find this apps source code.", sourceItem: navigationItem.leftBarButtonItems?.first),
+            TutorialAction(text: "Learn more about Parse Dashboard for iOS! See how your data is stored securely, where to find the GitHub repo and how to show your support", sourceItem: navigationItem.leftBarButtonItem),
             TutorialAction(text: "Long press on a cell to edit, duplicate or delete the configuration", sourceView: collectionView),
-            TutorialAction(text: "Add a new Parse Server configuration profile", sourceItem: navigationItem.rightBarButtonItems?.first)
+            TutorialAction(text: "Add a new Parse Server configuration profile", sourceItem: navigationItem.rightBarButtonItem)
         ]
         presentTutorial(for: actionsStack)
     }

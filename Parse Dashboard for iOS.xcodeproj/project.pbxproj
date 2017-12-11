@@ -42,6 +42,9 @@
 		3872C1F71FC3CC2000EBD87F /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */; };
 		3872C20C1FC414E100EBD87F /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20B1FC414E100EBD87F /* SchemaViewController.swift */; };
 		3872C20E1FC415AB00EBD87F /* SchemaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20D1FC415AB00EBD87F /* SchemaCell.swift */; };
+		38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */; };
+		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
+		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
 		38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */; };
 		38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */; };
 		38DE1CF81FC4BAB700C49508 /* QueryHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */; };
@@ -98,6 +101,9 @@
 		3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		3872C20B1FC414E100EBD87F /* SchemaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
 		3872C20D1FC415AB00EBD87F /* SchemaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaCell.swift; sourceTree = "<group>"; };
+		38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
+		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
 		38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryHelpCell.swift; sourceTree = "<group>"; };
@@ -134,8 +140,10 @@
 			isa = PBXGroup;
 			children = (
 				38028C981FC558A7003A4E95 /* WelcomeViewController.swift */,
+				38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */,
 				38DE1D011FC511EF00C49508 /* AppInfoViewController.swift */,
 				3852AA781FDCC7D900D7B009 /* SupportViewController.swift */,
+				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
 				380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */,
 			);
 			path = Misc;
@@ -255,6 +263,7 @@
 				38DE1D031FC5149B00C49508 /* Date+Extensions.swift */,
 				3872C1DE1FC3BE2400EBD87F /* UIApplication+Extensions.swift */,
 				38F12D3D1FC696D300D3817D /* UIAlertController+Extensions.swift */,
+				38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -424,6 +433,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
+				"${BUILT_PRODUCTS_DIR}/DynamicTabBarController/DynamicTabBarController.framework",
 				"${BUILT_PRODUCTS_DIR}/Former/Former.framework",
 				"${BUILT_PRODUCTS_DIR}/RMActionController/RMActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/RMDateSelectionViewController/RMDateSelectionViewController.framework",
@@ -432,6 +442,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicTabBarController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Former.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMDateSelectionViewController.framework",
@@ -472,6 +483,7 @@
 				3852AA791FDCC7D900D7B009 /* SupportViewController.swift in Sources */,
 				38DE1D021FC511EF00C49508 /* AppInfoViewController.swift in Sources */,
 				38DE1D041FC5149B00C49508 /* Date+Extensions.swift in Sources */,
+				38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */,
 				3872C1D91FC3BCF600EBD87F /* PFObject.swift in Sources */,
 				3872C1DA1FC3BCF600EBD87F /* PFServer.swift in Sources */,
 				3872C1E41FC3C08200EBD87F /* UIColor+Extensions.swift in Sources */,
@@ -483,8 +495,10 @@
 				38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */,
 				3872C1F31FC3C8AA00EBD87F /* PFCollectionViewCell.swift in Sources */,
 				38028C991FC558A7003A4E95 /* WelcomeViewController.swift in Sources */,
+				38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */,
 				380EB3891FDE3AB900AB4AB3 /* TutorialViewController.swift in Sources */,
 				3872C1E91FC3C42F00EBD87F /* Parse_Dashboard_for_iOS.xcdatamodeld in Sources */,
+				38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */,
 				3872C1EF1FC3C84E00EBD87F /* ServerCell.swift in Sources */,
 				382BFF561FDE15BC0050FF15 /* FormerImageCell.swift in Sources */,
 				38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */,

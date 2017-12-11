@@ -11,11 +11,22 @@ import Social
 
 class AppInfoViewController: UITableViewController {
     
+    // MARK: - Initialization
+    
+    init() {
+        super.init(style: .plain)
+        title = "About"
+        tabBarItem = UITabBarItem(title: "About", image: UIImage(named: "About")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "About"))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         setupTableView()
         setupNavigationBar()
     }
@@ -26,13 +37,14 @@ class AppInfoViewController: UITableViewController {
         
         tableView.showsVerticalScrollIndicator = false
         tableView.estimatedRowHeight = 60
-        tableView.contentInset.bottom = 30
+        tableView.contentInset.bottom = 60
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorStyle = .none
     }
     
     private func setupNavigationBar() {
         
+        configure()
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "Share"),
                             style: .plain,

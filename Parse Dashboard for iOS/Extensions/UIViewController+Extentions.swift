@@ -1,5 +1,5 @@
 //
-//  PFTableViewController.swift
+//  UIViewController+Extentions.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,28 +22,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 11/21/17.
+//  Created by Nathan Tannar on 12/11/17.
 //
 
 import UIKit
 
-class PFTableViewController: UITableViewController {
+extension UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configure()
-    }
-    
-    func handleError(_ error: String?) {
-        let error = error?.capitalized ?? "Unexpected Error"
-        let ping = Ping(text: error, style: .danger)
-        print(error)
-        ping.show(animated: true, duration: 3)
-    }
-    
-    func handleSuccess(_ message: String?) {
-        let message = message?.capitalized ?? "Success"
-        let toast = Toast(text: message)
-        toast.present(navigationController ?? self, animated: true, duration: 3)
+    func configure() {
+        navigationController?.navigationBar.tintColor = .logoTint
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
+            NSAttributedStringKey.foregroundColor : UIColor.black
+        ]
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationController?.navigationBar.largeTitleTextAttributes = [
+                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
+                NSAttributedStringKey.foregroundColor : UIColor.black
+            ]
+            navigationItem.hidesSearchBarWhenScrolling = false
+        }
     }
 }

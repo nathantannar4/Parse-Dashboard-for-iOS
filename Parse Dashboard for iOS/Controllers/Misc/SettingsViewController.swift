@@ -1,5 +1,5 @@
 //
-//  PFTableViewController.swift
+//  SettingsViewController.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,28 +22,45 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 11/21/17.
+//  Created by Nathan Tannar on 12/11/17.
 //
 
 import UIKit
 
-class PFTableViewController: UITableViewController {
+class SettingsViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    // MARK: - Initialization
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        title = "Settings"
+        tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "Settings")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Settings"))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
         configure()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
+                                                           target: self,
+                                                           action: #selector(dismissInfo))
     }
     
-    func handleError(_ error: String?) {
-        let error = error?.capitalized ?? "Unexpected Error"
-        let ping = Ping(text: error, style: .danger)
-        print(error)
-        ping.show(animated: true, duration: 3)
-    }
+    // MARK: - User Actions
     
-    func handleSuccess(_ message: String?) {
-        let message = message?.capitalized ?? "Success"
-        let toast = Toast(text: message)
-        toast.present(navigationController ?? self, animated: true, duration: 3)
+    @objc
+    func dismissInfo() {
+        dismiss(animated: true, completion: nil)
     }
 }
