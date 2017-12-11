@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F7112940A754637DCB4700EC2FE07912'
-               BlueprintName = 'RMDateSelectionViewController'
+               BlueprintIdentifier = '09F8E087091C60688A3B878681637BC9'
+               BlueprintName = 'BiometricAuthentication'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'RMDateSelectionViewController.framework'>
+               BuildableName = 'BiometricAuthentication.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

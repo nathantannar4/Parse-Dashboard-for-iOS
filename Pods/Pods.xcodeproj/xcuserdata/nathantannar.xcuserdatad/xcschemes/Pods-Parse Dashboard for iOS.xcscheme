@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "65BB6E4EBC2F7312E129742811423C93"
+               BlueprintIdentifier = "8A7BDE8E6BF2E7C99717D9F45BE189A1"
                BuildableName = "Pods_Parse_Dashboard_for_iOS.framework"
                BlueprintName = "Pods-Parse Dashboard for iOS"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "65BB6E4EBC2F7312E129742811423C93"
+            BlueprintIdentifier = "8A7BDE8E6BF2E7C99717D9F45BE189A1"
             BuildableName = "Pods_Parse_Dashboard_for_iOS.framework"
             BlueprintName = "Pods-Parse Dashboard for iOS"
             ReferencedContainer = "container:Pods.xcodeproj">

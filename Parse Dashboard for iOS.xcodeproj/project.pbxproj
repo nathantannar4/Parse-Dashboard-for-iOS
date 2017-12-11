@@ -45,6 +45,8 @@
 		38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */; };
 		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
+		38B2204C1FDF39B7002F12BD /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B2204B1FDF39B7002F12BD /* AuthViewController.swift */; };
+		38B220501FDF4783002F12BD /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B2204F1FDF4782002F12BD /* Auth.swift */; };
 		38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */; };
 		38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */; };
 		38DE1CF81FC4BAB700C49508 /* QueryHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */; };
@@ -104,6 +106,8 @@
 		38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
+		38B2204B1FDF39B7002F12BD /* AuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		38B2204F1FDF4782002F12BD /* Auth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryHelpCell.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 				3852AA781FDCC7D900D7B009 /* SupportViewController.swift */,
 				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
 				380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */,
+				38B2204B1FDF39B7002F12BD /* AuthViewController.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 		3872C1DD1FC3BCFB00EBD87F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				38B2204F1FDF4782002F12BD /* Auth.swift */,
 				38028CA71FC5615A003A4E95 /* Alert.swift */,
 				3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */,
 				3872C1D81FC3BCF600EBD87F /* Parse.swift */,
@@ -432,6 +438,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BiometricAuthentication/BiometricAuthentication.framework",
 				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/DynamicTabBarController/DynamicTabBarController.framework",
 				"${BUILT_PRODUCTS_DIR}/Former/Former.framework",
@@ -441,6 +448,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BiometricAuthentication.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicTabBarController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Former.framework",
@@ -501,7 +509,9 @@
 				38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */,
 				3872C1EF1FC3C84E00EBD87F /* ServerCell.swift in Sources */,
 				382BFF561FDE15BC0050FF15 /* FormerImageCell.swift in Sources */,
+				38B220501FDF4783002F12BD /* Auth.swift in Sources */,
 				38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */,
+				38B2204C1FDF39B7002F12BD /* AuthViewController.swift in Sources */,
 				3872C1C71FC3BC6400EBD87F /* AppDelegate.swift in Sources */,
 				382BFF551FDE15BC0050FF15 /* FormerFieldCell.swift in Sources */,
 				38DE1D101FC5453200C49508 /* ArrayViewController.swift in Sources */,

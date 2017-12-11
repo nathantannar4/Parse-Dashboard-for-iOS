@@ -26,8 +26,9 @@
 //
 
 import UIKit
+import Former
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: FormViewController {
     
     // MARK: - Properties
     
@@ -48,6 +49,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        configureForm()
     }
     
     private func setupNavigationBar() {
@@ -55,6 +57,32 @@ class SettingsViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))
+    }
+    
+    private func configureForm() {
+        
+        let switchRow = SwitchRowFormer<FormSwitchCell>() {
+            $0.titleLabel.text = "Biometric Authorization"
+            $0.titleLabel.textColor = .black
+            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
+            $0.switchButton.onTintColor = .logoTint
+            }.configure {
+                $0.switched = Auth.shared.isSetup
+            }.onSwitchChanged { newValue in
+                if newValue == false {
+                    Auth.shared.destroy(over: self.dynamicTabBarController ?? self)
+                } else {
+                    UserDefaults.standard.set(true, forKey: "isSetup")
+                }
+        }
+        
+        let section = SectionFormer(rowFormer: switchRow)
+            .set(headerViewFormer: LabelViewFormer<FormLabelHeaderView>()
+                .configure {
+                    $0.viewHeight = 40
+                    $0.text = "Security"
+        })
+        former.append(sectionFormer: section)
     }
     
     // MARK: - User Actions
