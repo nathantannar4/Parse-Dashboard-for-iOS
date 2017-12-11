@@ -62,10 +62,16 @@ class ServersViewController: PFCollectionViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         title = "Parse Dashboard"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
-                                                           style: .plain,
-                                                           target: self,
-                                                           action: #selector(showInfo))
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30),
+                            style: .plain,
+                            target: self,
+                            action: #selector(showInfo)),
+            UIBarButtonItem(image: UIImage(named: "Clap")?.scale(to: 36),
+                            style: .plain,
+                            target: self,
+                            action: #selector(showSupport))
+        ]
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add,
                             target: self,
@@ -123,6 +129,15 @@ class ServersViewController: PFCollectionViewController {
     @objc
     func showInfo() {
         let navigationController = UINavigationController(rootViewController: AppInfoViewController())
+        navigationController.modalPresentationStyle = .formSheet
+        navigationController.navigationBar.tintColor = .logoTint
+        navigationController.navigationBar.isTranslucent = false
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc
+    func showSupport() {
+        let navigationController = UINavigationController(rootViewController: SupportViewController())
         navigationController.modalPresentationStyle = .formSheet
         navigationController.navigationBar.tintColor = .logoTint
         navigationController.navigationBar.isTranslucent = false
