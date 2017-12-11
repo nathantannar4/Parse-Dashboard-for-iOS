@@ -48,6 +48,11 @@ class ServersViewController: PFCollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         fetchServersFromCoreData()
+        
+        let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
+        if isNew {
+            setupTutorial()
+        }
     }
     
     // MARK: - Override Setup
@@ -219,5 +224,31 @@ class ServersViewController: PFCollectionViewController {
         ]
         actions.forEach { alert.addAction($0) }
         present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Tutorial
+    
+    private func setupTutorial() {
+        
+        let actionsStack = [
+            TutorialAction(text: "Show your support by leaving a review or staring the GitHub repo!", sourceItem: navigationItem.leftBarButtonItems?.last),
+            TutorialAction(text: "Learn more about Parse Dashboard for iOS! See how your data is stored securely and where to find this apps source code.", sourceItem: navigationItem.leftBarButtonItems?.first),
+            TutorialAction(text: "Long press on a cell to edit, duplicate or delete the configuration", sourceView: collectionView),
+            TutorialAction(text: "Add a new Parse Server configuration profile", sourceItem: navigationItem.rightBarButtonItems?.first)
+        ]
+        presentTutorial(for: actionsStack)
+    }
+    
+    func presentTutorial(for actionsStack: [TutorialAction]) {
+        var actionsStack = actionsStack
+        guard let action = actionsStack.popLast() else {
+            UserDefaults.standard.set(false, forKey: .isNew) // Completed Tutorial
+            return
+        }
+        let tutorial = TutorialViewController(action: action)
+        tutorial.onContinue = {
+            self.presentTutorial(for: actionsStack)
+        }
+        present(tutorial, animated: true, completion: nil)
     }
 }

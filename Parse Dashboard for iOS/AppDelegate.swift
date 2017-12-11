@@ -46,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
         if isNew {
             // Show Welcome View
-            UserDefaults.standard.set(false, forKey: .isNew)
             window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
         } else {
             window?.rootViewController = UINavigationController(rootViewController: ServersViewController())
