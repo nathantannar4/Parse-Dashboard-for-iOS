@@ -101,7 +101,7 @@ class SchemaViewController: PFCollectionViewController {
             UIBarButtonItem(barButtonSystemItem: .add,
                             target: self,
                             action: #selector(addSchema)),
-            UIBarButtonItem(image: UIImage(named: "Info"),
+            UIBarButtonItem(image: UIImage(named: "Info")?.scale(to: 30),
                             style: .plain,
                             target: self,
                             action: #selector(showServerInfo))

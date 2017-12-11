@@ -50,8 +50,6 @@ class SupportViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
         setupTableView()
         setupNavigationBar()
         
@@ -60,7 +58,9 @@ class SupportViewController: UITableViewController {
     
     private func setupTableView() {
         
+        tableView.backgroundColor = .groupTableViewBackground
         tableView.contentInset.bottom = 60
+        tableView.contentInset.top = 20
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 60
     }
@@ -128,6 +128,7 @@ class SupportViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        cell.backgroundColor = .groupTableViewBackground
         cell.textLabel?.numberOfLines = 0
         
         switch indexPath.section {

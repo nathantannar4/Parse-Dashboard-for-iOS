@@ -39,6 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if !Auth.shared.granted, let vc = UIApplication.shared.presentedController {
+            Auth.shared.unlock(over: vc)
+        }
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        Auth.shared.lock()
+    }
+    
     private func setupRootViewController() {
         
         window = UIWindow(frame: UIScreen.main.bounds)

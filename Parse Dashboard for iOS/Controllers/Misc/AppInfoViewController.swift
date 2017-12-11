@@ -35,6 +35,7 @@ class AppInfoViewController: UITableViewController {
     
     private func setupTableView() {
         
+        tableView.backgroundColor = .groupTableViewBackground
         tableView.showsVerticalScrollIndicator = false
         tableView.estimatedRowHeight = 60
         tableView.contentInset.bottom = 60
@@ -136,6 +137,7 @@ class AppInfoViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
+        cell.backgroundColor = .groupTableViewBackground
         cell.selectionStyle = .none
         cell.textLabel?.numberOfLines = 0
         

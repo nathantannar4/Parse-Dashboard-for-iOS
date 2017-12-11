@@ -11,7 +11,7 @@ target 'Parse Dashboard for iOS' do
   pod 'RMDateSelectionViewController'
   pod 'Former'
   pod 'DynamicTabBarController'
-  # pod 'BiometricAuthentication'
+  pod 'BiometricAuthentication'
   
 
 end
