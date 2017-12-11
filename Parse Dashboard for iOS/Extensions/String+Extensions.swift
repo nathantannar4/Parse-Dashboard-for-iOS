@@ -30,6 +30,26 @@ import Foundation
 
 extension String {
     
+    static var configName: String {
+        return "name"
+    }
+    
+    static var applicationId: String {
+        return "applicationId"
+    }
+    
+    static var masterKey: String {
+        return "masterKey"
+    }
+    
+    static var serverUrl: String {
+        return "serverUrl"
+    }
+    
+    static var icon: String {
+        return "icon"
+    }
+    
     static var objectId: String {
         return "objectId"
     }

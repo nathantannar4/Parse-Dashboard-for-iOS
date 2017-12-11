@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B893E3BD33751BA032A7093BCE5688DE"
+               BlueprintIdentifier = "A7FA6ED88AF3B02411618CA4F1D140CB"
                BuildableName = "RMDateSelectionViewController.framework"
                BlueprintName = "RMDateSelectionViewController"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B893E3BD33751BA032A7093BCE5688DE"
+            BlueprintIdentifier = "A7FA6ED88AF3B02411618CA4F1D140CB"
             BuildableName = "RMDateSelectionViewController.framework"
             BlueprintName = "RMDateSelectionViewController"
             ReferencedContainer = "container:Pods.xcodeproj">
