@@ -32,11 +32,15 @@ class MoreViewController: DynamicTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBar.collectionView.reloadData()
         tabBar.activeTintColor = .logoTint
         tabBar.layer.shadowColor = UIColor.black.cgColor
         tabBar.layer.shadowRadius = 1
         tabBar.layer.shadowOpacity = 1
         tabBar.layer.shadowOffset = CGSize(width: 0, height: 0.25)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBar.collectionView.reloadData()
     }
 }

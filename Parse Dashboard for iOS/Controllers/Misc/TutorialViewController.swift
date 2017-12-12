@@ -69,11 +69,13 @@ class TutorialViewController: UIViewController {
     init(action: TutorialAction) {
         super.init(nibName: nil, bundle: nil)
         label.text = action.text
+        preferredContentSize = CGSize(width: 300, height: 300)
         modalPresentationStyle = .popover
         popoverPresentationController?.barButtonItem = action.sourceItem
         popoverPresentationController?.sourceView = action.sourceView
         popoverPresentationController?.sourceRect = action.sourceView?.frame ?? .zero
         popoverPresentationController?.backgroundColor = .lightBlueBackground
+        popoverPresentationController?.permittedArrowDirections = .up
         popoverPresentationController?.canOverlapSourceViewRect = true
         popoverPresentationController?.delegate = self
     }
@@ -95,7 +97,10 @@ class TutorialViewController: UIViewController {
         view.addSubview(continueButton)
         view.addSubview(label)
         
-        continueButton.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: 60)
+        continueButton.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        let height = continueButton.heightAnchor.constraint(equalToConstant: 60)
+        height.priority = .defaultLow
+        height.isActive = true
         label.anchor(view.topAnchor, left: view.leftAnchor, bottom: continueButton.topAnchor, right: view.rightAnchor, topConstant: 16, leftConstant: 16, bottomConstant: 16, rightConstant: 16)
     }
     

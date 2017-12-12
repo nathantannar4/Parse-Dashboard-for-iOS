@@ -39,7 +39,7 @@ class SupportViewController: UITableViewController {
     init() {
         super.init(style: .plain)
         title = "Support"
-        tabBarItem = UITabBarItem(title: "Support", image: UIImage(named: "Clap")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Clap"))
+        tabBarItem = UITabBarItem(title: "Support", image: UIImage(named: "Support_Unselected")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Support"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -188,7 +188,7 @@ class SupportViewController: UITableViewController {
                 cell.textLabel?.text = "Show You're a Fan"
                 cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 24)
                 cell.selectionStyle = .none
-                cell.imageView?.image = UIImage(named: "Support")?.scale(to: 30)
+                cell.imageView?.image = UIImage(named: "Heart")?.scale(to: 30)
                 let separatorView = UIView()
                 separatorView.backgroundColor = .lightGray
                 cell.contentView.addSubview(separatorView)

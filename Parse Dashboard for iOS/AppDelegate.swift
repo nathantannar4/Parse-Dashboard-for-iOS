@@ -64,8 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        blurView.isHidden = false
-        Auth.shared.lock()
+        if Auth.shared.isSetup {
+            Auth.shared.lock()
+            blurView.isHidden = false
+        }
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

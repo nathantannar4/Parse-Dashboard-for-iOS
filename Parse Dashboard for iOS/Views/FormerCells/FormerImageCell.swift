@@ -38,7 +38,7 @@ final class FormerImageCell: UITableViewCell, LabelFormableRow {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.textColor = .black
-        iconView.backgroundColor = .darkBlueBackground
+        iconView.backgroundColor = .logoTint
         iconView.layer.cornerRadius = 5
     }
     

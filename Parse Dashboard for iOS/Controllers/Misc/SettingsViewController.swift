@@ -37,7 +37,7 @@ class SettingsViewController: FormViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         title = "Settings"
-        tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "Settings")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Settings"))
+        tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "Settings_Unselected")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Settings"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,13 +78,34 @@ class SettingsViewController: FormViewController {
                 }
         }
         
-        let section = SectionFormer(rowFormer: switchRow)
-            .set(headerViewFormer: LabelViewFormer<FormLabelHeaderView>()
+        let resetRow = LabelRowFormer<FormLabelCell>() {
+                $0.titleLabel.font = .boldSystemFont(ofSize: 15)
+            }.configure {
+                $0.text = "Reset Tutorial"
+            }.onSelected { _ in
+                UserDefaults.standard.set(true, forKey: .isNew)
+                let toast = Toast(text: "Tutorial Reset", actionText: "Undo", action: {
+                    UserDefaults.standard.set(false, forKey: .isNew)
+                })
+                toast.backgroundColor = .darkGray
+                toast.present(self, animated: true, duration: 3)
+                self.former.deselect(animated: true)
+        }
+        
+        let createHeader: ((String) -> ViewFormer) = { text in
+            return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
                     $0.viewHeight = 40
-                    $0.text = "Security"
-        })
-        former.append(sectionFormer: section)
+                    $0.text = text
+                    
+            }
+        }
+        
+        let securitySection = SectionFormer(rowFormer: switchRow).set(headerViewFormer: createHeader("Security"))
+    
+        let tutorialSection = SectionFormer(rowFormer: resetRow).set(headerViewFormer: createHeader("Tutorial"))
+            
+        former.append(sectionFormer: securitySection, tutorialSection)
     }
     
     // MARK: - User Actions

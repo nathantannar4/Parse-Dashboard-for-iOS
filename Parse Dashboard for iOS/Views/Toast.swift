@@ -85,6 +85,7 @@ open class Toast: UIView {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(UIColor(white: 1, alpha: 0.3), for: .highlighted)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.contentHorizontalAlignment = .center
         return button
     }()

@@ -16,7 +16,7 @@ class AppInfoViewController: UITableViewController {
     init() {
         super.init(style: .plain)
         title = "About"
-        tabBarItem = UITabBarItem(title: "About", image: UIImage(named: "About")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "About"))
+        tabBarItem = UITabBarItem(title: "About", image: UIImage(named: "About_Unselected")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "About"))
     }
     
     required init?(coder aDecoder: NSCoder) {

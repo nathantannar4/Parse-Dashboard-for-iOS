@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="akc-4S-YfO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="akc-4S-YfO">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +21,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by Nathan Tannar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcy-9g-UHC">
                                 <rect key="frame" x="16" y="487" width="343" height="33"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="qUM-rX-e4W"/>
+                                    <constraint firstAttribute="height" constant="33" id="m0p-5m-Zw2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -30,17 +29,19 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NT Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Deu-0K-gHk">
                                 <rect key="frame" x="16" y="387" width="343" height="79"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="IKX-bB-piL"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.11668945103883743" green="0.2302684485912323" blue="0.30109256505966187" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Deu-0K-gHk" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="JCo-2t-kp2"/>
-                            <constraint firstItem="rcy-9g-UHC" firstAttribute="top" secondItem="Deu-0K-gHk" secondAttribute="bottom" constant="21" id="Mc6-5j-rgq"/>
-                            <constraint firstItem="Deu-0K-gHk" firstAttribute="leading" secondItem="rcy-9g-UHC" secondAttribute="leading" id="Sbx-Mv-hNP"/>
-                            <constraint firstItem="Deu-0K-gHk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="387" id="d7g-7r-qua"/>
-                            <constraint firstItem="Deu-0K-gHk" firstAttribute="trailing" secondItem="rcy-9g-UHC" secondAttribute="trailing" id="jei-4U-PEi"/>
-                            <constraint firstItem="Deu-0K-gHk" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="pxG-5a-Cjl"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rcy-9g-UHC" secondAttribute="bottom" constant="83" id="tsM-7Q-SB5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Deu-0K-gHk" secondAttribute="trailing" constant="16" id="B3T-te-9lD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rcy-9g-UHC" secondAttribute="bottom" constant="83" id="EnO-gj-lg4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rcy-9g-UHC" secondAttribute="trailing" constant="16" id="JMk-Uo-DUE"/>
+                            <constraint firstItem="Deu-0K-gHk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Ys2-e8-X5b"/>
+                            <constraint firstItem="rcy-9g-UHC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="f9x-DP-AUB"/>
+                            <constraint firstItem="rcy-9g-UHC" firstAttribute="top" secondItem="Deu-0K-gHk" secondAttribute="bottom" constant="21" id="nJU-TO-6aV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -68,7 +69,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yeR-m9-Eq9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-233.59999999999999" y="386.8065967016492"/>
+            <point key="canvasLocation" x="-738" y="385"/>
         </scene>
     </scenes>
     <resources>
