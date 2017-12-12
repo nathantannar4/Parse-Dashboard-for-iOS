@@ -85,7 +85,9 @@ class SupportViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 1 {
-            IAPHandler.shared.purchase(atIndex: indexPath.row - 1)
+            if IAPHandler.shared.iapProducts.count > 0 {
+                IAPHandler.shared.purchase(atIndex: indexPath.row - 1)
+            }
         } else if indexPath.section == 2 {
             if indexPath.row == 1 {
                 guard let url = URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=\(itunesID)&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software") else {

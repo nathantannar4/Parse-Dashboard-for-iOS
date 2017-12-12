@@ -70,7 +70,9 @@ class SettingsViewController: FormViewController {
                 $0.switched = Auth.shared.isSetup
             }.onSwitchChanged { newValue in
                 if newValue == false {
-                    Auth.shared.destroy(over: self.dynamicTabBarController ?? self)
+                    Auth.shared.destroy(completion: { (result) in
+                        
+                    })
                 } else {
                     UserDefaults.standard.set(true, forKey: "isSetup")
                 }

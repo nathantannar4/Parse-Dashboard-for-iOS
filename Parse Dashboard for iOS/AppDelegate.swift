@@ -31,7 +31,17 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    // MARK: - Properties
+    
     var window: UIWindow?
+    
+    var blurView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        return blurView
+    }()
+    
+    // MARK: - UIApplicationDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -40,14 +50,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if !Auth.shared.granted, let vc = UIApplication.shared.presentedController {
-            Auth.shared.unlock(over: vc)
+        if blurView.superview == nil {
+            window?.addSubview(blurView)
+            blurView.fillSuperview()
+        }
+        if !Auth.shared.granted {
+            Auth.shared.unlock(completion: { result in
+                self.blurView.isHidden = result
+            })
+        } else {
+            self.blurView.isHidden = true
         }
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
+        blurView.isHidden = false
         Auth.shared.lock()
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        self.saveContext()
+    }
+    
+    // MARK: - Window Setup
     
     private func setupRootViewController() {
         
@@ -61,10 +86,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UINavigationController(rootViewController: ServersViewController())
         }
         window?.makeKeyAndVisible()
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        self.saveContext()
     }
     
     // MARK: - Core Data stack

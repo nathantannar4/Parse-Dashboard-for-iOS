@@ -45,7 +45,6 @@
 		38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */; };
 		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
-		38B2204C1FDF39B7002F12BD /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B2204B1FDF39B7002F12BD /* AuthViewController.swift */; };
 		38B220501FDF4783002F12BD /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B2204F1FDF4782002F12BD /* Auth.swift */; };
 		38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */; };
 		38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */; };
@@ -106,7 +105,6 @@
 		38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
-		38B2204B1FDF39B7002F12BD /* AuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		38B2204F1FDF4782002F12BD /* Auth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 				3852AA781FDCC7D900D7B009 /* SupportViewController.swift */,
 				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
 				380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */,
-				38B2204B1FDF39B7002F12BD /* AuthViewController.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -511,7 +508,6 @@
 				382BFF561FDE15BC0050FF15 /* FormerImageCell.swift in Sources */,
 				38B220501FDF4783002F12BD /* Auth.swift in Sources */,
 				38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */,
-				38B2204C1FDF39B7002F12BD /* AuthViewController.swift in Sources */,
 				3872C1C71FC3BC6400EBD87F /* AppDelegate.swift in Sources */,
 				382BFF551FDE15BC0050FF15 /* FormerFieldCell.swift in Sources */,
 				38DE1D101FC5453200C49508 /* ArrayViewController.swift in Sources */,

@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import BiometricAuthentication
 
 class Auth: NSObject {
     
@@ -49,14 +50,12 @@ class Auth: NSObject {
         super.init()
     }
     
-    // MARK: - Methods
+    // MARK: - Methods [Public]
     
-    func unlock(over viewController: UIViewController) {
-        let authViewController = AuthViewController()
-        viewController.present(authViewController, animated: true) {
-            authViewController.authenticateUser(completion: { (success) in
-                self.isGranted = success
-            })
+    func unlock(completion: @escaping (Bool)->Void) {
+        authenticateUser { result in
+            self.isGranted = result
+            completion(result)
         }
     }
     
@@ -64,13 +63,53 @@ class Auth: NSObject {
         isGranted = false
     }
     
-    func destroy(over viewController: UIViewController) {
-        let authViewController = AuthViewController()
-        viewController.present(authViewController, animated: true) {
-            authViewController.authenticateUser(completion: { (success) in
+    func destroy(completion: @escaping (Bool)->Void) {
+        authenticateUser { result in
+            if result {
                 self.isGranted = false
                 UserDefaults.standard.set(false, forKey: "isSetup")
+            }
+            completion(result)
+        }
+    }
+    
+    // MARK: - Methods [Private]
+    
+    func authenticateUser(completion: @escaping (Bool)->Void) {
+        
+        if BioMetricAuthenticator.canAuthenticate() {
+            authenticateWithBiometrics(completion: { success in
+                if success {
+                    completion(true)
+                } else {
+                    self.authenticateWithPassword(success: {
+                        completion(true)
+                    })
+                }
             })
+        } else {
+            self.authenticateWithPassword(success: {
+                completion(true)
+            })
+        }
+    }
+    
+    private func authenticateWithBiometrics(completion: @escaping (Bool)->Void) {
+        BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", fallbackTitle: "Enter Passcode", cancelTitle: nil, success: {
+            completion(true)
+        }) { error in
+            if error == .fallback || error == .biometryLockedout {
+                completion(false)
+            }
+        }
+    }
+    
+    private func authenticateWithPassword(success: @escaping ()->Void) {
+        BioMetricAuthenticator.authenticateWithPasscode(reason: "", cancelTitle: nil, success: {
+            success()
+        }) { (error) in
+//            self.authenticateWithPassword(success: success)
+            print(error)
         }
     }
 }
