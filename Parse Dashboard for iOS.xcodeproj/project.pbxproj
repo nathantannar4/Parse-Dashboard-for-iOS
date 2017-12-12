@@ -42,6 +42,7 @@
 		3872C1F71FC3CC2000EBD87F /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */; };
 		3872C20C1FC414E100EBD87F /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20B1FC414E100EBD87F /* SchemaViewController.swift */; };
 		3872C20E1FC415AB00EBD87F /* SchemaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20D1FC415AB00EBD87F /* SchemaCell.swift */; };
+		388C28A01FDF995C008B2DF9 /* DownloadViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C289F1FDF995C008B2DF9 /* DownloadViewer.swift */; };
 		38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */; };
 		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
@@ -102,6 +103,7 @@
 		3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		3872C20B1FC414E100EBD87F /* SchemaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
 		3872C20D1FC415AB00EBD87F /* SchemaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaCell.swift; sourceTree = "<group>"; };
+		388C289F1FDF995C008B2DF9 /* DownloadViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewer.swift; sourceTree = "<group>"; };
 		38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */,
 				38028CA31FC56145003A4E95 /* Ping.swift */,
 				38028CA41FC56145003A4E95 /* Toast.swift */,
+				388C289F1FDF995C008B2DF9 /* DownloadViewer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				3848CA0B1FC552560038A636 /* PFTableViewController.swift in Sources */,
 				38DE1D001FC4C32300C49508 /* NSConstraintLayoutSet.swift in Sources */,
 				3872C1ED1FC3C4FC00EBD87F /* PFCollectionViewController.swift in Sources */,
+				388C28A01FDF995C008B2DF9 /* DownloadViewer.swift in Sources */,
 				38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */,
 				3872C1F31FC3C8AA00EBD87F /* PFCollectionViewCell.swift in Sources */,
 				38028C991FC558A7003A4E95 /* WelcomeViewController.swift in Sources */,

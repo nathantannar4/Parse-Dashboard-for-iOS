@@ -46,6 +46,13 @@ class FileViewController: UIViewController {
         return imageView
     }()
     
+    let downloadView: DownloadViewer = {
+        let view = DownloadViewer(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 200)))
+        view.backgroundColor = .darkPurpleBackground
+        view.layer.cornerRadius = 100
+        return view
+    }()
+    
     // MARK: - Initialization
     
     init(url: URL, filename: String, schema: PFSchema, key: String, objectId: String) {
@@ -77,6 +84,9 @@ class FileViewController: UIViewController {
         
         view.backgroundColor = .darkPurpleAccent
         view.addSubview(imageView)
+        view.addSubview(downloadView)
+        downloadView.anchorCenterToSuperview()
+        downloadView.anchor(widthConstant: 200, heightConstant: 200)
         imageView.fillSuperview()
     }
     
@@ -102,13 +112,17 @@ class FileViewController: UIViewController {
     // MARK: - Data Refresh
     
     func loadDataFromUrl() {
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async {
+        downloadView.downloadFile(from: url) { [weak self] data in
+            if let data = data {
                 self?.imageView.image = UIImage(data: data)
                 self?.imageView.contentMode = .scaleAspectFill
             }
-        }.resume()
+            UIView.animate(withDuration: 0.3, animations: {
+                self?.downloadView.alpha = 0
+            }, completion: { _ in
+                self?.downloadView.removeFromSuperview()
+            })
+        }
     }
     
     // MARK: - User Actions
