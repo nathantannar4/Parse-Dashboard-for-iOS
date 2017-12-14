@@ -405,9 +405,9 @@ class ObjectViewController: PFTableViewController {
 
                     } else if type == .relation, let dict = object.value(forKey: object.keys[indexPath.row]) as? [String : AnyObject] {
                         
-                        if let classname = dict["className"] as? String {
+                        if let classname = dict["className"] as? String, let schema = self.object.schema?.name {
                             
-                            let object = "{\"__type\":\"Pointer\", \"className\":\"\(classname)\", \"objectId\":\"\(self.object.id)\"}"
+                            let object = "{\"__type\":\"Pointer\", \"className\":\"\(schema)\", \"objectId\":\"\(self.object.id)\"}"
                             let relation = "\"$relatedTo\":{\"object\":\(object), \"key\":\"\(self.object.keys[indexPath.row])\"}"
                             let query = "where={" + relation + "}"
                             
