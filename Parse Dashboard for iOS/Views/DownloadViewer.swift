@@ -29,9 +29,10 @@ import UIKit
 
 class DownloadViewer: UIView {
     
-    // MARK: - Properties
+    // MARK: - Properties [Public]
     
-    let shapeLayer = CAShapeLayer()
+    var progressLayer = CAShapeLayer()
+    var pulsatingLayer = CAShapeLayer()
     
     let percentageLabel: UILabel = {
         let label = UILabel()
@@ -51,9 +52,11 @@ class DownloadViewer: UIView {
         return label
     }()
     
-    lazy var session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue())
+    // MARK: - Properties [Private]
     
-    var completion: ((Data?)->Void)?
+    lazy private var session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue())
+    
+    private var completion: ((Data?, Error?)->Void)?
     
     // MARK: - Properties
     
@@ -66,50 +69,85 @@ class DownloadViewer: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Setup [Private]
+    
     func setup() {
         
-
+        setupNotificationObservers()
+        setupLayers()
         addSubview(percentageLabel)
         addSubview(statusLabel)
         percentageLabel.anchor(nil, left: leftAnchor, bottom: centerYAnchor, right: rightAnchor)
         statusLabel.anchor(centerYAnchor, left: leftAnchor, bottom: nil, right: rightAnchor)
+    }
+    
+    private func setupLayers() {
+        pulsatingLayer = createCircleShapeLayer(strokeColor: .clear, fillColor: UIColor.darkPurpleBackground.darker(by: 5).withAlphaComponent(0.5))
+        layer.addSublayer(pulsatingLayer)
+        animatePulsatingLayer()
         
-        let trackLayer = CAShapeLayer()
-        let circularPath = UIBezierPath(arcCenter: .zero, radius: 100, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-        trackLayer.path = circularPath.cgPath
-        trackLayer.strokeColor = UIColor.darkPurpleAccent.cgColor
-        trackLayer.lineWidth = 10
-        trackLayer.fillColor = UIColor.clear.cgColor
-        trackLayer.lineCap = kCALineCapRound
-        trackLayer.position = center
+        let trackLayer = createCircleShapeLayer(strokeColor: UIColor.darkPurpleBackground.darker(by: 5), fillColor: .darkPurpleBackground)
         layer.addSublayer(trackLayer)
         
-        shapeLayer.path = circularPath.cgPath
-        shapeLayer.strokeColor = UIColor.white.cgColor
-        shapeLayer.lineWidth = 10
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineCap = kCALineCapRound
-        shapeLayer.position = center
-        shapeLayer.transform = CATransform3DMakeRotation(-CGFloat.pi / 2, 0, 0, 1)
-        shapeLayer.strokeEnd = 0
-
-        layer.addSublayer(shapeLayer)
-        
-        addPulseAnimation()
+        progressLayer = createCircleShapeLayer(strokeColor: .white, fillColor: .clear)
+        progressLayer.transform = CATransform3DMakeRotation(-CGFloat.pi / 2, 0, 0, 1)
+        progressLayer.strokeEnd = 0
+        layer.addSublayer(progressLayer)
     }
     
-    func addPulseAnimation(){
-        let pulse = PulseEffectCirlce(centerPosition: center)
-        pulse.backgroundColor = UIColor.darkPurpleBackground.cgColor
-        layer.insertSublayer(pulse, at: 0)
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(animatePulsatingLayer), name: .UIApplicationWillEnterForeground, object: nil)
     }
     
+    private func createCircleShapeLayer(strokeColor: UIColor, fillColor: UIColor) -> CAShapeLayer {
+        let layer = CAShapeLayer()
+        let circularPath = UIBezierPath(arcCenter: .zero, radius: 100, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        layer.path = circularPath.cgPath
+        layer.strokeColor = strokeColor.cgColor
+        layer.lineWidth = 20
+        layer.fillColor = fillColor.cgColor
+        layer.lineCap = kCALineCapRound
+        layer.position = center
+        return layer
+    }
     
-    func downloadFile(from url: URL, completion: ((Data?)->Void)?) {
+    // MARK: - Methods [Public]
+    
+    func downloadFile(from url: URL, completion: ((Data?, Error?)->Void)?) {
         self.completion = completion
-        shapeLayer.strokeEnd = 0
+        progressLayer.strokeEnd = 0
         let downloadTask = session.downloadTask(with: url)
         downloadTask.resume()
+    }
+    
+    // MARK: - Layer Animations [Private]
+    
+    @objc
+    private func animatePulsatingLayer() {
+        
+        let animation = CABasicAnimation(keyPath: "transform.scale.xy")
+        animation.toValue = 1.5
+        animation.duration = 0.8
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        animation.autoreverses = true
+        animation.repeatCount = .infinity
+        
+        pulsatingLayer.add(animation, forKey: "pulsing")
+    }
+    
+    private func animateCircle() {
+        
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.toValue = 1
+        basicAnimation.duration = 2
+        basicAnimation.fillMode = kCAFillModeForwards
+        basicAnimation.isRemovedOnCompletion = false
+        
+        progressLayer.add(basicAnimation, forKey: "progress")
     }
 }
 
@@ -118,10 +156,9 @@ extension DownloadViewer: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         
         let percentage = CGFloat(totalBytesWritten) / CGFloat(totalBytesExpectedToWrite)
-        
         DispatchQueue.main.async {
             self.percentageLabel.text = "\(Int(percentage * 100)) %"
-            self.shapeLayer.strokeEnd = percentage
+            self.progressLayer.strokeEnd = percentage
         }
     }
     
@@ -129,110 +166,16 @@ extension DownloadViewer: URLSessionDownloadDelegate {
         
         let data = FileManager.default.contents(atPath: location.path)
         DispatchQueue.main.async {
-            self.completion?(data)
+            self.completion?(data, nil)
             self.statusLabel.text = "Complete"
         }
     }
     
     func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
         DispatchQueue.main.async {
-            self.completion?(nil)
+            self.statusLabel.text = "Error"
+            self.completion?(nil, error)
         }
     }
 }
 
-/// Pulse Effect Circle
-class PulseEffectCirlce: CALayer {
-    
-    /// Radius of Circle
-    private var radius: CGFloat = 100
-    
-    /// Repeat count of animation
-    private var repeatedCount: Float = .infinity
-    
-    /// Animatin duration
-    private var animationDuration: TimeInterval = 0.75
-    
-    // Need to implement that, because otherwise it can't find
-    // the constructor init(layer:AnyObject!)
-    // Doesn't seem to look in the super class
-    override init(layer: Any) {
-        super.init(layer: layer)
-    }
-    
-    /// Init with position of Circle layer center position
-    init(centerPosition position: CGPoint) {
-        super.init()
-        
-        self.contentsScale = UIScreen.main.scale
-        self.opacity = 0.0
-        
-        self.backgroundColor = UIColor.blue.cgColor
-        
-        self.position = position
-        
-        DispatchQueue.global(qos: .background).async {
-            let groupedAnimation = self.setupAnimationGroup()
-            self.setPulse(radius: self.radius)
-            
-            DispatchQueue.main.async {
-                self.add(groupedAnimation, forKey: "pulseEffect")
-            }
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    /// Set pulse animation with Radius
-    private func setPulse(radius maximumRadius: CGFloat) {
-        self.radius = maximumRadius
-        
-        let tempPosition = self.position // Center position
-        let diameter = self.radius * 2
-        
-        self.bounds = CGRect(x: 0.0, y: 0.0, width: diameter, height: diameter)
-        self.cornerRadius = self.radius
-        self.position = tempPosition
-    }
-    
-    /// Grouping animation
-    private func setupAnimationGroup() -> CAAnimationGroup {
-        
-        let animationGroup = CAAnimationGroup()
-        animationGroup.duration = self.animationDuration // animation duration
-        animationGroup.repeatCount = self.repeatedCount // repeat count
-        animationGroup.autoreverses = true
-        animationGroup.isRemovedOnCompletion = false
-        
-        let defaultCurve = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
-        animationGroup.timingFunction = defaultCurve // timingFunction
-        
-        animationGroup.animations = [setScaleAnimation(), setOpacityAniamtion()]
-        
-        return animationGroup
-    }
-    
-    /// Scale animation
-    private func setScaleAnimation() -> CABasicAnimation {
-        
-        let scaleAnimation = CABasicAnimation(keyPath: "transform.scale.xy")
-        scaleAnimation.fromValue = 1.1
-        scaleAnimation.toValue = 1.5
-        scaleAnimation.duration = animationDuration
-        return scaleAnimation
-    }
-    
-    /// opacity animation
-    private  func setOpacityAniamtion() -> CAKeyframeAnimation {
-        
-        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
-        opacityAnimation.duration = self.animationDuration
-        opacityAnimation.values = [0.7, 0.5]
-        opacityAnimation.keyTimes = [0, 0.75]
-        opacityAnimation.isRemovedOnCompletion = false
-        return opacityAnimation
-        
-    }
-}

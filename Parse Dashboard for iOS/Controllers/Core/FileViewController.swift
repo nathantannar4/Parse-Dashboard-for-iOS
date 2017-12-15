@@ -46,12 +46,7 @@ class FileViewController: UIViewController {
         return imageView
     }()
     
-    let downloadView: DownloadViewer = {
-        let view = DownloadViewer(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 200)))
-        view.backgroundColor = .darkPurpleBackground
-        view.layer.cornerRadius = 100
-        return view
-    }()
+    lazy var downloadView = DownloadViewer(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 200)))
     
     // MARK: - Initialization
     
@@ -112,12 +107,16 @@ class FileViewController: UIViewController {
     // MARK: - Data Refresh
     
     func loadDataFromUrl() {
-        downloadView.downloadFile(from: url) { [weak self] data in
+        downloadView.downloadFile(from: url) { [weak self] data, error in
+            guard error == nil else {
+                Ping(text: error?.localizedDescription ?? "Error", style: .danger).show()
+                return
+            }
             if let data = data {
                 self?.imageView.image = UIImage(data: data)
                 self?.imageView.contentMode = .scaleAspectFill
             }
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self?.downloadView.alpha = 0
             }, completion: { _ in
                 self?.downloadView.removeFromSuperview()
@@ -137,7 +136,8 @@ class FileViewController: UIViewController {
         
         guard let image = imageView.image else { return }
         if image == UIImage(named: "File") { return }
-        PHPhotoLibrary.shared().performChanges( { PHAssetChangeRequest.creationRequestForAsset(from: image) }, completionHandler: { success, error in
+        PHPhotoLibrary.shared()
+            .performChanges( { PHAssetChangeRequest.creationRequestForAsset(from: image) }, completionHandler: { success, error in
             DispatchQueue.main.async {
                 if success {
                     // "Saved to camera roll"

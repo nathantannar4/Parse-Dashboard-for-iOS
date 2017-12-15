@@ -98,7 +98,7 @@ class Auth: NSObject {
         BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", fallbackTitle: "Enter Passcode", cancelTitle: nil, success: {
             completion(true)
         }) { error in
-            if error == .fallback || error == .biometryLockedout {
+            if error == .fallback || error == .biometryLockedout || error == .canceledByUser {
                 completion(false)
             }
         }
@@ -108,7 +108,6 @@ class Auth: NSObject {
         BioMetricAuthenticator.authenticateWithPasscode(reason: "", cancelTitle: nil, success: {
             success()
         }) { (error) in
-//            self.authenticateWithPassword(success: success)
             print(error)
         }
     }
