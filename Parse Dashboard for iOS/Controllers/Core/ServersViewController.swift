@@ -71,6 +71,7 @@ class ServersViewController: PFCollectionViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30), style: .plain, target: self, action: #selector(showMore))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addServer))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Servers", style: .plain, target: nil, action: nil)
     }
     
     // MARK: - UICollectionViewDataSource

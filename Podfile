@@ -12,6 +12,5 @@ target 'Parse Dashboard for iOS' do
   pod 'Former'
   pod 'DynamicTabBarController'
   pod 'BiometricAuthentication'
-  
 
 end

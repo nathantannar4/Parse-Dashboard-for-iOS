@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    /// A visual effect view for security when biometric authentication is on
     var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blurEffect)

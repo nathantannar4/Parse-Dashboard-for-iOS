@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/SchemaViewController.swift"
-            timestampString = "535106478.532275"
+            timestampString = "535153143.232578"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "handleRefresh()"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/SchemaViewController.swift"
-            timestampString = "535106478.532346"
+            timestampString = "535153143.23273"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "handleRefresh()"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/SchemaViewController.swift"
-            timestampString = "535106478.532399"
+            timestampString = "535153143.23282"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "handleRefresh()"
             landmarkType = "7">
             <Locations>
@@ -346,13 +346,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/AppDelegate.swift"
-            timestampString = "535106478.532722"
+            timestampString = "535152360.403929"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "AppDelegate"
-            landmarkType = "3">
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "application(_:open:options:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -458,12 +458,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/AppDelegate.swift"
-            timestampString = "535106478.533203"
+            timestampString = "535152360.4041"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "application(_:performActionFor:completionHandler:)"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "applicationWillTerminate(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -474,12 +474,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/AppDelegate.swift"
-            timestampString = "535106478.533463"
+            timestampString = "535152360.404181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "application(_:performActionFor:completionHandler:)"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "applicationWillTerminate(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
