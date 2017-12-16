@@ -44,6 +44,13 @@ class Parse {
         self.serverURL = config.serverUrl ?? String()
         self.applicationId = config.applicationId ?? String()
         self.masterKey = config.masterKey ?? String()
+        let hashedConfig: [String:String?] = [
+            .configName : config.name ?? "App",
+            .applicationId  : applicationId,
+            .masterKey  : masterKey,
+            .serverUrl  : serverURL
+        ]
+        UserDefaults.standard.set(hashedConfig, forKey: .recentConfig)
     }
     
     func get(_ endpoint: String, query: String = "", completion: @escaping PFCompletionBlock) {

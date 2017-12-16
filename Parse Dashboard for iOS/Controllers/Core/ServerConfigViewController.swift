@@ -165,10 +165,10 @@ class ServerConfigViewController: FormViewController {
                 .configure {
                     $0.viewHeight = 40
                     $0.text = text
-
+                    
             }
         }
-        
+       
         // Create SectionFormers
         
         let requiredSecion = SectionFormer(rowFormer: nameRow, appIdRow, masterKeyRow, serverUrlRow)
@@ -176,6 +176,14 @@ class ServerConfigViewController: FormViewController {
         
         let optionalSection = SectionFormer(rowFormer: imageRow)
             .set(headerViewFormer: createHeader("Optional"))
+            .set(footerViewFormer: {
+                return LabelViewFormer<FormLabelFooterView>()
+                    .configure {
+                        $0.viewHeight = 120
+                        $0.text = "Configurations can also be added by opening a URL link anywhere on your phone that is in the format:\n parsedashboard://<applicationId>:\n<masterKey>@<url>:<port>/<path>"
+                        
+                }
+            }())
         
         former.append(sectionFormer: requiredSecion, optionalSection)
             .onCellSelected { [weak self] _ in

@@ -88,9 +88,7 @@ class ServersViewController: PFCollectionViewController {
     // MARK: - UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let config = servers[indexPath.row]
-        Parse.shared.initialize(with: config)
-        navigationController?.pushViewController(SchemaViewController(), animated: true)
+        showSchemasForConfig(servers[indexPath.row])
     }
     
     override func collectionView(_ collectionView: UICollectionView, didLongSelectItemAt indexPath: IndexPath) {
@@ -119,8 +117,13 @@ class ServersViewController: PFCollectionViewController {
     
     // MARK: - User Actions
     
+    func showSchemasForConfig(_ config: ParseServerConfig) {
+        Parse.shared.initialize(with: config)
+        navigationController?.pushViewController(SchemaViewController(), animated: true)
+    }
+    
     @objc
-    func showMore() {
+    func showMore(atIndex index: Int = 0) {
         
         let moreController = MoreViewController(viewControllers: [
             UINavigationController(rootViewController: AppInfoViewController()),
@@ -128,6 +131,7 @@ class ServersViewController: PFCollectionViewController {
             UINavigationController(rootViewController: SettingsViewController())
         ])
         moreController.modalPresentationStyle = .formSheet
+        moreController.displayViewController(at: index, animated: false)
         present(moreController, animated: true, completion: nil)
     }
     

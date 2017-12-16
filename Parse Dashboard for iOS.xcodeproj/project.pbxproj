@@ -13,6 +13,7 @@
 		38028CA61FC56145003A4E95 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA41FC56145003A4E95 /* Toast.swift */; };
 		38028CA81FC5615A003A4E95 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA71FC5615A003A4E95 /* Alert.swift */; };
 		38028CAA1FC56611003A4E95 /* SchemaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */; };
+		3809B9EE1FE4D2A200D8DD2A /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3809B9ED1FE4D2A200D8DD2A /* DeepLink.swift */; };
 		380EB3891FDE3AB900AB4AB3 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */; };
 		382BFF4F1FDE13E10050FF15 /* ServerConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */; };
 		382BFF521FDE15220050FF15 /* FormerInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */; };
@@ -72,6 +73,7 @@
 		38028CA41FC56145003A4E95 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		38028CA71FC5615A003A4E95 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaDetailViewController.swift; sourceTree = "<group>"; };
+		3809B9ED1FE4D2A200D8DD2A /* DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLink.swift; sourceTree = "<group>"; };
 		380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConfigViewController.swift; sourceTree = "<group>"; };
 		382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInputAccessoryView.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				38B2204F1FDF4782002F12BD /* Auth.swift */,
+				3809B9ED1FE4D2A200D8DD2A /* DeepLink.swift */,
 				38028CA71FC5615A003A4E95 /* Alert.swift */,
 				3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */,
 				3872C1D81FC3BCF600EBD87F /* Parse.swift */,
@@ -497,6 +500,7 @@
 				3872C1E41FC3C08200EBD87F /* UIColor+Extensions.swift in Sources */,
 				38DE1CFC1FC4BB1B00C49508 /* ClassCell.swift in Sources */,
 				38028CA81FC5615A003A4E95 /* Alert.swift in Sources */,
+				3809B9EE1FE4D2A200D8DD2A /* DeepLink.swift in Sources */,
 				3848CA0B1FC552560038A636 /* PFTableViewController.swift in Sources */,
 				38DE1D001FC4C32300C49508 /* NSConstraintLayoutSet.swift in Sources */,
 				3872C1ED1FC3C4FC00EBD87F /* PFCollectionViewController.swift in Sources */,
