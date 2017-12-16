@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/SchemaViewController.swift"
-            timestampString = "534727697.071335"
+            timestampString = "535106478.532275"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "handleRefresh()"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/SchemaViewController.swift"
-            timestampString = "534727697.071458"
+            timestampString = "535106478.532346"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "handleRefresh()"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/SchemaViewController.swift"
-            timestampString = "534727697.071521"
+            timestampString = "535106478.532399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "handleRefresh()"
             landmarkType = "7">
             <Locations>
@@ -250,39 +250,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/ClassViewController.swift"
-            timestampString = "534716568.025367"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "setupToolbar()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Parse Dashboard for iOS/Controllers/Core/ClassViewController.swift"
-            timestampString = "534716568.025436"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "setupToolbar()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Parse Dashboard for iOS/Controllers/Core/ClassViewController.swift"
-            timestampString = "534716568.02549"
+            timestampString = "535106478.532476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "151"
@@ -298,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/ClassViewController.swift"
-            timestampString = "534716568.025539"
+            timestampString = "535106478.532525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "setupToolbar()"
             landmarkType = "7">
          </BreakpointContent>
@@ -314,11 +282,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/ClassViewController.swift"
-            timestampString = "534716568.025588"
+            timestampString = "535106478.532571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "setupToolbar()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/ClassViewController.swift"
+            timestampString = "535106478.532616"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "setupToolbar()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/ClassViewController.swift"
+            timestampString = "535106478.53266"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "viewWillDisappear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,7 +330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/Controllers/Core/ServerConfigViewController.swift"
-            timestampString = "535105885.713014"
+            timestampString = "535106415.992437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "255"
@@ -346,7 +346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/AppDelegate.swift"
-            timestampString = "535105885.713087"
+            timestampString = "535106478.532722"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
@@ -458,7 +458,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/AppDelegate.swift"
-            timestampString = "535105885.713673"
+            timestampString = "535106478.533203"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
@@ -474,7 +474,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Parse Dashboard for iOS/AppDelegate.swift"
-            timestampString = "535105885.713924"
+            timestampString = "535106478.533463"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"

@@ -49,6 +49,7 @@ class ServersViewController: PFCollectionViewController {
         super.viewDidAppear(animated)
         fetchServersFromCoreData()
         
+        
         let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
         if isNew {
             setupTutorial()
@@ -119,7 +120,9 @@ class ServersViewController: PFCollectionViewController {
     
     func showSchemasForConfig(_ config: ParseServerConfig) {
         Parse.shared.initialize(with: config)
-        navigationController?.pushViewController(SchemaViewController(), animated: true)
+        let schemaViewController = SchemaViewController()
+        schemaViewController.title = config.name
+        navigationController?.pushViewController(schemaViewController, animated: true)
     }
     
     @objc

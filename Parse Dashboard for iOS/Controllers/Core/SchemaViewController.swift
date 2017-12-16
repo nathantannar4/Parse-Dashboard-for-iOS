@@ -37,6 +37,7 @@ class SchemaViewController: PFCollectionViewController {
     private lazy var searchController: UISearchController = { [weak self] in
         let searchController = UISearchController(searchResultsController: nil)
         searchController.delegate = self
+        searchController.searchBar.placeholder = "Search Classes"
         searchController.searchBar.tintColor = .logoTint
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
@@ -92,7 +93,6 @@ class SchemaViewController: PFCollectionViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         
-        title = "Classes"
         definesPresentationContext = true
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController

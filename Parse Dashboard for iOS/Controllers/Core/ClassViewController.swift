@@ -43,6 +43,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     private lazy var searchController: UISearchController = { [weak self] in
         let searchController = UISearchController(searchResultsController: nil)
         searchController.delegate = self
+        searchController.searchBar.placeholder = "Search Objects"
         searchController.searchBar.tintColor = .logoTint
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
