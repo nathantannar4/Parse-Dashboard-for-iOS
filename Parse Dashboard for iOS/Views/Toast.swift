@@ -121,7 +121,7 @@ open class Toast: UIView {
         layoutRippleView()
         addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(Toast.didTap(gesture:))))
         actionButton.addTarget(self, action: #selector(Toast.didTapActionButton(button:)), for: .touchUpInside)
-        backgroundColor = Alert.Defaults.Color.Success
+        backgroundColor = .darkGray
     }
     
     private func layoutRippleView() {
@@ -246,6 +246,8 @@ open class Toast: UIView {
     @objc
     private func didTapActionButton(button: UIButton) {
         action?()
+        button.isUserInteractionEnabled = false
+        dismiss()
     }
     
     // MARK: - Ripple Animation Methods

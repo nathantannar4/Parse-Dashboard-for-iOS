@@ -30,7 +30,7 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+        
     // MARK: - Properties
     
     var window: UIWindow?
@@ -45,10 +45,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        setupRootViewController()
+        setupWindow()
+        if let item = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {
+            // If the user selected a shortcut item on launch switch the initial root UIViewController
+            self.application(application, performActionFor: item, completionHandler: { _ in })
+        }
         return true
     }
     
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        // Expected Format for config import
+        // parsedashboard://<applicationId>:\n<masterKey>@<url>:<port>/<path>
+        
+        let config = ParseServerConfig(entity: ParseServerConfig.entity(), insertInto: persistentContainer.viewContext)
+        config.name = url.host
+        config.applicationId = url.user ?? String()
+        config.masterKey = url.password ?? String()
+        var serverUrl = url.host ?? String()
+        if let port = url.port {
+            serverUrl.append(":\(port)")
+        }
+        let mount = url.path
+        serverUrl.append(mount)
+        config.serverUrl = serverUrl
+        saveContext()
+        self.application(app, performActionFor: DeepLink.home.item, completionHandler: { _ in })
+        
+        return true
+    }
+    
+    /// Restart any tasks that were paused (or not yet started) while the application was inactive.
+    /// If the application was previously in the background, optionally refresh the user interface.
     func applicationDidBecomeActive(_ application: UIApplication) {
         if blurView.superview == nil {
             window?.addSubview(blurView)
@@ -62,21 +90,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.blurView.isHidden = true
         }
     }
-    
+   
+    /// Use this method to release shared resources, save user data, invalidate timers, and store enough application
+    /// state information to restore your application to its current state in case it is terminated later
     func applicationDidEnterBackground(_ application: UIApplication) {
         if Auth.shared.isSetup {
             Auth.shared.lock()
             blurView.isHidden = false
         }
+        UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.recent.item, DeepLink.support.item] // Updated Shortcut Items
     }
     
+    /// Called when the application is about to terminate. Save data if appropriate.
+    /// See also applicationDidEnterBackground:.
     func applicationWillTerminate(_ application: UIApplication) {
         self.saveContext()
     }
     
+    /// Called when a user selects a shortcut item after 3D touching an app icon
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        guard let root = window?.rootViewController as? UINavigationController else { return }
+        if root != UIApplication.shared.presentedController {
+            UIApplication.shared.presentedController?.dismiss(animated: false, completion: nil)
+        }
+        guard let base = root.viewControllers.first as? ServersViewController else { return }
+        
+        switch shortcutItem.type {
+        case DeepLink.add.type:
+            // Add a new server configuration
+            root.popToRootViewController(animated: false)
+            base.addServer()
+        case DeepLink.recent.type:
+            // Go to the schema view of the most recently viewed server
+            guard let configHash = shortcutItem.userInfo as? [String:String] else { return }
+            let config = ParseServerConfig(entity: ParseServerConfig.entity(), insertInto: nil)
+            config.name = configHash[.configName]
+            config.applicationId = configHash[.applicationId]
+            config.masterKey = configHash[.masterKey]
+            config.serverUrl = configHash[.serverUrl]
+            root.popToRootViewController(animated: false)
+            base.showSchemasForConfig(config)
+        case DeepLink.support.type:
+            // Show the support page
+            root.popToRootViewController(animated: false)
+            base.showMore(atIndex: 1) // Index 1 is the SupportViewController
+        case DeepLink.home.type:
+            // Go to main server config list page
+            root.popToRootViewController(animated: false)
+            base.viewDidAppear(false)
+        default:
+            break
+        }
+        
+    }
+    
     // MARK: - Window Setup
     
-    private func setupRootViewController() {
+    /// Sets up the window to it's default properties
+    private func setupWindow() {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
@@ -87,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             window?.rootViewController = UINavigationController(rootViewController: ServersViewController())
         }
-        window?.makeKeyAndVisible()
+        window?.makeKeyAndVisible() // Required when not using storyboards
     }
     
     // MARK: - Core Data stack

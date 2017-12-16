@@ -50,5 +50,16 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>parsedashboard</string>
+            </array>
+            <key>CFBundleURLName</key>
+            <string>me.nathantannar.Parse-Dashboard</string>
+        </dict>
+    </array>
 </dict>
 </plist>

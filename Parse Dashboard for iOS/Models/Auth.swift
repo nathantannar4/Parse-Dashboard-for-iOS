@@ -95,10 +95,10 @@ class Auth: NSObject {
     }
     
     private func authenticateWithBiometrics(completion: @escaping (Bool)->Void) {
-        BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", fallbackTitle: "Enter Passcode", cancelTitle: nil, success: {
+        BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", cancelTitle: nil, success: {
             completion(true)
         }) { error in
-            if error == .fallback || error == .biometryLockedout || error == .canceledByUser {
+            if error == .fallback || error == .biometryLockedout{
                 completion(false)
             }
         }
