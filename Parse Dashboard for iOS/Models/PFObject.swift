@@ -48,7 +48,20 @@ class PFObject {
             if let index = keys.index(of: "type") {
                 keys.remove(at: index)
             }
-            return keys.sorted()
+            keys = keys.sorted()
+            if let index = keys.index(of: .objectId) {
+                keys.insert(keys.remove(at: index), at: 0)
+            }
+            if let index = keys.index(of: .createdAt) {
+                keys.insert(keys.remove(at: index), at: 1)
+            }
+            if let index = keys.index(of: .updatedAt) {
+                keys.insert(keys.remove(at: index), at: 2)
+            }
+            if let index = keys.index(of: .acl) {
+                keys.append(keys.remove(at: index))
+            }
+            return keys
         }
         return Array(json.dictionaryValue.keys).sorted() // Fallback on local keys
     }

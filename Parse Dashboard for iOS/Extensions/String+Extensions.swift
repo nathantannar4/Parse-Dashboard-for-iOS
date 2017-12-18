@@ -106,6 +106,10 @@ extension String {
         return "Date"
     }
     
+    static var object: String {
+        return "Object"
+    }
+    
     static var isNew: String {
         return "isNew"
     }

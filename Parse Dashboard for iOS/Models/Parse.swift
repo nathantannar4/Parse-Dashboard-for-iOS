@@ -113,6 +113,14 @@ class Parse {
     
     func post(_ endpoint: String, body: String? = nil, completion: @escaping PFCompletionBlock) {
         
+        guard let data = body?.data(using: .utf8) else {
+            return completion((false, "Invalid Data"), nil)
+        }
+        post(endpoint, body: data, completion: completion)
+    }
+    
+    func post(_ endpoint: String, body: Data, completion: @escaping PFCompletionBlock) {
+        
         guard UIApplication.shared.isConnectedToNetwork else {
             return completion((false, "Network Connection Unavailable"), nil)
         }
@@ -123,7 +131,7 @@ class Parse {
         
         var request = PFRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = body?.data(using: .utf8)
+        request.httpBody = body
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {

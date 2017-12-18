@@ -203,7 +203,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
             } else if indexPath.row == 1 {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: QueryHelpCell.reuseIdentifier, for: indexPath) as! QueryHelpCell
-                cell.leftText = ["$lt", "$lte", "$gt", "$gte", "$ne", "$in", "$inQuery", "$nin", "$exists", "$select", "$dontSelect\n", "$all", "$regex", "order", "limit\n", "skip\n", "keys\n", "include\n", "&"]
+                cell.leftText = ["$lt", "$lte", "$gt", "$gte\n", "$ne", "$in", "$inQuery\n", "$nin", "$exists", "$select\n", "$dontSelect\n", "$all\n", "$regex", "order", "limit\n\n", "skip\n", "keys\n", "include\n", "&"]
                 cell.rightText = ["Less Than", "Less Than Or Equal To", "Greater Than", "Greater Than Or Equal To", "Not Equal To", "Contained In", "Contained in query results", "Not Contained in", "A value is set for the key", "Match key value to query result", "Ignore keys with value equal to query result", "Contains all of the given values", "Match regular expression", "Specify a field to sort by", "Limit the number of objects returned by the query", "Use with limit to paginate through results", "Restrict the fields returned by the query", "Use on Pointer columns to return the full object", "Append constraints"]
                 return cell
             }

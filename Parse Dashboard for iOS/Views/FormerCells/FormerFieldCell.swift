@@ -37,6 +37,8 @@ final class FormerFieldCell: UITableViewCell, TextFieldFormableRow {
         super.awakeFromNib()
         titleLabel.textColor = .black
         textField.textColor = .darkGray
+        titleLabel.font = .boldSystemFont(ofSize: 15)
+        textField.font = .systemFont(ofSize: 15)
     }
     
     func formTextField() -> UITextField {

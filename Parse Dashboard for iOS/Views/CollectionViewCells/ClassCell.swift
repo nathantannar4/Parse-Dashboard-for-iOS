@@ -79,6 +79,7 @@ class ClassCell: PFCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         object = nil
+        searchKey = nil
     }
     
     override func setupViews() {

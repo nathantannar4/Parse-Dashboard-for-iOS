@@ -72,7 +72,7 @@ class LaunchScreenViewController: UIViewController {
             self.authorLabel.alpha = 0
         })
         
-        let xOrigin: CGFloat = UIDevice.current.model == .iPhoneX ? 18 : 20
+        let xOrigin: CGFloat = UIDevice.current.model == .iPhoneX ? 16 : 20
         
         UIView.animate(withDuration: 0.5, delay: delay, options: .curveEaseIn, animations: {
             self.titleLabel.alpha = 1
@@ -81,9 +81,16 @@ class LaunchScreenViewController: UIViewController {
             self.headerViewHeightConstraint.constant = newHeight
             self.view.layoutIfNeeded()
             self.logoView.frame.origin = CGPoint(x: xOrigin, y: statusBarHeight + 7)
+            // Hacky solution to match destination frames
             if !isPortrait {
-                // Hacky solution to match destination frame
                 self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -1)
+            }
+            if UIDevice.current.model == .iPhoneX {
+                if !isPortrait {
+                    self.titleLabel.transform = CGAffineTransform(translationX: -4, y: -1)
+                } else {
+                    self.titleLabel.transform = CGAffineTransform(translationX: -4, y: 0)
+                }
             }
         }) { _ in
             self.endTransition()

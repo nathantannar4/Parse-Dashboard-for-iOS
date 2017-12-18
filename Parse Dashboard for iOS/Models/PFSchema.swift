@@ -72,4 +72,21 @@ class PFSchema {
         guard let dict = fields?[field] as? [String : AnyObject] else { return nil }
         return dict["type"] as? String
     }
+    
+    func editableFields() -> [String] {
+        guard var keys = fields?.keys.sorted() else { return [] }
+        if let index = keys.index(of: .objectId) {
+            keys.remove(at: index)
+        }
+        if let index = keys.index(of: .createdAt) {
+            keys.remove(at: index)
+        }
+        if let index = keys.index(of: .updatedAt) {
+            keys.remove(at: index)
+        }
+        if let index = keys.index(of: .acl) {
+            keys.remove(at: index)
+        }
+        return keys
+    }
 }

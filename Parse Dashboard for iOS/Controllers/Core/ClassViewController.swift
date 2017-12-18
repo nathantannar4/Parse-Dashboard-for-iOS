@@ -33,12 +33,12 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     
     var query = "limit=1000&order=-updatedAt"
     
-    private var schema: PFSchema
+    var schema: PFSchema
     
-    private var objects = [PFObject]()
-    private var filteredObjects = [PFObject]()
+    var objects = [PFObject]()
+    var filteredObjects = [PFObject]()
     
-    fileprivate var searchKey: String = .objectId
+    var searchKey: String = .objectId
     
     private lazy var searchController: UISearchController = { [weak self] in
         let searchController = UISearchController(searchResultsController: nil)
@@ -144,7 +144,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         ]
     }
     
-    private func setupToolbar() {
+    open func setupToolbar() {
         
         if schema.name == "_Installation" {
             navigationController?.toolbar.barTintColor = .darkPurpleAccent
@@ -209,32 +209,9 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     @objc
     func addObject() {
         
-        let alert = UIAlertController(title: "Create Object", message: nil, preferredStyle: .alert)
-        alert.configureView()
-        
-        let saveAction = UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
-            
-            guard let classname = self?.schema.name, let body = alert.textFields?.first?.text else { return }
-            Parse.shared.post("/classes/" + classname, body: body, completion: { [weak self] (result, json) in
-                guard result.success, let json = json else {
-                    self?.handleError(result.error)
-                    return
-                }
-                let newObject = PFObject(json)
-                newObject.schema = self?.schema
-                self?.objects.insert(newObject, at: 0)
-                self?.handleSuccess("Object Created")
-                if self?.collectionView?.numberOfSections == 0 {
-                    self?.collectionView?.insertSections([0])
-                } else {
-                    self?.collectionView?.insertItems(at: [IndexPath(row: 0, section: 0)])
-                }
-            })
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
-        alert.addAction(saveAction)
-        alert.addTextField { $0.placeholder = "POST Body" }
-        present(alert, animated: true, completion: nil)
+        let viewController = ObjectCreatorViewController(for: schema)
+        let nav = UINavigationController(rootViewController: viewController)
+        present(nav, animated: true, completion: nil)
     }
     
     @objc
@@ -370,7 +347,7 @@ extension ClassViewController: UISearchControllerDelegate, UISearchResultsUpdati
         filterObjects(for: searchController.searchBar.text)
     }
     
-    private func isFiltering() -> Bool {
+    open func isFiltering() -> Bool {
         return !(searchController.searchBar.text?.isEmpty ?? true)
     }
     

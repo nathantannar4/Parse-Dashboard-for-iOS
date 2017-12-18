@@ -33,8 +33,6 @@ import MessageUI
 
 class SettingsViewController: FormViewController {
     
-    // MARK: - Properties
-    
     // MARK: - Initialization
     
     init() {
@@ -51,24 +49,24 @@ class SettingsViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure()
         setupNavigationBar()
-        configureForm()
+        buildForm()
     }
     
     private func setupNavigationBar() {
-        configure()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))
     }
     
-    private func configureForm() {
+    private func buildForm() {
         
         let switchRow = SwitchRowFormer<FormSwitchCell>() {
-            $0.titleLabel.text = "Biometric Authorization"
-            $0.titleLabel.textColor = .black
-            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
-            $0.switchButton.onTintColor = .logoTint
+                $0.titleLabel.text = "Biometric Authorization"
+                $0.titleLabel.textColor = .black
+                $0.titleLabel.font = .boldSystemFont(ofSize: 15)
+                $0.switchButton.onTintColor = .logoTint
             }.configure {
                 $0.switched = Auth.shared.isSetup
             }.onSwitchChanged { newValue in

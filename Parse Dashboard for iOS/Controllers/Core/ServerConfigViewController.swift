@@ -86,21 +86,35 @@ class ServerConfigViewController: FormViewController {
         buildForm()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    // MARK: - View Setup
+    
     private func setupTableView() {
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = 30
     }
     
     private func setupNavigationBar() {
+        navigationController?.navigationBar.barTintColor = .darkBlueBackground
+        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
-            NSAttributedStringKey.foregroundColor : UIColor.black
+            NSAttributedStringKey.foregroundColor : UIColor.white
         ]
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
             navigationController?.navigationBar.largeTitleTextAttributes = [
                 NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
-                NSAttributedStringKey.foregroundColor : UIColor.black
+                NSAttributedStringKey.foregroundColor : UIColor.white
             ]
             navigationItem.hidesSearchBarWhenScrolling = false
         }
@@ -109,8 +123,8 @@ class ServerConfigViewController: FormViewController {
                                                            target: self,
                                                            action: #selector(cancelEdit))
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save",
-                                                            style: .done,
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Save"),
+                                                            style: .plain,
                                                             target: self,
                                                             action: #selector(saveContext))
     }
@@ -197,6 +211,7 @@ class ServerConfigViewController: FormViewController {
             if let data = self.imageData {
                 $0.iconView.image = UIImage(data: data)
             }
+            $0.iconView.backgroundColor = .darkBlueBackground
             }.configure {
                 $0.text = "Choose icon image from library"
                 $0.rowHeight = 60

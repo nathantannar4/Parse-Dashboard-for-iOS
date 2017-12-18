@@ -531,7 +531,7 @@ class ObjectViewController: PFTableViewController {
                 alert.addTextField {
                     $0.text = value as? String
                     $0.placeholder = value as? String
-                    $0.keyboardType = .numberPad
+                    $0.keyboardType = .numbersAndPunctuation
                 }
                 self?.present(alert, animated: true, completion: nil)
 
