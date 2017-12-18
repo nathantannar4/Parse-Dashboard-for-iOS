@@ -16,7 +16,7 @@ class AppInfoViewController: UITableViewController {
     init() {
         super.init(style: .plain)
         title = "About"
-        tabBarItem = UITabBarItem(title: "About", image: UIImage(named: "About_Unselected")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "About"))
+        tabBarItem = UITabBarItem(title: "About", image: UIImage(named: "About")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "About"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,7 +45,20 @@ class AppInfoViewController: UITableViewController {
     
     private func setupNavigationBar() {
         
-        configure()
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.barTintColor = .logoTint
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
+            NSAttributedStringKey.foregroundColor : UIColor.white
+        ]
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationController?.navigationBar.largeTitleTextAttributes = [
+                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
+                NSAttributedStringKey.foregroundColor : UIColor.white
+            ]
+        }
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "Share"),
                             style: .plain,
@@ -59,6 +72,72 @@ class AppInfoViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))
+    }
+    
+    // MARK: - UITableViewDatasource
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell()
+        cell.backgroundColor = .groupTableViewBackground
+        cell.selectionStyle = .none
+        cell.textLabel?.numberOfLines = 0
+        
+        switch indexPath.row {
+        case 0:
+            let imageView = UIImageView(image: UIImage(named: "Dashboard"))
+            imageView.contentMode = .scaleToFill
+            cell.contentView.addSubview(imageView)
+            imageView.fillSuperview()
+        case 1:
+            cell.textLabel?.text = "Parse Dashboard for iOS"
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+            let separatorView = UIView()
+            separatorView.backgroundColor = .lightGray
+            cell.contentView.addSubview(separatorView)
+            separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
+        case 2:
+            cell.textLabel?.text = "A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
+            cell.textLabel?.textColor = .darkGray
+            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        case 3:
+            cell.textLabel?.text = "Data Security"
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
+            let separatorView = UIView()
+            separatorView.backgroundColor = .lightGray
+            cell.contentView.addSubview(separatorView)
+            separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
+        case 4:
+            cell.textLabel?.text = "Privacy and data protection is important. Know that your Parse Server's application ID and master key are only stored on your devices core data."
+            cell.textLabel?.textColor = .darkGray
+            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        case 5:
+            cell.textLabel?.text = "Open Source"
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
+            let separatorView = UIView()
+            separatorView.backgroundColor = .lightGray
+            cell.contentView.addSubview(separatorView)
+            separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
+        case 6:
+            cell.textLabel?.text = "Interested in viewing the code for this app? This app is open source! Tap the GitHub logo to view the repo."
+            cell.textLabel?.textColor = .darkGray
+            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        default:
+            break
+        }
+        return cell
     }
     
     // MARK: - User Actions
@@ -118,72 +197,5 @@ class AppInfoViewController: UITableViewController {
         actionSheet.popoverPresentationController?.permittedArrowDirections = .up
         actionSheet.popoverPresentationController?.barButtonItem = sender
         present(actionSheet, animated: true, completion: nil)
-    }
-    
-    // MARK: - UITableViewDatasource
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell()
-        cell.backgroundColor = .groupTableViewBackground
-        cell.selectionStyle = .none
-        cell.textLabel?.numberOfLines = 0
-        
-        switch indexPath.row {
-        case 0:
-            let imageView = UIImageView(image: UIImage(named: "Dashboard"))
-            imageView.contentMode = .scaleToFill
-            cell.contentView.addSubview(imageView)
-            imageView.fillSuperview()
-        case 1:
-            cell.textLabel?.text = "Parse Dashboard for iOS"
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 24)
-            cell.imageView?.image = UIImage(named: "Logo")?.scale(to: 44)
-            let separatorView = UIView()
-            separatorView.backgroundColor = .lightGray
-            cell.contentView.addSubview(separatorView)
-            separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
-        case 2:
-            cell.textLabel?.text = "A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
-            cell.textLabel?.textColor = .darkGray
-            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-        case 3:
-            cell.textLabel?.text = "Data Security"
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
-            let separatorView = UIView()
-            separatorView.backgroundColor = .lightGray
-            cell.contentView.addSubview(separatorView)
-            separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
-        case 4:
-            cell.textLabel?.text = "Privacy and data protection is important. Know that your Parse Server's application ID and master key are only stored on your devices core data."
-            cell.textLabel?.textColor = .darkGray
-            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-        case 5:
-            cell.textLabel?.text = "Open Source"
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
-            let separatorView = UIView()
-            separatorView.backgroundColor = .lightGray
-            cell.contentView.addSubview(separatorView)
-            separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
-        case 6:
-            cell.textLabel?.text = "Interested in viewing the code for this app? This app is open source! Tap the GitHub logo to view the repo."
-            cell.textLabel?.textColor = .darkGray
-            cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-        default:
-            break
-        }
-        return cell
     }
 }

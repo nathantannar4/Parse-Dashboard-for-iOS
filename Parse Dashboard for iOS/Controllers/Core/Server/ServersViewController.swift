@@ -144,11 +144,12 @@ class ServersViewController: PFCollectionViewController {
     @objc
     func showMore(atIndex index: Int = 0) {
         
-        let moreController = MoreViewController(viewControllers: [
+        let viewControllers = [
             UINavigationController(rootViewController: AppInfoViewController()),
             UINavigationController(rootViewController: SupportViewController()),
             UINavigationController(rootViewController: SettingsViewController())
-        ])
+        ]
+        let moreController = MoreViewController(viewControllers: viewControllers)
         moreController.modalPresentationStyle = .formSheet
         moreController.displayViewController(at: index, animated: false)
         present(moreController, animated: true, completion: nil)

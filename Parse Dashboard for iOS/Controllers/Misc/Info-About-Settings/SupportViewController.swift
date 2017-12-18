@@ -39,7 +39,7 @@ class SupportViewController: UITableViewController {
     init() {
         super.init(style: .plain)
         title = "Support"
-        tabBarItem = UITabBarItem(title: "Support", image: UIImage(named: "Support_Unselected")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Support"))
+        tabBarItem = UITabBarItem(title: "Support", image: UIImage(named: "Support")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Support"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,7 +66,21 @@ class SupportViewController: UITableViewController {
     }
     
     private func setupNavigationBar() {
-        configure()
+        
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.barTintColor = .logoTint
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
+            NSAttributedStringKey.foregroundColor : UIColor.white
+        ]
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationController?.navigationBar.largeTitleTextAttributes = [
+                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
+                NSAttributedStringKey.foregroundColor : UIColor.white
+            ]
+        }
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))

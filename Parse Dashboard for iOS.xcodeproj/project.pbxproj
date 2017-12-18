@@ -150,12 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				38028C981FC558A7003A4E95 /* WelcomeViewController.swift */,
-				38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */,
-				38DE1D011FC511EF00C49508 /* AppInfoViewController.swift */,
-				3852AA781FDCC7D900D7B009 /* SupportViewController.swift */,
-				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
 				380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */,
 				38F135B81FE75F5900176C9A /* LaunchScreenViewController.swift */,
+				38856BAB1FE84B1500349828 /* Info-About-Settings */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -163,16 +160,10 @@
 		38028C9B1FC558BC003A4E95 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */,
-				3872C1EA1FC3C49900EBD87F /* ServersViewController.swift */,
-				38DE1D0B1FC5415000C49508 /* ServerDetailViewController.swift */,
-				3872C20B1FC414E100EBD87F /* SchemaViewController.swift */,
-				38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */,
-				38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */,
-				38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */,
-				38F135C21FE7807400176C9A /* ObjectCreatorViewController.swift */,
-				38E64ABE1FE7A6D0006949B7 /* ObjectSelectorController.swift */,
-				38DE1D051FC515B800C49508 /* ObjectViewController.swift */,
+				38856BA71FE84AB600349828 /* Server */,
+				38856BA81FE84AC300349828 /* Schema */,
+				38856BA91FE84AD200349828 /* Class */,
+				38856BAA1FE84ADA00349828 /* Object */,
 				38DE1D0E1FC5453200C49508 /* ArrayViewController.swift */,
 				38DE1D0D1FC5453200C49508 /* FileViewController.swift */,
 			);
@@ -316,6 +307,55 @@
 				38DE1CFF1FC4C32300C49508 /* NSConstraintLayoutSet.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		38856BA71FE84AB600349828 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */,
+				3872C1EA1FC3C49900EBD87F /* ServersViewController.swift */,
+				38DE1D0B1FC5415000C49508 /* ServerDetailViewController.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		38856BA81FE84AC300349828 /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				3872C20B1FC414E100EBD87F /* SchemaViewController.swift */,
+				38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */,
+			);
+			path = Schema;
+			sourceTree = "<group>";
+		};
+		38856BA91FE84AD200349828 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */,
+				38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		38856BAA1FE84ADA00349828 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				38F135C21FE7807400176C9A /* ObjectCreatorViewController.swift */,
+				38E64ABE1FE7A6D0006949B7 /* ObjectSelectorController.swift */,
+				38DE1D051FC515B800C49508 /* ObjectViewController.swift */,
+			);
+			path = Object;
+			sourceTree = "<group>";
+		};
+		38856BAB1FE84B1500349828 /* Info-About-Settings */ = {
+			isa = PBXGroup;
+			children = (
+				38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */,
+				38DE1D011FC511EF00C49508 /* AppInfoViewController.swift */,
+				3852AA781FDCC7D900D7B009 /* SupportViewController.swift */,
+				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
+			);
+			path = "Info-About-Settings";
 			sourceTree = "<group>";
 		};
 		3E82BA79F155D6BA924309A9 /* Frameworks */ = {

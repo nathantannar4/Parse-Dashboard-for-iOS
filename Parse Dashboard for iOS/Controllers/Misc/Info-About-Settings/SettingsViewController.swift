@@ -38,7 +38,7 @@ class SettingsViewController: FormViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         title = "Settings"
-        tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "Settings_Unselected")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Settings"))
+        tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "Settings")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Settings"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,12 +49,26 @@ class SettingsViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
         setupNavigationBar()
         buildForm()
     }
     
     private func setupNavigationBar() {
+        
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.barTintColor = .logoTint
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
+            NSAttributedStringKey.foregroundColor : UIColor.white
+        ]
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationController?.navigationBar.largeTitleTextAttributes = [
+                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
+                NSAttributedStringKey.foregroundColor : UIColor.white
+            ]
+        }
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))

@@ -43,4 +43,14 @@ class MoreViewController: DynamicTabBarController {
         super.viewDidAppear(animated)
         tabBar.collectionView.reloadData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarStyle = .default
+    }
 }
