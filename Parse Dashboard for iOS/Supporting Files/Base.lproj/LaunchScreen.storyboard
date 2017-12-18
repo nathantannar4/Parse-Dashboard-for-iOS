@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by Nathan Tannar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcy-9g-UHC">
-                                <rect key="frame" x="16" y="551" width="343" height="33"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2017 Nathan Tannar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcy-9g-UHC">
+                                <rect key="frame" x="60" y="301" width="692" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="m0p-5m-Zw2"/>
                                 </constraints>
@@ -27,17 +27,11 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NT Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Deu-0K-gHk">
-                                <rect key="frame" x="16" y="451" width="343" height="79"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="79" id="IKX-bB-piL"/>
-                                </constraints>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bA-2o-Llr">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="0.0" width="812" height="200"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="N5i-Vj-Qa2">
-                                        <rect key="frame" x="122.5" y="35" width="130" height="130"/>
+                                        <rect key="frame" x="341.33333333333331" y="35" width="130" height="130"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="cEL-O0-0Yd"/>
                                             <constraint firstAttribute="height" constant="130" id="eAg-8L-NbO"/>
@@ -51,17 +45,23 @@
                                     <constraint firstItem="N5i-Vj-Qa2" firstAttribute="centerY" secondItem="9bA-2o-Llr" secondAttribute="centerY" id="iOd-M2-aRt"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NT Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Deu-0K-gHk">
+                                <rect key="frame" x="60" y="214" width="692" height="79"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="IKX-bB-piL"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.11668945103883743" green="0.2302684485912323" blue="0.30109256505966187" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Deu-0K-gHk" secondAttribute="trailing" constant="16" id="B3T-te-9lD"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rcy-9g-UHC" secondAttribute="bottom" constant="83" id="EnO-gj-lg4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rcy-9g-UHC" secondAttribute="bottom" constant="20" id="EnO-gj-lg4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rcy-9g-UHC" secondAttribute="trailing" constant="16" id="JMk-Uo-DUE"/>
-                            <constraint firstItem="9bA-2o-Llr" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Yk0-Rv-lDx"/>
+                            <constraint firstItem="9bA-2o-Llr" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="Yk0-Rv-lDx"/>
                             <constraint firstItem="Deu-0K-gHk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Ys2-e8-X5b"/>
-                            <constraint firstItem="9bA-2o-Llr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yzt-nJ-Kft"/>
+                            <constraint firstItem="9bA-2o-Llr" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Yzt-nJ-Kft"/>
                             <constraint firstItem="rcy-9g-UHC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="f9x-DP-AUB"/>
-                            <constraint firstItem="rcy-9g-UHC" firstAttribute="top" secondItem="Deu-0K-gHk" secondAttribute="bottom" constant="21" id="nJU-TO-6aV"/>
+                            <constraint firstItem="rcy-9g-UHC" firstAttribute="top" secondItem="Deu-0K-gHk" secondAttribute="bottom" constant="8" id="nJU-TO-6aV"/>
                             <constraint firstItem="9bA-2o-Llr" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="sjS-sw-Aay"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

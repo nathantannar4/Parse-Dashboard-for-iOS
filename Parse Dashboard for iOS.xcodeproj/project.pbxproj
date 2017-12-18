@@ -62,6 +62,7 @@
 		38F135B91FE75F5900176C9A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F135B81FE75F5900176C9A /* LaunchScreenViewController.swift */; };
 		38F135BD1FE7603300176C9A /* LaunchScreenCopy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38F135BC1FE7603300176C9A /* LaunchScreenCopy.storyboard */; };
 		38F135BF1FE763D000176C9A /* UIWindow+Extenions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F135BE1FE763D000176C9A /* UIWindow+Extenions.swift */; };
+		38F135C11FE77A7B00176C9A /* Pods-Parse Dashboard for iOS-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38F135C01FE77A7B00176C9A /* Pods-Parse Dashboard for iOS-acknowledgements.plist */; };
 		F25ECBC77855B1F9E2419001 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DEF2EA353A95C2C89F0735 /* Pods_Parse_Dashboard_for_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +124,7 @@
 		38F135B81FE75F5900176C9A /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		38F135BC1FE7603300176C9A /* LaunchScreenCopy.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreenCopy.storyboard; sourceTree = "<group>"; };
 		38F135BE1FE763D000176C9A /* UIWindow+Extenions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extenions.swift"; sourceTree = "<group>"; };
+		38F135C01FE77A7B00176C9A /* Pods-Parse Dashboard for iOS-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Pods-Parse Dashboard for iOS-acknowledgements.plist"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-acknowledgements.plist"; sourceTree = SOURCE_ROOT; };
 		49DEF2EA353A95C2C89F0735 /* Pods_Parse_Dashboard_for_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Parse_Dashboard_for_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04CF76C16F215027BB1D481 /* Pods-Parse Dashboard for iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		E34E4B477BD41310F7A5DDF0 /* Pods-Parse Dashboard for iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				38F135BC1FE7603300176C9A /* LaunchScreenCopy.storyboard */,
 				3872C1CF1FC3BC6400EBD87F /* Info.plist */,
 				3872C1E71FC3C42F00EBD87F /* Parse_Dashboard_for_iOS.xcdatamodeld */,
+				38F135C01FE77A7B00176C9A /* Pods-Parse Dashboard for iOS-acknowledgements.plist */,
 				38DE1CFF1FC4C32300C49508 /* NSConstraintLayoutSet.swift */,
 			);
 			path = "Supporting Files";
@@ -389,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3872C1CB1FC3BC6400EBD87F /* Assets.xcassets in Resources */,
+				38F135C11FE77A7B00176C9A /* Pods-Parse Dashboard for iOS-acknowledgements.plist in Resources */,
 				382BFF5B1FDE15FC0050FF15 /* FormerImageCell.xib in Resources */,
 				38F135BD1FE7603300176C9A /* LaunchScreenCopy.storyboard in Resources */,
 				3872C1CE1FC3BC6400EBD87F /* LaunchScreen.storyboard in Resources */,

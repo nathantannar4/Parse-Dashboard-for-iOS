@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C3r-cI-mrY">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="C3r-cI-mrY" customClass="LaunchScreenViewController" customModule="Parse_Dashboard_for_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Eiv-Dn-i30">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by Nathan Tannar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="woe-BU-IEI">
-                                <rect key="frame" x="16" y="551" width="343" height="33"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2017 Nathan Tannar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="woe-BU-IEI">
+                                <rect key="frame" x="16" y="725" width="343" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="8WH-RC-iBZ"/>
                                 </constraints>
@@ -27,24 +27,18 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NT Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Vym-qz-fjP">
-                                <rect key="frame" x="16" y="451" width="343" height="79"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="79" id="OQF-4O-0dq"/>
-                                </constraints>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iyw-gh-k4L">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="zdE-I7-E3f">
-                                        <rect key="frame" x="122.5" y="35" width="130" height="130"/>
+                                        <rect key="frame" x="123" y="35" width="130" height="130"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="rK6-3U-kMs"/>
                                             <constraint firstAttribute="height" constant="130" id="uyY-JL-rgM"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parse Dashboard" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEa-dd-1pH">
-                                        <rect key="frame" x="20" y="161.5" width="335" height="28.5"/>
+                                        <rect key="frame" x="20" y="161.66666666666666" width="335" height="28.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="23.5"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -61,6 +55,12 @@
                                     <constraint firstAttribute="height" constant="200" id="zWi-zF-7Pz"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NT Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Vym-qz-fjP">
+                                <rect key="frame" x="16" y="638" width="343" height="79"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="OQF-4O-0dq"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.116689451" green="0.23026844860000001" blue="0.30109256509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -69,10 +69,10 @@
                             <constraint firstItem="T1O-ZL-svf" firstAttribute="trailing" secondItem="woe-BU-IEI" secondAttribute="trailing" constant="16" id="Xgd-Eb-GOk"/>
                             <constraint firstItem="T1O-ZL-svf" firstAttribute="trailing" secondItem="Vym-qz-fjP" secondAttribute="trailing" constant="16" id="YnN-ol-t3j"/>
                             <constraint firstItem="Vym-qz-fjP" firstAttribute="leading" secondItem="T1O-ZL-svf" secondAttribute="leading" constant="16" id="ctF-DE-Q89"/>
-                            <constraint firstItem="woe-BU-IEI" firstAttribute="top" secondItem="Vym-qz-fjP" secondAttribute="bottom" constant="21" id="doy-YR-y7q"/>
-                            <constraint firstItem="Iyw-gh-k4L" firstAttribute="leading" secondItem="T1O-ZL-svf" secondAttribute="leading" id="l0D-rm-bE7"/>
-                            <constraint firstItem="Iyw-gh-k4L" firstAttribute="trailing" secondItem="T1O-ZL-svf" secondAttribute="trailing" id="nOo-Uh-3hw"/>
-                            <constraint firstItem="T1O-ZL-svf" firstAttribute="bottom" secondItem="woe-BU-IEI" secondAttribute="bottom" constant="83" id="r3C-03-5ta"/>
+                            <constraint firstItem="woe-BU-IEI" firstAttribute="top" secondItem="Vym-qz-fjP" secondAttribute="bottom" constant="8" id="doy-YR-y7q"/>
+                            <constraint firstItem="Iyw-gh-k4L" firstAttribute="leading" secondItem="Eiv-Dn-i30" secondAttribute="leading" id="l0D-rm-bE7"/>
+                            <constraint firstItem="Iyw-gh-k4L" firstAttribute="trailing" secondItem="Eiv-Dn-i30" secondAttribute="trailing" id="nOo-Uh-3hw"/>
+                            <constraint firstItem="T1O-ZL-svf" firstAttribute="bottom" secondItem="woe-BU-IEI" secondAttribute="bottom" constant="20" id="r3C-03-5ta"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="T1O-ZL-svf"/>
                     </view>
