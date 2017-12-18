@@ -33,6 +33,8 @@ class ServersViewController: PFCollectionViewController {
     
     // MARK: - Properties
     
+    var shouldAnimateFirstLoad = false
+    
     private var servers = [ParseServerConfig]()
     private var context: NSManagedObjectContext? {
         return (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
@@ -45,10 +47,23 @@ class ServersViewController: PFCollectionViewController {
         view.backgroundColor = .darkBlueBackground
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if shouldAnimateFirstLoad {
+            collectionView?.transform = CGAffineTransform(translationX: 0, y: -view.frame.height)
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         fetchServersFromCoreData()
         
+        if shouldAnimateFirstLoad {
+            shouldAnimateFirstLoad = false
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveLinear, animations: {
+                self.collectionView?.transform = .identity
+            }, completion: nil)
+        }
         
         let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
         if isNew {

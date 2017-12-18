@@ -27,6 +27,7 @@
 
 import UIKit
 import Former
+import AlertHUDKit
 
 class SettingsViewController: FormViewController {
     
@@ -74,7 +75,7 @@ class SettingsViewController: FormViewController {
                         
                     })
                 } else {
-                    UserDefaults.standard.set(true, forKey: "isSetup")
+                    UserDefaults.standard.set(true, forKey: .isSetup)
                 }
         }
         
@@ -103,9 +104,9 @@ class SettingsViewController: FormViewController {
         
         let securitySection = SectionFormer(rowFormer: switchRow).set(headerViewFormer: createHeader("Security"))
     
-        let tutorialSection = SectionFormer(rowFormer: resetRow).set(headerViewFormer: createHeader("Tutorial"))
+        let otherSection = SectionFormer(rowFormer: resetRow).set(headerViewFormer: createHeader("Other"))
             
-        former.append(sectionFormer: securitySection, tutorialSection)
+        former.append(sectionFormer: securitySection, otherSection)
     }
     
     // MARK: - User Actions

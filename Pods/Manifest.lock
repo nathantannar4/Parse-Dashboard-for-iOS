@@ -1,4 +1,6 @@
 PODS:
+  - AcknowList (1.4)
+  - AlertHUDKit (1.0.0)
   - BiometricAuthentication (1.0.2)
   - DKImagePickerController (3.8.1):
     - DKImagePickerController/Camera (= 3.8.1)
@@ -11,16 +13,22 @@ PODS:
   - RMDateSelectionViewController (2.3.1):
     - RMActionController (~> 1.3.1)
   - SwiftyJSON (4.0.0)
+  - WhatsNew (0.4.1)
 
 DEPENDENCIES:
+  - AcknowList
+  - AlertHUDKit
   - BiometricAuthentication
   - DKImagePickerController
   - DynamicTabBarController
   - Former
   - RMDateSelectionViewController
   - SwiftyJSON
+  - WhatsNew
 
 SPEC CHECKSUMS:
+  AcknowList: 1fae3fa62f256ddd1001adf20ba5c52743515ac7
+  AlertHUDKit: 2686ae78f2f1fe6455f117d7e93e1e7731780fec
   BiometricAuthentication: e14b081ea7c59c6c4ee8b54f26489ce9d737ba51
   DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
   DynamicTabBarController: 26956b00a436740784993739dd8b376c46bf045a
@@ -28,7 +36,8 @@ SPEC CHECKSUMS:
   RMActionController: 535715be9f3d9eb96a838485370dcccee0dda597
   RMDateSelectionViewController: 1157d34245e6a1dda700e8a9c44417321d181951
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  WhatsNew: 930ad6dbdf90486afbfe27747cb628a56fa2988d
 
-PODFILE CHECKSUM: b1f35bb0b0d8578d173d0e4a4d2c6d1b23911eb8
+PODFILE CHECKSUM: 24273dcb3ebacdd28ac13cbae6d1126e539d4340
 
 COCOAPODS: 1.3.1

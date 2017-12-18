@@ -29,7 +29,6 @@ import UIKit
 
 public class Alert {
     
-    
     /// The state of an alert
     ///
     /// - transitioning: The alert is animating
@@ -79,29 +78,29 @@ public class Alert {
             /// The color used for alerts of Alert.Style == .info. Default is Apple's default blue tint.
             public static var Info: UIColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
             
-            /// The color used for alerts of Alert.Style == .success. Default is Material Green 600
-            public static var Success: UIColor = UIColor(red: 77/255, green: 162/255, blue: 71/255, alpha: 1)
+            /// The color used for alerts of Alert.Style == .success. Default is Material Green 800
+            public static var Success: UIColor = UIColor(red: 46/255, green: 125/255, blue: 50/255, alpha: 1)
             
             /// The color used for alerts of Alert.Style == .warning. Default is Material Deep Orange 600
             public static var Warning: UIColor = UIColor(red: 235/255, green: 80/255, blue: 43/255, alpha: 1)
             
-            /// The color used for alerts of Alert.Style == .danger. Default is .red
-            public static var Danger: UIColor = UIColor.red
+            /// The color used for alerts of Alert.Style == .danger. Default is Material Red 700
+            public static var Danger: UIColor = UIColor(red: 203/255, green: 45/255, blue: 53/255, alpha: 1)
         }
         
         public struct Font {
             
-            /// The color used for alerts of Alert.Style == .info.
-            public static var Info: UIFont = UIFont.boldSystemFont(ofSize: 14)
+            /// The color used for alerts of Alert.Style == .info. Default is preferredFont(forTextStyle: .body).
+            public static var Info: UIFont = UIFont.preferredFont(forTextStyle: .body)
             
-            /// The color used for alerts of Alert.Style == .success.
-            public static var Success: UIFont = UIFont.boldSystemFont(ofSize: 14)
+            /// The color used for alerts of Alert.Style == .success. Default is preferredFont(forTextStyle: .body).
+            public static var Success: UIFont = UIFont.preferredFont(forTextStyle: .body)
             
-            /// The color used for alerts of Alert.Style == .warning.
-            public static var Warning: UIFont = UIFont.boldSystemFont(ofSize: 14)
+            /// The color used for alerts of Alert.Style == .warning. Default is preferredFont(forTextStyle: .body).
+            public static var Warning: UIFont = UIFont.preferredFont(forTextStyle: .body)
             
-            /// The color used for alerts of Alert.Style == .danger.
-            public static var Danger: UIFont = UIFont.boldSystemFont(ofSize: 14)
+            /// The color used for alerts of Alert.Style == .danger. Default is preferredFont(forTextStyle: .body).
+            public static var Danger: UIFont = UIFont.preferredFont(forTextStyle: .body)
         }
     }
 }

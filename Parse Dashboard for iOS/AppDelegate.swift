@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import AlertHUDKit
 import CoreData
 
 @UIApplicationMain
@@ -45,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - UIApplicationDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        Alert.Defaults.Color.Info = .logoTint
         
         setupWindow()
         if let item = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {
@@ -158,7 +161,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Show Welcome View
             window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
         } else {
-            window?.rootViewController = UINavigationController(rootViewController: ServersViewController())
+            let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController()!
+            window?.rootViewController = launchScreen
         }
         window?.makeKeyAndVisible() // Required when not using storyboards
     }
