@@ -171,7 +171,7 @@ class ObjectViewController: PFTableViewController {
             
             guard let message = alert.textFields?.first?.text else { return }
             let body = "{\"where\":{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"\(self.object.id)\"}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
-            Parse.shared.post("/push", body: body, completion: { [weak self] (result, json) in
+            Parse.shared.post("/push", data: body.data(using: .utf8), completion: { [weak self] (result, json) in
                 guard result.success else {
                     self?.handleError(result.error)
                     return
@@ -290,31 +290,23 @@ class ObjectViewController: PFTableViewController {
                     
                 } else if type == .array {
                     
-                    if let array = value as? [String] {
+                    if let array = value as? [AnyObject] {
                         
                         // Array
-                        if array.count > 0 {
-                            cell.value = "\n Array of \(array.count) elements\n"
-                            cell.valueTextView.layer.cornerRadius = 5
-                            cell.valueTextView.layer.backgroundColor = UIColor.darkPurpleAccent.cgColor
-                            cell.valueTextView.textColor = .white
-                            cell.valueTextView.isUserInteractionEnabled = false
-                        } else {
-                            cell.value = "[]" 
-                        }
+                        cell.value = "\n Array of \(array.count) elements\n"
+                        cell.valueTextView.layer.cornerRadius = 5
+                        cell.valueTextView.layer.backgroundColor = UIColor.darkPurpleAccent.cgColor
+                        cell.valueTextView.textColor = .white
+                        cell.valueTextView.isUserInteractionEnabled = false
                         return cell
-                    } else if let array = value as? NSArray {
+                    } else if let array = value as? [String : AnyObject] {
                         
                         // Array of Objects
-                        if array.count > 0 {
-                            cell.value = "\n Array of \(array.count) objects\n" 
-                            cell.valueTextView.layer.cornerRadius = 5
-                            cell.valueTextView.layer.backgroundColor = UIColor.darkPurpleAccent.cgColor
-                            cell.valueTextView.textColor = .white
-                            cell.valueTextView.isUserInteractionEnabled = false
-                        } else {
-                            cell.value = "[]" 
-                        }
+                        cell.value = "\n Array of \(array.count) objects\n"
+                        cell.valueTextView.layer.cornerRadius = 5
+                        cell.valueTextView.layer.backgroundColor = UIColor.darkPurpleAccent.cgColor
+                        cell.valueTextView.textColor = .white
+                        cell.valueTextView.isUserInteractionEnabled = false
                         return cell
                     } else {
                         cell.value = String.undefined
@@ -602,12 +594,38 @@ class ObjectViewController: PFTableViewController {
                 }
                 self?.present(alert, animated: true, completion: nil)
                 
+            } else if type == .array {
+                
+                let value: [Any] = self?.object.json.dictionary?[key]?.arrayObject ?? []
+                let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
+                alert.configureView()
+                
+                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+                    
+                    guard let newValue = alert.textFields?.first?.text else { return }
+                    print(newValue)
+                    print("{\"\(key)\":\(newValue)}")
+                    let data = "{\"\(key)\":\(newValue)}".data(using: .utf8)
+                    self?.updateField(with: data)
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                alert.addAction(cancelAction)
+                alert.addAction(saveAction)
+                
+                alert.addTextField { (textField : UITextField!) -> Void in
+                    textField.placeholder = .objectId
+                    textField.text = String(describing: value)
+                    textField.heightAnchor.constraint(equalToConstant: 44).isActive = true
+                }
+                self?.present(alert, animated: true, completion: nil)
+            
             } else {
                 
                 // Any other type is treated as a JSON object
                 
-                let value = self?.object.value(forKey: key) ?? []
-                guard let jsonData = try? JSONSerialization.data(withJSONObject: value, options: .prettyPrinted), let acl = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else {
+                let json = self?.object.value(forKey: key) ?? []
+                guard let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted), let value = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else {
                     self?.handleError("JSON parse failed")
                     return
                 }
@@ -630,7 +648,7 @@ class ObjectViewController: PFTableViewController {
                 
                 alert.addTextField { (textField : UITextField!) -> Void in
                     textField.placeholder = .objectId
-                    textField.text = (acl as String).trimmingCharacters(in: .whitespacesAndNewlines)
+                    textField.text = value.trimmingCharacters(in: .whitespacesAndNewlines)
                     textField.heightAnchor.constraint(equalToConstant: 44).isActive = true
                 }
                 self?.present(alert, animated: true, completion: nil)

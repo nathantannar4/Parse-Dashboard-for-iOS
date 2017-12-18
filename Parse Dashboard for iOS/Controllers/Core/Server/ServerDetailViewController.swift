@@ -57,6 +57,16 @@ class ServerDetailViewController: PFTableViewController {
         setupNavigationBar()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
     // MARK: Data Refresh
     
     @objc
@@ -80,7 +90,7 @@ class ServerDetailViewController: PFTableViewController {
         
         tableView.contentInset.top = 10
         tableView.contentInset.bottom = 30
-        tableView.backgroundColor = .lightBlueBackground
+        tableView.backgroundColor = .groupTableViewBackground
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
@@ -96,17 +106,18 @@ class ServerDetailViewController: PFTableViewController {
     private func setupNavigationBar() {
        
         title = "Server Info"
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.barTintColor = UIColor.lightBlueAccent.darker()
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = .logoTint
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
-            NSAttributedStringKey.foregroundColor : UIColor.black
+            NSAttributedStringKey.foregroundColor : UIColor.white
         ]
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
             navigationController?.navigationBar.largeTitleTextAttributes = [
                 NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
-                NSAttributedStringKey.foregroundColor : UIColor.black
+                NSAttributedStringKey.foregroundColor : UIColor.white
             ]
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Raw"),
@@ -151,12 +162,13 @@ class ServerDetailViewController: PFTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FieldCell.reuseIdentifier, for: indexPath)  as! FieldCell
-        
+        cell.keyLabel.textColor = UIColor.lightBlueAccent.darker()
         if viewStyle == .formatted {
             cell.key = server.keys[indexPath.row]
             cell.value = server.values[indexPath.row] 
             return cell
         }
+        cell.keyLabel.textColor = UIColor.lightBlueAccent.darker()
         cell.key = "JSON"
         cell.value = server.json 
         return cell

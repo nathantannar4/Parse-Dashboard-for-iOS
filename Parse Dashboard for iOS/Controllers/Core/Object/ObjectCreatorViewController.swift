@@ -73,8 +73,8 @@ class ObjectCreatorViewController: FormViewController {
         buildForm()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
@@ -120,7 +120,8 @@ class ObjectCreatorViewController: FormViewController {
         
         let currentFields = schema.editableFields().map { return createRow(for: $0) }
         let bodySection = SectionFormer(rowFormers: currentFields)
-        former.append(sectionFormer: bodySection, moreSection)
+        former
+            .append(sectionFormer: bodySection, moreSection)
             .onCellSelected { [weak self] _ in
                 self?.formerInputAccessoryView.update()
         }
@@ -199,15 +200,18 @@ class ObjectCreatorViewController: FormViewController {
                             return
                         }
                         let updatedSchema = PFSchema(json)
+                        let index = (self?.schema.editableFields().count ?? 0) > 0 ? 1 : 0
                         self?.schema.fields?[fieldName] = updatedSchema.fields?[fieldName]
                         self?.handleSuccess("Class Updated")
-                        if let newRow = self?.createRow(for: fieldName), let sectionToDelete = self?.former.sectionFormers[1] {
+                        if let newRow = self?.createRow(for: fieldName), let sectionToDelete = self?.former.sectionFormers[index] {
                             
                             let numberOfRows = self?.former.sectionFormers.first?.numberOfRows ?? 0
-                            let indexPath = IndexPath(row: numberOfRows, section: 0)
+                            let row = index == 1 ? numberOfRows : 0 // Accounts for there being no initial fields
+                            let indexPath = IndexPath(row: row, section: 0)
                             
-                            self?.former.insertUpdate(rowFormer: newRow, toIndexPath: indexPath, rowAnimation: .fade)
+                            self?.former
                                 .removeUpdate(sectionFormer: sectionToDelete, rowAnimation: .fade)
+                                .insertUpdate(rowFormer: newRow, toIndexPath: indexPath, rowAnimation: .fade)
                                 .insertUpdate(sectionFormer: self!.moreSection, toSection: 1, rowAnimation: .fade)
                             
                         } else {
@@ -220,8 +224,10 @@ class ObjectCreatorViewController: FormViewController {
         }
         
         let section = SectionFormer(rowFormer: fieldNameRow, dataTypePickerRow, addRow)
-        former.removeUpdate(sectionFormer: moreSection, rowAnimation: .fade)
-            .insertUpdate(sectionFormer: section, toSection: 1, rowAnimation: .fade)
+        let index = schema.editableFields().count > 0 ? 1 : 0 // Accounts for there being no initial fields
+        former
+            .removeUpdate(sectionFormer: moreSection, rowAnimation: .fade)
+            .insertUpdate(sectionFormer: section, toSection: index, rowAnimation: .fade)
             .onCellSelected { [weak self] _ in
                 self?.formerInputAccessoryView.update()
         }
@@ -335,7 +341,8 @@ class ObjectCreatorViewController: FormViewController {
                     $0.placeholder = type
                 }.onTextChanged { [weak self] newValue in
                     // Update
-                    self?.body.dictionaryObject?[field] = newValue
+                    let arrayValue = JSON(arrayLiteral: newValue)
+                    self?.body.dictionaryObject?[field] = arrayValue
             }
         case .relation:
             return LabelRowFormer<FormLabelCell>() {
@@ -343,7 +350,7 @@ class ObjectCreatorViewController: FormViewController {
                     $0.accessoryType = .disclosureIndicator
                 }.configure {
                     $0.text = field
-                    $0.subText = "Array"
+                    $0.subText = type
                 }.onSelected { [weak self] _ in
                     self?.former.deselect(animated: true)
                     self?.handleError("Sorry, relations cannot be added via Parse Server's REST API")
@@ -365,7 +372,7 @@ class ObjectCreatorViewController: FormViewController {
     // MARK: - Error Handling
     
     func handleError(_ error: String?) {
-        let error = error?.capitalized ?? "Unexpected Error"
+        let error = error ?? "Unexpected Error"
         Ping(text: error, style: .danger).show()
     }
     
@@ -386,7 +393,7 @@ class ObjectCreatorViewController: FormViewController {
         
         do {
             let data = try body.rawData()
-            Parse.shared.post("/classes/" + schema.name, body: data, completion: { [weak self] (result, json) in
+            Parse.shared.post("/classes/" + schema.name, data: data, completion: { [weak self] (result, json) in
                 guard result.success, let json = json else {
                     self?.handleError(result.error)
                     return

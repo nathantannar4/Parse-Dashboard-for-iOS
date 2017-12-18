@@ -53,6 +53,7 @@ class SchemaDetailViewController: PFTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configure()
         setupTableView()
         setupNavigationBar()
     }

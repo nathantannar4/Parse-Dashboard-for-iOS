@@ -192,7 +192,7 @@ class SchemaViewController: PFCollectionViewController {
         
         let createAction = UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
             
-            guard let classname = alert.textFields?.first?.text else { return }
+            guard let classname = alert.textFields?.first?.text?.replacingOccurrences(of: " ", with: "_") else { return }
             Parse.shared.post("/schemas/" + classname, completion: { (result, json) in
                 guard result.success, let json = json else {
                     self?.handleError(result.error)

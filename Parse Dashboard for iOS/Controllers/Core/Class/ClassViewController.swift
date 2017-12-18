@@ -191,7 +191,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
 
             // Example: where={"user":{"$inQuery":{"className":"_User","where":{"objectId":{"$in":["zaAqYBP8X9"]}}}}}
             let body = "{\"where\":{\"user\":{\"$inQuery\":{\"className\":\"_User\",\"where\":{\"objectId\":{\"$in\":\(userIds)}}}}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
-            Parse.shared.post("/push", body: body, completion: { [weak self] (result, json) in
+            Parse.shared.post("/push", data: body.data(using: .utf8), completion: { [weak self] (result, json) in
                 guard result.success else {
                     self?.handleError(result.error)
                     return
