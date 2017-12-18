@@ -28,6 +28,7 @@
 // Appologies, this file is a mess
 
 import UIKit
+import SwiftyJSON
 import RMDateSelectionViewController
 
 class ObjectViewController: PFTableViewController {
@@ -571,28 +572,20 @@ class ObjectViewController: PFTableViewController {
                     self?.handleError("Failed to parse schema for type")
                     return
                 }
-                guard let classname = pointer["targetClass"] else { return }
+                guard let targetClass = pointer["targetClass"] else { return }
                 
-                let alert = UIAlertController(title: key, message: "\(classname) Pointer", preferredStyle: .alert)
-                alert.configureView()
-                
-                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
-                    guard let newValue = alert.textFields?.first?.text else { return }
+                Parse.shared.get("/schemas/" + targetClass, completion: { [weak self] (result, json) in
                     
-                    let data = "{\"\(key)\":{\"__type\":\"Pointer\", \"className\":\"\(classname)\", \"objectId\":\"\(newValue)\"}}".data(using: .utf8)
-                    self?.updateField(with: data)
+                    guard result.success, let schemaJSON = json else {
+                        self?.handleError(result.error)
+                        return
+                    }
+                    let schema = PFSchema(schemaJSON)
+                    let selectionController = ObjectSelectorViewController(schema)
+                    selectionController.delegate = self
+                    selectionController.selectorKey = key
+                    self?.navigationController?.pushViewController(selectionController, animated: true)
                 })
-                
-                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-                alert.addAction(cancelAction)
-                alert.addAction(saveAction)
-                
-                alert.addTextField { (textField : UITextField!) -> Void in
-                    textField.placeholder = .objectId
-                    let currentPointer = self?.object.value(forKey: key) as? [String:String]
-                    textField.text = currentPointer?[.objectId]
-                }
-                self?.present(alert, animated: true, completion: nil)
                 
             } else if type == .array {
                 
@@ -685,3 +678,33 @@ class ObjectViewController: PFTableViewController {
         })
     }
 }
+
+extension ObjectViewController: ObjectSelectorViewControllerDelegate {
+    
+    func didSelectObject(_ object: PFObject, for key: String) {
+        
+        guard let type = self.object.schema?.typeForField(key) else { return }
+
+        switch type {
+        case .pointer:
+            
+            var body = JSON()
+            body.dictionaryObject?[key] = [
+                "__type"    : "Pointer",
+                "objectId"  : object.id,
+                "className" : object.schema?.name
+            ]
+            do {
+                let data = try body.rawData()
+                self.updateField(with: data)
+            } catch let error {
+                self.handleError(error.localizedDescription)
+            }
+            
+        default:
+            handleError(nil)
+        }
+    }
+    
+}
+

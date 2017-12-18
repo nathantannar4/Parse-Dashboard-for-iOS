@@ -40,7 +40,6 @@
 		3872C1F71FC3CC2000EBD87F /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */; };
 		3872C20C1FC414E100EBD87F /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20B1FC414E100EBD87F /* SchemaViewController.swift */; };
 		3872C20E1FC415AB00EBD87F /* SchemaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20D1FC415AB00EBD87F /* SchemaCell.swift */; };
-		38856BAE1FE84C0600349828 /* ArrayEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38856BAD1FE84C0600349828 /* ArrayEditorViewController.swift */; };
 		38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */; };
 		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
@@ -105,7 +104,6 @@
 		3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		3872C20B1FC414E100EBD87F /* SchemaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
 		3872C20D1FC415AB00EBD87F /* SchemaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaCell.swift; sourceTree = "<group>"; };
-		38856BAD1FE84C0600349828 /* ArrayEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayEditorViewController.swift; sourceTree = "<group>"; };
 		38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
@@ -166,7 +164,7 @@
 				38856BA81FE84AC300349828 /* Schema */,
 				38856BA91FE84AD200349828 /* Class */,
 				38856BAA1FE84ADA00349828 /* Object */,
-				38856BAC1FE84BF600349828 /* Array */,
+				38DE1D0E1FC5453200C49508 /* ArrayViewController.swift */,
 				38DE1D0D1FC5453200C49508 /* FileViewController.swift */,
 			);
 			path = Core;
@@ -358,15 +356,6 @@
 				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
 			);
 			path = "Info-About-Settings";
-			sourceTree = "<group>";
-		};
-		38856BAC1FE84BF600349828 /* Array */ = {
-			isa = PBXGroup;
-			children = (
-				38DE1D0E1FC5453200C49508 /* ArrayViewController.swift */,
-				38856BAD1FE84C0600349828 /* ArrayEditorViewController.swift */,
-			);
-			path = Array;
 			sourceTree = "<group>";
 		};
 		3E82BA79F155D6BA924309A9 /* Frameworks */ = {
@@ -568,7 +557,6 @@
 				38DE1D001FC4C32300C49508 /* NSConstraintLayoutSet.swift in Sources */,
 				3872C1ED1FC3C4FC00EBD87F /* PFCollectionViewController.swift in Sources */,
 				38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */,
-				38856BAE1FE84C0600349828 /* ArrayEditorViewController.swift in Sources */,
 				3872C1F31FC3C8AA00EBD87F /* PFCollectionViewCell.swift in Sources */,
 				38028C991FC558A7003A4E95 /* WelcomeViewController.swift in Sources */,
 				38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */,

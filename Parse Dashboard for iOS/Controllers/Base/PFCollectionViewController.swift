@@ -83,14 +83,14 @@ class PFCollectionViewController: UICollectionViewController, UICollectionViewDe
     }
     
     func handleError(_ error: String?) {
-        let error = error?.capitalized ?? "Unexpected Error"
+        let error = error ?? "Unexpected Error"
         let ping = Ping(text: error, style: .danger)
         print(error)
         ping.show(animated: true, duration: 3)
     }
     
     func handleSuccess(_ message: String?) {
-        let message = message?.capitalized ?? "Success"
+        let message = message ?? "Success"
         let toast = Toast(text: message)
         toast.present(navigationController ?? self, animated: true, duration: 3)
     }

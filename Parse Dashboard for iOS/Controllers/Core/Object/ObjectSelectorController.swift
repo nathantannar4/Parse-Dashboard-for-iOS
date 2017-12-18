@@ -57,17 +57,21 @@ class ObjectSelectorViewController: ClassViewController {
     
     override func willMove(toParentViewController parent: UIViewController?) {
         super.willMove(toParentViewController: parent)
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.barTintColor = .darkPurpleBackground
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16),
-            NSAttributedStringKey.foregroundColor : UIColor.white
-        ]
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.largeTitleTextAttributes = [
-                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 20),
+        if (parent as? ObjectViewController) != nil {
+            configure()
+        } else if (parent as? ObjectCreatorViewController) != nil {
+            navigationController?.navigationBar.tintColor = .white
+            navigationController?.navigationBar.barTintColor = .darkPurpleBackground
+            navigationController?.navigationBar.titleTextAttributes = [
+                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16),
                 NSAttributedStringKey.foregroundColor : UIColor.white
             ]
+            if #available(iOS 11.0, *) {
+                navigationController?.navigationBar.largeTitleTextAttributes = [
+                    NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 20),
+                    NSAttributedStringKey.foregroundColor : UIColor.white
+                ]
+            }
         }
     }
     
