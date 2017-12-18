@@ -40,6 +40,8 @@
 		3872C1F71FC3CC2000EBD87F /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */; };
 		3872C20C1FC414E100EBD87F /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20B1FC414E100EBD87F /* SchemaViewController.swift */; };
 		3872C20E1FC415AB00EBD87F /* SchemaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20D1FC415AB00EBD87F /* SchemaCell.swift */; };
+		38856BB11FE8635A00349828 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 38856BAF1FE8635900349828 /* LICENSE */; };
+		38856BB21FE8635A00349828 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 38856BB01FE8635900349828 /* README.md */; };
 		38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */; };
 		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
@@ -104,6 +106,8 @@
 		3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		3872C20B1FC414E100EBD87F /* SchemaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
 		3872C20D1FC415AB00EBD87F /* SchemaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaCell.swift; sourceTree = "<group>"; };
+		38856BAF1FE8635900349828 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		38856BB01FE8635900349828 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 		3872C1BA1FC3BC6400EBD87F = {
 			isa = PBXGroup;
 			children = (
+				38856BAF1FE8635900349828 /* LICENSE */,
+				38856BB01FE8635900349828 /* README.md */,
 				3872C1C51FC3BC6400EBD87F /* Parse Dashboard for iOS */,
 				3872C1C41FC3BC6400EBD87F /* Products */,
 				C47E14E626273EA976A6D0B0 /* Pods */,
@@ -440,8 +446,10 @@
 				3872C1CB1FC3BC6400EBD87F /* Assets.xcassets in Resources */,
 				38F135C11FE77A7B00176C9A /* Pods-Parse Dashboard for iOS-acknowledgements.plist in Resources */,
 				382BFF5B1FDE15FC0050FF15 /* FormerImageCell.xib in Resources */,
+				38856BB11FE8635A00349828 /* LICENSE in Resources */,
 				38F135BD1FE7603300176C9A /* LaunchScreenCopy.storyboard in Resources */,
 				3872C1CE1FC3BC6400EBD87F /* LaunchScreen.storyboard in Resources */,
+				38856BB21FE8635A00349828 /* README.md in Resources */,
 				382BFF5A1FDE15FC0050FF15 /* FormerFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -5,6 +5,17 @@
 
 #### A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.
 
+## Features
+
+- Complete Parse Server database modification
+	- Add/Delete Schemas
+	- Add/Edit/Delete Objects
+	- Upload/Delete Files
+- Send targeted Push Notifications 
+- Force Touch Shortcuts
+- Easy configuration import with a custom URL scheme:
+	- ```parsedashboard://<applicationId>:\n<masterKey>@<url>:<port>/<path>```
+
 ## Screenshots
 
 <img src="Screenshots/A.png?raw=true" width="250" height="542"> <img src="Screenshots/B.png?raw=true" width="250" height="542"> <img src="Screenshots/C.png?raw=true" width="250" height="542">
