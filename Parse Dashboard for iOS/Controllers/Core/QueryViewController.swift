@@ -97,6 +97,11 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     
     private func setupNavigationBar() {
         
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.popoverPresentationController?.backgroundColor = .darkPurpleBackground
         navigationController?.navigationBar.barTintColor = .darkPurpleBackground
         navigationController?.navigationBar.tintColor = .white
@@ -153,7 +158,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
             header.textLabel?.text = "Saved Queries"
             return header
         case 1:
-            header.textLabel?.text = "New Query"
+            header.textLabel?.text = "Current Query"
             return header
         case 2:
             header.textLabel?.text = "Search Key"

@@ -1,0 +1,6 @@
+framework module AlertHUDKit {
+  umbrella header "AlertHUDKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

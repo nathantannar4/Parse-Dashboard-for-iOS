@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		38028C991FC558A7003A4E95 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028C981FC558A7003A4E95 /* WelcomeViewController.swift */; };
 		38028CA01FC560FD003A4E95 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028C9F1FC560FD003A4E95 /* UIDevice+Extensions.swift */; };
-		38028CA51FC56145003A4E95 /* Ping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA31FC56145003A4E95 /* Ping.swift */; };
-		38028CA61FC56145003A4E95 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA41FC56145003A4E95 /* Toast.swift */; };
-		38028CA81FC5615A003A4E95 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA71FC5615A003A4E95 /* Alert.swift */; };
 		38028CAA1FC56611003A4E95 /* SchemaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */; };
 		3809B9EE1FE4D2A200D8DD2A /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3809B9ED1FE4D2A200D8DD2A /* DeepLink.swift */; };
 		380EB3891FDE3AB900AB4AB3 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */; };
@@ -43,7 +40,6 @@
 		3872C1F71FC3CC2000EBD87F /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */; };
 		3872C20C1FC414E100EBD87F /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20B1FC414E100EBD87F /* SchemaViewController.swift */; };
 		3872C20E1FC415AB00EBD87F /* SchemaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C20D1FC415AB00EBD87F /* SchemaCell.swift */; };
-		388C28A01FDF995C008B2DF9 /* DownloadViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C289F1FDF995C008B2DF9 /* DownloadViewer.swift */; };
 		38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */; };
 		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
@@ -63,15 +59,15 @@
 		38DE1D0F1FC5453200C49508 /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1D0D1FC5453200C49508 /* FileViewController.swift */; };
 		38DE1D101FC5453200C49508 /* ArrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1D0E1FC5453200C49508 /* ArrayViewController.swift */; };
 		38F12D3E1FC696D300D3817D /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F12D3D1FC696D300D3817D /* UIAlertController+Extensions.swift */; };
+		38F135B91FE75F5900176C9A /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F135B81FE75F5900176C9A /* LaunchScreenViewController.swift */; };
+		38F135BD1FE7603300176C9A /* LaunchScreenCopy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38F135BC1FE7603300176C9A /* LaunchScreenCopy.storyboard */; };
+		38F135BF1FE763D000176C9A /* UIWindow+Extenions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F135BE1FE763D000176C9A /* UIWindow+Extenions.swift */; };
 		F25ECBC77855B1F9E2419001 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DEF2EA353A95C2C89F0735 /* Pods_Parse_Dashboard_for_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		38028C981FC558A7003A4E95 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		38028C9F1FC560FD003A4E95 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
-		38028CA31FC56145003A4E95 /* Ping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ping.swift; sourceTree = "<group>"; };
-		38028CA41FC56145003A4E95 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
-		38028CA71FC5615A003A4E95 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		38028CA91FC56611003A4E95 /* SchemaDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaDetailViewController.swift; sourceTree = "<group>"; };
 		3809B9ED1FE4D2A200D8DD2A /* DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLink.swift; sourceTree = "<group>"; };
 		380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -105,7 +101,6 @@
 		3872C1F61FC3CC2000EBD87F /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		3872C20B1FC414E100EBD87F /* SchemaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
 		3872C20D1FC415AB00EBD87F /* SchemaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaCell.swift; sourceTree = "<group>"; };
-		388C289F1FDF995C008B2DF9 /* DownloadViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewer.swift; sourceTree = "<group>"; };
 		38AF51FB1FDF2F6B00FC4B40 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
@@ -125,6 +120,9 @@
 		38DE1D0D1FC5453200C49508 /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
 		38DE1D0E1FC5453200C49508 /* ArrayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayViewController.swift; sourceTree = "<group>"; };
 		38F12D3D1FC696D300D3817D /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
+		38F135B81FE75F5900176C9A /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		38F135BC1FE7603300176C9A /* LaunchScreenCopy.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreenCopy.storyboard; sourceTree = "<group>"; };
+		38F135BE1FE763D000176C9A /* UIWindow+Extenions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extenions.swift"; sourceTree = "<group>"; };
 		49DEF2EA353A95C2C89F0735 /* Pods_Parse_Dashboard_for_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Parse_Dashboard_for_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04CF76C16F215027BB1D481 /* Pods-Parse Dashboard for iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		E34E4B477BD41310F7A5DDF0 /* Pods-Parse Dashboard for iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Parse Dashboard for iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -151,6 +149,7 @@
 				3852AA781FDCC7D900D7B009 /* SupportViewController.swift */,
 				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
 				380EB3881FDE3AB900AB4AB3 /* TutorialViewController.swift */,
+				38F135B81FE75F5900176C9A /* LaunchScreenViewController.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -250,7 +249,6 @@
 			children = (
 				38B2204F1FDF4782002F12BD /* Auth.swift */,
 				3809B9ED1FE4D2A200D8DD2A /* DeepLink.swift */,
-				38028CA71FC5615A003A4E95 /* Alert.swift */,
 				3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */,
 				3872C1D81FC3BCF600EBD87F /* Parse.swift */,
 				3872C1D51FC3BCF500EBD87F /* PFObject.swift */,
@@ -272,6 +270,7 @@
 				3872C1DE1FC3BE2400EBD87F /* UIApplication+Extensions.swift */,
 				38F12D3D1FC696D300D3817D /* UIAlertController+Extensions.swift */,
 				38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */,
+				38F135BE1FE763D000176C9A /* UIWindow+Extenions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -294,9 +293,6 @@
 				382BFF571FDE15BF0050FF15 /* FormerCells */,
 				38DE1CFD1FC4C30E00C49508 /* InputTextView.swift */,
 				382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */,
-				38028CA31FC56145003A4E95 /* Ping.swift */,
-				38028CA41FC56145003A4E95 /* Toast.swift */,
-				388C289F1FDF995C008B2DF9 /* DownloadViewer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -305,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				3872C1CC1FC3BC6400EBD87F /* LaunchScreen.storyboard */,
+				38F135BC1FE7603300176C9A /* LaunchScreenCopy.storyboard */,
 				3872C1CF1FC3BC6400EBD87F /* Info.plist */,
 				3872C1E71FC3C42F00EBD87F /* Parse_Dashboard_for_iOS.xcdatamodeld */,
 				38DE1CFF1FC4C32300C49508 /* NSConstraintLayoutSet.swift */,
@@ -393,6 +390,7 @@
 			files = (
 				3872C1CB1FC3BC6400EBD87F /* Assets.xcassets in Resources */,
 				382BFF5B1FDE15FC0050FF15 /* FormerImageCell.xib in Resources */,
+				38F135BD1FE7603300176C9A /* LaunchScreenCopy.storyboard in Resources */,
 				3872C1CE1FC3BC6400EBD87F /* LaunchScreen.storyboard in Resources */,
 				382BFF5A1FDE15FC0050FF15 /* FormerFieldCell.xib in Resources */,
 			);
@@ -441,6 +439,8 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Parse Dashboard for iOS/Pods-Parse Dashboard for iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AcknowList/AcknowList.framework",
+				"${BUILT_PRODUCTS_DIR}/AlertHUDKit/AlertHUDKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BiometricAuthentication/BiometricAuthentication.framework",
 				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/DynamicTabBarController/DynamicTabBarController.framework",
@@ -448,9 +448,12 @@
 				"${BUILT_PRODUCTS_DIR}/RMActionController/RMActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/RMDateSelectionViewController/RMDateSelectionViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AcknowList.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlertHUDKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BiometricAuthentication.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicTabBarController.framework",
@@ -458,6 +461,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMDateSelectionViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -471,10 +475,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38028CA61FC56145003A4E95 /* Toast.swift in Sources */,
 				3872C1DF1FC3BE2500EBD87F /* UIApplication+Extensions.swift in Sources */,
 				38DE1CF81FC4BAB700C49508 /* QueryHelpCell.swift in Sources */,
 				38DE1D061FC515B800C49508 /* ObjectViewController.swift in Sources */,
+				38F135BF1FE763D000176C9A /* UIWindow+Extenions.swift in Sources */,
 				3872C1F71FC3CC2000EBD87F /* UIImage+Extensions.swift in Sources */,
 				38DE1CFE1FC4C30E00C49508 /* InputTextView.swift in Sources */,
 				3872C1DC1FC3BCF600EBD87F /* Parse.swift in Sources */,
@@ -490,7 +494,6 @@
 				3872C1E31FC3C08200EBD87F /* String+Extensions.swift in Sources */,
 				3852AA7B1FDCC7E000D7B009 /* IAPHandler.swift in Sources */,
 				3872C1EB1FC3C49900EBD87F /* ServersViewController.swift in Sources */,
-				38028CA51FC56145003A4E95 /* Ping.swift in Sources */,
 				3852AA791FDCC7D900D7B009 /* SupportViewController.swift in Sources */,
 				38DE1D021FC511EF00C49508 /* AppInfoViewController.swift in Sources */,
 				38DE1D041FC5149B00C49508 /* Date+Extensions.swift in Sources */,
@@ -499,16 +502,15 @@
 				3872C1DA1FC3BCF600EBD87F /* PFServer.swift in Sources */,
 				3872C1E41FC3C08200EBD87F /* UIColor+Extensions.swift in Sources */,
 				38DE1CFC1FC4BB1B00C49508 /* ClassCell.swift in Sources */,
-				38028CA81FC5615A003A4E95 /* Alert.swift in Sources */,
 				3809B9EE1FE4D2A200D8DD2A /* DeepLink.swift in Sources */,
 				3848CA0B1FC552560038A636 /* PFTableViewController.swift in Sources */,
 				38DE1D001FC4C32300C49508 /* NSConstraintLayoutSet.swift in Sources */,
 				3872C1ED1FC3C4FC00EBD87F /* PFCollectionViewController.swift in Sources */,
-				388C28A01FDF995C008B2DF9 /* DownloadViewer.swift in Sources */,
 				38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */,
 				3872C1F31FC3C8AA00EBD87F /* PFCollectionViewCell.swift in Sources */,
 				38028C991FC558A7003A4E95 /* WelcomeViewController.swift in Sources */,
 				38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */,
+				38F135B91FE75F5900176C9A /* LaunchScreenViewController.swift in Sources */,
 				380EB3891FDE3AB900AB4AB3 /* TutorialViewController.swift in Sources */,
 				3872C1E91FC3C42F00EBD87F /* Parse_Dashboard_for_iOS.xcdatamodeld in Sources */,
 				38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */,

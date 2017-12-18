@@ -27,6 +27,7 @@
 
 import UIKit
 import Photos
+import AlertHUDKit
 import DKImagePickerController
 
 class FileViewController: UIViewController {
@@ -45,8 +46,6 @@ class FileViewController: UIViewController {
         imageView.contentMode = .center
         return imageView
     }()
-    
-    lazy var downloadView = DownloadViewer(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 200)))
     
     // MARK: - Initialization
     
@@ -79,9 +78,6 @@ class FileViewController: UIViewController {
         
         view.backgroundColor = .darkPurpleAccent
         view.addSubview(imageView)
-        view.addSubview(downloadView)
-        downloadView.anchorCenterToSuperview()
-        downloadView.anchor(widthConstant: 200, heightConstant: 200)
         imageView.fillSuperview()
     }
     
@@ -107,7 +103,7 @@ class FileViewController: UIViewController {
     // MARK: - Data Refresh
     
     func loadDataFromUrl() {
-        downloadView.downloadFile(from: url) { [weak self] data, error in
+        DownloadWheel().downloadFile(from: url) { [weak self] (view, data, error) in
             guard error == nil else {
                 Ping(text: error?.localizedDescription ?? "Error", style: .danger).show()
                 return
@@ -116,12 +112,7 @@ class FileViewController: UIViewController {
                 self?.imageView.image = UIImage(data: data)
                 self?.imageView.contentMode = .scaleAspectFill
             }
-            UIView.animate(withDuration: 0.5, animations: {
-                self?.downloadView.alpha = 0
-            }, completion: { _ in
-                self?.downloadView.removeFromSuperview()
-            })
-        }
+        }.present(self)
     }
     
     // MARK: - User Actions

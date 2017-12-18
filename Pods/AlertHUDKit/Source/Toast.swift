@@ -29,7 +29,7 @@ import UIKit
 
 open class Toast: UIView {
     
-    // MARK: - Properties
+    // MARK: - Properties [Public]
     
     open var dismissOnTap: Bool = true
     
@@ -39,7 +39,11 @@ open class Toast: UIView {
         }
     }
     
-    open var currentState: Alert.State = .inactive
+    open var currentState: Alert.State = .inactive {
+        didSet {
+            isUserInteractionEnabled = currentState != .transitioning
+        }
+    }
     
     open var isRippleEnabled: Bool = true
     
@@ -85,7 +89,6 @@ open class Toast: UIView {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(UIColor(white: 1, alpha: 0.3), for: .highlighted)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.contentHorizontalAlignment = .center
         return button
     }()
@@ -121,7 +124,11 @@ open class Toast: UIView {
         layoutRippleView()
         addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(Toast.didTap(gesture:))))
         actionButton.addTarget(self, action: #selector(Toast.didTapActionButton(button:)), for: .touchUpInside)
-        backgroundColor = .darkGray
+        backgroundColor = UIColor(red: 97/255, green: 97/255, blue: 97/255, alpha: 1)
+        layer.shadowRadius = 2
+        layer.shadowOffset = CGSize(width: 0, height: -1)
+        layer.shadowOpacity = 0.3
+        layer.shadowColor = UIColor.darkGray.cgColor
     }
     
     private func layoutRippleView() {
@@ -226,14 +233,17 @@ open class Toast: UIView {
         
         guard currentState == .active else { return }
         currentState = .transitioning
-        UIView.transition(with: self, duration: 0.3, options: .curveLinear, animations: {
+        if animated {
+            UIView.transition(with: self, duration: 0.3, options: .curveLinear, animations: {
                 self.alpha = 0
             }, completion: { _ in
                 self.currentState = .inactive
-                self.constraints.forEach { self.removeConstraint($0) }
                 self.removeFromSuperview()
-            }
-        )
+            })
+        } else {
+            currentState = .inactive
+            removeFromSuperview()
+        }
     }
     
     @objc
@@ -245,8 +255,10 @@ open class Toast: UIView {
     
     @objc
     private func didTapActionButton(button: UIButton) {
-        action?()
         button.isUserInteractionEnabled = false
+        rippleView.center = button.center
+        animate()
+        action?()
         dismiss()
     }
     

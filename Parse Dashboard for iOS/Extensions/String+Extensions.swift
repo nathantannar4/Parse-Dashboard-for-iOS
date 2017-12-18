@@ -109,6 +109,10 @@ extension String {
     static var isNew: String {
         return "isNew"
     }
+    
+    static var isSetup: String {
+        return "isSetup"
+    }
 
     static var recentConfig: String {
         return "recentConfig"

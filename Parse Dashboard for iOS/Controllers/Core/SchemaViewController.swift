@@ -106,6 +106,7 @@ class SchemaViewController: PFCollectionViewController {
                             target: self,
                             action: #selector(showServerInfo))
         ]
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Classes", style: .plain, target: nil, action: nil)
     }
     
     // MARK: - UICollectionViewDataSource

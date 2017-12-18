@@ -32,31 +32,40 @@ typealias PFCompletionBlock = (PFResult, [String:AnyObject]?) -> Void
 
 class Parse {
     
+    // MARK: - Properties
+    
     static var shared = Parse()
     
-    private var serverURL: String = ""
-    private var applicationId: String = ""
-    private var masterKey: String = ""
+    public private(set) var currentConfiguration: ParseServerConfig? {
+        didSet {
+            let hashedConfig: [String:String?] = [
+                .configName     : currentConfiguration?.name ?? "App",
+                .applicationId  : currentConfiguration?.applicationId ?? "",
+                .masterKey      : currentConfiguration?.masterKey ?? "",
+                .serverUrl      : currentConfiguration?.serverUrl ?? ""
+            ]
+            UserDefaults.standard.set(hashedConfig, forKey: .recentConfig)
+        }
+    }
     
-    private init() {}
+    // MARK: - Initialization
+    
+    private init() {} // Use `shared`
+    
+    // MARK: - Methods [Public]
     
     func initialize(with config: ParseServerConfig) {
-        self.serverURL = config.serverUrl ?? String()
-        self.applicationId = config.applicationId ?? String()
-        self.masterKey = config.masterKey ?? String()
-        let hashedConfig: [String:String?] = [
-            .configName : config.name ?? "App",
-            .applicationId  : applicationId,
-            .masterKey  : masterKey,
-            .serverUrl  : serverURL
-        ]
-        UserDefaults.standard.set(hashedConfig, forKey: .recentConfig)
+        currentConfiguration = config
     }
     
     func get(_ endpoint: String, query: String = "", completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
             return completion((false, "Network Connection Unavailable"), nil)
+        }
+        
+        guard let serverURL = currentConfiguration?.serverUrl else {
+            return completion((false, "Invalid Server URL"), nil)
         }
         
         var urlString = serverURL + endpoint
@@ -76,10 +85,7 @@ class Parse {
             return completion((false, "Invalid Server URL"), nil)
         }
 
-        var request = URLRequest(url: url)
-        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = PFRequest(url: url)
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
@@ -111,14 +117,11 @@ class Parse {
             return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        guard let url = URL(string: serverURL + endpoint) else {
+        guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
             return completion((false, "Invalid Server URL"), nil)
         }
         
-        var request = URLRequest(url: url)
-        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = PFRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = body?.data(using: .utf8)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
@@ -157,14 +160,11 @@ class Parse {
             return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        guard let url = URL(string: serverURL + endpoint) else {
+        guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
             return completion((false, "Invalid Server URL"), nil)
         }
         
-        var request = URLRequest(url: url)
-        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = PFRequest(url: url)
         request.httpMethod = "DELETE"
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
@@ -196,13 +196,11 @@ class Parse {
         }
         
         let name = key + ".jpg"
-        guard let url = URL(string: serverURL + "/files/" + name) else {
+        guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + "/files/" + name) else {
             return completion((false, "Invalid Server URL"), nil)
         }
 
-        var request = URLRequest(url: url)
-        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
+        var request = PFRequest(url: url)
         request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = imageData
@@ -255,14 +253,11 @@ class Parse {
             return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        guard let url = URL(string: serverURL + endpoint) else {
+        guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
             return completion((false, "Invalid Server URL"), nil)
         }
 
-        var request = URLRequest(url: url)
-        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = PFRequest(url: url)
         request.httpMethod = "PUT"
         request.httpBody = data
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
@@ -298,6 +293,18 @@ class Parse {
                 DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
             }
         }.resume()
+    }
+    
+    // MARK: - Methods [Private]
+    
+    private func PFRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        let applicationId = currentConfiguration?.applicationId ?? ""
+        let masterKey = currentConfiguration?.masterKey ?? ""
+        request.setValue(applicationId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        return request
     }
     
 }

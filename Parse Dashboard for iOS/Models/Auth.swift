@@ -39,7 +39,7 @@ class Auth: NSObject {
     }
     
     var isSetup: Bool {
-        return UserDefaults.standard.bool(forKey: "isSetup")
+        return UserDefaults.standard.bool(forKey: .isSetup)
     }
     
     private var isGranted: Bool = false
@@ -67,7 +67,7 @@ class Auth: NSObject {
         authenticateUser { result in
             if result {
                 self.isGranted = false
-                UserDefaults.standard.set(false, forKey: "isSetup")
+                UserDefaults.standard.set(false, forKey: .isSetup)
             }
             completion(result)
         }

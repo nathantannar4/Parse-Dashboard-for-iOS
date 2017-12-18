@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import AlertHUDKit
 
 class PFCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
