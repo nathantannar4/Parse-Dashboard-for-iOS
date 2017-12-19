@@ -119,13 +119,13 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     @objc
     func didSaveQuery() {
         guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else { return }
-        let queryObject = NSManagedObject(entity: Query.entity(), insertInto: context)
-        queryObject.setValue(query, forKey: "constraint")
+        let queryObject = Query(entity: Query.entity(), insertInto: context)
+        queryObject.constraint = query
+        queryObject.searchKey = searchKey
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
-        guard let query = queryObject as? Query else { return }
-        savedQueries.append(query)
-        self.handleSuccess("Query Added")
-        tableView.insertRows(at: [IndexPath(row: savedQueries.count - 1, section: 0)], with: .fade)
+        savedQueries.append(queryObject)
+        handleSuccess("Query Added")
+        tableView.insertRows(at: [IndexPath(row: savedQueries.count - 1, section: 1)], with: .fade)
     }
     
     @objc
@@ -138,7 +138,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     // MARK: - UITableViewController
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 1 && indexPath.row == 0 {
+        if indexPath.section == 2 && indexPath.row == 0 {
             return 80
         } 
         return UITableViewAutomaticDimension
@@ -155,13 +155,13 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
         header.textLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         switch section {
         case 0:
-            header.textLabel?.text = "Saved Queries"
+            header.textLabel?.text = "Search Key"
             return header
         case 1:
-            header.textLabel?.text = "Current Query"
+            header.textLabel?.text = "Saved Queries"
             return header
         case 2:
-            header.textLabel?.text = "Search Key"
+            header.textLabel?.text = "Current Query"
             return header
         default:
             return nil
@@ -174,24 +174,29 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return savedQueries.count
+            return keys.count
         } else if section == 1 {
+            return savedQueries.count
+        } else if section == 2 {
             return 2
         }
-        return keys.count
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
             cell.textLabel?.text = savedQueries[indexPath.row].constraint
             cell.textLabel?.font = UIFont.systemFont(ofSize: 12)
             cell.textLabel?.numberOfLines = 0
+            let searchKey = savedQueries[indexPath.row].searchKey ?? .objectId
+            cell.detailTextLabel?.text = "Search Key: " + searchKey
+            cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12, weight: .light)
             return cell
             
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             
             if indexPath.row == 0 {
                 
@@ -224,20 +229,21 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             
             guard let query = savedQueries[indexPath.row].constraint else { return }
+            let searchKey = savedQueries[indexPath.row].searchKey ?? .objectId
             dismiss(animated: true, completion: {
-                self.delegate?.query(didChangeWith: query, searchKey: self.searchKey)
+                self.delegate?.query(didChangeWith: query, searchKey: searchKey)
             })
             
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 0 {
             toggleSearchKey(at: indexPath)
         }
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == 0
+        return indexPath.section == 1
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -245,8 +251,9 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
         let editAction = UITableViewRowAction(style: .default, title: " Edit ", handler: { action, indexpath in
             
             self.query = self.savedQueries[indexPath.row].constraint ?? String()
-            self.tableView.reloadRows(at: [indexPath, IndexPath(row: 0, section: 1)], with: .none)
-            self.tableView.reloadSections([2], with: .none)
+            self.searchKey = self.savedQueries[indexPath.row].searchKey ?? .objectId
+            self.tableView.reloadRows(at: [indexPath, IndexPath(row: 0, section: 2)], with: .none)
+            self.tableView.reloadSections([0], with: .none)
         })
         editAction.backgroundColor = .darkPurpleAccent
         
@@ -281,7 +288,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
             cell.accessoryType = .checkmark
         }
         if let row = oldIndex {
-            let oldIndexPath = IndexPath(row: row, section: 2)
+            let oldIndexPath = IndexPath(row: row, section: 0)
             guard oldIndexPath != indexPath, let cell = tableView.cellForRow(at: oldIndexPath) else { return }
             cell.accessoryType = .none
         }
