@@ -29,6 +29,7 @@ import UIKit
 import Photos
 import AlertHUDKit
 import DKImagePickerController
+import PDFReader
 
 class FileViewController: UIViewController {
     
@@ -42,22 +43,23 @@ class FileViewController: UIViewController {
     
     fileprivate var currentFileData: Data? {
         didSet {
-            navigationItem.rightBarButtonItems?.first?.isEnabled = false
             if let data = currentFileData {
                 if let image = UIImage(data: data) {
                     imageView.image = image
                     imageView.contentMode = .scaleAspectFill
-                    actionButton.isHidden = true
-                    navigationItem.rightBarButtonItems?.first?.isEnabled = true
+                    actionButton.setTitle("Export Image", for: .normal)
                 } else {
-                    imageView.image = UIImage(named: "File")
+                    if filename.components(separatedBy: ".").last == "pdf" {
+                        imageView.image = UIImage(named: "PDF")
+                        actionButton.setTitle("View File", for: .normal)
+                    } else {
+                        imageView.image = UIImage(named: "File")
+                        actionButton.setTitle("Export File", for: .normal)
+                    }
                     imageView.contentMode = .center
-                    actionButton.isHidden = false
-                    actionButton.setTitle("Open File", for: .normal)
                 }
             } else {
                 imageView.image = UIImage(named: "File")
-                actionButton.isHidden = false
                 actionButton.setTitle("Download File", for: .normal)
             }
         }
@@ -78,7 +80,7 @@ class FileViewController: UIViewController {
         button.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
         button.backgroundColor = .logoTint
         button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(accessFile), for: .touchUpInside)
+        button.addTarget(self, action: #selector(accessFile(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -122,33 +124,29 @@ class FileViewController: UIViewController {
     private func setupNavigationBar() {
         
         title = "File View"
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                            target: self,
                                                            action: #selector(dismissInfo))
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "Save"),
-                            style: .plain,
-                            target: self,
-                            action: #selector(saveFileAsImage)),
             UIBarButtonItem(image: UIImage(named: "Upload"),
                             style: .plain,
                             target: self,
                             action: #selector(uploadNewFile))
         ]
-        navigationItem.rightBarButtonItems?.first?.isEnabled = false
     }
     
     // MARK: - Data Refresh
     
     @objc
-    func accessFile() {
+    func accessFile(_ sender: UIButton) {
         
+        sender.isEnabled = false
         if currentFileData == nil {
             loadDataFromUrl()
         } else {
             exportFile()
         }
+        sender.isEnabled = true
     }
     
     func loadDataFromUrl() {
@@ -167,12 +165,37 @@ class FileViewController: UIViewController {
                 return
             }
             view.currentState = .active
+            self?.actionButton.isHidden = false
         }.present(self)
     }
     
     func exportFile() {
         
-        
+        guard let data = currentFileData else { return }
+        do {
+            let directory = FileManager.default.temporaryDirectory
+            let type = filename.components(separatedBy: ".").last!
+            let path = directory.appendingPathComponent(filename)
+            print("Writing to: ", path)
+            try data.write(to: path, options: .completeFileProtection)
+            
+            // Try to render the file as a PDF
+            if type == "pdf", let pdf = PDFDocument(url: path) {
+                let readerController = PDFViewController.createNew(with: pdf, actionButtonImage: UIImage(named: "Share")?.withRenderingMode(.alwaysTemplate), actionStyle: .activitySheet)
+                readerController.backgroundColor = .groupTableViewBackground
+                navigationController?.pushViewController(readerController, animated: true)
+            } else if let image = UIImage(data: data) {
+                let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+                present(activity, animated: true, completion: nil)
+            } else {
+                // Fallback on system to recognize file
+                let activity = UIActivityViewController(activityItems: [path], applicationActivities: nil)
+                present(activity, animated: true, completion: nil)
+            }
+            
+        } catch let error {
+            handleError(error.localizedDescription)
+        }
     }
     
     // MARK: - User Actions
@@ -218,26 +241,6 @@ class FileViewController: UIViewController {
                 self?.url = URL(string: urlString)
             }
         }
-    }
-    
-    @objc
-    func saveFileAsImage() {
-        
-        guard let data = currentFileData, let image = UIImage(data: data) else { return }
-        
-        PHPhotoLibrary.shared()
-            .performChanges( { PHAssetChangeRequest.creationRequestForAsset(from: image) }, completionHandler: { success, error in
-            DispatchQueue.main.async {
-                if success {
-                    // "Saved to camera roll"
-                    self.handleSuccess("Saved to Camera Roll")
-                } else {
-                    // "Error saving to camera roll"
-                    self.handleError(error?.localizedDescription)
-                }
-            }
-        })
-        
     }
     
     func presentDocumentPicker() {
@@ -370,3 +373,4 @@ extension FileViewController: UIDocumentBrowserViewControllerDelegate {
         // Not currently supported, but having this silences warnings
     }
 }
+

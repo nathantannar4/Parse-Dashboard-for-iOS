@@ -9,6 +9,7 @@ PODS:
   - DKImagePickerController/ImageManager (3.8.1)
   - DynamicTabBarController (1.0.0)
   - Former (1.6.0)
+  - PDFReader (2.5.1)
   - RMActionController (1.3.1)
   - RMDateSelectionViewController (2.3.1):
     - RMActionController (~> 1.3.1)
@@ -22,6 +23,7 @@ DEPENDENCIES:
   - DKImagePickerController
   - DynamicTabBarController
   - Former
+  - PDFReader
   - RMDateSelectionViewController
   - SwiftyJSON
   - WhatsNew
@@ -33,11 +35,12 @@ SPEC CHECKSUMS:
   DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
   DynamicTabBarController: 26956b00a436740784993739dd8b376c46bf045a
   Former: c3407c1d74f1b02014a7e8c6d7aa5bb4d1e5363b
+  PDFReader: 2c4a845d0560f33221cf911516e3b700967680f6
   RMActionController: 535715be9f3d9eb96a838485370dcccee0dda597
   RMDateSelectionViewController: 1157d34245e6a1dda700e8a9c44417321d181951
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   WhatsNew: 930ad6dbdf90486afbfe27747cb628a56fa2988d
 
-PODFILE CHECKSUM: 24273dcb3ebacdd28ac13cbae6d1126e539d4340
+PODFILE CHECKSUM: 081372b50fa1cda8dd65eaae836e10a840f4d730
 
 COCOAPODS: 1.3.1

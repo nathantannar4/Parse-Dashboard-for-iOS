@@ -11,6 +11,7 @@
 	- Add/Delete Schemas
 	- Add/Edit/Delete Objects
 	- Upload/Delete Files
+- View PDFs
 - Send targeted Push Notifications 
 - Force Touch Shortcuts
 - Easy configuration import with a custom URL scheme:
