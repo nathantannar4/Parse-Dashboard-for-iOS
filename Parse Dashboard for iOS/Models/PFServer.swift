@@ -57,3 +57,16 @@ class PFServer {
         }
     }
 }
+
+
+extension ParseServerConfig {
+    
+    var exportableURL: URL? {
+        guard let url = URL(string: serverUrl ?? "") else { return nil }
+        let isSecure = url.absoluteString.contains("https")
+        let port = isSecure ? "" : ":\(String(url.port ?? 80))"
+        let urlString = "parsedashboard://\(applicationId ?? ""):\(masterKey ?? "")@" + (url.host ?? "") + port + url.path
+        return URL(string: urlString)
+    }
+    
+}

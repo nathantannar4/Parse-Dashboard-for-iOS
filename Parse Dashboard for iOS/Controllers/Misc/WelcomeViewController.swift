@@ -40,7 +40,8 @@ class WelcomeViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = .logoTint
         view.addSubview(imageView)
-        imageView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 44, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        imageView.anchorCenterToSuperview()
+        imageView.anchor(widthConstant: 100, heightConstant: 100)
         
         return view
     }()
@@ -98,6 +99,16 @@ class WelcomeViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
     // MARK: - Setup
     
     private func setupNavigationBar() {
@@ -142,6 +153,12 @@ class WelcomeViewController: UIViewController {
     
     @objc
     func getStarted() {
-        present(UINavigationController(rootViewController: ServersViewController()), animated: true, completion: nil)
+        let rootViewController = UINavigationController(rootViewController: ServersViewController())
+        UIApplication.shared.presentedWindow?.switchRootViewController(
+            rootViewController,
+            animated: true,
+            duration: 0.3,
+            options: .transitionFlipFromRight,
+            completion: nil)
     }
 }

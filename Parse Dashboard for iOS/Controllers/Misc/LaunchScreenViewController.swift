@@ -44,24 +44,74 @@ class LaunchScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        beginTransition()
+        let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
+        if isNew {
+            beginTransitionForNewLaunch()
+        } else {
+            beginTransition()
+        }
     }
     
     // MARK: - Animation Methods
+    
+    func beginTransitionForNewLaunch() {
+        
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let isPortrait = view.frame.height > view.frame.width
+        let navigationHeight: CGFloat = isPortrait ? (44 + statusBarHeight) : 44
+        var newHeight = (UIDevice.current.userInterfaceIdiom == .pad ? 244 : 144) + navigationHeight
+        
+        var yTranslation = navigationHeight / 2
+        
+        if (UIDevice.current.model == .iPhoneX && !isPortrait) || (UIDevice.current.model == .iPhone6 && !isPortrait) {
+            // Hardcoded hack
+            newHeight -= 12
+            yTranslation -= 6
+        }
+        
+        logoView.tintColor = .white
+        
+        let delay: TimeInterval = 0.25
+        
+        UIView.animate(withDuration: 0.25, delay: 0.25 + delay, options: .curveEaseIn, animations: {
+            self.logoView.image = UIImage(named: "Logo")?.withRenderingMode(.alwaysTemplate)
+        })
+        
+        UIView.animate(withDuration: 0.5) {
+            self.headerView.backgroundColor = .logoTint
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: delay, options: .curveEaseIn, animations: {
+            self.authorImageView.alpha = 0
+            self.authorLabel.alpha = 0
+            self.logoViewWidthConstraint.constant = 100
+            self.logoViewHeightConstraint.constant = 100
+            self.logoView.transform = CGAffineTransform(translationX: 0, y: yTranslation)
+            self.headerViewHeightConstraint.constant = newHeight
+            self.view.layoutIfNeeded()
+        }) { _ in
+            self.endTransition()
+        }
+    }
     
     func beginTransition() {
         
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
-        // largeTitleNavBarHeight = 96
-        // standardNavBarHeight = 44
         let isPortrait = view.frame.height > view.frame.width
-        let newHeight = isPortrait ? (96 + statusBarHeight) : 44
+        var newHeight = isPortrait ? (96 + statusBarHeight) : 44
         if isPortrait {
             titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
         } else {
             titleLabel.textAlignment = .center
             titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        }
+        
+        if (UIDevice.current.model == .iPhone6 || UIDevice.current.model == .iPhoneX) && !isPortrait {
+            // Hardcoded hack
+            newHeight -= 12
+        } else if UIDevice.current.model == .iPhone5 {
+            newHeight -= 2
         }
         
         let delay: TimeInterval = 0.25
@@ -75,19 +125,37 @@ class LaunchScreenViewController: UIViewController {
         let xOrigin: CGFloat = UIDevice.current.model == .iPhoneX ? 16 : 20
         
         UIView.animate(withDuration: 0.5, delay: delay, options: .curveEaseIn, animations: {
-            self.titleLabel.alpha = 1
             self.logoViewWidthConstraint.constant = 30
             self.logoViewHeightConstraint.constant = 30
             self.headerViewHeightConstraint.constant = newHeight
             self.view.layoutIfNeeded()
-            self.logoView.frame.origin = CGPoint(x: xOrigin, y: statusBarHeight + 7)
+            
             // Hacky solution to match destination frames
             if !isPortrait {
                 self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -1)
             }
+            
+            if UIDevice.current.model == .iPhone6 && !isPortrait {
+                self.logoView.frame.origin = CGPoint(x: xOrigin, y: 0)
+                self.titleLabel.transform = CGAffineTransform(translationX: 0, y: 3)
+            } else if UIDevice.current.model == .iPhoneX && !isPortrait {
+                if #available(iOS 11.0, *) {
+                    self.logoView.frame.origin = CGPoint(x: self.view.safeAreaInsets.left + xOrigin + 4, y: 0)
+                }
+            } else if UIDevice.current.model == .iPhone5 {
+                if isPortrait {
+                    self.logoView.frame.origin = CGPoint(x: xOrigin - 4, y: statusBarHeight + 7)
+                    self.titleLabel.transform = CGAffineTransform(translationX: -3, y: -2)
+                } else {
+                    self.logoView.frame.origin = CGPoint(x: xOrigin - 4, y: statusBarHeight + 7)
+                }
+            } else {
+                self.logoView.frame.origin = CGPoint(x: xOrigin, y: statusBarHeight + 7)
+            }
+            
             if UIDevice.current.model == .iPhoneX {
                 if !isPortrait {
-                    self.titleLabel.transform = CGAffineTransform(translationX: -4, y: -1)
+                    self.titleLabel.transform = CGAffineTransform(translationX: 0, y: 4)
                 } else {
                     self.titleLabel.transform = CGAffineTransform(translationX: -4, y: 0)
                 }
@@ -98,9 +166,18 @@ class LaunchScreenViewController: UIViewController {
     }
     
     func endTransition() {
-        let serversViewController = ServersViewController()
-        serversViewController.shouldAnimateFirstLoad = true
-        let rootViewController = UINavigationController(rootViewController: serversViewController)
+        
+        var rootViewController: UIViewController
+        
+        let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
+        if isNew {
+            rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+        } else {
+            let serversViewController = ServersViewController()
+            serversViewController.shouldAnimateFirstLoad = true
+            rootViewController = UINavigationController(rootViewController: serversViewController)
+        }
+        
         UIApplication.shared.presentedWindow?.switchRootViewController(
             rootViewController,
             animated: true,

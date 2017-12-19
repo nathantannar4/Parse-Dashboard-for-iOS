@@ -167,6 +167,9 @@ class ServersViewController: PFCollectionViewController {
             UIAlertAction(title: "Duplicate", style: .default, handler: { [weak self] _ in
                 self?.duplicateServer(at: indexPath)
             }),
+            UIAlertAction(title: "Export", style: .default, handler: { [weak self] _ in
+                self?.exportServer(at: indexPath)
+            }),
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 self?.deleteServer(at: indexPath)
             }),
@@ -208,6 +211,19 @@ class ServersViewController: PFCollectionViewController {
         self.handleSuccess("Server Duplicated")
     }
     
+    func exportServer(at indexPath: IndexPath) {
+        
+        // Expected Format for config import
+        // parsedashboard://<applicationId>:<masterKey>@<url>:<port>/<path>
+        
+        guard let url = servers[indexPath.row].exportableURL else {
+            handleError("Sorry, that configuration is invalid and cannot be exported")
+            return
+        }
+        let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(activity, animated: true, completion: nil)
+    }
+    
     func deleteServer(at indexPath: IndexPath) {
         
         let alert = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
@@ -239,7 +255,7 @@ class ServersViewController: PFCollectionViewController {
         let actionsStack = [
             TutorialAction(text: "Learn more about Parse Dashboard for iOS! See how your data is stored securely, where to find the GitHub repo and how to show your support", sourceItem: navigationItem.leftBarButtonItem),
             TutorialAction(text: "Long press on a cell to edit, duplicate or delete the configuration", sourceView: collectionView),
-            TutorialAction(text: "Add a new Parse Server configuration profile", sourceItem: navigationItem.rightBarButtonItem)
+            TutorialAction(text: "Add a new Parse Server configuration", sourceItem: navigationItem.rightBarButtonItem)
         ]
         presentTutorial(for: actionsStack)
     }

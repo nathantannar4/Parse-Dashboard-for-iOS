@@ -40,6 +40,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blurEffect)
+        let imageView = UIImageView(image: UIImage(named: "Logo"))
+        imageView.backgroundColor = .white
+        imageView.layer.cornerRadius = 50
+        blurView.contentView.addSubview(imageView)
+        imageView.anchorCenterXToSuperview()
+        imageView.anchorCenterYToSuperview(constant: -200)
+        imageView.anchor(widthConstant: 100, heightConstant: 100)
         return blurView
     }()
     
@@ -65,13 +72,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         // Expected Format for config import
-        // parsedashboard://<applicationId>:\n<masterKey>@<url>:<port>/<path>
+        // parsedashboard://<applicationId>:<masterKey>@<url>:<port>/<path>
         
         let config = ParseServerConfig(entity: ParseServerConfig.entity(), insertInto: persistentContainer.viewContext)
-        config.name = url.host
+        config.name = (url.host ?? "") + url.path
         config.applicationId = url.user ?? String()
         config.masterKey = url.password ?? String()
-        var serverUrl = url.host ?? String()
+        var serverUrl = "http://" + (url.host ?? String())
         if let port = url.port {
             serverUrl.append(":\(port)")
         }
@@ -84,12 +91,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    /// Restart any tasks that were paused (or not yet started) while the application was inactive.
-    /// If the application was previously in the background, optionally refresh the user interface.
     func applicationDidBecomeActive(_ application: UIApplication) {
         if blurView.superview == nil {
-            window?.addSubview(blurView)
-            blurView.fillSuperview()
+            // Delay to account for launch screen annimation
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                self.window?.addSubview(self.blurView)
+                self.blurView.fillSuperview()
+            })
         }
         if !Auth.shared.granted {
             Auth.shared.unlock(completion: { result in
@@ -100,18 +108,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
    
-    /// Use this method to release shared resources, save user data, invalidate timers, and store enough application
-    /// state information to restore your application to its current state in case it is terminated later
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         if Auth.shared.isSetup {
             Auth.shared.lock()
             blurView.isHidden = false
         }
-        UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.recent.item, DeepLink.support.item] // Updated Shortcut Items
+        UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.recent.item, DeepLink.support.item] // Update Shortcut Items
     }
     
-    /// Called when the application is about to terminate. Save data if appropriate.
-    /// See also applicationDidEnterBackground:.
     func applicationWillTerminate(_ application: UIApplication) {
         self.saveContext()
     }
@@ -161,15 +165,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
-        let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
-        if isNew {
-            // Show Welcome View
-            window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
-        } else {
-            
-            let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController()!
-            window?.rootViewController = launchScreen
-        }
+        let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController()!
+        window?.rootViewController = launchScreen
         window?.makeKeyAndVisible() // Required when not using storyboards
     }
     

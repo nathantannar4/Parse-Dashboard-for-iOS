@@ -86,7 +86,9 @@ class SettingsViewController: FormViewController {
             }.onSwitchChanged { newValue in
                 if newValue == false {
                     Auth.shared.destroy(completion: { (result) in
-                        
+                        if result {
+                            UserDefaults.standard.set(false, forKey: .isSetup)
+                        }
                     })
                 } else {
                     UserDefaults.standard.set(true, forKey: .isSetup)
