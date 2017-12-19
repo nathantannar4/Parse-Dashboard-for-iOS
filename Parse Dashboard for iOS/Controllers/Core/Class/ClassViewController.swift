@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class ClassViewController: PFCollectionViewController, QueryDelegate {
     
@@ -179,30 +180,43 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     @objc
     func sendPushNotification() {
         
-        let alert = UIAlertController(title: "Push Notification", message: "To: Devices Matching Current Query", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Push Notification", message: "To: Devices Matching Current Search/Query", preferredStyle: .alert)
         alert.configureView()
         
         let saveAction = UIAlertAction(title: "Send", style: .default, handler: { _ in
             
-            guard let message = alert.textFields?.first?.text else { return }
-            let userIds = self.objects.map {
+            guard let title = alert.textFields?.first?.text, let message = alert.textFields?.last?.text else { return }
+            
+            let objects = self.isFiltering() ? self.filteredObjects : self.objects
+            
+            let userIds = objects.map {
                 return $0.json["user"].dictionary?["objectId"]?.stringValue ?? String()
             }
 
             // Example: where={"user":{"$inQuery":{"className":"_User","where":{"objectId":{"$in":["zaAqYBP8X9"]}}}}}
-            let body = "{\"where\":{\"user\":{\"$inQuery\":{\"className\":\"_User\",\"where\":{\"objectId\":{\"$in\":\(userIds)}}}}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
-            Parse.shared.post("/push", data: body.data(using: .utf8), completion: { [weak self] (result, json) in
-                guard result.success else {
-                    self?.handleError(result.error)
-                    return
-                }
-                self?.handleSuccess("Push Notification Delivered")
-            })
+            let bodyStringLiteral = "{\"where\":{\"user\":{\"$inQuery\":{\"className\":\"_User\",\"where\":{\"objectId\":{\"$in\":\(userIds)}}}}},\"data\":{\"title\":\"\(title)\",\"alert\":\"\(message)\"}}"
+            
+            let body = JSON(parseJSON: bodyStringLiteral)
+            
+            do {
+                print(body)
+                let data = try body.rawData()
+                Parse.shared.push(payload: data, completion: { [weak self] result, json in
+                    guard result.success else {
+                        self?.handleError(result.error)
+                        return
+                    }
+                    self?.handleSuccess("Push Notification Delivered")
+                })
+            } catch let error {
+                self.handleError(error.localizedDescription)
+            }
         })
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         alert.addAction(saveAction)
-        alert.addTextField { $0.placeholder = "Payload Message" }
+        alert.addTextField { $0.placeholder = "Title" }
+        alert.addTextField { $0.placeholder = "Message" }
         present(alert, animated: true, completion: nil)
     }
     

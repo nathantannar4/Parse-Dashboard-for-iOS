@@ -171,20 +171,43 @@ class ObjectViewController: PFTableViewController {
         
         let saveAction = UIAlertAction(title: "Send", style: .default, handler: { _ in
             
-            guard let message = alert.textFields?.first?.text else { return }
-            let body = "{\"where\":{\"user\":{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":\"\(self.object.id)\"}},\"data\":{\"title\":\"Message from Server\",\"alert\":\"\(message)\"}}"
-            Parse.shared.post("/push", data: body.data(using: .utf8), completion: { [weak self] (result, json) in
-                guard result.success else {
-                    self?.handleError(result.error)
-                    return
-                }
-                self?.handleSuccess("Push Notification Delivered")
-            })
+            guard let title = alert.textFields?.first?.text, let message = alert.textFields?.last?.text else { return }
+            
+            var user = JSON()
+            user["__type"].string = "Pointer"
+            user["className"].string = "_User"
+            user["objectId"].string = self.object.id
+            
+            var data = JSON()
+            data["title"].string = title
+            data["alert"].string = message
+            
+            var query = JSON()
+            query["user"] = user
+            
+            var body = JSON()
+            body["where"] = query
+            body["data"] = data
+   
+            do {
+                print(body)
+                let data = try body.rawData()
+                Parse.shared.push(payload: data, completion: { [weak self] result, json in
+                    guard result.success else {
+                        self?.handleError(result.error)
+                        return
+                    }
+                    self?.handleSuccess("Push Notification Delivered")
+                })
+            } catch let error {
+                self.handleError(error.localizedDescription)
+            }
         })
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         alert.addAction(saveAction)
-        alert.addTextField { $0.placeholder = "Payload Message" }
+        alert.addTextField { $0.placeholder = "Title" }
+        alert.addTextField { $0.placeholder = "Message" }
         present(alert, animated: true, completion: nil)
     }
     

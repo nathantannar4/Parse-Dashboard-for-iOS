@@ -301,6 +301,49 @@ class Parse {
         }.resume()
     }
     
+    func push(payload: Data, completion: @escaping PFCompletionBlock) {
+        
+        guard UIApplication.shared.isConnectedToNetwork else {
+            return completion((false, "Network Connection Unavailable"), nil)
+        }
+        
+        guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + "/push") else {
+            return completion((false, "Invalid Server URL"), nil)
+        }
+        
+        var request = PFRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = payload
+        URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
+            
+            guard let data = data, error == nil else {
+                DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
+                return
+            }
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject] else { return }
+                if let error = json["error"] as? String {
+                    
+                    DispatchQueue.main.sync { completion((false, error), nil) }
+                    
+                } else {
+                    if let code = json["code"] as? Int, code == 1 {
+                        
+                        DispatchQueue.main.sync { completion((false, json["message"] as? String), json) }
+                        
+                    } else {
+                        
+                        let result = json["result"] as? Bool ?? true
+                        DispatchQueue.main.sync { completion((result, nil), json) }
+                        
+                    }
+                }
+            } catch _ {
+                DispatchQueue.main.sync { completion((false, "Push failed. HTTPS may be required"), nil) }
+            }
+            }.resume()
+    }
+    
     // MARK: - Methods [Private]
     
     private func PFRequest(url: URL) -> URLRequest {
