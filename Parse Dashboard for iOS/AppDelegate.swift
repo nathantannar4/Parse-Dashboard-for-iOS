@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         config.name = (url.host ?? "") + url.path
         config.applicationId = url.user ?? String()
         config.masterKey = url.password ?? String()
-        var serverUrl = "http://" + (url.host ?? String())
+        var serverUrl = "https://" + (url.host ?? String()) // Assume https to enforce security
         if let port = url.port {
             serverUrl.append(":\(port)")
         }

@@ -30,7 +30,7 @@ import UIKit
 typealias PFResult = (success: Bool, error: String?)
 typealias PFCompletionBlock = (PFResult, [String:AnyObject]?) -> Void
 
-class Parse {
+class Parse: NSObject {
     
     // MARK: - Properties
     
@@ -50,7 +50,10 @@ class Parse {
     
     // MARK: - Initialization
     
-    private init() {} // Use `shared`
+    // Use `shared`
+    private override init() {
+        super.init()
+    }
     
     // MARK: - Methods [Public]
     
@@ -120,6 +123,7 @@ class Parse {
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
             return completion((false, "Invalid Server URL"), nil)
         }
+        
         
         var request = PFRequest(url: url)
         request.httpMethod = "POST"
@@ -341,7 +345,7 @@ class Parse {
             } catch _ {
                 DispatchQueue.main.sync { completion((false, "Push failed. HTTPS may be required"), nil) }
             }
-            }.resume()
+        }.resume()
     }
     
     // MARK: - Methods [Private]
@@ -358,3 +362,5 @@ class Parse {
     }
     
 }
+
+
