@@ -36,9 +36,32 @@ class FileViewController: UIViewController {
     
     private var schema: PFSchema
     private var key: String
-    private var url: URL
+    private var url: URL?
     private var filename: String
     private var objectId: String
+    
+    fileprivate var currentFileData: Data? {
+        didSet {
+            navigationItem.rightBarButtonItems?.first?.isEnabled = false
+            if let data = currentFileData {
+                if let image = UIImage(data: data) {
+                    imageView.image = image
+                    imageView.contentMode = .scaleAspectFill
+                    actionButton.isHidden = true
+                    navigationItem.rightBarButtonItems?.first?.isEnabled = true
+                } else {
+                    imageView.image = UIImage(named: "File")
+                    imageView.contentMode = .center
+                    actionButton.isHidden = false
+                    actionButton.setTitle("Open File", for: .normal)
+                }
+            } else {
+                imageView.image = UIImage(named: "File")
+                actionButton.isHidden = false
+                actionButton.setTitle("Download File", for: .normal)
+            }
+        }
+    }
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -47,9 +70,21 @@ class FileViewController: UIViewController {
         return imageView
     }()
     
+    lazy var actionButton: UIButton = { [weak self] in
+        let button = UIButton()
+        button.setTitle("Download File", for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
+        button.backgroundColor = .logoTint
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(accessFile), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Initialization
     
-    init(url: URL, filename: String, schema: PFSchema, key: String, objectId: String) {
+    init(url: URL?, filename: String, schema: PFSchema, key: String, objectId: String) {
         self.url = url
         self.filename = filename
         self.schema = schema
@@ -69,7 +104,6 @@ class FileViewController: UIViewController {
         
         setupView()
         setupNavigationBar()
-        loadDataFromUrl()
     }
     
     // MARK: - Setup
@@ -78,7 +112,11 @@ class FileViewController: UIViewController {
         
         view.backgroundColor = .darkPurpleAccent
         view.addSubview(imageView)
+        view.addSubview(actionButton)
         imageView.fillSuperview()
+        actionButton.anchorCenterXToSuperview()
+        actionButton.anchor(widthConstant: 44*3, heightConstant: 44)
+        actionButton.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 100).isActive = true
     }
     
     private func setupNavigationBar() {
@@ -92,27 +130,49 @@ class FileViewController: UIViewController {
             UIBarButtonItem(image: UIImage(named: "Save"),
                             style: .plain,
                             target: self,
-                            action: #selector(saveImage)),
+                            action: #selector(saveFileAsImage)),
             UIBarButtonItem(image: UIImage(named: "Upload"),
                             style: .plain,
                             target: self,
-                            action: #selector(presentImagePicker))
+                            action: #selector(uploadNewFile))
         ]
+        navigationItem.rightBarButtonItems?.first?.isEnabled = false
     }
     
     // MARK: - Data Refresh
     
+    @objc
+    func accessFile() {
+        
+        if currentFileData == nil {
+            loadDataFromUrl()
+        } else {
+            exportFile()
+        }
+    }
+    
     func loadDataFromUrl() {
-        DownloadWheel().downloadFile(from: url) { [weak self] (view, data, error) in
+        
+        guard let url = url else {
+            handleError("File does not exist")
+            return
+        }
+        actionButton.isHidden = true
+        let progressWheel = DownloadWheel()
+        print("Download: ", url)
+        progressWheel.downloadFile(from: url) { [weak self] (view, data, error) in
+            self?.currentFileData = data
             guard error == nil else {
-                Ping(text: error?.localizedDescription ?? "Error", style: .danger).show()
+                self?.handleError(error?.localizedDescription)
                 return
             }
-            if let data = data {
-                self?.imageView.image = UIImage(data: data)
-                self?.imageView.contentMode = .scaleAspectFill
-            }
+            view.currentState = .active
         }.present(self)
+    }
+    
+    func exportFile() {
+        
+        
     }
     
     // MARK: - User Actions
@@ -123,28 +183,91 @@ class FileViewController: UIViewController {
     }
     
     @objc
-    func saveImage() {
+    func uploadNewFile() {
         
-        guard let image = imageView.image else { return }
-        if image == UIImage(named: "File") { return }
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.configureView()
+        actionSheet.addAction(UIAlertAction(title: "Photo", style: .default, handler: { [weak self] _ in
+            self?.presentImagePicker()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Document", style: .default, handler: { [weak self] _ in
+            self?.presentDocumentPicker()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    // MARK: - Helpers
+    
+    func deleteOldFile() {
+        
+        if let appId = Parse.shared.currentConfiguration?.applicationId,
+           let urlString = url?.absoluteString.replacingOccurrences(of: "\(appId)/", with: ""),
+           let url = URL(string: urlString) {
+            // Delete the old file
+            Parse.shared.delete(url: url, completion: { _, _ in
+                Toast(text: "Deleted Old File").present(self)
+            })
+        }
+        
+        // Update the current url
+        Parse.shared.get("/classes/\(schema.name)/\(objectId)") { [weak self] result, json in
+            guard let json = json, let key = self?.key else { return }
+            let updatedObject = PFObject(json)
+            if let urlString = (updatedObject.value(forKey: key) as? [String:String])?["url"] {
+                self?.url = URL(string: urlString)
+            }
+        }
+    }
+    
+    @objc
+    func saveFileAsImage() {
+        
+        guard let data = currentFileData, let image = UIImage(data: data) else { return }
+        
         PHPhotoLibrary.shared()
             .performChanges( { PHAssetChangeRequest.creationRequestForAsset(from: image) }, completionHandler: { success, error in
             DispatchQueue.main.async {
                 if success {
                     // "Saved to camera roll"
-                    Toast(text: "Saved to camera roll").present(self, animated: true, duration: 3)
+                    self.handleSuccess("Saved to Camera Roll")
                 } else {
                     // "Error saving to camera roll"
-                    Ping(text: "Error saving to camera roll", style: .success).show(animated: true, duration: 3)
+                    self.handleError(error?.localizedDescription)
                 }
             }
         })
         
     }
     
-    // MARK: UIImagePickerControllerDelegate
+    func presentDocumentPicker() {
+        
+        if #available(iOS 11.0, *) {
+            let documentBrowser = UIDocumentBrowserViewController(forOpeningFilesWithContentTypes: nil)
+            documentBrowser.delegate = self
+            documentBrowser.allowsDocumentCreation = false
+            documentBrowser.allowsPickingMultipleItems = false
+            documentBrowser.additionalLeadingNavigationBarButtonItems = [
+                UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelDocumentPicker))
+            ]
+            present(documentBrowser, animated: false, completion: nil)
+        } else {
+            handleError("Sorry, this is only available on iOS 11")
+        }
+    }
     
     @objc
+    func cancelDocumentPicker() {
+        if #available(iOS 11.0, *) {
+            // Assume the presented controller is the UIDocumentBrowserViewController
+            if let documentBrowser = UIApplication.shared.presentedController as? UIDocumentBrowserViewController {
+                documentBrowser.dismiss(animated: false, completion: nil)
+            }
+        }
+    }
+    
+    // MARK: UIImagePickerControllerDelegate
+    
     func presentImagePicker() {
         
         let picker = DKImagePickerController()
@@ -152,22 +275,98 @@ class FileViewController: UIViewController {
         picker.singleSelect = true
         picker.autoCloseOnSingleSelect = false
         picker.didSelectAssets = { assets in
-            assets.first?.fetchOriginalImageWithCompleteBlock({ image, _ in
+            assets.first?.fetchOriginalImageWithCompleteBlock { [weak self] image, _ in
                 let imageData = image != nil ? UIImageJPEGRepresentation(image!, 1) : nil
-                Toast(text: "Uploading").present(self, animated: true, duration: 3)
-                Parse.shared.post(filename: self.filename , classname:  self.schema.name, key: self.key, objectId: self.objectId, imageData: imageData, completion: { [weak self] (result, json) in
-                    guard result.success else {
-                        Ping(text: result.error ?? "Upload Failed", style: .success).show(animated: true, duration: 3)
-                        return
-                    }
-                    self?.imageView.contentMode = .scaleAspectFill
-                    self?.imageView.image = image
-                })
-            })
+                self?.uploadFile(data: imageData!, for: "jpg")
+            }
         }
         picker.navigationBar.isTranslucent = false
-        picker.navigationBar.tintColor = .logoTint
+        picker.navigationBar.tintColor = .darkPurpleBackground
         present(picker, animated: true, completion: nil)
     }
 
+    // MARK: - Error Handling
+    
+    func handleError(_ error: String?) {
+        let error = error ?? "Unexpected Error"
+        print(error)
+        Ping(text: error, style: .danger).show(animated: true, duration: 3)
+    }
+    
+    func handleSuccess(_ message: String?) {
+        let message = message ?? "Success"
+        print(message)
+        Ping(text: message, style: .info).show(animated: true, duration: 3)
+    }
+}
+
+extension FileViewController: UIDocumentBrowserViewControllerDelegate {
+    
+    // MARK: Document Picker Helpers
+    
+    private func openFile(at url: URL, completion: @escaping (Bool)->Void) {
+        
+        let file = File(fileURL: url)
+        file.open { [weak self] success in
+            completion(success)
+            if success {
+                guard let data = FileManager.default.contents(atPath: file.fileURL.path) else {
+                    self?.handleError("Sorry, access to that file is unavailable")
+                    return
+                }
+                let fileType = url.absoluteString.components(separatedBy: ".").last!.lowercased()
+                self?.uploadFile(data: data, for: fileType)
+            } else {
+                self?.handleError("Failed to open file")
+            }
+        }
+    }
+    
+    private func uploadFile(data: Data, for fileType: String) {
+        
+        Toast(text: "Uploading").present(self, animated: true, duration: 1)
+        Parse.shared.post(filename: self.filename , classname:  self.schema.name, key: self.key,
+                          objectId: self.objectId, data: data, fileType: fileType, contentType: "application/\(fileType)",
+                          completion: { [weak self] (result, json) in
+            guard result.success else {
+                self?.handleError(result.error)
+                return
+            }
+            self?.handleSuccess("application/\(fileType) File Uploaded")
+            self?.currentFileData = data
+            self?.deleteOldFile()
+        })
+    }
+    
+    // MARK: UIDocumentBrowserViewControllerDelegate Helpers
+    
+    @available(iOS 11.0, *)
+    func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentURLs documentURLs: [URL]) {
+
+        guard let url = documentURLs.first else { return }
+        openFile(at: url) { success in
+            if success {
+                controller.dismiss(animated: false, completion: nil)
+            }
+        }
+    }
+    
+    @available(iOS 11.0, *)
+    func documentBrowser(_ controller: UIDocumentBrowserViewController, didImportDocumentAt sourceURL: URL, toDestinationURL destinationURL: URL) {
+        openFile(at: destinationURL) { success in
+            if success {
+                controller.dismiss(animated: false, completion: nil)
+            }
+        }
+    }
+    
+    @available(iOS 11.0, *)
+    func documentBrowser(_ controller: UIDocumentBrowserViewController, failedToImportDocumentAt documentURL: URL, error: Error?) {
+        self.handleError(error?.localizedDescription)
+    }
+    
+    @available(iOS 11.0, *)
+    func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
+        // Not currently supported, but having this silences warnings
+    }
 }

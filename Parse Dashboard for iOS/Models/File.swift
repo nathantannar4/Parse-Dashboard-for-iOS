@@ -1,5 +1,5 @@
 //
-//  PFTableViewController.swift
+//  File.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,28 +22,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 11/21/17.
+//  Created by Nathan Tannar on 9/5/17.
 //
 
 import UIKit
-import AlertHUDKit
 
-class PFTableViewController: UITableViewController {
+class File: UIDocument {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configure()
+    override func contents(forType typeName: String) throws -> Any {
+        // Encode your document with an instance of NSData or NSFileWrapper
+        return Data()
     }
     
-    func handleError(_ error: String?) {
-        let error = error ?? "Unexpected Error"
-        print(error)
-        Ping(text: error, style: .danger).show(animated: true, duration: 3)
-    }
-    
-    func handleSuccess(_ message: String?) {
-        let message = message ?? "Success"
-        print(message)
-        Ping(text: message, style: .info).show(animated: true, duration: 3)
+    override func load(fromContents contents: Any, ofType typeName: String?) throws {
+        // Load your document from contents
     }
 }
+
+

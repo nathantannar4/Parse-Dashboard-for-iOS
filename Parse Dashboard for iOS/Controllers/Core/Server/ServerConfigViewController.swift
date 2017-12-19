@@ -278,7 +278,7 @@ class ServerConfigViewController: FormViewController {
             })
         }
         picker.navigationBar.isTranslucent = false
-        picker.navigationBar.tintColor = .logoTint
+        picker.navigationBar.tintColor = .darkBlueBackground
         present(picker, animated: true, completion: nil)
     }
 }

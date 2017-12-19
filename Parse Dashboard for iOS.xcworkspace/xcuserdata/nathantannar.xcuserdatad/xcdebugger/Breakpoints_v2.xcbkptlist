@@ -531,5 +531,469 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.34643"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "presentDocumentPicker()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.347081"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "loadDataFromUrl()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.34758"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "loadDataFromUrl()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.348068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "loadDataFromUrl()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Parse_Dashboard_for_iOS.FileViewController.loadDataFromUrl() -&gt; ()"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/FileViewController.swift"
+                  timestampString = "535353892.851744"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "144">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (AlertHUDKit.DownloadWheel, Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Parse_Dashboard_for_iOS.FileViewController.loadDataFromUrl() -&gt; ()"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/FileViewController.swift"
+                  timestampString = "535353892.854003"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/Object/ObjectViewController.swift"
+            timestampString = "535355877.348525"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "665"
+            endingLineNumber = "665"
+            landmarkName = "tableView(_:editActionsForRowAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (__ObjC.UITableViewRowAction, Foundation.IndexPath) -&gt; () in Parse_Dashboard_for_iOS.ObjectViewController.tableView(__ObjC.UITableView, editActionsForRowAt: Foundation.IndexPath) -&gt; Swift.Optional&lt;Swift.Array&lt;__ObjC.UITableViewRowAction&gt;&gt;"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/Object/ObjectViewController.swift"
+                  timestampString = "535343704.860454"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "661"
+                  endingLineNumber = "661"
+                  offsetFromSymbolStart = "1740">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 ((success: Swift.Bool, error: Swift.Optional&lt;Swift.String&gt;), Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;&gt;) -&gt; () in closure #2 (__ObjC.UITableViewRowAction, Foundation.IndexPath) -&gt; () in Parse_Dashboard_for_iOS.ObjectViewController.tableView(__ObjC.UITableView, editActionsForRowAt: Foundation.IndexPath) -&gt; Swift.Optional&lt;Swift.Array&lt;__ObjC.UITableViewRowAction&gt;&gt;"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/Object/ObjectViewController.swift"
+                  timestampString = "535343704.862848"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "662"
+                  endingLineNumber = "662"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.348597"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "deleteOldFile()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.34902"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "deleteOldFile()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Parse_Dashboard_for_iOS.FileViewController.deleteFile() -&gt; ()"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/FileViewController.swift"
+                  timestampString = "535344923.004085"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "195"
+                  endingLineNumber = "195"
+                  offsetFromSymbolStart = "1516">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 ((success: Swift.Bool, error: Swift.Optional&lt;Swift.String&gt;), Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;&gt;) -&gt; () in Parse_Dashboard_for_iOS.FileViewController.deleteFile() -&gt; ()"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/FileViewController.swift"
+                  timestampString = "535344923.006041"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "196"
+                  endingLineNumber = "196"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.349402"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "deleteOldFile()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Parse_Dashboard_for_iOS.FileViewController.deleteOldFile() -&gt; ()"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/FileViewController.swift"
+                  timestampString = "535345720.784211"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "199"
+                  endingLineNumber = "199"
+                  offsetFromSymbolStart = "1628">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 ((success: Swift.Bool, error: Swift.Optional&lt;Swift.String&gt;), Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;&gt;) -&gt; () in Parse_Dashboard_for_iOS.FileViewController.deleteOldFile() -&gt; ()"
+                  moduleName = "Parse Dashboard for iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nathantannar/Documents/iOS/Parse-Dashboard-for-iOS/Parse%20Dashboard%20for%20iOS/Controllers/Core/FileViewController.swift"
+                  timestampString = "535345720.785786"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "199"
+                  endingLineNumber = "199"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.349767"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "deleteOldFile()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/Object/ObjectViewController.swift"
+            timestampString = "535355877.350136"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/Object/ObjectViewController.swift"
+            timestampString = "535355877.350194"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/Object/ObjectViewController.swift"
+            timestampString = "535355877.350246"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/Object/ObjectViewController.swift"
+            timestampString = "535355877.350296"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "361"
+            endingLineNumber = "361"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/Object/ObjectViewController.swift"
+            timestampString = "535355877.350346"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.350397"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "currentFileData"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.350712"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "documentBrowser(_:didPickDocumentURLs:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.351009"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "loadDataFromUrl()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.351305"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "loadDataFromUrl()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.351598"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "saveFileAsImage(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.351887"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "loadDataFromUrl()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Parse Dashboard for iOS/Controllers/Core/FileViewController.swift"
+            timestampString = "535355877.352168"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "loadDataFromUrl()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

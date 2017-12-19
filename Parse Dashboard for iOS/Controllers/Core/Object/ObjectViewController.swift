@@ -29,6 +29,7 @@
 
 import UIKit
 import SwiftyJSON
+import AlertHUDKit
 import RMDateSelectionViewController
 
 class ObjectViewController: PFTableViewController {
@@ -465,13 +466,13 @@ class ObjectViewController: PFTableViewController {
                             navVC.navigationBar.tintColor = .logoTint
                             navVC.modalPresentationStyle = .formSheet
                             self?.present(navVC, animated: true, completion: {
-                                imageVC.presentImagePicker()
+                                imageVC.uploadNewFile()
                             })
                         }
                     }
                 } else {
                     
-                    let imageVC = FileViewController(url: URL(string: "http://nathantannar.me")!,
+                    let imageVC = FileViewController(url: nil,
                                                      filename: String(),
                                                      schema: schema,
                                                      key: key,
@@ -481,7 +482,7 @@ class ObjectViewController: PFTableViewController {
                     navVC.navigationBar.tintColor = .logoTint
                     navVC.modalPresentationStyle = .formSheet
                     self?.present(navVC, animated: true, completion: {
-                        imageVC.presentImagePicker()
+                        imageVC.uploadNewFile()
                     })
                     
                 }
@@ -651,6 +652,20 @@ class ObjectViewController: PFTableViewController {
         editAction.backgroundColor = .logoTint
 
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
+            
+            let keys = self.object.keys
+            let value = self.object.value(forKey: keys[indexPath.row])
+            if let dict = value as? [String : AnyObject] {
+                if let type = dict["__type"] as? String {
+                    // We need to remove the appId
+                    guard let appId = Parse.shared.currentConfiguration?.applicationId else { return }
+                    
+                    if type == .file, let urlString = (dict["url"] as? String)?.replacingOccurrences(of: "\(appId)/", with: ""), let url = URL(string: urlString) {
+                        // Delete the file
+                        Parse.shared.delete(url: url, completion: { _, _ in })
+                    }
+                }
+            }
             
             let data = "{\"\(self.object.keys[indexPath.row])\":null}".data(using: .utf8)
             self.updateField(with: data)

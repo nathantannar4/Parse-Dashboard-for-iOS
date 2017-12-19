@@ -46,6 +46,7 @@
 		38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */; };
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
 		38B220501FDF4783002F12BD /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B2204F1FDF4782002F12BD /* Auth.swift */; };
+		38D23F9A1FE8D42700D42A2D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D23F991FE8D42700D42A2D /* File.swift */; };
 		38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */; };
 		38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */; };
 		38DE1CF81FC4BAB700C49508 /* QueryHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */; };
@@ -112,6 +113,7 @@
 		38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
 		38B2204F1FDF4782002F12BD /* Auth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		38D23F991FE8D42700D42A2D /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryHelpCell.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				38B2204F1FDF4782002F12BD /* Auth.swift */,
+				38D23F991FE8D42700D42A2D /* File.swift */,
 				3809B9ED1FE4D2A200D8DD2A /* DeepLink.swift */,
 				3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */,
 				3872C1D81FC3BCF600EBD87F /* Parse.swift */,
@@ -582,6 +585,7 @@
 				38DE1D101FC5453200C49508 /* ArrayViewController.swift in Sources */,
 				3872C20E1FC415AB00EBD87F /* SchemaCell.swift in Sources */,
 				38DE1D0C1FC5415000C49508 /* ServerDetailViewController.swift in Sources */,
+				38D23F9A1FE8D42700D42A2D /* File.swift in Sources */,
 				38F135C31FE7807400176C9A /* ObjectCreatorViewController.swift in Sources */,
 				382BFF4F1FDE13E10050FF15 /* ServerConfigViewController.swift in Sources */,
 				38DE1CF91FC4BAB700C49508 /* QueryInputCell.swift in Sources */,

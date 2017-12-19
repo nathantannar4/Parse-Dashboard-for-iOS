@@ -155,13 +155,17 @@ class Parse {
     }
     
     func delete(_ endpoint: String, completion: @escaping PFCompletionBlock) {
-    
-        guard UIApplication.shared.isConnectedToNetwork else {
-            return completion((false, "Network Connection Unavailable"), nil)
-        }
         
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
             return completion((false, "Invalid Server URL"), nil)
+        }
+        delete(url: url, completion: completion)
+    }
+    
+    func delete(url: URL, completion: @escaping PFCompletionBlock) {
+        
+        guard UIApplication.shared.isConnectedToNetwork else {
+            return completion((false, "Network Connection Unavailable"), nil)
         }
         
         var request = PFRequest(url: url)
@@ -189,21 +193,23 @@ class Parse {
         }.resume()
     }
 
-    func post(filename: String, classname: String, key: String, objectId: String, imageData: Data?, completion: @escaping PFCompletionBlock) {
+    func post(filename: String, classname: String, key: String,
+              objectId: String, data: Data?, fileType: String, contentType: String,
+              completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
             return completion((false, "Network Connection Unavailable"), nil)
         }
         
-        let name = key + ".jpg"
+        let name = key + "." + fileType
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + "/files/" + name) else {
             return completion((false, "Invalid Server URL"), nil)
         }
 
         var request = PFRequest(url: url)
-        request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
+        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        request.httpBody = imageData
+        request.httpBody = data
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {
@@ -224,7 +230,7 @@ class Parse {
                         
                     } else if let result = json?["result"] as? Bool, !result {
                         
-                        DispatchQueue.main.sync { completion((false, "Image Upload Failed"), json) }
+                        DispatchQueue.main.sync { completion((false, "File Upload Failed"), json) }
                         
                     } else {
                         var file: [String : String] = [:]
@@ -298,6 +304,7 @@ class Parse {
     // MARK: - Methods [Private]
     
     private func PFRequest(url: URL) -> URLRequest {
+        print("Request: ", url)
         var request = URLRequest(url: url)
         let applicationId = currentConfiguration?.applicationId ?? ""
         let masterKey = currentConfiguration?.masterKey ?? ""
