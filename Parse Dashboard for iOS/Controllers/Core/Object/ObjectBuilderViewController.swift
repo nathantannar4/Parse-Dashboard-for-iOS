@@ -1,5 +1,5 @@
 //
-//  ObjectCreatorViewController.swift
+//  ObjectBuilderViewController.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -30,7 +30,7 @@ import AlertHUDKit
 import Former
 import SwiftyJSON
 
-class ObjectCreatorViewController: FormViewController {
+class ObjectBuilderViewController: FormViewController {
     
     // MARK: - Properties
     
@@ -150,6 +150,7 @@ class ObjectCreatorViewController: FormViewController {
         let dataTypePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Any>() {
                 $0.titleLabel.text = "Data Type"
                 $0.titleLabel.font = .boldSystemFont(ofSize: 15)
+                $0.displayLabel.textColor = .darkGray
             }.configure {
                 $0.pickerItems = types.map { return InlinePickerItem(title: $0) }
             }.onValueChanged { [weak self] item in
@@ -409,7 +410,7 @@ class ObjectCreatorViewController: FormViewController {
     
 }
 
-extension ObjectCreatorViewController: ObjectSelectorViewControllerDelegate {
+extension ObjectBuilderViewController: ObjectSelectorViewControllerDelegate {
     
     func didSelectObject(_ object: PFObject, for key: String) {
         

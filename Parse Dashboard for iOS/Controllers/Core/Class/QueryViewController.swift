@@ -108,12 +108,13 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Save"),
                                                            style: .plain,
                                                            target: self,
-                                                           action: #selector(self.didSaveQuery))
+                                                           action: #selector(didSaveQuery))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply",
                                                             style: .done,
                                                             target: self,
-                                                            action: #selector(self.didApplyQuery))
+                                                            action: #selector(didApplyQuery))
+        navigationItem.backBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
     }
     
     @objc
@@ -178,7 +179,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
         } else if section == 1 {
             return savedQueries.count
         } else if section == 2 {
-            return 2
+            return 3
         }
         return 0
     }
@@ -207,6 +208,15 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
                 
             } else if indexPath.row == 1 {
                 
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+                cell.textLabel?.text = "Query Builder"
+                cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+                cell.detailTextLabel?.text = "A graphical way to make a basic query"
+                cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12, weight: .light)
+                cell.accessoryType = .disclosureIndicator
+                return cell
+                
+            } else if indexPath.row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: QueryHelpCell.reuseIdentifier, for: indexPath) as! QueryHelpCell
                 cell.leftText = ["$lt", "$lte", "$gt", "$gte\n", "$ne", "$in", "$inQuery\n", "$nin", "$exists", "$select\n", "$dontSelect\n", "$all\n", "$regex", "order", "limit\n\n", "skip\n", "keys\n", "include\n", "&"]
                 cell.rightText = ["Less Than", "Less Than Or Equal To", "Greater Than", "Greater Than Or Equal To", "Not Equal To", "Contained In", "Contained in query results", "Not Contained in", "A value is set for the key", "Match key value to query result", "Ignore keys with value equal to query result", "Contains all of the given values", "Match regular expression", "Specify a field to sort by", "Limit the number of objects returned by the query", "Use with limit to paginate through results", "Restrict the fields returned by the query", "Use on Pointer columns to return the full object", "Append constraints"]
@@ -239,6 +249,11 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
             
         } else if indexPath.section == 0 {
             toggleSearchKey(at: indexPath)
+        } else if indexPath.section == 2 && indexPath.row == 1 {
+            let builder = QueryBuilderViewController(for: keys)
+            builder.delegate = self
+            builder.schema = schema
+            navigationController?.pushViewController(builder, animated: true)
         }
     }
     
@@ -314,5 +329,13 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
             return false
         }
         return true
+    }
+}
+
+extension QueryViewController: QueryBuilderDelegate {
+    
+    func query(didChangeWith query: String) {
+        self.query = query
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
     }
 }

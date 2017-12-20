@@ -223,7 +223,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     @objc
     func addObject() {
         
-        let viewController = ObjectCreatorViewController(for: schema)
+        let viewController = ObjectBuilderViewController(for: schema)
         let nav = UINavigationController(rootViewController: viewController)
         present(nav, animated: true, completion: nil)
     }

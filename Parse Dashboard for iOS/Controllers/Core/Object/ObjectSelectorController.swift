@@ -59,7 +59,7 @@ class ObjectSelectorViewController: ClassViewController {
         super.willMove(toParentViewController: parent)
         if (parent as? ObjectViewController) != nil {
             configure()
-        } else if (parent as? ObjectCreatorViewController) != nil {
+        } else if (parent as? ObjectBuilderViewController) != nil {
             navigationController?.navigationBar.tintColor = .white
             navigationController?.navigationBar.barTintColor = .darkPurpleBackground
             navigationController?.navigationBar.titleTextAttributes = [

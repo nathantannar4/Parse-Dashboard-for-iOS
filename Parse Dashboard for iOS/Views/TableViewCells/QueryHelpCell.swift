@@ -59,7 +59,7 @@ class QueryHelpCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Help"
+        label.text = "RESTful Query Help"
         label.textColor = .logoTint
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
