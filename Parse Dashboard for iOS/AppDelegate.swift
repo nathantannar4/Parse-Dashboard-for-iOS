@@ -58,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Alert.Defaults.Color.Warning = .darkPurpleBackground
         Alert.Defaults.Color.Danger = .red
         Alert.Defaults.Color.Success = .logoTint
+        Alert.Defaults.Color.Warning = .logoTint
         Alert.Defaults.Font.Info = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Danger = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Success = .boldSystemFont(ofSize: 14)

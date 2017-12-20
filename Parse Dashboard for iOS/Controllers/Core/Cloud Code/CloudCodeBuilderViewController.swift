@@ -84,7 +84,6 @@ class CloudCodeBuilderViewController: FormViewController {
     
     private func setupNavigationBar() {
         
-        title = "New Cloud Function"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Save"),
                                                             style: .plain,
                                                             target: self,
@@ -114,19 +113,25 @@ class CloudCodeBuilderViewController: FormViewController {
                 $0.titleLabel.font = .boldSystemFont(ofSize: 15)
                 $0.displayLabel.textColor = .darkGray
             }.configure {
-                $0.pickerItems = ["/functions", "/jobs"].map { return InlinePickerItem(title: $0) }
-                $0.selectedRow = cloudCode.isFunction ? 0 : 1
+                if cloudCode.isFunction {
+                    title = "Cloud Function"
+                    $0.pickerItems = ["/functions", "/jobs"].map { return InlinePickerItem(title: $0) }
+                } else {
+                    title = "Cloud Function"
+                    $0.pickerItems = ["/jobs", "/functions"].map { return InlinePickerItem(title: $0) }
+                }
             }.onValueChanged { [weak self] item in
                 // Update
                 if item.title == "/functions" {
-                    self?.title = "New Cloud Function"
+                    self?.title = "Cloud Function"
                     self?.cloudCode.isFunction = true
                 } else {
-                    self?.title = "New Background Job"
+                    self?.title = "Background Job"
                     self?.cloudCode.isFunction = false
                 }
                 self?.cloudCode.endpoint = item.title
         }
+        endpointRow.update()
         
         let nameRow = TextFieldRowFormer<FormerFieldCell>(instantiateType: .Nib(nibName: "FormerFieldCell")) { [weak self] in
                 $0.titleLabel.text = "Name"

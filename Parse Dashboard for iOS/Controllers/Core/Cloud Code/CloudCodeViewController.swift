@@ -112,7 +112,7 @@ class CloudCodeViewController: PFTableViewController {
     
     private func setupNavigationBar() {
         
-        title = "Cloud Code Console"
+        title = "Cloud Code Executor"
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = .darkPurpleBackground
         navigationController?.navigationBar.barTintColor = UIColor(white: 0.1, alpha: 1)
@@ -172,9 +172,7 @@ class CloudCodeViewController: PFTableViewController {
         
         if section == 0 && isFunctions {
             header.textLabel?.text = "Cloud Functions"
-        } else if section == 0 {
-            header.textLabel?.text = "Background Jobs"
-        } else if section == 1 {
+        } else {
             header.textLabel?.text = "Background Jobs"
         }
         return header
@@ -188,13 +186,12 @@ class CloudCodeViewController: PFTableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        switch section {
-        case 0:
+        let isFunctions = functions.count > 0
+        
+        if section == 0 && isFunctions {
             return functions.count
-        case 1:
+        } else {
             return jobs.count
-        default:
-            fatalError()
         }
     }
     
@@ -206,17 +203,16 @@ class CloudCodeViewController: PFTableViewController {
         cell.detailTextLabel?.font = .systemFont(ofSize: 14)
         cell.detailTextLabel?.numberOfLines = 0
         
-        switch indexPath.section {
-        case 0:
+        let isFunctions = functions.count > 0
+        
+        if indexPath.section == 0 && isFunctions {
             cell.textLabel?.text = functions[indexPath.row].name
             cell.detailTextLabel?.text = functions[indexPath.row].body
             return cell
-        case 1:
+        } else {
             cell.textLabel?.text = jobs[indexPath.row].name
             cell.detailTextLabel?.text = jobs[indexPath.row].body
             return cell
-        default:
-            fatalError()
         }
     }
     
@@ -250,12 +246,14 @@ class CloudCodeViewController: PFTableViewController {
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        editAction.backgroundColor = .darkPurpleBackground
+        editAction.backgroundColor = .darkPurpleAccent
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { _, indexPath in
             
             guard let context = self.context else { return }
             do {
-                if indexPath.section == 0 {
+                let isFunctions = self.functions.count > 0
+                
+                if indexPath.section == 0 && isFunctions {
                     let function = self.functions[indexPath.row]
                     context.delete(function)
                     try context.save()
