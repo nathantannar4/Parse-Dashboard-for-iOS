@@ -215,13 +215,16 @@ class SchemaViewController: PFCollectionViewController {
     }
     
     func showSchemaDetails(at indexPath: IndexPath) {
-        let viewController = SchemaDetailViewController(schemas[indexPath.row])
+        let schema = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
+        let viewController = SchemaDetailViewController(schema)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     func promptDeleteSchema(at indexPath: IndexPath) {
         
-        let alert = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+        let schema = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
+        
+        let alert = UIAlertController(title: "Delete `\(schema.name)`?", message: "This cannot be undone", preferredStyle: .alert)
         alert.configureView()
         
         let actions = [
@@ -237,12 +240,25 @@ class SchemaViewController: PFCollectionViewController {
     
     func deleteSchema(at indexPath: IndexPath) {
         
-        let classname = schemas[indexPath.row].name
-        Parse.shared.delete("/schemas/" + classname) { [weak self] (result, json) in
+        let schema = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
+        Parse.shared.delete("/schemas/" + schema.name) { [weak self] (result, json) in
             if result.success {
-                self?.handleSuccess("Class Deleted")
-                self?.schemas.remove(at: indexPath.row)
-                self?.collectionView?.deleteItems(at: [indexPath])
+                self?.handleSuccess("Class `\(schema.name)` deleted")
+                if self?.isFiltering() == true {
+                    self?.filteredSchemas.remove(at: indexPath.row)
+                    if self?.filteredSchemas.count == 0 {
+                        self?.collectionView?.deleteSections([indexPath.section])
+                    } else {
+                        self?.collectionView?.deleteItems(at: [indexPath])
+                    }
+                } else {
+                    self?.schemas.remove(at: indexPath.row)
+                    if self?.schemas.count == 0 {
+                        self?.collectionView?.deleteSections([indexPath.section])
+                    } else {
+                        self?.collectionView?.deleteItems(at: [indexPath])
+                    }
+                }
             } else {
                 let errorCode = json?["code"] as? Int ?? -1
                 if errorCode == 255 {
@@ -257,25 +273,29 @@ class SchemaViewController: PFCollectionViewController {
         
     func deleteAllObjectsInSchema(at indexPath: IndexPath) {
         
-        let alert = UIAlertController(title: "Warning: Class contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
+        let schema = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
+        
+        let alert = UIAlertController(title: "WARNING: `\(schema.name)` contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
         alert.configureView()
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             
-            guard let classname = self?.schemas[indexPath.row].name else { return }
-            self?.handleSuccess("Deleting objects in \(classname)")
-            Parse.shared.get("/classes/" + classname, completion: { [weak self] (result, json) in
+            Parse.shared.get("/classes/" + schema.name, completion: { [weak self] (result, json) in
                 
                 guard result.success, let results = json?["results"] as? [[String: AnyObject]] else {
                     self?.handleError(result.error)
                     return
                 }
+                self?.handleSuccess("Deleting objects in `\(schema.name)`")
                 for result in results {
-                    if let id = result["objectId"] as? String {
-                        Parse.shared.delete("/classes/\(classname)/\(id)", completion: { _,_  in })
+                    if let id = result[.objectId] as? String {
+                        Parse.shared.delete("/classes/\(schema.name)/\(id)", completion: { _,_  in })
                     }
                 }
-                self?.deleteSchema(at: indexPath) // Retry to delete the schema
+                // Retry to delete the schema after a delay
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+                    self?.deleteSchema(at: indexPath)
+                })
             })
         })
         

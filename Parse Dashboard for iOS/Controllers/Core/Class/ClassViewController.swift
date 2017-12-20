@@ -223,7 +223,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     @objc
     func addObject() {
         
-        let viewController = ObjectCreatorViewController(for: schema)
+        let viewController = ObjectBuilderViewController(for: schema)
         let nav = UINavigationController(rootViewController: viewController)
         present(nav, animated: true, completion: nil)
     }
@@ -303,24 +303,35 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         
     func deleteObject(at indexPath: IndexPath) {
         
-        let alert = UIAlertController(title: "Are you sure?", message: "This cannot be undone", preferredStyle: .alert)
+        let object = isFiltering() ? filteredObjects[indexPath.row] : objects[indexPath.row]
+        
+        let alert = UIAlertController(title: "Delete object \(object.id)?", message: "This cannot be undone", preferredStyle: .alert)
         alert.configureView()
         
         let actions = [
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 
-                guard let classname = self?.schema.name, let id = self?.objects[indexPath.row].id else { return }
-                Parse.shared.delete("/classes/\(classname)/\(id)", completion: { [weak self] (result, json) in
+                guard let classname = self?.schema.name else { return }
+                Parse.shared.delete("/classes/\(classname)/\(object.id)", completion: { [weak self] (result, json) in
                     guard result.success else {
                         self?.handleError(result.error)
                         return
                     }
-                    self?.handleSuccess("Object \(id) deleted")
-                    self?.objects.remove(at: indexPath.row)
-                    if self?.objects.count == 0 {
-                        self?.collectionView?.deleteSections([0])
+                    self?.handleSuccess("Object \(object.id) deleted")
+                    if self?.isFiltering() == true {
+                        self?.filteredObjects.remove(at: indexPath.row)
+                        if self?.filteredObjects.count == 0 {
+                            self?.collectionView?.deleteSections([0])
+                        } else {
+                            self?.collectionView?.deleteItems(at: [indexPath])
+                        }
                     } else {
-                        self?.collectionView?.deleteItems(at: [indexPath])
+                        self?.objects.remove(at: indexPath.row)
+                        if self?.objects.count == 0 {
+                            self?.collectionView?.deleteSections([0])
+                        } else {
+                            self?.collectionView?.deleteItems(at: [indexPath])
+                        }
                     }
                 })
             }),
