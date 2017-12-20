@@ -3,31 +3,42 @@
 # Parse Dashboard for iOS
 > Updated to Swift 4, iOS 11 and iPhone X Support
 
-#### A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.
+###### A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.
 
-## Features
+## Feature Breakdown
 
-- Complete Parse Server database modification
-	- Add/Delete Schemas
-	- Add/Edit/Delete Objects
-	- Upload/Delete Files
-- View PDFs
-- Send targeted Push Notifications 
+- Create/Delete Classes
+	- View class details 
+- Create/Edit/Delete Objects
+	- Create objects using an intuitive form
+	- Edit pointers
+	- View relations
+- Query Objects
+	- Save a query for later execution 
+	- Easily search by selecting a search key
+	- Create and execute complex queries via the RESTful syntax
+	- Create basic queries with an intuitive form
+- File management
+ 	- Dedicated PDF and image viewer
+	- Upload files from Dropbox/Google Drive/Onebox/etc.
+	- Download and export files 
+- Send push notifications to a user or installation query
+- View Parse Server's configuration info
 - Force Touch Shortcuts
-- Easy configuration import with a custom URL scheme:
-	- ```parsedashboard://<applicationId>:\n<masterKey>@<url>:<port>/<path>```
+- Registered URL scheme for easy import/export of configurations
+	- ```parsedashboard://<applicationId>:<masterKey>@<url>:<port>/<path>```
 
 ## Screenshots
 
 <img src="Screenshots/A.png?raw=true" width="250" height="542"> <img src="Screenshots/B.png?raw=true" width="250" height="542"> <img src="Screenshots/C.png?raw=true" width="250" height="542">
 
-<img src="Screenshots/C.5.png?raw=true" width="250" height="542"> <img src="Screenshots/D.png?raw=true" width="250" height="542"> <img src="Screenshots/E.png?raw=true" width="250" height="542">
+<img src="Screenshots/D.png?raw=true" width="250" height="542"> <img src="Screenshots/E.png?raw=true" width="250" height="542"> <img src="Screenshots/F.png?raw=true" width="250" height="542"> 
 
-<img src="Screenshots/F.png?raw=true" width="250" height="542"> <img src="Screenshots/G.png?raw=true" width="250" height="542"> <img src="Screenshots/H.png?raw=true" width="250" height="542">
+<img src="Screenshots/G.png?raw=true" width="250" height="542"> <img src="Screenshots/H.png?raw=true" width="250" height="542"> <img src="Screenshots/I.png?raw=true" width="250" height="542"> 
 
-<img src="Screenshots/I.png?raw=true" width="250" height="542"> <img src="Screenshots/J.png?raw=true" width="250" height="542"> <img src="Screenshots/K.png?raw=true" width="250" height="542">
+<img src="Screenshots/J.png?raw=true" width="250" height="542"> <img src="Screenshots/K.png?raw=true" width="250" height="542"> <img src="Screenshots/L.png?raw=true" width="250" height="542"> 
 
-<img src="Screenshots/L.png?raw=true" width="250" height="542"> <img src="Screenshots/M.png?raw=true" width="250" height="542"> <img src="Screenshots/N.png?raw=true" width="250" height="542">
+<img src="Screenshots/M.png?raw=true" width="250" height="542"> <img src="Screenshots/N.png?raw=true" width="250" height="542"> <img src="Screenshots/O.png?raw=true" width="250" height="542">
 
 
 ## Author

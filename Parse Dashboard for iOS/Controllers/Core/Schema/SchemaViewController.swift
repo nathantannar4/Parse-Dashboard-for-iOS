@@ -224,7 +224,7 @@ class SchemaViewController: PFCollectionViewController {
         
         let schema = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
         
-        let alert = UIAlertController(title: "Delete `\(schema.name)`?", message: "This cannot be undone", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete \(schema.name)?", message: "This cannot be undone", preferredStyle: .alert)
         alert.configureView()
         
         let actions = [
@@ -275,7 +275,7 @@ class SchemaViewController: PFCollectionViewController {
         
         let schema = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
         
-        let alert = UIAlertController(title: "WARNING: `\(schema.name)` contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "WARNING: \(schema.name) contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
         alert.configureView()
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
@@ -286,7 +286,7 @@ class SchemaViewController: PFCollectionViewController {
                     self?.handleError(result.error)
                     return
                 }
-                self?.handleSuccess("Deleting objects in `\(schema.name)`")
+                self?.handleSuccess("Deleting objects in \(schema.name)")
                 for result in results {
                     if let id = result[.objectId] as? String {
                         Parse.shared.delete("/classes/\(schema.name)/\(id)", completion: { _,_  in })

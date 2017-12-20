@@ -91,17 +91,17 @@ class ObjectBuilderViewController: FormViewController {
     }
     
     private func setupNavigationBar() {
-        title = "New `\(schema.name)` Object"
+        title = "New Object"
         navigationController?.navigationBar.barTintColor = .darkPurpleBackground
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16),
+            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18),
             NSAttributedStringKey.foregroundColor : UIColor.white
         ]
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
             navigationController?.navigationBar.largeTitleTextAttributes = [
-                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 20),
+                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 24),
                 NSAttributedStringKey.foregroundColor : UIColor.white
             ]
             navigationItem.hidesSearchBarWhenScrolling = false

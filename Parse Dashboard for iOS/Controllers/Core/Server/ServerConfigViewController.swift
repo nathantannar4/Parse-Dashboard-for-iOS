@@ -167,7 +167,7 @@ class ServerConfigViewController: FormViewController {
             $0.titleLabel.text = "Server URL"
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
-                $0.placeholder = "http://<url>:<port>/<path>"
+                $0.placeholder = "https://<url>:<port>/<path>"
                 $0.text = self.serverUrl
             }.onTextChanged { [weak self] in
                 self?.serverUrl = $0

@@ -40,6 +40,8 @@ class ObjectSelectorViewController: ClassViewController {
     
     weak var delegate: ObjectSelectorViewControllerDelegate?
     
+    var previousViewController: UIViewController?
+    
     // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +49,7 @@ class ObjectSelectorViewController: ClassViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // Don't Call Super
         configure()
         setupNavigationBar()
     }
@@ -57,20 +60,16 @@ class ObjectSelectorViewController: ClassViewController {
     
     override func willMove(toParentViewController parent: UIViewController?) {
         super.willMove(toParentViewController: parent)
-        if (parent as? ObjectViewController) != nil {
-            configure()
-        } else if (parent as? ObjectBuilderViewController) != nil {
-            navigationController?.navigationBar.tintColor = .white
-            navigationController?.navigationBar.barTintColor = .darkPurpleBackground
-            navigationController?.navigationBar.titleTextAttributes = [
-                NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16),
-                NSAttributedStringKey.foregroundColor : UIColor.white
-            ]
-            if #available(iOS 11.0, *) {
-                navigationController?.navigationBar.largeTitleTextAttributes = [
-                    NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 20),
-                    NSAttributedStringKey.foregroundColor : UIColor.white
-                ]
+        
+        if let controllers = (parent as? UINavigationController)?.viewControllers {
+            previousViewController = controllers[controllers.count - 2]
+        } else {
+            if previousViewController is ObjectViewController {
+                configure()
+            } else if previousViewController is ObjectBuilderViewController {
+                UIApplication.shared.statusBarStyle = .lightContent
+                navigationController?.navigationBar.tintColor = .white
+                navigationController?.navigationBar.barTintColor = .darkPurpleBackground
             }
         }
     }
