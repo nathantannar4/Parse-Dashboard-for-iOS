@@ -48,6 +48,9 @@
 		38AF52001FDF30ED00FC4B40 /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */; };
 		38B220501FDF4783002F12BD /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B2204F1FDF4782002F12BD /* Auth.swift */; };
 		38D23F9A1FE8D42700D42A2D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D23F991FE8D42700D42A2D /* File.swift */; };
+		38D5E9571FEA4D5600AB0902 /* CloudCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9561FEA4D5600AB0902 /* CloudCodeViewController.swift */; };
+		38D5E9591FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9581FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift */; };
+		38D5E9611FEA61C900AB0902 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9601FEA61C900AB0902 /* ConsoleView.swift */; };
 		38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */; };
 		38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */; };
 		38DE1CF81FC4BAB700C49508 /* QueryHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */; };
@@ -116,6 +119,9 @@
 		38AF51FF1FDF30ED00FC4B40 /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
 		38B2204F1FDF4782002F12BD /* Auth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		38D23F991FE8D42700D42A2D /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		38D5E9561FEA4D5600AB0902 /* CloudCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudCodeViewController.swift; sourceTree = "<group>"; };
+		38D5E9581FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudCodeBuilderViewController.swift; sourceTree = "<group>"; };
+		38D5E9601FEA61C900AB0902 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryHelpCell.swift; sourceTree = "<group>"; };
@@ -169,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				38856BA71FE84AB600349828 /* Server */,
+				38D5E9551FEA4D2200AB0902 /* Cloud Code */,
 				38856BA81FE84AC300349828 /* Schema */,
 				38856BA91FE84AD200349828 /* Class */,
 				38856BAA1FE84ADA00349828 /* Object */,
@@ -303,6 +310,7 @@
 				382BFF571FDE15BF0050FF15 /* FormerCells */,
 				38DE1CFD1FC4C30E00C49508 /* InputTextView.swift */,
 				382BFF511FDE15220050FF15 /* FormerInputAccessoryView.swift */,
+				38D5E9601FEA61C900AB0902 /* ConsoleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -323,8 +331,8 @@
 		38856BA71FE84AB600349828 /* Server */ = {
 			isa = PBXGroup;
 			children = (
-				382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */,
 				3872C1EA1FC3C49900EBD87F /* ServersViewController.swift */,
+				382BFF4E1FDE13E10050FF15 /* ServerConfigViewController.swift */,
 				38DE1D0B1FC5415000C49508 /* ServerDetailViewController.swift */,
 			);
 			path = Server;
@@ -368,6 +376,15 @@
 				38AF51FD1FDF300200FC4B40 /* SettingsViewController.swift */,
 			);
 			path = "Info-About-Settings";
+			sourceTree = "<group>";
+		};
+		38D5E9551FEA4D2200AB0902 /* Cloud Code */ = {
+			isa = PBXGroup;
+			children = (
+				38D5E9561FEA4D5600AB0902 /* CloudCodeViewController.swift */,
+				38D5E9581FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift */,
+			);
+			path = "Cloud Code";
 			sourceTree = "<group>";
 		};
 		3E82BA79F155D6BA924309A9 /* Frameworks */ = {
@@ -561,6 +578,7 @@
 				3852AA7B1FDCC7E000D7B009 /* IAPHandler.swift in Sources */,
 				3872C1EB1FC3C49900EBD87F /* ServersViewController.swift in Sources */,
 				3852AA791FDCC7D900D7B009 /* SupportViewController.swift in Sources */,
+				38D5E9571FEA4D5600AB0902 /* CloudCodeViewController.swift in Sources */,
 				38DE1D021FC511EF00C49508 /* AppInfoViewController.swift in Sources */,
 				38DE1D041FC5149B00C49508 /* Date+Extensions.swift in Sources */,
 				38AF51FE1FDF300200FC4B40 /* SettingsViewController.swift in Sources */,
@@ -580,6 +598,7 @@
 				380EB3891FDE3AB900AB4AB3 /* TutorialViewController.swift in Sources */,
 				3872C1E91FC3C42F00EBD87F /* Parse_Dashboard_for_iOS.xcdatamodeld in Sources */,
 				38AF51FC1FDF2F6B00FC4B40 /* MoreViewController.swift in Sources */,
+				38D5E9611FEA61C900AB0902 /* ConsoleView.swift in Sources */,
 				3872C1EF1FC3C84E00EBD87F /* ServerCell.swift in Sources */,
 				382BFF561FDE15BC0050FF15 /* FormerImageCell.swift in Sources */,
 				38E64ABF1FE7A6D0006949B7 /* ObjectSelectorController.swift in Sources */,
@@ -595,6 +614,7 @@
 				38F135C31FE7807400176C9A /* ObjectBuilderViewController.swift in Sources */,
 				382BFF4F1FDE13E10050FF15 /* ServerConfigViewController.swift in Sources */,
 				38DE1CF91FC4BAB700C49508 /* QueryInputCell.swift in Sources */,
+				38D5E9591FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

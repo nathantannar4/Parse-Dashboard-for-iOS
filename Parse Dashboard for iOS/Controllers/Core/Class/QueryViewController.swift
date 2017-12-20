@@ -45,6 +45,10 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     
     var savedQueries: [Query] = []
     
+    private var context: NSManagedObjectContext? {
+        return (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
+    }
+    
     // MARK: - Initialization
     
     init(_ schma: PFSchema, searchKey: String, query: String) {
@@ -72,14 +76,12 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     // MARK: - Data Storage
     
     private func getSavedQueries() {
-        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
-            return
-        }
+        guard let context = context else { return }
         let request: NSFetchRequest<Query> = Query.fetchRequest()
         do {
             savedQueries = try context.fetch(request)
         } catch let error {
-            print(error.localizedDescription)
+            self.handleError(error.localizedDescription)
         }
     }
     
@@ -119,7 +121,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
     
     @objc
     func didSaveQuery() {
-        guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else { return }
+        guard let context = context else { return }
         let queryObject = Query(entity: Query.entity(), insertInto: context)
         queryObject.constraint = query
         queryObject.searchKey = searchKey
@@ -274,7 +276,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { _,_ in
             
-            guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else { return }
+            guard let context = self.context else { return }
             context.delete(self.savedQueries[indexPath.row])
             do {
                 try context.save()
@@ -282,7 +284,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
                 self.savedQueries.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
             } catch let error {
-                print(error.localizedDescription)
+                self.handleError(error.localizedDescription)
             }
         })
         

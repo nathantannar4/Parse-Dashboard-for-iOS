@@ -52,6 +52,17 @@ class SchemaViewController: PFCollectionViewController {
         handleRefresh()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: animated)
+        setupToolbar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(true, animated: animated)
+    }
+    
     // MARK: - Data Refresh
     
     @objc
@@ -93,7 +104,6 @@ class SchemaViewController: PFCollectionViewController {
     override func setupNavigationBar() {
         super.setupNavigationBar()
         
-        definesPresentationContext = true
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         }
@@ -107,6 +117,35 @@ class SchemaViewController: PFCollectionViewController {
                             action: #selector(showServerInfo))
         ]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Classes", style: .plain, target: nil, action: nil)
+    }
+    
+    private func setupToolbar() {
+        
+        navigationController?.toolbar.isTranslucent = false
+        navigationController?.toolbar.barTintColor = .white
+        var items = [UIBarButtonItem]()
+        items.append(
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        )
+        let codeItem: UIBarButtonItem = {
+            let contentView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+            label.text = "Execute Cloud Code"
+            label.textColor = .logoTint
+            label.font = UIFont.boldSystemFont(ofSize: 12)
+            label.textAlignment = .right
+            contentView.addSubview(label)
+            let imageView = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
+            imageView.image = UIImage(named: "CloudCode")?.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = .logoTint
+            imageView.contentMode = .scaleAspectFit
+            contentView.addSubview(imageView)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showCloudCodeController))
+            contentView.addGestureRecognizer(tapGesture)
+            return UIBarButtonItem(customView: contentView)
+        }()
+        items.append(codeItem)
+        toolbarItems = items
     }
     
     // MARK: - UICollectionViewDataSource
@@ -161,6 +200,14 @@ class SchemaViewController: PFCollectionViewController {
             navigationController.modalPresentationStyle = .formSheet
             self?.present(navigationController, animated: true, completion: nil)
         }
+    }
+    
+    @objc
+    func showCloudCodeController() {
+        
+        let navigationController = UINavigationController(rootViewController: CloudCodeViewController())
+        navigationController.modalPresentationStyle = .formSheet
+        present(navigationController, animated: true, completion: nil)
     }
     
     // MARK: - User Actions
