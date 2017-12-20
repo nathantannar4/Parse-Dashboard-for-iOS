@@ -68,13 +68,13 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupToolbar()
         handleRefresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if schema.name == "_Installation" {
+            setupToolbar()
             navigationController?.setToolbarHidden(false, animated: animated)
         }
     }
@@ -130,7 +130,6 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         super.setupNavigationBar()
         
         title = schema.name
-        definesPresentationContext = true
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         }
@@ -148,6 +147,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     open func setupToolbar() {
         
         if schema.name == "_Installation" {
+            navigationController?.toolbar.isTranslucent = false
             navigationController?.toolbar.barTintColor = .darkPurpleAccent
             navigationController?.toolbar.tintColor = .white
             var items = [UIBarButtonItem]()
@@ -155,20 +155,20 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             )
             let pushItem: UIBarButtonItem = {
-                let containView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+                let contentView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
                 let label = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
                 label.text = "Send Push Notification"
                 label.textColor = .white
                 label.font = UIFont.boldSystemFont(ofSize: 12)
                 label.textAlignment = .right
-                containView.addSubview(label)
-                let imageview = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
-                imageview.image = UIImage(named: "Push")
-                imageview.contentMode = .scaleAspectFit
-                containView.addSubview(imageview)
+                contentView.addSubview(label)
+                let imageView = UIImageView(frame: CGRect(x: 150, y: 5, width: 50, height: 30))
+                imageView.image = UIImage(named: "Push")
+                imageView.contentMode = .scaleAspectFit
+                contentView.addSubview(imageView)
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sendPushNotification))
-                containView.addGestureRecognizer(tapGesture)
-                return UIBarButtonItem(customView: containView)
+                contentView.addGestureRecognizer(tapGesture)
+                return UIBarButtonItem(customView: contentView)
             }()
             items.append(pushItem)
             toolbarItems = items

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1114" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CloudCode" representedClassName="CloudCode" syncable="YES" codeGenerationType="class">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endpoint" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFunction" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="ParseServerConfig" representedClassName="ParseServerConfig" syncable="YES" codeGenerationType="class">
         <attribute name="applicationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="icon" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -14,5 +20,6 @@
     <elements>
         <element name="ParseServerConfig" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="Query" positionX="-54" positionY="27" width="128" height="75"/>
+        <element name="CloudCode" positionX="-54" positionY="18" width="128" height="105"/>
     </elements>
 </model>

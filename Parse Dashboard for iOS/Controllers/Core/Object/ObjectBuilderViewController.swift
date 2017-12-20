@@ -91,7 +91,7 @@ class ObjectBuilderViewController: FormViewController {
     }
     
     private func setupNavigationBar() {
-        title = "New Object"
+        title = "New \(schema.name) Object"
         navigationController?.navigationBar.barTintColor = .darkPurpleBackground
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [
