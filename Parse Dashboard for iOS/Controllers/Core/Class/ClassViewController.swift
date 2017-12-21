@@ -67,12 +67,13 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .darkPurpleBackground
         handleRefresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.view.backgroundColor = .darkPurpleBackground
         if schema.name == "_Installation" {
             setupToolbar()
             navigationController?.setToolbarHidden(false, animated: animated)

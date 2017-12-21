@@ -8,13 +8,11 @@ target 'Parse Dashboard for iOS' do
   # Pods for Parse Dashboard for iOS
   pod 'SwiftyJSON'
   pod 'AlertHUDKit'
-  pod 'DKImagePickerController'
   pod 'RMDateSelectionViewController'
   pod 'Former'
   pod 'DynamicTabBarController'
   pod 'BiometricAuthentication'
   pod 'AcknowList'
-  pod 'WhatsNew'
   pod 'PDFReader'
 
 end

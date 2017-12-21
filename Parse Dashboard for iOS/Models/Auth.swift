@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 import BiometricAuthentication
 
 class Auth: NSObject {
@@ -51,6 +52,19 @@ class Auth: NSObject {
     }
     
     // MARK: - Methods [Public]
+    
+    func method() -> String {
+        
+        if BioMetricAuthenticator.shared.faceIDAvailable() {
+            return "Face ID"
+        } else {
+            guard LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
+                return "Passcode Lock"
+                
+            }
+            return "Touch ID"
+        }
+    }
     
     func unlock(completion: @escaping (Bool)->Void) {
         authenticateUser { result in

@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import DynamicTabBarController
 
 class LaunchScreenViewController: UIViewController {
     
@@ -175,6 +176,9 @@ class LaunchScreenViewController: UIViewController {
         } else {
             let serversViewController = ServersViewController()
             serversViewController.shouldAnimateFirstLoad = true
+//            let container = DynamicTabBarController(viewControllers: [UINavigationController(rootViewController: serversViewController)])
+//            container.tabBar.scrollIndicatorHeight = 0
+//            container.updateTabBarHeight(to: 0, animated: false)
             rootViewController = UINavigationController(rootViewController: serversViewController)
         }
         

@@ -37,7 +37,7 @@
                                             <constraint firstAttribute="height" constant="130" id="uyY-JL-rgM"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parse Dashboard" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEa-dd-1pH">
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parse Dashboard for iOS" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEa-dd-1pH">
                                         <rect key="frame" x="20" y="161.66666666666666" width="335" height="28.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="23.5"/>
                                         <nil key="textColor"/>

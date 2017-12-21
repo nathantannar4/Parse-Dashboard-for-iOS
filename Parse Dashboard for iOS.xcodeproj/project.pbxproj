@@ -51,6 +51,8 @@
 		38D5E9571FEA4D5600AB0902 /* CloudCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9561FEA4D5600AB0902 /* CloudCodeViewController.swift */; };
 		38D5E9591FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9581FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift */; };
 		38D5E9611FEA61C900AB0902 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9601FEA61C900AB0902 /* ConsoleView.swift */; };
+		38D5E9631FEC49A700AB0902 /* PFImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9621FEC49A700AB0902 /* PFImagePickerController.swift */; };
+		38D5E9651FEC590200AB0902 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9641FEC590200AB0902 /* UIButton+Extensions.swift */; };
 		38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */; };
 		38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */; };
 		38DE1CF81FC4BAB700C49508 /* QueryHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */; };
@@ -122,6 +124,8 @@
 		38D5E9561FEA4D5600AB0902 /* CloudCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudCodeViewController.swift; sourceTree = "<group>"; };
 		38D5E9581FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudCodeBuilderViewController.swift; sourceTree = "<group>"; };
 		38D5E9601FEA61C900AB0902 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
+		38D5E9621FEC49A700AB0902 /* PFImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFImagePickerController.swift; sourceTree = "<group>"; };
+		38D5E9641FEC590200AB0902 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryHelpCell.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 			children = (
 				3872C1EC1FC3C4FC00EBD87F /* PFCollectionViewController.swift */,
 				3848CA0A1FC552560038A636 /* PFTableViewController.swift */,
+				38D5E9621FEC49A700AB0902 /* PFImagePickerController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				3872C1F41FC3C91600EBD87F /* UIView+AutoLayout.swift */,
+				38D5E9641FEC590200AB0902 /* UIButton+Extensions.swift */,
 				3872C1E11FC3C08200EBD87F /* String+Extensions.swift */,
 				3872C1E21FC3C08200EBD87F /* UIColor+Extensions.swift */,
 				38028C9F1FC560FD003A4E95 /* UIDevice+Extensions.swift */,
@@ -523,28 +529,24 @@
 				"${BUILT_PRODUCTS_DIR}/AcknowList/AcknowList.framework",
 				"${BUILT_PRODUCTS_DIR}/AlertHUDKit/AlertHUDKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BiometricAuthentication/BiometricAuthentication.framework",
-				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/DynamicTabBarController/DynamicTabBarController.framework",
 				"${BUILT_PRODUCTS_DIR}/Former/Former.framework",
 				"${BUILT_PRODUCTS_DIR}/PDFReader/PDFReader.framework",
 				"${BUILT_PRODUCTS_DIR}/RMActionController/RMActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/RMDateSelectionViewController/RMDateSelectionViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AcknowList.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlertHUDKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BiometricAuthentication.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicTabBarController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Former.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PDFReader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMDateSelectionViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -587,6 +589,7 @@
 				3872C1E41FC3C08200EBD87F /* UIColor+Extensions.swift in Sources */,
 				38DE1CFC1FC4BB1B00C49508 /* ClassCell.swift in Sources */,
 				3809B9EE1FE4D2A200D8DD2A /* DeepLink.swift in Sources */,
+				38D5E9631FEC49A700AB0902 /* PFImagePickerController.swift in Sources */,
 				3848CA0B1FC552560038A636 /* PFTableViewController.swift in Sources */,
 				38DE1D001FC4C32300C49508 /* NSConstraintLayoutSet.swift in Sources */,
 				3872C1ED1FC3C4FC00EBD87F /* PFCollectionViewController.swift in Sources */,
@@ -615,6 +618,7 @@
 				382BFF4F1FDE13E10050FF15 /* ServerConfigViewController.swift in Sources */,
 				38DE1CF91FC4BAB700C49508 /* QueryInputCell.swift in Sources */,
 				38D5E9591FEA50FA00AB0902 /* CloudCodeBuilderViewController.swift in Sources */,
+				38D5E9651FEC590200AB0902 /* UIButton+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

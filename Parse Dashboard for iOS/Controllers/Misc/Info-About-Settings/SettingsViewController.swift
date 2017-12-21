@@ -77,7 +77,7 @@ class SettingsViewController: FormViewController {
     private func buildForm() {
         
         let switchRow = SwitchRowFormer<FormSwitchCell>() {
-                $0.titleLabel.text = "Biometric Authorization"
+                $0.titleLabel.text = Auth.shared.method()
                 $0.titleLabel.textColor = .black
                 $0.titleLabel.font = .boldSystemFont(ofSize: 15)
                 $0.switchButton.onTintColor = .logoTint

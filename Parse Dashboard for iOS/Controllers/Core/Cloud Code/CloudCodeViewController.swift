@@ -202,6 +202,7 @@ class CloudCodeViewController: PFTableViewController {
         cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.font = .systemFont(ofSize: 14)
         cell.detailTextLabel?.numberOfLines = 0
+        cell.accessoryType = .disclosureIndicator
         
         let isFunctions = functions.count > 0
         
@@ -293,8 +294,8 @@ class CloudCodeViewController: PFTableViewController {
     
     func handeLog(_ message: String?) {
         let message = message ?? String()
-        let dateString = Date().string(dateStyle: .short, timeStyle: .medium)
-        consoleView.log(message: "\(dateString): " + message)
+        let dateString = Date().string(dateStyle: .none, timeStyle: .medium)
+        consoleView.log(message: "> \(dateString): " + message)
     }
     
 }

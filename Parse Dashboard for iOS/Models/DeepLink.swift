@@ -62,10 +62,8 @@ enum DeepLink {
         case .add:
             return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Add", localizedSubtitle: "New Configuration", icon: icon, userInfo: nil)
         case .recent:
-            guard let config = UserDefaults.standard.value(forKey: .recentConfig) as? [String:String] else {
-                return DeepLink.home.item
-            }
-            return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Recent", localizedSubtitle: config[.configName], icon: icon, userInfo: config)
+            let config = UserDefaults.standard.value(forKey: .recentConfig) as? [String:String]
+            return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Recent", localizedSubtitle: config?[.configName], icon: icon, userInfo: config)
         case .support:
             return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Support", localizedSubtitle: "Donate/Review", icon: icon, userInfo: nil)
         case .home:

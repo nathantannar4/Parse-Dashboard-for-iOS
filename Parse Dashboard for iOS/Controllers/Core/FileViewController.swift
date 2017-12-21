@@ -28,7 +28,6 @@
 import UIKit
 import Photos
 import AlertHUDKit
-import DKImagePickerController
 import PDFReader
 
 class FileViewController: UIViewController {
@@ -269,23 +268,20 @@ class FileViewController: UIViewController {
         }
     }
     
-    // MARK: UIImagePickerControllerDelegate
+    // MARK: - Image Picker
     
     func presentImagePicker() {
         
-        let picker = DKImagePickerController()
-        picker.assetType = .allPhotos
-        picker.singleSelect = true
-        picker.autoCloseOnSingleSelect = false
-        picker.didSelectAssets = { assets in
-            assets.first?.fetchOriginalImageWithCompleteBlock { [weak self] image, _ in
-                let imageData = image != nil ? UIImageJPEGRepresentation(image!, 1) : nil
-                self?.uploadFile(data: imageData!, for: "jpg")
+        let imagePicker = PFImagePickerController()
+        imagePicker.onImageSelection { [weak self] image in
+            guard let image = image else { return }
+            guard let imageData = UIImageJPEGRepresentation(image, 1) else {
+                self?.handleError("Invalid Image Data")
+                return
             }
+            self?.uploadFile(data: imageData, for: "jpg")
         }
-        picker.navigationBar.isTranslucent = false
-        picker.navigationBar.tintColor = .darkPurpleBackground
-        present(picker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
 
     // MARK: - Error Handling

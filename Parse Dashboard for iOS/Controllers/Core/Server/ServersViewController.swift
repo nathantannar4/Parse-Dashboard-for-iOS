@@ -27,7 +27,6 @@
 
 import UIKit
 import CoreData
-import DKImagePickerController
 
 class ServersViewController: PFCollectionViewController {
     
@@ -49,6 +48,7 @@ class ServersViewController: PFCollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.view.backgroundColor = .darkBlueBackground
         if shouldAnimateFirstLoad {
             collectionView?.transform = CGAffineTransform(translationX: 0, y: -view.frame.height)
         }
@@ -82,7 +82,7 @@ class ServersViewController: PFCollectionViewController {
     
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        title = "Parse Dashboard"
+        title = "Parse Dashboard for iOS"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30), style: .plain, target: self, action: #selector(showMore))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addServer))
@@ -254,7 +254,7 @@ class ServersViewController: PFCollectionViewController {
         
         let actionsStack = [
             TutorialAction(text: "Learn more about Parse Dashboard for iOS! See how your data is stored securely, where to find the GitHub repo and how to show your support", sourceItem: navigationItem.leftBarButtonItem),
-            TutorialAction(text: "Long press on a cell to edit, duplicate or delete the configuration", sourceView: collectionView),
+            TutorialAction(text: "Long press on a cell to edit, duplicate, export or delete the configuration", sourceView: collectionView),
             TutorialAction(text: "Add a new Parse Server configuration", sourceItem: navigationItem.rightBarButtonItem)
         ]
         presentTutorial(for: actionsStack)

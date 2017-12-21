@@ -58,8 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Alert.Defaults.Color.Warning = .darkPurpleBackground
         Alert.Defaults.Color.Danger = .red
         Alert.Defaults.Color.Success = .logoTint
-        Alert.Defaults.Color.Warning = .logoTint
         Alert.Defaults.Font.Info = .boldSystemFont(ofSize: 14)
+        Alert.Defaults.Font.Warning = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Danger = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Success = .boldSystemFont(ofSize: 14)
         
@@ -115,7 +115,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Auth.shared.lock()
             blurView.isHidden = false
         }
-        UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.recent.item, DeepLink.support.item] // Update Shortcut Items
+        // Update Shortcut Items
+        if UserDefaults.standard.value(forKey: .recentConfig) == nil {
+            UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.support.item]
+        } else {
+            UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.recent.item, DeepLink.support.item]
+        }
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -167,7 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
-        let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController()!
+        let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController() as! LaunchScreenViewController
         window?.rootViewController = launchScreen
         window?.makeKeyAndVisible() // Required when not using storyboards
     }

@@ -1,5 +1,5 @@
 //
-//  ConsoleView.swift
+//  PFImagePickerController.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,54 +22,45 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 12/20/17.
+//  Created by Nathan Tannar on 12/21/17.
 //
 
 import UIKit
 
-class ConsoleView: UIView {
+class PFImagePickerController: UIImagePickerController {
     
     // MARK: - Properties
     
-    private var textView: UITextView = {
-        let textView = UITextView()
-        textView.textColor = .white
-        textView.font = UIFont(name: "Menlo", size: 11.0)!
-        textView.backgroundColor = .clear
-        textView.isUserInteractionEnabled = false
-        return textView
-    }()
+    fileprivate var onSelection: ((UIImage?)->Void)?
     
-    // MARK: - Initialization
+    // MARK: - View Life Cycle
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Setup View
-    
-    func setupView() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        backgroundColor = .black
-        layer.shadowRadius = 3
-        layer.shadowOffset = CGSize(width: 0, height: -1)
-        layer.shadowOpacity = 0.3
-        layer.shadowColor = UIColor.black.cgColor
-        
-        addSubview(textView)
-        textView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, leftConstant: 6, bottomConstant: 24, rightConstant: 6)
+        sourceType = .photoLibrary
+        navigationBar.isTranslucent = false
+        navigationBar.tintColor = .logoTint
+        delegate = self
     }
     
     // MARK: - Methods
     
-    func log(message: String) {
-        textView.text.append(message + "\n")
-        let range = NSMakeRange(textView.text.count - 2, 1)
-        textView.scrollRangeToVisible(range)
+    func onImageSelection(_ code: @escaping (UIImage?)->Void) {
+        onSelection = code
+    }
+}
+
+extension PFImagePickerController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        onSelection?(nil)
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        onSelection?(info[UIImagePickerControllerOriginalImage] as? UIImage)
+        picker.dismiss(animated: true, completion: nil)
     }
 }

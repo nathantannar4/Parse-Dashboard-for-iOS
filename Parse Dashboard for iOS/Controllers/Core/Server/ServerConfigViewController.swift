@@ -29,7 +29,6 @@ import UIKit
 import CoreData
 import Former
 import AlertHUDKit
-import DKImagePickerController
 
 class ServerConfigViewController: FormViewController {
     
@@ -260,25 +259,24 @@ class ServerConfigViewController: FormViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    // MARK: - Image Picker
+    
     func presentImagePicker() {
         
-        let picker = DKImagePickerController()
-        picker.assetType = .allPhotos
-        picker.singleSelect = true
-        picker.autoCloseOnSingleSelect = false
-        picker.didSelectAssets = { assets in
-            guard let asset = assets.first else {
-                self.imageData = nil
-                self.imageRow.cellUpdate { $0.iconView.image = nil }
+        let imagePicker = PFImagePickerController()
+        imagePicker.onImageSelection { [weak self] image in
+            guard let image = image else {
+                self?.imageRow.cellUpdate { $0.iconView.image = nil }
+                self?.imageData = nil
                 return
             }
-            asset.fetchOriginalImageWithCompleteBlock({ image, _ in
-                self.imageData = UIImageJPEGRepresentation(image!, 1)
-                self.imageRow.cellUpdate { $0.iconView.image = image }
-            })
+            guard let imageData = UIImageJPEGRepresentation(image, 1) else {
+                Ping(text: "Invalid Image Data", style: .danger).show()
+                return
+            }
+            self?.imageRow.cellUpdate { $0.iconView.image = image }
+            self?.imageData = imageData
         }
-        picker.navigationBar.isTranslucent = false
-        picker.navigationBar.tintColor = .darkBlueBackground
-        present(picker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
 }
