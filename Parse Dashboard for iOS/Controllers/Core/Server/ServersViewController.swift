@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import DynamicTabBarController
 import CoreData
 
 class ServersViewController: PFCollectionViewController {
@@ -49,6 +50,7 @@ class ServersViewController: PFCollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.view.backgroundColor = .darkBlueBackground
+        fetchServersFromCoreData()
         if shouldAnimateFirstLoad {
             collectionView?.transform = CGAffineTransform(translationX: 0, y: -view.frame.height)
         }
@@ -56,7 +58,6 @@ class ServersViewController: PFCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        fetchServersFromCoreData()
         
         if shouldAnimateFirstLoad {
             shouldAnimateFirstLoad = false
@@ -68,6 +69,9 @@ class ServersViewController: PFCollectionViewController {
         let isNew = UserDefaults.standard.value(forKey: .isNew) as? Bool ?? true
         if isNew {
             setupTutorial()
+        }
+        DispatchQueue.main.async {
+            self.adjustConsoleView()
         }
     }
     
@@ -87,6 +91,51 @@ class ServersViewController: PFCollectionViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addServer))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Servers", style: .plain, target: nil, action: nil)
+    }
+    
+    func adjustConsoleView() {
+        
+        let isConsoleHidden = UserDefaults.standard.bool(forKey: .isConsoleHidden)
+        if isConsoleHidden && dynamicTabBarController != nil {
+            
+            // Remove for later possible use
+            ConsoleView.shared.removeFromSuperview()
+            
+            // Switch to no container
+            let serversViewController = ServersViewController()
+            serversViewController.shouldAnimateFirstLoad = shouldAnimateFirstLoad
+            UIApplication.shared.presentedWindow?.switchRootViewController(
+                UINavigationController(rootViewController: serversViewController),
+                animated: true,
+                duration: 0.3,
+                options: .transitionCrossDissolve,
+                completion: nil)
+
+        } else if dynamicTabBarController == nil && !isConsoleHidden {
+            
+            // Switch to DynamicTabBarController which supports a bottom tray view
+            let serversViewController = ServersViewController()
+            serversViewController.shouldAnimateFirstLoad = shouldAnimateFirstLoad
+            let container = DynamicTabBarController(viewControllers: [UINavigationController(rootViewController: serversViewController)])
+            container.tabBar.scrollIndicatorHeight = 0
+            container.updateTabBarHeight(to: 0, animated: false)
+            
+            UIApplication.shared.presentedWindow?.switchRootViewController(
+                container,
+                animated: true,
+                duration: 0.3,
+                options: .transitionCrossDissolve,
+                completion: nil)
+            
+        } else if let container = dynamicTabBarController {
+            
+            container.tabBar.backgroundColor = .black
+            container.trayView.backgroundColor = .black
+            guard ConsoleView.shared.superview == nil else { return }
+            container.trayView.addSubview(ConsoleView.shared)
+            ConsoleView.shared.fillSuperview()
+            container.showTrayView(withHeight: view.frame.height / 5, withDuration: 0.3, completion: nil)
+        }
     }
     
     // MARK: - UICollectionViewDataSource

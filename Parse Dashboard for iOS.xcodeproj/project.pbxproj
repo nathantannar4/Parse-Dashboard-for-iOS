@@ -53,6 +53,7 @@
 		38D5E9611FEA61C900AB0902 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9601FEA61C900AB0902 /* ConsoleView.swift */; };
 		38D5E9631FEC49A700AB0902 /* PFImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9621FEC49A700AB0902 /* PFImagePickerController.swift */; };
 		38D5E9651FEC590200AB0902 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9641FEC590200AB0902 /* UIButton+Extensions.swift */; };
+		38D5E9671FEC76BF00AB0902 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D5E9661FEC76BF00AB0902 /* NSAttributedString+Extensions.swift */; };
 		38DE1CF31FC4BAA600C49508 /* ClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */; };
 		38DE1CF41FC4BAA600C49508 /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */; };
 		38DE1CF81FC4BAB700C49508 /* QueryHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */; };
@@ -126,6 +127,7 @@
 		38D5E9601FEA61C900AB0902 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		38D5E9621FEC49A700AB0902 /* PFImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFImagePickerController.swift; sourceTree = "<group>"; };
 		38D5E9641FEC590200AB0902 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		38D5E9661FEC76BF00AB0902 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		38DE1CF11FC4BAA600C49508 /* ClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassViewController.swift; sourceTree = "<group>"; };
 		38DE1CF21FC4BAA600C49508 /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		38DE1CF51FC4BAB700C49508 /* QueryHelpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryHelpCell.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 			children = (
 				3872C1F41FC3C91600EBD87F /* UIView+AutoLayout.swift */,
 				38D5E9641FEC590200AB0902 /* UIButton+Extensions.swift */,
+				38D5E9661FEC76BF00AB0902 /* NSAttributedString+Extensions.swift */,
 				3872C1E11FC3C08200EBD87F /* String+Extensions.swift */,
 				3872C1E21FC3C08200EBD87F /* UIColor+Extensions.swift */,
 				38028C9F1FC560FD003A4E95 /* UIDevice+Extensions.swift */,
@@ -568,6 +571,7 @@
 				38DE1CFE1FC4C30E00C49508 /* InputTextView.swift in Sources */,
 				3872C1DC1FC3BCF600EBD87F /* Parse.swift in Sources */,
 				38F12D3E1FC696D300D3817D /* UIAlertController+Extensions.swift in Sources */,
+				38D5E9671FEC76BF00AB0902 /* NSAttributedString+Extensions.swift in Sources */,
 				38DE1D0F1FC5453200C49508 /* FileViewController.swift in Sources */,
 				38028CAA1FC56611003A4E95 /* SchemaDetailViewController.swift in Sources */,
 				38DE1D081FC516A700C49508 /* FieldCell.swift in Sources */,

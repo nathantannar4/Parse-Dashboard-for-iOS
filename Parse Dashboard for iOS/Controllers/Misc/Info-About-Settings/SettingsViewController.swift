@@ -131,6 +131,17 @@ class SettingsViewController: FormViewController {
                 }
         }
         
+        let showConsoleRow = SwitchRowFormer<FormSwitchCell>() {
+                $0.titleLabel.text = "Show Log Console"
+                $0.titleLabel.textColor = .black
+                $0.titleLabel.font = .boldSystemFont(ofSize: 15)
+                $0.switchButton.onTintColor = .logoTint
+            }.configure {
+                $0.switched = !UserDefaults.standard.bool(forKey: .isConsoleHidden)
+            }.onSwitchChanged { newValue in
+                UserDefaults.standard.set(!newValue, forKey: .isConsoleHidden)
+        }
+        
         let resetTutorialRow = LabelRowFormer<FormLabelCell>() {
                 $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             }.configure {
@@ -173,7 +184,7 @@ class SettingsViewController: FormViewController {
         let supportSection = SectionFormer(rowFormer: bugReportRow, featureRequestRow)
             .set(headerViewFormer: createHeader("Support"))
     
-        let otherSection = SectionFormer(rowFormer: resetTutorialRow, acknowledgementRow)
+        let otherSection = SectionFormer(rowFormer: showConsoleRow, resetTutorialRow, acknowledgementRow)
             .set(headerViewFormer: createHeader("Other"))
             .set(footerViewFormer: {
                 return LabelViewFormer<FormLabelFooterView>()

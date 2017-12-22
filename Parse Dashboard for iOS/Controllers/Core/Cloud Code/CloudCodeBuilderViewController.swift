@@ -75,8 +75,8 @@ class CloudCodeBuilderViewController: FormViewController {
         tableView.tableFooterView = UIView()
         
         let gradient: CAGradientLayer = CAGradientLayer()
-        gradient.colors = [UIColor(white: 0.1, alpha: 1).cgColor, UIColor.black.cgColor]
-        gradient.locations = [0.0 , 0.75]
+        gradient.colors = [UIColor(white: 0.1, alpha: 1).cgColor, UIColor(white: 0.25, alpha: 1).cgColor]
+        gradient.locations = [0.0 , 1]
         gradient.frame = view.bounds
         tableView.backgroundView = UIView()
         tableView.backgroundView?.layer.insertSublayer(gradient, at: 0)

@@ -29,14 +29,22 @@ import UIKit
 
 class ConsoleView: UIView {
     
+    enum LogKind {
+        case error, success, info
+    }
+    
     // MARK: - Properties
+    
+    static var shared = ConsoleView()
     
     private var textView: UITextView = {
         let textView = UITextView()
+        textView.textContainerInset = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         textView.textColor = .white
         textView.font = UIFont(name: "Menlo", size: 11.0)!
         textView.backgroundColor = .clear
-        textView.isUserInteractionEnabled = false
+        textView.isEditable = false
+        textView.isSelectable = false
         return textView
     }()
     
@@ -59,17 +67,38 @@ class ConsoleView: UIView {
         layer.shadowRadius = 3
         layer.shadowOffset = CGSize(width: 0, height: -1)
         layer.shadowOpacity = 0.3
-        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowColor = UIColor.darkGray.cgColor
         
         addSubview(textView)
-        textView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, leftConstant: 6, bottomConstant: 24, rightConstant: 6)
+        textView.fillSuperview()
     }
     
     // MARK: - Methods
     
-    func log(message: String) {
-        textView.text.append(message + "\n")
-        let range = NSMakeRange(textView.text.count - 2, 1)
-        textView.scrollRangeToVisible(range)
+    public func scrollToBottom() {
+        if textView.bounds.height < textView.contentSize.height {
+            textView.layoutManager.ensureLayout(for: textView.textContainer)
+            let offset = CGPoint(x: 0, y: (textView.contentSize.height - textView.frame.size.height))
+            textView.setContentOffset(offset, animated: true)
+        }
+    }
+    
+    func log(message: String, kind: LogKind = .info) {
+        
+        DispatchQueue.main.async {
+            
+            let dateString = Date().string(dateStyle: .none, timeStyle: .medium)
+            
+            let newText = NSMutableAttributedString(attributedString: self.textView.attributedText)
+            newText.normal("\(dateString) > ", font: UIFont(name: "Menlo", size: 11.0)!, color: .white)
+            switch kind {
+            case .info: newText.normal(message + "\n", font: UIFont(name: "Menlo", size: 11.0)!, color: .white)
+            case .error: newText.normal(message + "\n", font: UIFont(name: "Menlo", size: 11.0)!, color: .red)
+            case .success: newText.normal(message + "\n", font: UIFont(name: "Menlo", size: 11.0)!, color: .green)
+            }
+            
+            self.textView.attributedText = newText
+            self.scrollToBottom()
+        }
     }
 }

@@ -93,18 +93,19 @@ class CloudCodeViewController: PFTableViewController {
     private func setupConsoleView() {
         
         guard let navView = navigationController?.view else { return }
+        consoleView.layer.shadowColor = UIColor.black.cgColor
         navView.addSubview(consoleView)
-        consoleView.anchor(nil, left: navView.leftAnchor, bottom: navView.bottomAnchor, right: navView.rightAnchor, heightConstant: view.frame.height / 4)
+        consoleView.anchor(nil, left: navView.leftAnchor, bottom: navView.bottomAnchor, right: navView.rightAnchor, heightConstant: view.frame.height / 5)
     }
     
     private func setupTableView() {
         
-        tableView.contentInset.bottom = view.frame.height / 4
+        tableView.contentInset.bottom = view.frame.height / 5
         tableView.tableFooterView = UIView()
         
         let gradient: CAGradientLayer = CAGradientLayer()
-        gradient.colors = [UIColor(white: 0.1, alpha: 1).cgColor, UIColor.black.cgColor]
-        gradient.locations = [0.0 , 0.75]
+        gradient.colors = [UIColor(white: 0.1, alpha: 1).cgColor, UIColor.darkGray.darker().cgColor]
+        gradient.locations = [0.0, NSNumber(value: Float(tableView.contentInset.bottom))]
         gradient.frame = view.bounds
         tableView.backgroundView = UIView()
         tableView.backgroundView?.layer.insertSublayer(gradient, at: 0)
@@ -293,9 +294,8 @@ class CloudCodeViewController: PFTableViewController {
     }
     
     func handeLog(_ message: String?) {
-        let message = message ?? String()
-        let dateString = Date().string(dateStyle: .none, timeStyle: .medium)
-        consoleView.log(message: "> \(dateString): " + message)
+        let message = message ?? "..."
+        consoleView.log(message: message)
     }
     
 }

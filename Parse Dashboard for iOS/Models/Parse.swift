@@ -90,12 +90,15 @@ class Parse: NSObject {
 
         var request = PFRequest(url: url)
         request.httpMethod = "GET"
+        logToConsole("GET: " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {
+                self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
+            self.logToConsole("RESPONSE: \(data.count) bytes", kind: .success)
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
                 if let error = json?["error"] as? String {
@@ -128,12 +131,15 @@ class Parse: NSObject {
         var request = PFRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = data
+        logToConsole("POST: \(data?.count ?? 0) bytes to" + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {
+                self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
+            self.logToConsole("RESPONSE: \(data.count) bytes", kind: .success)
             do {
                 guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject] else { return }
                 if let error = json["error"] as? String {
@@ -174,12 +180,15 @@ class Parse: NSObject {
         
         var request = PFRequest(url: url)
         request.httpMethod = "DELETE"
+        logToConsole("DELETE: " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {
+                self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
+            self.logToConsole("RESPONSE: \(data.count) bytes", kind: .success)
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
                 if let error = json?["error"] as? String {
@@ -214,12 +223,15 @@ class Parse: NSObject {
         request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = data
+        logToConsole("POST: \(data?.count ?? 0) bytes to " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {
+                self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
+            self.logToConsole("RESPONSE: \(data.count) bytes", kind: .success)
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
                 
@@ -270,12 +282,15 @@ class Parse: NSObject {
         var request = PFRequest(url: url)
         request.httpMethod = "PUT"
         request.httpBody = data
+        logToConsole("PUT: \(data.count) bytes to " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {
+                self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
+            self.logToConsole("RESPONSE: \(data.count) bytes", kind: .success)
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject]
                 
@@ -318,12 +333,14 @@ class Parse: NSObject {
         var request = PFRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = payload
+        logToConsole("POST: \(payload.count) to " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
             guard let data = data, error == nil else {
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
             }
+            self.logToConsole("RESPONSE: \(data.count) bytes", kind: .success)
             do {
                 guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : AnyObject] else { return }
                 if let error = json["error"] as? String {
@@ -351,7 +368,6 @@ class Parse: NSObject {
     // MARK: - Methods [Private]
     
     private func PFRequest(url: URL) -> URLRequest {
-        print("Request: ", url)
         var request = URLRequest(url: url)
         let applicationId = currentConfiguration?.applicationId ?? ""
         let masterKey = currentConfiguration?.masterKey ?? ""
@@ -359,6 +375,11 @@ class Parse: NSObject {
         request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         return request
+    }
+    
+    private func logToConsole(_ message: String, kind: ConsoleView.LogKind) {
+        print(message)
+        ConsoleView.shared.log(message: message, kind: kind)
     }
     
 }

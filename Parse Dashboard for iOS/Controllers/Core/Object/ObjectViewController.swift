@@ -387,16 +387,12 @@ class ObjectViewController: PFTableViewController {
                         
                         let url = dict["url"] as! String
                         let name = dict["name"] as! String
-                        let imageVC = FileViewController(url: URL(string: url)!,
+                        let fileVC = FileViewController(url: URL(string: url)!,
                                                          filename: name,
                                                          schema: schema,
                                                          key: object.keys[indexPath.row],
                                                          objectId: object.id)
-                        let navVC = UINavigationController(rootViewController: imageVC)
-                        navVC.navigationBar.isTranslucent = false
-                        navVC.navigationBar.tintColor = .logoTint
-                        navVC.modalPresentationStyle = .formSheet
-                        present(navVC, animated: true, completion: nil)
+                        navigationController?.pushViewController(fileVC, animated: true)
                         
                     } else if type == .pointer {
                         
@@ -480,34 +476,22 @@ class ObjectViewController: PFTableViewController {
                         if type == .file {
                             let url = dict["url"] as! String
                             let name = dict["name"] as! String
-                            let imageVC = FileViewController(url: URL(string: url)!,
+                            let fileVC = FileViewController(url: URL(string: url)!,
                                                              filename: name,
                                                              schema: schema,
                                                              key: key,
                                                              objectId: id)
-                            let navVC = UINavigationController(rootViewController: imageVC)
-                            navVC.navigationBar.isTranslucent = false
-                            navVC.navigationBar.tintColor = .logoTint
-                            navVC.modalPresentationStyle = .formSheet
-                            self?.present(navVC, animated: true, completion: {
-                                imageVC.uploadNewFile()
-                            })
+                            self?.navigationController?.pushViewController(fileVC, animated: true)
                         }
                     }
                 } else {
                     
-                    let imageVC = FileViewController(url: nil,
+                    let fileVC = FileViewController(url: nil,
                                                      filename: String(),
                                                      schema: schema,
                                                      key: key,
                                                      objectId: id)
-                    let navVC = UINavigationController(rootViewController: imageVC)
-                    navVC.navigationBar.isTranslucent = false
-                    navVC.navigationBar.tintColor = .logoTint
-                    navVC.modalPresentationStyle = .formSheet
-                    self?.present(navVC, animated: true, completion: {
-                        imageVC.uploadNewFile()
-                    })
+                    self?.navigationController?.pushViewController(fileVC, animated: true)
                     
                 }
             } else if type == .string {

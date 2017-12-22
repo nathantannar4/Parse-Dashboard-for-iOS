@@ -123,9 +123,6 @@ class FileViewController: UIViewController {
     private func setupNavigationBar() {
         
         title = "File View"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
-                                                           target: self,
-                                                           action: #selector(dismissInfo))
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "Upload"),
                             style: .plain,
@@ -157,12 +154,15 @@ class FileViewController: UIViewController {
         actionButton.isHidden = true
         let progressWheel = DownloadWheel()
         print("Download: ", url)
+        ConsoleView.shared.log(message: "GET: " + url.absoluteString, kind: .info)
         progressWheel.downloadFile(from: url) { [weak self] (view, data, error) in
             self?.currentFileData = data
             guard error == nil else {
+                ConsoleView.shared.log(message: "RESPONSE: " + error.debugDescription, kind: .error)
                 self?.handleError(error?.localizedDescription)
                 return
             }
+            ConsoleView.shared.log(message: "RESPONSE: \(data?.count ?? 0) byes", kind: .success)
             view.currentState = .active
             self?.actionButton.isHidden = false
         }.present(self)
@@ -198,11 +198,6 @@ class FileViewController: UIViewController {
     }
     
     // MARK: - User Actions
-    
-    @objc
-    func dismissInfo() {
-        dismiss(animated: true, completion: nil)
-    }
     
     @objc
     func uploadNewFile() {
@@ -305,6 +300,7 @@ extension FileViewController: UIDocumentBrowserViewControllerDelegate {
     
     private func openFile(at url: URL, completion: @escaping (Bool)->Void) {
         
+        ConsoleView.shared.log(message: "GET: " + url.absoluteString, kind: .info)
         let file = File(fileURL: url)
         file.open { [weak self] success in
             completion(success)

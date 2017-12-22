@@ -121,5 +121,9 @@ extension String {
     static var recentConfig: String {
         return "recentConfig"
     }
+    
+    static var isConsoleHidden: String {
+        return "isConsoleHidden"
+    }
 
 }

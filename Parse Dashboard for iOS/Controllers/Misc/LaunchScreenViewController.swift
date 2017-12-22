@@ -174,12 +174,7 @@ class LaunchScreenViewController: UIViewController {
         if isNew {
             rootViewController = UINavigationController(rootViewController: WelcomeViewController())
         } else {
-            let serversViewController = ServersViewController()
-            serversViewController.shouldAnimateFirstLoad = true
-//            let container = DynamicTabBarController(viewControllers: [UINavigationController(rootViewController: serversViewController)])
-//            container.tabBar.scrollIndicatorHeight = 0
-//            container.updateTabBarHeight(to: 0, animated: false)
-            rootViewController = UINavigationController(rootViewController: serversViewController)
+            rootViewController = UINavigationController(rootViewController: ServersViewController())
         }
         
         UIApplication.shared.presentedWindow?.switchRootViewController(

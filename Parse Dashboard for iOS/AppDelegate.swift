@@ -27,6 +27,7 @@
 
 import UIKit
 import AlertHUDKit
+import DynamicTabBarController
 import CoreData
 
 @UIApplicationMain
@@ -130,17 +131,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Called when a user selects a shortcut item after 3D touching an app icon
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         
-        guard let root = window?.rootViewController as? UINavigationController else { return }
+        let root = window?.rootViewController as? UINavigationController ?? ((window?.rootViewController as? DynamicTabBarController)?.viewControllers.first as? UINavigationController)
+        guard let navigationController = root else { return }
         if root != UIApplication.shared.presentedController {
             UIApplication.shared.presentedController?.dismiss(animated: false, completion: nil)
         }
-        guard let base = root.viewControllers.first as? ServersViewController else { return }
+        guard let serverVC = navigationController.viewControllers.first as? ServersViewController else { return }
         
         switch shortcutItem.type {
         case DeepLink.add.type:
             // Add a new server configuration
-            root.popToRootViewController(animated: false)
-            base.addServer()
+            navigationController.popToRootViewController(animated: false)
+            serverVC.addServer()
         case DeepLink.recent.type:
             // Go to the schema view of the most recently viewed server
             guard let configHash = shortcutItem.userInfo as? [String:String] else { return }
@@ -149,16 +151,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             config.applicationId = configHash[.applicationId]
             config.masterKey = configHash[.masterKey]
             config.serverUrl = configHash[.serverUrl]
-            root.popToRootViewController(animated: false)
-            base.showSchemasForConfig(config)
+            navigationController.popToRootViewController(animated: false)
+            serverVC.showSchemasForConfig(config)
         case DeepLink.support.type:
             // Show the support page
-            root.popToRootViewController(animated: false)
-            base.showMore(atIndex: 1) // Index 1 is the SupportViewController
+            navigationController.popToRootViewController(animated: false)
+            serverVC.showMore(atIndex: 1) // Index 1 is the SupportViewController
         case DeepLink.home.type:
             // Go to main server config list page
-            root.popToRootViewController(animated: false)
-            base.viewDidAppear(false)
+            serverVC.viewWillAppear(false)
+            navigationController.popToRootViewController(animated: false)
         default:
             break
         }
