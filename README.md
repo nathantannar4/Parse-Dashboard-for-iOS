@@ -21,7 +21,11 @@
 - File management
  	- Dedicated PDF and image viewer
 	- Upload files from Dropbox/Google Drive/Onebox/etc.
-	- Download and export files 
+	- Download and export files
+- Execute Cloud Code
+    - Functions
+    - Background Jobs
+- View a log of all network calls and their responses
 - Send push notifications to a user or installation query
 - View Parse Server's configuration info
 - Force Touch Shortcuts
@@ -39,6 +43,8 @@
 <img src="Screenshots/J.png?raw=true" width="250" height="542"> <img src="Screenshots/K.png?raw=true" width="250" height="542"> <img src="Screenshots/L.png?raw=true" width="250" height="542"> 
 
 <img src="Screenshots/M.png?raw=true" width="250" height="542"> <img src="Screenshots/N.png?raw=true" width="250" height="542"> <img src="Screenshots/O.png?raw=true" width="250" height="542">
+
+<img src="Screenshots/P.png?raw=true" width="250" height="542"> <img src="Screenshots/Q.png?raw=true" width="250" height="542">
 
 
 ## Author
