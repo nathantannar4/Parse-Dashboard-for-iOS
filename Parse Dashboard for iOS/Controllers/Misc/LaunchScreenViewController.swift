@@ -174,7 +174,9 @@ class LaunchScreenViewController: UIViewController {
         if isNew {
             rootViewController = UINavigationController(rootViewController: WelcomeViewController())
         } else {
-            rootViewController = UINavigationController(rootViewController: ServersViewController())
+            let serversVC = ServersViewController()
+            serversVC.shouldAnimateFirstLoad = true
+            rootViewController = UINavigationController(rootViewController: serversVC)
         }
         
         UIApplication.shared.presentedWindow?.switchRootViewController(

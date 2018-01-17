@@ -125,5 +125,9 @@ extension String {
     static var isConsoleHidden: String {
         return "isConsoleHidden"
     }
+    
+    static var parseDashboardURLScheme: String {
+        return "parsedashboard"
+    }
 
 }

@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     /// A visual effect view for security when biometric authentication is on
-    var blurView: UIVisualEffectView = {
+    private var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         let imageView = UIImageView(image: UIImage(named: "Logo"))
@@ -55,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // AlertHUDKit Defaults
         Alert.Defaults.Color.Info = .logoTint
         Alert.Defaults.Color.Warning = .darkPurpleBackground
         Alert.Defaults.Color.Danger = .red
@@ -67,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupWindow()
         if let item = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {
             // If the user selected a shortcut item on launch switch the initial root UIViewController
-            self.application(application, performActionFor: item, completionHandler: { _ in })
+            navigateDeepLink(to: item)
         }
         return true
     }
@@ -77,59 +78,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Expected Format for config import
         // parsedashboard://<applicationId>:<masterKey>@<url>:<port>/<path>
         
-        let config = ParseServerConfig(entity: ParseServerConfig.entity(), insertInto: persistentContainer.viewContext)
-        config.name = (url.host ?? "") + url.path
-        config.applicationId = url.user ?? String()
-        config.masterKey = url.password ?? String()
-        var serverUrl = "https://" + (url.host ?? String()) // Assume https to enforce security
-        if let port = url.port {
-            serverUrl.append(":\(port)")
+        if url.scheme == .parseDashboardURLScheme {
+            importConfiguration(from: url)
         }
-        let mount = url.path
-        serverUrl.append(mount)
-        config.serverUrl = serverUrl
-        saveContext()
-        self.application(app, performActionFor: DeepLink.home.item, completionHandler: { _ in })
-        
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if blurView.superview == nil {
-            // Delay to account for launch screen annimation
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
-                self.window?.addSubview(self.blurView)
-                self.blurView.fillSuperview()
-            })
-        }
-        if !Auth.shared.granted {
-            Auth.shared.unlock(completion: { result in
-                self.blurView.isHidden = result
-            })
-        } else {
-            self.blurView.isHidden = true
-        }
+        
+        addSecurityBlurEffect()
+        toggleSecurityBlur(isLocked: true)
     }
    
     func applicationWillResignActive(_ application: UIApplication) {
-        if Auth.shared.isSetup {
-            Auth.shared.lock()
-            blurView.isHidden = false
-        }
-        // Update Shortcut Items
-        if UserDefaults.standard.value(forKey: .recentConfig) == nil {
-            UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.support.item]
-        } else {
-            UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.recent.item, DeepLink.support.item]
-        }
+        
+        toggleSecurityBlur(isLocked: false)
+        updateShortcutItems()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        self.saveContext()
+        
+        saveContext()
     }
     
     /// Called when a user selects a shortcut item after 3D touching an app icon
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        navigateDeepLink(to: shortcutItem)
+    }
+    
+    // MARK: - Window Setup
+    
+    /// Sets up the window to it's default properties
+    private func setupWindow() {
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
+        let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController() as! LaunchScreenViewController
+        window?.rootViewController = launchScreen
+        window?.makeKeyAndVisible() // Required when not using storyboards
+    }
+    
+    // MARK: - Deep Links
+    
+    /// Sends the application to the shortcut
+    ///
+    /// - Parameter shortcutItem: The Deep Link
+    private func navigateDeepLink(to shortcutItem: UIApplicationShortcutItem) {
         
         let root = window?.rootViewController as? UINavigationController ?? ((window?.rootViewController as? DynamicTabBarController)?.viewControllers.first as? UINavigationController)
         guard let navigationController = root else { return }
@@ -162,21 +157,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             serverVC.viewWillAppear(false)
             navigationController.popToRootViewController(animated: false)
         default:
-            break
+            return
         }
-        
     }
     
-    // MARK: - Window Setup
-    
-    /// Sets up the window to it's default properties
-    private func setupWindow() {
+    /// Updates the 3D touch shotcut items
+    private func updateShortcutItems() {
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .white
-        let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController() as! LaunchScreenViewController
-        window?.rootViewController = launchScreen
-        window?.makeKeyAndVisible() // Required when not using storyboards
+        if UserDefaults.standard.value(forKey: .recentConfig) == nil {
+            UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.support.item]
+        } else {
+            UIApplication.shared.shortcutItems = [DeepLink.add.item, DeepLink.home.item, DeepLink.recent.item, DeepLink.support.item]
+        }
+    }
+    
+    // MARK: - Custom URL Scheme Interaction
+
+    /// Imports a confirguation by parsing a URL
+    ///
+    /// - Parameter url: parsedashboard://<applicationId>:<masterKey>@<url>:<port>/<path>
+    private func importConfiguration(from url: URL) {
+        
+        let config = ParseServerConfig(entity: ParseServerConfig.entity(),
+                                       insertInto: persistentContainer.viewContext)
+        
+        config.name = (url.host ?? "") + url.path
+        config.applicationId = url.user ?? String()
+        config.masterKey = url.password ?? String()
+        var serverUrl = "https://" + (url.host ?? String()) // Assume https to enforce security
+        if let port = url.port {
+            serverUrl.append(":\(port)")
+        }
+        let mount = url.path
+        serverUrl.append(mount)
+        config.serverUrl = serverUrl
+        saveContext()
+        
+        // Send the user to the home screen
+        navigateDeepLink(to: DeepLink.home.item)
     }
     
     // MARK: - Core Data stack
@@ -205,5 +223,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    // MARK: - Auth Security Blur
+    
+    private func addSecurityBlurEffect() {
+        
+        if blurView.superview == nil {
+            // Delay to account for launch screen annimation
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                self.window?.addSubview(self.blurView)
+                self.blurView.fillSuperview()
+            })
+        }
+    }
+    
+    private func toggleSecurityBlur(isLocked: Bool) {
+        
+        if isLocked {
+            if !Auth.shared.granted {
+                Auth.shared.unlock(completion: { result in
+                    self.blurView.isHidden = result
+                })
+            } else {
+                self.blurView.isHidden = true
+            }
+        } else {
+            if Auth.shared.isSetup {
+                Auth.shared.lock()
+                blurView.isHidden = false
+            }
+        }
+    }
 }
 
