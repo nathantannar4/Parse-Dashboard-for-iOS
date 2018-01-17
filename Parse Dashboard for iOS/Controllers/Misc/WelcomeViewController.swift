@@ -93,6 +93,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserDefaults.standard.set(true, forKey: .isConsoleHidden)
         view.backgroundColor = .darkBlueBackground
         setupSubviews()
         setupNavigationBar()

@@ -5,6 +5,8 @@
 
 ###### A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.
 
+[Download On the App Store](https://itunes.apple.com/us/app/parse-dashboard/id1212141622)
+
 ## Feature Breakdown
 
 - Create/Delete Classes
