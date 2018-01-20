@@ -193,7 +193,7 @@ class SupportViewController: UITableViewController {
                     break
                 }
             } else {
-                cell.textLabel?.text = "In-App Purchases Unavailable"
+                cell.textLabel?.text = "In-App Donations Unavailable"
                 cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
             }
         case 2:
@@ -210,8 +210,6 @@ class SupportViewController: UITableViewController {
             case 1:
                 cell.textLabel?.text = "Rate on the App Store"
                 cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-                cell.detailTextLabel?.text = "Currently Unavailable"
-                cell.detailTextLabel?.font = UIFont.boldSystemFont(ofSize: 12)
                 cell.imageView?.image = UIImage(named: "Rating")
                 cell.accessoryType = .disclosureIndicator
             case 2:
