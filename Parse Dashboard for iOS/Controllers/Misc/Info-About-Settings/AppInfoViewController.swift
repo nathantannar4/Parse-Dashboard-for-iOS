@@ -188,6 +188,9 @@ class AppInfoViewController: UITableViewController {
                     UIActivityType.postToVimeo,
                     UIActivityType.postToTencentWeibo
                 ]
+                activityVC.popoverPresentationController?.permittedArrowDirections = .up
+                activityVC.popoverPresentationController?.canOverlapSourceViewRect = true
+                activityVC.popoverPresentationController?.barButtonItem = sender
                 self.present(activityVC, animated: true, completion: nil)
             }),
             UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

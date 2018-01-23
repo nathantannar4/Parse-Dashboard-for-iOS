@@ -206,6 +206,8 @@ class ServersViewController: PFCollectionViewController {
     
     func presentActions(for indexPath: IndexPath) {
         
+        guard let cell = collectionView?.cellForItem(at: indexPath) else { return }
+        
         let actionSheet = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
         actionSheet.configureView()
         
@@ -226,6 +228,9 @@ class ServersViewController: PFCollectionViewController {
         ]
         
         actions.forEach { actionSheet.addAction($0) }
+        actionSheet.popoverPresentationController?.canOverlapSourceViewRect = true
+        actionSheet.popoverPresentationController?.sourceView = cell
+        actionSheet.popoverPresentationController?.sourceRect = cell.bounds
         present(actionSheet, animated: true, completion: nil)
     }
     
@@ -265,11 +270,16 @@ class ServersViewController: PFCollectionViewController {
         // Expected Format for config import
         // parsedashboard://<applicationId>:<masterKey>@<url>:<port>/<path>
         
+        guard let cell = collectionView?.cellForItem(at: indexPath) else { return }
+        
         guard let url = servers[indexPath.row].exportableURL else {
             handleError("Sorry, that configuration is invalid and cannot be exported")
             return
         }
         let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activity.popoverPresentationController?.canOverlapSourceViewRect = true
+        activity.popoverPresentationController?.sourceView = cell
+        activity.popoverPresentationController?.sourceRect = cell.bounds
         present(activity, animated: true, completion: nil)
     }
     

@@ -211,6 +211,8 @@ class FileViewController: UIViewController {
             self?.presentDocumentPicker()
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.popoverPresentationController?.permittedArrowDirections = .up
+        actionSheet.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(actionSheet, animated: true, completion: nil)
     }
     

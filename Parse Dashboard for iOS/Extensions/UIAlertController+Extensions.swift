@@ -30,6 +30,7 @@ import UIKit
 extension UIAlertController {
     
     func configureView() {
+        popoverPresentationController?.backgroundColor = .white
         view.subviews.last?.subviews.last?.backgroundColor = .white
         view.subviews.last?.subviews.last?.layer.cornerRadius = 16
         view.tintColor = .logoTint

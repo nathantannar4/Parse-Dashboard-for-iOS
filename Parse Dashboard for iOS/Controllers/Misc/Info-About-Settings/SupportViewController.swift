@@ -30,10 +30,6 @@ import StoreKit
 
 class SupportViewController: UITableViewController {
     
-    // MARK: - Properties
-
-    let itunesID = "1212141622"
-    
     // MARK: - Initialization
     
     init() {
@@ -104,7 +100,8 @@ class SupportViewController: UITableViewController {
             }
         } else if indexPath.section == 2 {
             if indexPath.row == 1 {
-                guard let url = URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=\(itunesID)&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software") else {
+                
+                guard let url = URL(string: "https://itunes.apple.com/ca/app/parse-dashboard/id1212141622?mt=8") else {
                     return
                 }
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)

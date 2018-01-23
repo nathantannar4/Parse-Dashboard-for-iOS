@@ -288,6 +288,8 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     
     func presentActions(for indexPath: IndexPath) {
         
+        guard let cell = collectionView?.cellForItem(at: indexPath) else { return }
+        
         let actionSheet = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
         actionSheet.configureView()
         
@@ -299,6 +301,9 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         ]
         
         actions.forEach { actionSheet.addAction($0) }
+        actionSheet.popoverPresentationController?.canOverlapSourceViewRect = true
+        actionSheet.popoverPresentationController?.sourceView = cell
+        actionSheet.popoverPresentationController?.sourceRect = cell.bounds
         present(actionSheet, animated: true, completion: nil)
     }
         

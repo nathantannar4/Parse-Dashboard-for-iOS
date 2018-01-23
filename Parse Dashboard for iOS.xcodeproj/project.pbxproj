@@ -22,6 +22,7 @@
 		3848CA0B1FC552560038A636 /* PFTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3848CA0A1FC552560038A636 /* PFTableViewController.swift */; };
 		3852AA791FDCC7D900D7B009 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3852AA781FDCC7D900D7B009 /* SupportViewController.swift */; };
 		3852AA7B1FDCC7E000D7B009 /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */; };
+		385A21402016E1B100637DE8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385A213F2016E1B100637DE8 /* StoreKit.framework */; };
 		3872C1C71FC3BC6400EBD87F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872C1C61FC3BC6400EBD87F /* AppDelegate.swift */; };
 		3872C1CB1FC3BC6400EBD87F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3872C1CA1FC3BC6400EBD87F /* Assets.xcassets */; };
 		3872C1CE1FC3BC6400EBD87F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3872C1CC1FC3BC6400EBD87F /* LaunchScreen.storyboard */; };
@@ -94,6 +95,7 @@
 		3848CA0A1FC552560038A636 /* PFTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFTableViewController.swift; sourceTree = "<group>"; };
 		3852AA781FDCC7D900D7B009 /* SupportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
 		3852AA7A1FDCC7E000D7B009 /* IAPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHandler.swift; sourceTree = "<group>"; };
+		385A213F2016E1B100637DE8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3872C1C31FC3BC6400EBD87F /* Parse Dashboard for iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Parse Dashboard for iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3872C1C61FC3BC6400EBD87F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3872C1CA1FC3BC6400EBD87F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F25ECBC77855B1F9E2419001 /* Pods_Parse_Dashboard_for_iOS.framework in Frameworks */,
+				385A21402016E1B100637DE8 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +402,7 @@
 		3E82BA79F155D6BA924309A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				385A213F2016E1B100637DE8 /* StoreKit.framework */,
 				49DEF2EA353A95C2C89F0735 /* Pods_Parse_Dashboard_for_iOS.framework */,
 			);
 			name = Frameworks;
@@ -449,6 +453,11 @@
 					3872C1C21FC3BC6400EBD87F = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
