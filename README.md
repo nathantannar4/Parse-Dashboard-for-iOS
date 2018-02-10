@@ -1,4 +1,4 @@
-## 2000+ Downloads, Three 5-Star Reviews
+## 4000+ Downloads, Three 5-Star Reviews
 
 # Parse Dashboard for iOS
 > Updated to Swift 4, iOS 11 and iPhone X Support
