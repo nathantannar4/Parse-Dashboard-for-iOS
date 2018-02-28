@@ -61,7 +61,7 @@ class WelcomeViewController: UIViewController {
     
     var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "A beautiful unofficial moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
+        label.text = "A beautiful unofficial mobile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
         if UIDevice.current.userInterfaceIdiom == .pad {
             label.font = UIFont.systemFont(ofSize: 30)
         } else {
