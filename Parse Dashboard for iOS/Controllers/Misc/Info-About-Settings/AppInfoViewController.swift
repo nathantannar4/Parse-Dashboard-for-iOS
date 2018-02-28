@@ -109,7 +109,7 @@ class AppInfoViewController: UITableViewController {
             cell.contentView.addSubview(separatorView)
             separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
         case 2:
-            cell.textLabel?.text = "A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
+            cell.textLabel?.text = "A beautiful mobile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
             cell.textLabel?.textColor = .darkGray
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         case 3:
