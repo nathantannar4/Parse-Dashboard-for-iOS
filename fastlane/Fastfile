@@ -7,16 +7,14 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+update_fastlane
 
 default_platform(:ios)
 
 platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do
-    disable_automatic_code_signing(path: "Parse Dashboard for iOS.xcodeproj")
-    build_app(workspace: "Parse Dashboard for iOS.xcworkspace", scheme: "Pods-Parse Dashboard for iOS")
-    enable_automatic_code_signing(path: "Parse Dashboard for iOS.xcodeproj")
+    build_app(workspace: "Parse Dashboard for iOS.xcworkspace", scheme: "Parse Dashboard for iOS")
     upload_to_app_store(skip_metadata: true, skip_screenshots: true)
   end
 end

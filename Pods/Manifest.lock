@@ -2,7 +2,10 @@ PODS:
   - AcknowList (1.4)
   - AlertHUDKit (1.0.0)
   - BiometricAuthentication (1.0.2)
+  - Crashlytics (3.10.1):
+    - Fabric (~> 1.7.5)
   - DynamicTabBarController (1.0.0)
+  - Fabric (1.7.5)
   - Former (1.6.0)
   - PDFReader (2.5.1)
   - RMActionController (1.3.1)
@@ -14,7 +17,9 @@ DEPENDENCIES:
   - AcknowList
   - AlertHUDKit
   - BiometricAuthentication
+  - Crashlytics
   - DynamicTabBarController
+  - Fabric
   - Former
   - PDFReader
   - RMDateSelectionViewController
@@ -24,13 +29,15 @@ SPEC CHECKSUMS:
   AcknowList: 1fae3fa62f256ddd1001adf20ba5c52743515ac7
   AlertHUDKit: 2686ae78f2f1fe6455f117d7e93e1e7731780fec
   BiometricAuthentication: e14b081ea7c59c6c4ee8b54f26489ce9d737ba51
+  Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   DynamicTabBarController: 26956b00a436740784993739dd8b376c46bf045a
+  Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
   Former: c3407c1d74f1b02014a7e8c6d7aa5bb4d1e5363b
   PDFReader: 2c4a845d0560f33221cf911516e3b700967680f6
   RMActionController: 535715be9f3d9eb96a838485370dcccee0dda597
   RMDateSelectionViewController: 1157d34245e6a1dda700e8a9c44417321d181951
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: d2b92a54f78d07cccd0185815092573a8f11fd8f
+PODFILE CHECKSUM: 595d3145e8889ba72092d8869c6a77c434d3a077
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

@@ -1,4 +1,4 @@
-app_identifier "org.cocoapods.Pods-Parse-Dashboard-for-iOS" # The bundle identifier of your app
+app_identifier "me.nathantannar.Parse-Dashboard-for-iOS" # The bundle identifier of your app
 apple_id "nathantannar4@gmail.com" # Your Apple email address
 
 itc_team_id "118035690" # iTunes Connect Team ID

@@ -80,6 +80,7 @@ class ServersViewController: PFCollectionViewController {
     override func setupCollectionView() {
         super.setupCollectionView()
         
+        collectionView?.refreshControl = refreshControl
         collectionView?.backgroundColor = .darkBlueBackground
         collectionView?.register(ServerCell.self, forCellWithReuseIdentifier: ServerCell.reuseIdentifier)
     }
@@ -170,7 +171,9 @@ class ServersViewController: PFCollectionViewController {
     
     // MARK: - CoreData Refresh
     
+    @objc
     func fetchServersFromCoreData() {
+        refreshControl.endRefreshing()
         guard let context = context else { return }
         let request: NSFetchRequest<ParseServerConfig> = ParseServerConfig.fetchRequest()
         do {

@@ -29,6 +29,8 @@ import UIKit
 import AlertHUDKit
 import DynamicTabBarController
 import CoreData
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -55,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        Fabric.with([Crashlytics.self])
+        
         // AlertHUDKit Defaults
         Alert.Defaults.Color.Info = .logoTint
         Alert.Defaults.Color.Warning = .darkPurpleBackground
@@ -64,6 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Alert.Defaults.Font.Warning = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Danger = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Success = .boldSystemFont(ofSize: 14)
+        
+        
         
         setupWindow()
         if let item = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {

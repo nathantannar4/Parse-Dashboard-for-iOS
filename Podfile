@@ -14,5 +14,7 @@ target 'Parse Dashboard for iOS' do
   pod 'BiometricAuthentication'
   pod 'AcknowList'
   pod 'PDFReader'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
 end
