@@ -1,17 +1,25 @@
 PODS:
-  - AcknowList (1.4)
-  - AlertHUDKit (1.0.0)
-  - BiometricAuthentication (1.0.2)
+  - AcknowList (1.6)
+  - AlertHUDKit (1.0.1)
+  - BiometricAuthentication (1.0.5)
+  - Bolts/Tasks (1.9.0)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
-  - DynamicTabBarController (1.0.0)
-  - Fabric (1.7.5)
-  - Former (1.6.0)
+  - DynamicTabBarController (1.0.1)
+  - Fabric (1.7.6)
+  - Former (1.6.1)
+  - FTLinearActivityIndicator (1.0.4)
+  - Parse (1.17.1):
+    - Parse/Core (= 1.17.1)
+  - Parse/Core (1.17.1):
+    - Bolts/Tasks (~> 1.9)
   - PDFReader (2.5.1)
   - RMActionController (1.3.1)
   - RMDateSelectionViewController (2.3.1):
     - RMActionController (~> 1.3.1)
+  - SwiftRater (1.0.0)
   - SwiftyJSON (4.0.0)
+  - WhatsNew (0.4.3)
 
 DEPENDENCIES:
   - AcknowList
@@ -21,23 +29,51 @@ DEPENDENCIES:
   - DynamicTabBarController
   - Fabric
   - Former
+  - FTLinearActivityIndicator
+  - Parse
   - PDFReader
   - RMDateSelectionViewController
+  - SwiftRater
   - SwiftyJSON
+  - WhatsNew
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AcknowList
+    - AlertHUDKit
+    - BiometricAuthentication
+    - Bolts
+    - Crashlytics
+    - DynamicTabBarController
+    - Fabric
+    - Former
+    - FTLinearActivityIndicator
+    - Parse
+    - PDFReader
+    - RMActionController
+    - RMDateSelectionViewController
+    - SwiftRater
+    - SwiftyJSON
+    - WhatsNew
 
 SPEC CHECKSUMS:
-  AcknowList: 1fae3fa62f256ddd1001adf20ba5c52743515ac7
-  AlertHUDKit: 2686ae78f2f1fe6455f117d7e93e1e7731780fec
-  BiometricAuthentication: e14b081ea7c59c6c4ee8b54f26489ce9d737ba51
+  AcknowList: 2b27ccc75110be58be37424c4b08b07bdec628b4
+  AlertHUDKit: 795605364a6b73f980a65fc9b9176bb5d8157806
+  BiometricAuthentication: e80e99bf1fe871ab624172eb91f1ddbbc47499b5
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
-  DynamicTabBarController: 26956b00a436740784993739dd8b376c46bf045a
-  Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
-  Former: c3407c1d74f1b02014a7e8c6d7aa5bb4d1e5363b
+  DynamicTabBarController: 475200d59b701b0b1c97ce5a58ae487de6f18163
+  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  Former: 830077d303185f56bcde1be0158b31f0626f1be4
+  FTLinearActivityIndicator: 0c4ff2067cd67d88fd932ec214da90083ea7148e
+  Parse: d3edaf8c7c722cb33cb83ba7821d015ae32d362d
   PDFReader: 2c4a845d0560f33221cf911516e3b700967680f6
   RMActionController: 535715be9f3d9eb96a838485370dcccee0dda597
   RMDateSelectionViewController: 1157d34245e6a1dda700e8a9c44417321d181951
+  SwiftRater: f8308d1ef8544a4136d45912ffb083f0b14f03ea
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
 
-PODFILE CHECKSUM: 595d3145e8889ba72092d8869c6a77c434d3a077
+PODFILE CHECKSUM: a85ef41ade11fdfe8c8c5b95fbcca0f202c6990c
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

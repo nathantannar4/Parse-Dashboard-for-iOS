@@ -84,7 +84,7 @@ class ObjectViewController: PFTableViewController {
     func handleRefresh() {
         
         guard let classname = object.schema?.name else { return }
-        Parse.shared.get("/classes/\(classname)/\(object.id)") { [weak self] (result, json) in
+        ParseLite.shared.get("/classes/\(classname)/\(object.id)") { [weak self] (result, json) in
             guard result.success, let json = json else {
                 self?.tableView.refreshControl?.endRefreshing()
                 self?.handleError(result.error)
@@ -193,7 +193,7 @@ class ObjectViewController: PFTableViewController {
             do {
                 print(body)
                 let data = try body.rawData()
-                Parse.shared.push(payload: data, completion: { [weak self] result, json in
+                ParseLite.shared.push(payload: data, completion: { [weak self] result, json in
                     guard result.success else {
                         self?.handleError(result.error)
                         return
@@ -222,7 +222,7 @@ class ObjectViewController: PFTableViewController {
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 
                 guard let classname = self?.object.schema?.name, let id = self?.object.id else { return }
-                Parse.shared.delete("/classes/\(classname)/\(id)", completion: { [weak self] (result, json) in
+                ParseLite.shared.delete("/classes/\(classname)/\(id)", completion: { [weak self] (result, json) in
                     guard result.success else {
                         self?.tableView.refreshControl?.endRefreshing()
                         self?.handleError(result.error)
@@ -400,13 +400,13 @@ class ObjectViewController: PFTableViewController {
                             handleError(nil)
                             return
                         }
-                        Parse.shared.get("/schemas/" + classname, completion: { [weak self] (result, json) in
+                        ParseLite.shared.get("/schemas/" + classname, completion: { [weak self] (result, json) in
                             
                             guard result.success, let schemaJSON = json else {
                                 self?.handleError(result.error)
                                 return
                             }
-                            Parse.shared.get("/classes/\(classname)/\(objectId)", completion: { (result, json) in
+                            ParseLite.shared.get("/classes/\(classname)/\(objectId)", completion: { (result, json) in
                                 guard result.success, let objectJSON = json else {
                                     self?.handleError(result.error)
                                     return
@@ -425,7 +425,7 @@ class ObjectViewController: PFTableViewController {
                             let relation = "\"$relatedTo\":{\"object\":\(object), \"key\":\"\(self.object.keys[indexPath.row])\"}"
                             let query = "where={" + relation + "}"
                             
-                            Parse.shared.get("/schemas/" + classname, completion: { [weak self] (result, json) in
+                            ParseLite.shared.get("/schemas/" + classname, completion: { [weak self] (result, json) in
                                 
                                 guard result.success, let json = json else {
                                     self?.handleError(result.error)
@@ -583,7 +583,7 @@ class ObjectViewController: PFTableViewController {
                 }
                 guard let targetClass = pointer["targetClass"] else { return }
                 
-                Parse.shared.get("/schemas/" + targetClass, completion: { [weak self] (result, json) in
+                ParseLite.shared.get("/schemas/" + targetClass, completion: { [weak self] (result, json) in
                     
                     guard result.success, let schemaJSON = json else {
                         self?.handleError(result.error)
@@ -666,11 +666,11 @@ class ObjectViewController: PFTableViewController {
             if let dict = value as? [String : AnyObject] {
                 if let type = dict["__type"] as? String {
                     // We need to remove the appId
-                    guard let appId = Parse.shared.currentConfiguration?.applicationId else { return }
+                    guard let appId = ParseLite.shared.currentConfiguration?.applicationId else { return }
                     
                     if type == .file, let urlString = (dict["url"] as? String)?.replacingOccurrences(of: "\(appId)/", with: ""), let url = URL(string: urlString) {
                         // Delete the file
-                        Parse.shared.delete(url: url, completion: { _, _ in })
+                        ParseLite.shared.delete(url: url, completion: { _, _ in })
                     }
                 }
             }
@@ -690,7 +690,7 @@ class ObjectViewController: PFTableViewController {
         }
         
         guard let classname = self.object.schema?.name else { return }
-        Parse.shared.put("/classes/\(classname)/\(object.id)", data: data, completion: { [weak self] (result, json) in
+        ParseLite.shared.put("/classes/\(classname)/\(object.id)", data: data, completion: { [weak self] (result, json) in
             
             guard result.success else {
                 self?.handleError(result.error)

@@ -51,6 +51,7 @@ open class DynamicTabBarCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 12)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     

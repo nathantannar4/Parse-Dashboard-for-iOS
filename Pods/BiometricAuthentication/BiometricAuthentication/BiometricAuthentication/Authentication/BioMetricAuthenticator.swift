@@ -76,14 +76,19 @@ public extension BioMetricAuthenticator {
         }
         
         // authenticate
-        BioMetricAuthenticator.shared.evaluate(policy: LAPolicy.deviceOwnerAuthentication, with: context, reason: reasonString, success: successBlock, failure: failureBlock)
+        if #available(iOS 9.0, *) {
+            BioMetricAuthenticator.shared.evaluate(policy: LAPolicy.deviceOwnerAuthentication, with: context, reason: reasonString, success: successBlock, failure: failureBlock)
+        } else {
+            // Fallback on earlier versions
+            BioMetricAuthenticator.shared.evaluate(policy: LAPolicy.deviceOwnerAuthenticationWithBiometrics, with: context, reason: reasonString, success: successBlock, failure: failureBlock)
+        }
     }
     
     /// checks if face id is avaiable on device
     public func faceIDAvailable() -> Bool {
         if #available(iOS 11.0, *) {
             let context = LAContext()
-            return (context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: nil) && context.biometryType == .faceID)
+            return (context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil) && context.biometryType == .faceID)
         }
         return false
     }

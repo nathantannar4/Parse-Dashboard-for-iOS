@@ -63,7 +63,7 @@ class SchemaDetailViewController: PFTableViewController {
     @objc
     func refreshClass() {
         
-        Parse.shared.get("/schemas/" + schema.name) { [weak self] (result, json) in
+        ParseLite.shared.get("/schemas/" + schema.name) { [weak self] (result, json) in
             guard result.success, let json = json else {
                 self?.handleError(result.error)
                 self?.tableView.refreshControl?.endRefreshing()
@@ -112,7 +112,7 @@ class SchemaDetailViewController: PFTableViewController {
     @objc
     func deleteSchema() {
         
-        Parse.shared.delete("/schemas/" + schema.name) { [weak self] (result, json) in
+        ParseLite.shared.delete("/schemas/" + schema.name) { [weak self] (result, json) in
             if result.success {
                 self?.handleSuccess("Class Deleted")
                  _ = self?.navigationController?.popViewController(animated: true)
@@ -135,7 +135,7 @@ class SchemaDetailViewController: PFTableViewController {
             
             guard let classname = self?.schema.name else { return }
             self?.handleSuccess("Deleting objects in class \(classname)")
-            Parse.shared.get("/classes/" + classname, completion: { [weak self] (result, json) in
+            ParseLite.shared.get("/classes/" + classname, completion: { [weak self] (result, json) in
                 
                 guard result.success, let results = json?["results"] as? [[String: AnyObject]] else {
                     self?.handleError(result.error)
@@ -143,7 +143,7 @@ class SchemaDetailViewController: PFTableViewController {
                 }
                 for result in results {
                     if let id = result["objectId"] as? String {
-                        Parse.shared.delete("/classes/\(classname)/\(id)", completion: { _,_  in })
+                        ParseLite.shared.delete("/classes/\(classname)/\(id)", completion: { _,_  in })
                     }
                 }
                 self?.deleteSchema() // Retry to delete the schema

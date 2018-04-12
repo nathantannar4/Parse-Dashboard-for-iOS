@@ -26,15 +26,17 @@
 //
 
 import UIKit
+import Crashlytics
+import Fabric
 
 typealias PFResult = (success: Bool, error: String?)
 typealias PFCompletionBlock = (PFResult, [String:AnyObject]?) -> Void
 
-class Parse: NSObject {
+class ParseLite: NSObject {
     
     // MARK: - Properties
     
-    static var shared = Parse()
+    static var shared = ParseLite()
     
     public private(set) var currentConfiguration: ParseServerConfig? {
         didSet {
@@ -256,7 +258,7 @@ class Parse: NSObject {
                         let jsonObject: [String : [String : String]] = [key : file]
                         do {
                             let data = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions.prettyPrinted)
-                            Parse.shared.put("/classes/\(classname)/\(objectId)", data: data, completion: completion)
+                            ParseLite.shared.put("/classes/\(classname)/\(objectId)", data: data, completion: completion)
                             
                         } catch let error {
                             DispatchQueue.main.sync { completion((false, error.localizedDescription), nil) }
@@ -379,6 +381,7 @@ class Parse: NSObject {
     
     private func logToConsole(_ message: String, kind: ConsoleView.LogKind) {
         print(message)
+        Answers.logCustomEvent(withName: message, customAttributes: nil)
         ConsoleView.shared.log(message: message, kind: kind)
     }
     

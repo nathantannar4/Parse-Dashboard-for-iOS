@@ -47,14 +47,13 @@ class IAPHandler: NSObject {
     }
     
     enum IAPProductId: String  {
-        case tier1 = "tier_one_tip"
-        case tier2 = "tier_two_tip"
-        case tier3 = "tier_three_tip"
+        case tier1 = "tier_a_tip"
+        case tier2 = "tier_b_tip"
     }
     
     static let shared = IAPHandler()
     
-    fileprivate var productIDs = [IAPProductId.tier1.rawValue, IAPProductId.tier2.rawValue, IAPProductId.tier3.rawValue]
+    fileprivate var productIDs = [IAPProductId.tier1.rawValue, IAPProductId.tier2.rawValue]
     fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
     

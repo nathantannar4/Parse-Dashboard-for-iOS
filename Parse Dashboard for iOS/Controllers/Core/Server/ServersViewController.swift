@@ -27,6 +27,8 @@
 
 import UIKit
 import DynamicTabBarController
+import WhatsNew
+import SwiftRater
 import CoreData
 
 class ServersViewController: PFCollectionViewController {
@@ -53,6 +55,21 @@ class ServersViewController: PFCollectionViewController {
         fetchServersFromCoreData()
         if shouldAnimateFirstLoad {
             collectionView?.transform = CGAffineTransform(translationX: 0, y: -view.frame.height)
+        }
+        if WhatsNew.shouldPresent() {
+            let whatsNew = WhatsNewViewController(items: [
+                WhatsNewItem.image(title: "Donations", subtitle: "Show your support for this project", image: #imageLiteral(resourceName: "Money")),
+                WhatsNewItem.image(title: "Reviews", subtitle: "Dont want to donate? It's now easier to write a review", image: #imageLiteral(resourceName: "Star")),
+                WhatsNewItem.image(title: "Crash Analytics", subtitle: "Fabric has been added to swiftly address bugs", image: #imageLiteral(resourceName: "Settings")),
+                WhatsNewItem.image(title: "Coming Soon", subtitle: "Language localization settings", image: #imageLiteral(resourceName: "Logo"))
+                ])
+            whatsNew.titleColor = .logoTint
+            whatsNew.itemTitleColor = .primaryColor
+            whatsNew.buttonTextColor = .white
+            whatsNew.buttonBackgroundColor = .logoTint
+            whatsNew.presentIfNeeded(on: self)
+        } else {
+            SwiftRater.check()
         }
     }
     
@@ -173,12 +190,12 @@ class ServersViewController: PFCollectionViewController {
     
     @objc
     func fetchServersFromCoreData() {
-        refreshControl.endRefreshing()
         guard let context = context else { return }
         let request: NSFetchRequest<ParseServerConfig> = ParseServerConfig.fetchRequest()
         do {
             servers = try context.fetch(request)
             collectionView?.reloadData()
+            collectionView?.refreshControl?.endRefreshing()
         } catch let error {
             handleError(error.localizedDescription)
         }
@@ -187,7 +204,7 @@ class ServersViewController: PFCollectionViewController {
     // MARK: - User Actions
     
     func showSchemasForConfig(_ config: ParseServerConfig) {
-        Parse.shared.initialize(with: config)
+        ParseLite.shared.initialize(with: config)
         let schemaViewController = SchemaViewController()
         schemaViewController.title = config.name
         navigationController?.pushViewController(schemaViewController, animated: true)

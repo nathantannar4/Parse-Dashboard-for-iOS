@@ -20,7 +20,7 @@ It's very simple and easy to use that handles Touch ID and Face ID authenticatio
 
 ## Requirements
 
-- iOS 9.0+
+- iOS 8.0+
 - Xcode 8+
 - Swift 3.0+
 
@@ -30,6 +30,12 @@ It's very simple and easy to use that handles Touch ID and Face ID authenticatio
 
 ```ruby
 pod 'BiometricAuthentication'
+```
+
+### Carthage
+
+```ruby
+github "rushisangani/BiometricAuthentication"
 ```
 
 ## Usage
@@ -130,6 +136,8 @@ BioMetricAuthenticator.authenticateWithPasscode(reason: "", success: {
     - Called when more than 5 failed attempts made using biometric authentication. This will locked your biometry system.
     - You'll restrict user when this error is occured.
     - Aleternatively you can ask user to enter device passcode to unlock biometry.
+8. **biometryNotAvailable**
+    - Called when device does not support Face ID or Touch ID authentication.
 
 ### Example
 
@@ -143,6 +151,11 @@ BioMetricAuthenticator.authenticateWithBioMetrics(reason: "", success: {
     // do nothing on canceled
     if error == .canceledByUser || error == .canceledBySystem {
         return
+    }
+    
+    // device does not support biometric (face id or touch id) authentication
+    else if error == .biometryNotAvailable {
+        self?.showErrorAlert(message: error.message())
     }
 
     // show alternatives on fallback button clicked

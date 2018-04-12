@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import SwiftRater
 import StoreKit
 
 class SupportViewController: UITableViewController {
@@ -100,11 +101,7 @@ class SupportViewController: UITableViewController {
             }
         } else if indexPath.section == 2 {
             if indexPath.row == 1 {
-                
-                guard let url = URL(string: "https://itunes.apple.com/ca/app/parse-dashboard/id1212141622?mt=8") else {
-                    return
-                }
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                SwiftRater.rateApp()
             } else {
                 guard let url = URL(string: "https://github.com/nathantannar4/Parse-Dashboard-for-iOS") else {
                     return
@@ -190,8 +187,8 @@ class SupportViewController: UITableViewController {
                     break
                 }
             } else {
-                cell.textLabel?.text = "In-App Donations Unavailable"
-                cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
+                cell.textLabel?.text = "Fetching Donation Options..."
+                cell.textLabel?.font = UIFont.italicSystemFont(ofSize: 18)
             }
         case 2:
             switch indexPath.row {

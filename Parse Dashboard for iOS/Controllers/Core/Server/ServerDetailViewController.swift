@@ -62,7 +62,7 @@ class ServerDetailViewController: PFTableViewController {
     @objc
     func refreshClass() {
        
-        Parse.shared.get("/serverInfo") { [weak self] (result, json) in
+        ParseLite.shared.get("/serverInfo") { [weak self] (result, json) in
             guard result.success, let json = json else {
                 self?.handleError(result.error)
                 self?.tableView.refreshControl?.endRefreshing()

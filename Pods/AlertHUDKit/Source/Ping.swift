@@ -114,7 +114,7 @@ open class Ping: UIView {
         guard let statusBar = statusBar else { return .zero }
         if UIDevice.current.model == .iPhoneX {
             return CGRect(x: 0, y: 0,
-                          width: statusBar.frame.size.width, height: statusBar.frame.height + 10)
+                          width: statusBar.frame.size.width, height: statusBar.frame.height + 6)
         } else {
             return statusBar.frame
         }

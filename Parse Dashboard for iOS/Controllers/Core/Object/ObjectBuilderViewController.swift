@@ -195,7 +195,7 @@ class ObjectBuilderViewController: FormViewController {
                 
                 do {
                     let data = try newField.rawData()
-                    Parse.shared.put("/schemas/" + className, data: data, completion: { (result, json) in
+                    ParseLite.shared.put("/schemas/" + className, data: data, completion: { (result, json) in
                         guard result.success, let json = json else {
                             self?.handleError(result.error)
                             return
@@ -320,7 +320,7 @@ class ObjectBuilderViewController: FormViewController {
                     self?.former.deselect(animated: true)
                     
                     guard let targetClass = targetClass else { return }
-                    Parse.shared.get("/schemas/" + targetClass, completion: { [weak self] (result, json) in
+                    ParseLite.shared.get("/schemas/" + targetClass, completion: { [weak self] (result, json) in
                         
                         guard result.success, let schemaJSON = json else {
                             self?.handleError(result.error)
@@ -394,7 +394,7 @@ class ObjectBuilderViewController: FormViewController {
         
         do {
             let data = try body.rawData()
-            Parse.shared.post("/classes/" + schema.name, data: data, completion: { [weak self] (result, json) in
+            ParseLite.shared.post("/classes/" + schema.name, data: data, completion: { [weak self] (result, json) in
                 guard result.success, let json = json else {
                     self?.handleError(result.error)
                     return

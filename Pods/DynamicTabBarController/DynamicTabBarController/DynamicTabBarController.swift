@@ -449,9 +449,15 @@ extension DynamicTabBarController: UICollectionViewDataSource {
 extension DynamicTabBarController: UICollectionViewDelegate {
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        displayViewController(at: indexPath.row, animated: true)
+
+        defer { displayViewController(at: indexPath.row, animated: true) }
+        
         tabBar.updateUserInteraction(isEnabled: false)
         tabBar.moveCurrentBarView(to: indexPath.row, animated: true, shouldScroll: true)
+        
+        // If the currentIndex is selected try to pop to a UINav root
+        guard currentIndex == indexPath.row, let navigationController = viewControllers[indexPath.row] as? UINavigationController else { return }
+        navigationController.popToRootViewController(animated: true)
     }
     
 }

@@ -95,7 +95,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         if collectionView?.numberOfSections != 0 {
             collectionView?.deleteSections([0])
         }
-        Parse.shared.get("/classes/" + schema.name, query: "?" + query) { [weak self] (result, json) in
+        ParseLite.shared.get("/classes/" + schema.name, query: "?" + query) { [weak self] (result, json) in
             guard result.success else {
                 self?.handleError(result.error)
                 self?.refreshControl.endRefreshing()
@@ -202,7 +202,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
             do {
                 print(body)
                 let data = try body.rawData()
-                Parse.shared.push(payload: data, completion: { [weak self] result, json in
+                ParseLite.shared.push(payload: data, completion: { [weak self] result, json in
                     guard result.success else {
                         self?.handleError(result.error)
                         return
@@ -318,7 +318,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
             UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
                 
                 guard let classname = self?.schema.name else { return }
-                Parse.shared.delete("/classes/\(classname)/\(object.id)", completion: { [weak self] (result, json) in
+                ParseLite.shared.delete("/classes/\(classname)/\(object.id)", completion: { [weak self] (result, json) in
                     guard result.success else {
                         self?.handleError(result.error)
                         return

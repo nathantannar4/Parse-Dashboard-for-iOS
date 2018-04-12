@@ -1,7 +1,7 @@
 //
 // AcknowListViewController.swift
 //
-// Copyright (c) 2015-2017 Vincent Tourraine (http://www.vtourraine.net)
+// Copyright (c) 2015-2018 Vincent Tourraine (http://www.vtourraine.net)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,16 @@ open class AcknowListViewController: UITableViewController {
     }
 
     /**
+     Initializes the `AcknowListViewController` instance for the plist file based on its name.
+
+     - returns: The new `AcknowListViewController` instance.
+     */
+    public convenience init(fileNamed fileName: String) {
+        let path = AcknowListViewController.acknowledgementsPlistPath(name: fileName)
+        self.init(acknowledgementsPlistPath: path)
+    }
+
+    /**
      Initializes the `AcknowListViewController` instance for a plist file path.
 
      - parameter acknowledgementsPlistPath: The path to the acknowledgements plist file.
@@ -94,7 +104,7 @@ open class AcknowListViewController: UITableViewController {
 
     func commonInit(acknowledgementsPlistPath: String?) {
         self.title = AcknowLocalization.localizedTitle()
-
+        
         if let acknowledgementsPlistPath = acknowledgementsPlistPath {
             let parser = AcknowParser(plistPath: acknowledgementsPlistPath)
             let headerFooter = parser.parseHeaderAndFooter()
@@ -140,8 +150,21 @@ open class AcknowListViewController: UITableViewController {
     }
 
     class func defaultAcknowledgementsPlistPath() -> String? {
-        let DefaultAcknowledgementsPlistName = "Pods-acknowledgements"
-        return self.acknowledgementsPlistPath(name: DefaultAcknowledgementsPlistName)
+        guard let bundleName = Bundle.main.infoDictionary?["CFBundleName"] as? String else {
+            return nil
+        }
+
+        let defaultAcknowledgementsPlistName = "Pods-\(bundleName)-acknowledgements"
+        let defaultAcknowledgementsPlistPath = self.acknowledgementsPlistPath(name: defaultAcknowledgementsPlistName)
+
+        if let defaultAcknowledgementsPlistPath = defaultAcknowledgementsPlistPath,
+            FileManager.default.fileExists(atPath: defaultAcknowledgementsPlistPath) == true {
+            return defaultAcknowledgementsPlistPath
+        }
+        else {
+            // Legacy value
+            return self.acknowledgementsPlistPath(name: "Pods-acknowledgements")
+        }
     }
 
     // MARK: - View life cycle
@@ -219,7 +242,11 @@ open class AcknowListViewController: UITableViewController {
     @IBAction open func openCocoaPodsWebsite(_ sender: AnyObject) {
         let url = URL(string: AcknowLocalization.CocoaPodsURLString())
         if let url = url {
-            UIApplication.shared.openURL(url)
+            if #available(iOS 10.0, tvOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
     }
 
@@ -243,7 +270,7 @@ open class AcknowListViewController: UITableViewController {
     }
 
     func configureHeaderView() {
-        let font = UIFont.systemFont(ofSize: 12)
+        let font = UIFont.preferredFont(forTextStyle: .footnote)
         let labelWidth = self.view.frame.width - 2 * AcknowListViewController.LabelMargin()
 
         if let headerText = self.headerText {
@@ -274,7 +301,7 @@ open class AcknowListViewController: UITableViewController {
     }
 
     func configureFooterView() {
-        let font = UIFont.systemFont(ofSize: 12)
+        let font = UIFont.preferredFont(forTextStyle: .footnote)
         let labelWidth = self.view.frame.width - 2 * AcknowListViewController.LabelMargin()
 
         if let footerText = self.footerText {
@@ -311,7 +338,7 @@ open class AcknowListViewController: UITableViewController {
     }
 
     func heightForLabel(text labelText: NSString, width labelWidth: CGFloat) -> CGFloat {
-        let font = UIFont.systemFont(ofSize: 12)
+        let font = UIFont.preferredFont(forTextStyle: .footnote)
         let options: NSStringDrawingOptions = NSStringDrawingOptions.usesLineFragmentOrigin
         // should be (NSLineBreakByWordWrapping | NSStringDrawingUsesLineFragmentOrigin)?
         let labelBounds: CGRect = labelText.boundingRect(with: CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude), options: options, attributes: [NSAttributedStringKey.font: font], context: nil)

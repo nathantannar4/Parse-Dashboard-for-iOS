@@ -1,11 +1,12 @@
 ![Former](https://raw.githubusercontent.com/ra1028/Former/master/Logo.png)
+
 #### Former is a fully customizable Swift library for easy creating UITableView based form.
 [![Swift3](https://img.shields.io/badge/swift3-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift)
 [![CocoaPods Shield](https://img.shields.io/cocoapods/v/Former.svg)](https://cocoapods.org/pods/Former)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE)
 
-## Overview
+## Demo
 <img src="http://i.imgur.com/1gOwZZN.gif" width="220">
 <img src="http://i.imgur.com/g9yeTtV.gif" width="220">
 <img src="http://i.imgur.com/ouM1SsG.gif" width="220">
@@ -20,6 +21,8 @@
   + [SectionFormer](#sectionformer)
   + [Former](#former)
   + [Customizability](#customizability)
+* [Contributing](#contributing)
+* [Submitting Issues](#submitting-issues)
 * [License](#license)
 
 ## Requirements  
@@ -37,7 +40,9 @@ Add the following line to your Podfile:
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-  pod "Former"
+
+  pod 'Former'
+  
 end
 ```
 #### [Carthage](https://github.com/Carthage/Carthage)
@@ -47,8 +52,9 @@ github "ra1028/Former"
 ```
 
 ## Usage
-You can setting the cell appearance and events callback at the same time.  
-ViewController and Cell does not need to override the ones that are provided by default.  
+You can set the cell's appearance and events-callback at the same time.  
+ViewController and Cell do not need to override the provided defaults. 
+
 ### Simple Example
 ```Swift
 import Former
@@ -84,10 +90,10 @@ final class ViewController: FormViewController {
 
 
 ### RowFormer
-RowFormer is base of the class that manages the cell.  
-Cell that managed by the RowFormer class should conform to the corresponding protocol.  
-Each of RowFormer classes You can set the event handling in function named like on~ (onSelected, onValueChanged, etc...)  
-Default provided RowFormer classes and the protocols that corresponding to it are the below.  
+RowFormer is the base class of the class that manages the cell.
+A cell that is managed by the RowFormer class should conform to the corresponding protocol.
+Each of the RowFormer classes exposes event handling in functions named "on*" (e.g., onSelected, onValueChanged, etc...)  
+Default provided RowFormer classes and the protocols that corresponding to it are listed below.  
 
 <table>
 <thead>
@@ -168,15 +174,15 @@ Default provided RowFormer classes and the protocols that corresponding to it ar
 </tr>
 <tr>
 <td><img src="http://i.imgur.com/jUn8Get.gif" width="200"></td>
-<td>SelecterPickerRowFormer</td>
-<td>SelecterPickerFormableRow</td>
-<td>FormSelecterPickerCell</td>
+<td>SelectorPickerRowFormer</td>
+<td>SelectorPickerFormableRow</td>
+<td>FormSelectorPickerCell</td>
 </tr>
 <tr>
 <td><img src="http://i.imgur.com/VfxaKoL.gif" width="200"></td>
-<td>SelecterDatePickerRowFormer</td>
-<td>SelecterDatePickerFormableRow</td>
-<td>FormSelecterDatePickerCell</td>
+<td>SelectorDatePickerRowFormer</td>
+<td>SelectorDatePickerFormableRow</td>
+<td>FormSelectorDatePickerCell</td>
 </tr>
 <tr>
 <td><img src="http://i.imgur.com/NHb6SXy.gif" width="200"></td>
@@ -228,9 +234,9 @@ row.dynamicRowHeight { tableView, indexPath -> CGFloat in
 
 
 ### ViewFormer
-ViewFormer is base of the class that manages the HeaderFooterView.  
-HeaderFooterView that managed by the ViewFormer class should conform to the corresponding protocol.  
-Default provided ViewFormer classes and the protocols that corresponding to it are the below.  
+ViewFormer is base class of the class that manages the HeaderFooterView.  
+A HeaderFooterView that is managed by the ViewFormer class should conform to the corresponding protocol.
+Default provided ViewFormer classes and the protocols that correspond to it are listed below.  
 
 <table>
 <thead>
@@ -375,8 +381,8 @@ public func didUnHighlightCell(handler: (NSIndexPath -> Void)) -> Self
 
 ### Customizability
 __ViewController__  
-There is no need to inherit the FormViewController.  
-Create an instance of UITableView and Former, as in the following example.
+There is no need to inherit from the FormViewController class.  
+Instead, create an instance of UITableView and Former, as in the following example.
 ```Swift
 final class YourViewController: UIViewController {    
 
@@ -386,9 +392,9 @@ final class YourViewController: UIViewController {
     ...
 ```
 __Cell__
-Need not to inherit the default provided cell (FormLabelCell etc ...), but need conform to the corresponding protocol.
-You can use course Nib.
-Example with LabelRowFormer:
+There is likewise no need to inherit from the default provided cell class (FormLabelCell etc ...); only conform to the corresponding protocol.
+You can use Nibs, of course.
+An example with LabelRowFormer:
 ```Swift
 final class YourCell: UITableViewCell, LabelFormableRow {
 
@@ -414,10 +420,10 @@ final class YourCell: UITableViewCell, LabelFormableRow {
     ...
 ```
 __RowFormer__
-If you want to create a custom RowFormer, inherits the BaseRowFormer and comply with the Formable protocol.  
-It must conform to In ConfigurableInlineForm in case of InlineRowFomer, conform to UpdatableSelectorForm case of SelectorRowFormer.
+If you want to create a custom RowFormer, make your class inherit from BaseRowFormer and comply with the Formable protocol.  
+It must conform to ConfigurableInlineForm. In the case of InlineRowFomer, conform to the UpdatableSelectorForm case of SelectorRowFormer.
 Please look at the source code for details.  
-Examples of RowFormer of cells with two a UITextField:  
+Examples of RowFormer using cells with two UITextFields:  
 ```Swift
 public protocol DoubleTextFieldFormableRow: FormableRow {
 
@@ -489,6 +495,20 @@ public final class DoubleTextFieldRowFormer<T: UITableViewCell where T: DoubleTe
     }
 }
 ```
+
+## Contributing
+If you're interesting in helping us improve and maintain Former, it is highly encouraged that you fork the repository and submit a pull request with your updates.
+
+If you do chose to submit a pull request, please make sure to clearly document what changes you have made in the description of the PR. 
+
+## Submitting Issues
+If you find yourself having any issues with Former, feel free to submit an issue. Please BE SURE to include the following:
+
+* TITLE
+* ISSUE DESCRIPTION
+* HOW TO REPLICATE ISSUE
+
+If your issue doesn't contain this information, it will be closed due to lack of information.
 
 ## License
 Former is available under the MIT license. See the LICENSE file for more info.

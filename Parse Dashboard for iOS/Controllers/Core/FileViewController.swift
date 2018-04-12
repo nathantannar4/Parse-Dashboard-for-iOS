@@ -68,6 +68,7 @@ class FileViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "File")
         imageView.contentMode = .center
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -220,17 +221,17 @@ class FileViewController: UIViewController {
     
     func deleteOldFile() {
         
-        if let appId = Parse.shared.currentConfiguration?.applicationId,
+        if let appId = ParseLite.shared.currentConfiguration?.applicationId,
            let urlString = url?.absoluteString.replacingOccurrences(of: "\(appId)/", with: ""),
            let url = URL(string: urlString) {
             // Delete the old file
-            Parse.shared.delete(url: url, completion: { _, _ in
+            ParseLite.shared.delete(url: url, completion: { _, _ in
                 Toast(text: "Deleted Old File").present(self)
             })
         }
         
         // Update the current url
-        Parse.shared.get("/classes/\(schema.name)/\(objectId)") { [weak self] result, json in
+        ParseLite.shared.get("/classes/\(schema.name)/\(objectId)") { [weak self] result, json in
             guard let json = json, let key = self?.key else { return }
             let updatedObject = PFObject(json)
             if let urlString = (updatedObject.value(forKey: key) as? [String:String])?["url"] {
@@ -322,7 +323,7 @@ extension FileViewController: UIDocumentBrowserViewControllerDelegate {
     private func uploadFile(data: Data, for fileType: String) {
         
         Toast(text: "Uploading").present(self, animated: true, duration: 1)
-        Parse.shared.post(filename: self.filename , classname:  self.schema.name, key: self.key,
+        ParseLite.shared.post(filename: self.filename , classname:  self.schema.name, key: self.key,
                           objectId: self.objectId, data: data, fileType: fileType, contentType: "application/\(fileType)",
                           completion: { [weak self] (result, json) in
             guard result.success else {

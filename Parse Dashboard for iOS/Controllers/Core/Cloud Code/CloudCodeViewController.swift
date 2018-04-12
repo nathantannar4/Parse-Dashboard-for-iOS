@@ -225,7 +225,7 @@ class CloudCodeViewController: PFTableViewController {
         guard let endpoint = cloudCode.endpoint, let name = cloudCode.name else { return }
         let data = cloudCode.body?.data(using: .utf8)
         handeLog("POST \(endpoint)/\(name)")
-        Parse.shared.post("\(endpoint)/\(name)", data: data) { (result, json) in
+        ParseLite.shared.post("\(endpoint)/\(name)", data: data) { (result, json) in
             guard result.success, let json = json else {
                 self.handeLog(result.error)
                 return

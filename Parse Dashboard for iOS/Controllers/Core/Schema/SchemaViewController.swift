@@ -73,7 +73,7 @@ class SchemaViewController: PFCollectionViewController {
         if collectionView?.numberOfSections != 0 {
             collectionView?.deleteSections([0])
         }
-        Parse.shared.get("/schemas") { [weak self] (result, json) in
+        ParseLite.shared.get("/schemas") { [weak self] (result, json) in
             guard result.success else {
                 self?.handleError(result.error)
                 self?.refreshControl.endRefreshing()
@@ -188,7 +188,7 @@ class SchemaViewController: PFCollectionViewController {
     
     @objc
     func showServerInfo() {
-        Parse.shared.get("/serverInfo") { [weak self] (result, json) in
+        ParseLite.shared.get("/serverInfo") { [weak self] (result, json) in
             guard result.success, let json = json else {
                 self?.handleError(result.error)
                 return
@@ -245,7 +245,7 @@ class SchemaViewController: PFCollectionViewController {
         let createAction = UIAlertAction(title: "Create", style: .default, handler: { [weak self] _ in
             
             guard let classname = alert.textFields?.first?.text?.replacingOccurrences(of: " ", with: "_") else { return }
-            Parse.shared.post("/schemas/" + classname, completion: { (result, json) in
+            ParseLite.shared.post("/schemas/" + classname, completion: { (result, json) in
                 guard result.success, let json = json else {
                     self?.handleError(result.error)
                     return
@@ -293,7 +293,7 @@ class SchemaViewController: PFCollectionViewController {
     func deleteSchema(at indexPath: IndexPath) {
         
         let schema = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
-        Parse.shared.delete("/schemas/" + schema.name) { [weak self] (result, json) in
+        ParseLite.shared.delete("/schemas/" + schema.name) { [weak self] (result, json) in
             if result.success {
                 self?.handleSuccess("Class `\(schema.name)` deleted")
                 if self?.isFiltering() == true {
@@ -332,7 +332,7 @@ class SchemaViewController: PFCollectionViewController {
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             
-            Parse.shared.get("/classes/" + schema.name, completion: { [weak self] (result, json) in
+            ParseLite.shared.get("/classes/" + schema.name, completion: { [weak self] (result, json) in
                 
                 guard result.success, let results = json?["results"] as? [[String: AnyObject]] else {
                     self?.handleError(result.error)
@@ -341,7 +341,7 @@ class SchemaViewController: PFCollectionViewController {
                 self?.handleSuccess("Deleting objects in \(schema.name)")
                 for result in results {
                     if let id = result[.objectId] as? String {
-                        Parse.shared.delete("/classes/\(schema.name)/\(id)", completion: { _,_  in })
+                        ParseLite.shared.delete("/classes/\(schema.name)/\(id)", completion: { _,_  in })
                     }
                 }
                 // Retry to delete the schema after a delay

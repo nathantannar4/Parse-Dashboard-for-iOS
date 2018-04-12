@@ -2,7 +2,8 @@
 platform :ios, '10.0'
 
 target 'Parse Dashboard for iOS' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  
+  inhibit_all_warnings!
   use_frameworks!
 
   # Pods for Parse Dashboard for iOS
@@ -14,7 +15,11 @@ target 'Parse Dashboard for iOS' do
   pod 'BiometricAuthentication'
   pod 'AcknowList'
   pod 'PDFReader'
+  pod 'WhatsNew'
+  pod 'SwiftRater'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'FTLinearActivityIndicator'
+  pod 'Parse'
 
 end

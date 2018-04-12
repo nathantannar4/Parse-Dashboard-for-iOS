@@ -107,13 +107,13 @@ class ArrayViewController: PFTableViewController {
             
             guard let classname = dict["className"] as? String, let objectId = dict[.objectId] as? String else { return }
             
-            Parse.shared.get("/schemas/" + classname, completion: { [weak self] (result, json) in
+            ParseLite.shared.get("/schemas/" + classname, completion: { [weak self] (result, json) in
                 
                 guard result.success, let schemaJSON = json else {
                     self?.handleError(result.error)
                     return
                 }
-                Parse.shared.get("/classes/\(classname)/\(objectId)", completion: { (result, json) in
+                ParseLite.shared.get("/classes/\(classname)/\(objectId)", completion: { (result, json) in
                     guard result.success, let objectJSON = json else {
                         self?.handleError(result.error)
                         return

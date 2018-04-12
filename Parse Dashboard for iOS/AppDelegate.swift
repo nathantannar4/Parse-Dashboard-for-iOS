@@ -27,10 +27,14 @@
 
 import UIKit
 import AlertHUDKit
+import FTLinearActivityIndicator
 import DynamicTabBarController
 import CoreData
+import Parse
+import UserNotifications
 import Fabric
 import Crashlytics
+import SwiftRater
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -57,9 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        Fabric.with([Crashlytics.self])
+        // Configure Fabric
+        Fabric.with([Crashlytics.self, Answers.self])
         
-        // AlertHUDKit Defaults
+        // Configure AlertHUDKit
         Alert.Defaults.Color.Info = .logoTint
         Alert.Defaults.Color.Warning = .darkPurpleBackground
         Alert.Defaults.Color.Danger = .red
@@ -69,7 +74,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Alert.Defaults.Font.Danger = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Success = .boldSystemFont(ofSize: 14)
         
+        // Configure SwiftRater
+        SwiftRater.useStoreKitIfAvailable = true
+        SwiftRater.daysUntilPrompt = 7
+        SwiftRater.usesUntilPrompt = 10
+        SwiftRater.significantUsesUntilPrompt = 3
+        SwiftRater.daysBeforeReminding = 1
+        SwiftRater.showLaterButton = true
+        SwiftRater.debugMode = false
+        SwiftRater.appLaunched()
         
+        // Configure Parse
+        setupParse()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { accepted, error in
+            guard accepted else { return }
+            DispatchQueue.main.async {
+                application.registerForRemoteNotifications()
+            }
+        }
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        UIApplication.configureLinearNetworkActivityIndicatorIfNeeded()
         
         setupWindow()
         if let item = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {
@@ -111,6 +136,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         
         navigateDeepLink(to: shortcutItem)
+    }
+    
+    // MARK: - Push Notifications
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let installation = PFInstallation.current()
+        installation?.setDeviceTokenFrom(deviceToken)
+        installation?.saveInBackground()
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        if (error as NSError).code == 3010 {
+            print("Push notifications are not supported in the iOS Simulator.")
+        } else {
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+        }
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        if let data = userInfo["aps"] {
+            print("Recieved Remote Notification: \(data)")
+            let title = (data as AnyObject).value(forKey: "title") as? String
+            let alert = (data as AnyObject).value(forKey: "alert") as? String
+            var message: String?
+            if let title = title, let alert = alert {
+                message = title + ": " + alert
+            } else {
+                message = title ?? alert
+            }
+            guard let notificationMessage = message else { return }
+            UIApplication.shared.applicationIconBadgeNumber += 1
+            Ping(text: notificationMessage, style: .info).show(animated: true, duration: 5)
+        }
     }
     
     // MARK: - Window Setup
@@ -258,6 +317,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 blurView.isHidden = false
             }
         }
+    }
+    
+    // MARK: - Parse
+    
+    func setupParse() {
+        
+        let config = ParseClientConfiguration {
+            $0.applicationId = "yTJ0pnOP0yjl9WhFTijhXRv5BK55a9ewLC0CjsSS"
+            $0.clientKey = "haEk6JilsROkkLfhyCDmG7aLMVmhnkxY13qOkE7y"
+            $0.server = "https://parseapi.back4app.com/"
+        }
+        Parse.initialize(with: config)
+        PFUser.enableAutomaticUser()
+        
+        // Get some analytics
+        if let runCount = PFUser.current()?.value(forKey: "runCount") as? Int {
+            PFUser.current()?.setValue(runCount + 1, forKey: "runCount")
+        } else {
+            PFUser.current()?.setValue(1, forKey: "runCount")
+        }
+        PFUser.current()?.setValue(Locale.current.languageCode, forKey: "locale")
+        PFUser.current()?.saveInBackground()
     }
 }
 
