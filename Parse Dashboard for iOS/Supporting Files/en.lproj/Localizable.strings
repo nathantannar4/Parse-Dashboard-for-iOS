@@ -5,3 +5,42 @@
   Created by Nathan Tannar on 4/11/18.
   Copyright © 2018 Nathan Tannar. All rights reserved.
 */
+
+"Search"="Search";
+"About"="About";
+"Cancel"="Cancel";
+"Share"="Share";
+"ShareCaption"="Check out this awesome mobile Parse Dashboard client for iOS";
+"MoreOptions"="More Options";
+"Continue"="Continue";
+"GetStarted"="Get Started";
+"OpenSource"="Open Source";
+"OpenSourceInfo"= "Interested in viewing the code for this app? This app is open source! Tap the GitHub logo to view the repo.";
+"DataSecurity"="Data Security";
+"DataSecurityInfo"="Privacy and data protection is important. Know that your Parse Server's application identifier and master key are only stored on your devices core data";
+"AppDescription"="A beautiful unofficial mobile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.";
+"Success"="Success";
+"UnknownError"="Unknown Error";
+"Support"="Support";
+"SupportInfo"="Thank you for using Parse Dashboard for iOS! Like you I was developing apps that used Parse Server. I wanted an easy way to view my database on my phone so I developed my own mobile dashboard. I released this app for free with no ads. So please, if you enjoy it please donate and or leave a star on the Github Repo to show your support!";
+"MakeDonation"="Make a Donation";
+"FanPrompt"="Show You're a Fan";
+"RatePrompt"="Rate on the App Store";
+"StarRepoPrompt"="Star GitHub Repo";
+"Settings"="Settings";
+"Home"="Home";
+"Add"="Add";
+"Recent"="Recent";
+"IAPDisabled"="Purchases are disabled in your device!";
+"IAPRestored"="You've successfully restored your purchase!";
+"IAPPurchased"="You've successfully bought this purchase!";
+"NoNetwork"="Network Connection Unavailable";
+"InvalidURL"="Invalid Server URL";
+"Edit"="Edit";
+"Duplicate"="Duplicate";
+"Export"="Export";
+"Delete"="Delete";
+"Actions"="Actions";
+"Servers"="Servers";
+"Save"="Save";
+"Details"="Details";
