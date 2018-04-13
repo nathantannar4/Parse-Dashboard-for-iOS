@@ -124,7 +124,7 @@ class ObjectViewController: PFTableViewController {
                             style: .plain,
                             target: self,
                             action: #selector(toggleView(sender:))),
-            UIBarButtonItem(image: UIImage(named: "Delete"),
+            UIBarButtonItem(image: UIImage(named: Localizable.delete.localized),
                             style: .plain,
                             target: self,
                             action: #selector(deleteObject))
@@ -205,7 +205,7 @@ class ObjectViewController: PFTableViewController {
             }
         })
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: Localizable.cancel.localized, style: .destructive, handler: nil))
         alert.addAction(saveAction)
         alert.addTextField { $0.placeholder = "Title" }
         alert.addTextField { $0.placeholder = "Message" }
@@ -219,7 +219,7 @@ class ObjectViewController: PFTableViewController {
         alert.configureView()
         
         let actions = [
-            UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
                 
                 guard let classname = self?.object.schema?.name, let id = self?.object.id else { return }
                 ParseLite.shared.delete("/classes/\(classname)/\(id)", completion: { [weak self] (result, json) in
@@ -232,7 +232,7 @@ class ObjectViewController: PFTableViewController {
                     _ = self?.navigationController?.popViewController(animated: true)
                 })
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil),
             ]
         actions.forEach { alert.addAction($0) }
         self.present(alert, animated: true, completion: nil)
@@ -499,13 +499,13 @@ class ObjectViewController: PFTableViewController {
                 let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
                 alert.configureView()
                 
-                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+                let saveAction = UIAlertAction(title: Localizable.save.localized, style: .default, handler: { [weak self] _ in
                     guard let newValue = alert.textFields?.first?.text else { return }
                     let data = "{\"\(key)\":\"\(newValue)\"}".data(using: .utf8)
                     self?.updateField(with: data)
                 })
 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                let cancelAction = UIAlertAction(title: Localizable.cancel.localized, style: .destructive, handler: nil)
                 alert.addAction(cancelAction)
                 alert.addAction(saveAction)
 
@@ -520,13 +520,13 @@ class ObjectViewController: PFTableViewController {
                 let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
                 alert.configureView()
                 
-                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+                let saveAction = UIAlertAction(title: Localizable.save.localized, style: .default, handler: { [weak self] _ in
                     guard let newValue = alert.textFields?.first?.text else { return }
                     let data = "{\"\(key)\":\(newValue)}".data(using: .utf8)
                     self?.updateField(with: data)
                 })
 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                let cancelAction = UIAlertAction(title: Localizable.cancel.localized, style: .destructive, handler: nil)
                 alert.addAction(cancelAction)
                 alert.addAction(saveAction)
 
@@ -547,7 +547,7 @@ class ObjectViewController: PFTableViewController {
                     let data = "{\"\(key)\":{\"__type\":\"Date\", \"iso\":\"\(dateString)\"}}".data(using: .utf8)
                     self?.updateField(with: data)
                 })
-                let cancelAction = RMAction<UIDatePicker>(title: "Cancel", style: .destructive, andHandler: nil)
+                let cancelAction = RMAction<UIDatePicker>(title: Localizable.cancel.localized, style: .destructive, andHandler: nil)
                 guard let datePicker = RMDateSelectionViewController(style: .white, title: key, message: type, select: selectAction, andCancel: cancelAction) else { return }
                 datePicker.disableMotionEffects = true
                 datePicker.disableBouncingEffects = true
@@ -602,7 +602,7 @@ class ObjectViewController: PFTableViewController {
                 let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
                 alert.configureView()
                 
-                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+                let saveAction = UIAlertAction(title: Localizable.save.localized, style: .default, handler: { [weak self] _ in
                     
                     guard let newValue = alert.textFields?.first?.text else { return }
                     print(newValue)
@@ -611,7 +611,7 @@ class ObjectViewController: PFTableViewController {
                     self?.updateField(with: data)
                 })
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                let cancelAction = UIAlertAction(title: Localizable.cancel.localized, style: .destructive, handler: nil)
                 alert.addAction(cancelAction)
                 alert.addAction(saveAction)
                 
@@ -635,7 +635,7 @@ class ObjectViewController: PFTableViewController {
                 let alert = UIAlertController(title: key, message: type, preferredStyle: .alert)
                 alert.configureView()
                 
-                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] _ in
+                let saveAction = UIAlertAction(title: Localizable.save.localized, style: .default, handler: { [weak self] _ in
                     
                     guard let newValue = alert.textFields?.first?.text else { return }
                     print(newValue)
@@ -644,7 +644,7 @@ class ObjectViewController: PFTableViewController {
                     self?.updateField(with: data)
                 })
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                let cancelAction = UIAlertAction(title: Localizable.cancel.localized, style: .destructive, handler: nil)
                 alert.addAction(cancelAction)
                 alert.addAction(saveAction)
                 
@@ -659,7 +659,7 @@ class ObjectViewController: PFTableViewController {
         })
         editAction.backgroundColor = .logoTint
 
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { action, indexpath in
+        let deleteAction = UITableViewRowAction(style: .destructive, title: Localizable.delete.localized, handler: { action, indexpath in
             
             let keys = self.object.keys
             let value = self.object.value(forKey: keys[indexPath.row])

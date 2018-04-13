@@ -39,9 +39,9 @@ class IAPHandler: NSObject {
         
         func message() -> String {
             switch self {
-            case .disabled: return "Purchases are disabled in your device!"
-            case .restored: return "You've successfully restored your purchase!"
-            case .purchased: return "You've successfully bought this purchase!"
+            case .disabled: return Localizable.iap_disabled.localized
+            case .restored: return Localizable.iap_restored.localized
+            case .purchased: return Localizable.iap_purchased.localized
             }
         }
     }

@@ -106,7 +106,7 @@ class ObjectBuilderViewController: FormViewController {
             ]
             navigationItem.hidesSearchBarWhenScrolling = false
         }
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: Localizable.cancel.localized, style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                            target: self,
                                                            action: #selector(cancelCreation))
@@ -373,12 +373,12 @@ class ObjectBuilderViewController: FormViewController {
     // MARK: - Error Handling
     
     func handleError(_ error: String?) {
-        let error = error ?? "Unexpected Error"
+        let error = error ?? Localizable.unknownError.localized
         Ping(text: error, style: .danger).show()
     }
     
     func handleSuccess(_ message: String?) {
-        let message = message?.capitalized ?? "Success"
+        let message = message?.capitalized ?? Localizable.success.localized
         Ping(text: message, style: .success).show()
     }
     

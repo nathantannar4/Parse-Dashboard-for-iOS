@@ -158,7 +158,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
         header.textLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         switch section {
         case 0:
-            header.textLabel?.text = "Search Key"
+            header.textLabel?.text = Localizable.search.localized + " Key"
             return header
         case 1:
             header.textLabel?.text = "Saved Queries"
@@ -195,7 +195,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
             cell.textLabel?.font = UIFont.systemFont(ofSize: 12)
             cell.textLabel?.numberOfLines = 0
             let searchKey = savedQueries[indexPath.row].searchKey ?? .objectId
-            cell.detailTextLabel?.text = "Search Key: " + searchKey
+            cell.detailTextLabel?.text = Localizable.search.localized + " Key: " + searchKey
             cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12, weight: .light)
             return cell
             
@@ -274,7 +274,7 @@ class QueryViewController: PFTableViewController, UITextViewDelegate {
         })
         editAction.backgroundColor = .darkPurpleAccent
         
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: { _,_ in
+        let deleteAction = UITableViewRowAction(style: .destructive, title: Localizable.delete.localized, handler: { _,_ in
             
             guard let context = self.context else { return }
             context.delete(self.savedQueries[indexPath.row])

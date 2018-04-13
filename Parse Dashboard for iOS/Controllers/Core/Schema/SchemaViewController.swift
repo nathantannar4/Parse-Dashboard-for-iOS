@@ -37,7 +37,7 @@ class SchemaViewController: PFCollectionViewController {
     private lazy var searchController: UISearchController = { [weak self] in
         let searchController = UISearchController(searchResultsController: nil)
         searchController.delegate = self
-        searchController.searchBar.placeholder = "Search Classes"
+        searchController.searchBar.placeholder = Localizable.search.localized + " Classes"
         searchController.searchBar.tintColor = .logoTint
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
@@ -223,10 +223,10 @@ class SchemaViewController: PFCollectionViewController {
             UIAlertAction(title: "Details", style: .default, handler: { [weak self] _ in
                 self?.showSchemaDetails(at: indexPath)
             }),
-            UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
                 self?.promptDeleteSchema(at: indexPath)
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil)
         ]
         
         actions.forEach { actionSheet.addAction($0) }
@@ -260,7 +260,7 @@ class SchemaViewController: PFCollectionViewController {
             })
         })
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: Localizable.cancel.localized, style: .destructive, handler: nil))
         alert.addAction(createAction)
         alert.addTextField { $0.placeholder = "Classname" }
         present(alert, animated: true, completion: nil)
@@ -280,10 +280,10 @@ class SchemaViewController: PFCollectionViewController {
         alert.configureView()
         
         let actions = [
-            UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
                 self?.deleteSchema(at: indexPath)
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil)
             ]
         actions.forEach { alert.addAction($0) }
         present(alert, animated: true, completion: nil)
@@ -330,7 +330,7 @@ class SchemaViewController: PFCollectionViewController {
         let alert = UIAlertController(title: "WARNING: \(schema.name) contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
         alert.configureView()
         
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+        let deleteAction = UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
             
             ParseLite.shared.get("/classes/" + schema.name, completion: { [weak self] (result, json) in
                 
@@ -351,7 +351,7 @@ class SchemaViewController: PFCollectionViewController {
             })
         })
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: Localizable.cancel.localized, style: .default, handler: nil))
         alert.addAction(deleteAction)
         present(alert, animated: true, completion: nil)
     }

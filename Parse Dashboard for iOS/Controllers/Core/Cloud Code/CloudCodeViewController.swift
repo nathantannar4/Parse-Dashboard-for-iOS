@@ -249,7 +249,7 @@ class CloudCodeViewController: PFTableViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         editAction.backgroundColor = .darkPurpleAccent
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { _, indexPath in
+        let deleteAction = UITableViewRowAction(style: .destructive, title: Localizable.delete.localized) { _, indexPath in
             
             guard let context = self.context else { return }
             do {
@@ -288,7 +288,7 @@ class CloudCodeViewController: PFTableViewController {
     // MARK: - Error Handling
     
     override func handleSuccess(_ message: String?) {
-        let message = message ?? "Success"
+        let message = message ?? Localizable.success.localized
         print(message)
         Ping(text: message, style: .warning).show()
     }

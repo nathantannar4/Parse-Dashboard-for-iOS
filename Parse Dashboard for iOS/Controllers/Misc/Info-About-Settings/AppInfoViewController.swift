@@ -15,8 +15,8 @@ class AppInfoViewController: UITableViewController {
     
     init() {
         super.init(style: .plain)
-        title = "About"
-        tabBarItem = UITabBarItem(title: "About", image: UIImage(named: "About")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "About"))
+        title = Localizable.about.localized
+        tabBarItem = UITabBarItem(title: title, image: UIImage(named: Localizable.about.rawValue)?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: Localizable.about.rawValue))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,7 +60,7 @@ class AppInfoViewController: UITableViewController {
             ]
         }
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "Share"),
+            UIBarButtonItem(image: UIImage(named: Localizable.share.rawValue),
                             style: .plain,
                             target: self,
                             action: #selector(shareApp(sender:))),
@@ -109,29 +109,29 @@ class AppInfoViewController: UITableViewController {
             cell.contentView.addSubview(separatorView)
             separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
         case 2:
-            cell.textLabel?.text = "A beautiful mobile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
+            cell.textLabel?.text = Localizable.appDescription.localized
             cell.textLabel?.textColor = .darkGray
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         case 3:
-            cell.textLabel?.text = "Data Security"
+            cell.textLabel?.text = Localizable.dataSecurity.localized
             cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.contentView.addSubview(separatorView)
             separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
         case 4:
-            cell.textLabel?.text = "Privacy and data protection is important. Know that your Parse Server's application ID and master key are only stored on your devices core data."
+            cell.textLabel?.text = Localizable.dataSecurityInfo.localized
             cell.textLabel?.textColor = .darkGray
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         case 5:
-            cell.textLabel?.text = "Open Source"
+            cell.textLabel?.text = Localizable.openSource.localized
             cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
             let separatorView = UIView()
             separatorView.backgroundColor = .lightGray
             cell.contentView.addSubview(separatorView)
             separatorView.anchor(cell.contentView.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
         case 6:
-            cell.textLabel?.text = "Interested in viewing the code for this app? This app is open source! Tap the GitHub logo to view the repo."
+            cell.textLabel?.text = Localizable.openSourceInfo.localized
             cell.textLabel?.textColor = .darkGray
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         default:
@@ -159,25 +159,25 @@ class AppInfoViewController: UITableViewController {
     @objc
     func shareApp(sender: UIBarButtonItem) {
         
-        let shareText = "Hey! Check out this awesome mobile Parse Dashboard client for iOS! https://itunes.apple.com/ca/app/parse-dashboard/id1212141622"
+        let shareText = Localizable.shareCaption.localized + " https://itunes.apple.com/ca/app/parse-dashboard/id1212141622"
         
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: Localizable.share.localized, message: nil, preferredStyle: .actionSheet)
         actionSheet.configureView()
         
         let actions = [
-            UIAlertAction(title: "Share on Facebook", style: .default, handler: { _ in
+            UIAlertAction(title: "Facebook", style: .default, handler: { _ in
                 
                 guard let facebookSheet = SLComposeViewController(forServiceType: SLServiceTypeFacebook) else { return }
                 facebookSheet.setInitialText(shareText)
                 self.present(facebookSheet, animated: true, completion: nil)
             }),
-            UIAlertAction(title: "Share on Twitter", style: .default, handler: { _ in
+            UIAlertAction(title: "Twitter", style: .default, handler: { _ in
                 
                 guard let twitterSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter) else { return }
                 twitterSheet.setInitialText(shareText)
                 self.present(twitterSheet, animated: true, completion: nil)
             }),
-            UIAlertAction(title: "More Options", style: .default, handler: { _ in
+            UIAlertAction(title: Localizable.moreOptions.localized, style: .default, handler: { _ in
                 
                 let activityVC = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
                 activityVC.excludedActivityTypes = [
@@ -193,7 +193,7 @@ class AppInfoViewController: UITableViewController {
                 activityVC.popoverPresentationController?.barButtonItem = sender
                 self.present(activityVC, animated: true, completion: nil)
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil)
         ]
         actions.forEach { actionSheet.addAction($0) }
         actionSheet.modalPresentationStyle = .popover

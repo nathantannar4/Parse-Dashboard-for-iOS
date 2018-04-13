@@ -61,7 +61,7 @@ class WelcomeViewController: UIViewController {
     
     var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "A beautiful unofficial mobile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client."
+        label.text = Localizable.appDescription.localized
         if UIDevice.current.userInterfaceIdiom == .pad {
             label.font = UIFont.systemFont(ofSize: 30)
         } else {
@@ -75,7 +75,7 @@ class WelcomeViewController: UIViewController {
     
     lazy var getStartedButton: UIButton = { [weak self] in
         let button = UIButton()
-        button.setTitle("Get Started", for: .normal)
+        button.setTitle(Localizable.getStarted.localized, for: .normal)
         if UIDevice.current.userInterfaceIdiom == .pad {
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 36)
         } else {

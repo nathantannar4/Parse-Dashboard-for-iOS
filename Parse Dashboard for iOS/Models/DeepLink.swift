@@ -60,14 +60,14 @@ enum DeepLink {
     var item: UIMutableApplicationShortcutItem {
         switch self {
         case .add:
-            return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Add", localizedSubtitle: "New Configuration", icon: icon, userInfo: nil)
+            return UIMutableApplicationShortcutItem(type: type, localizedTitle: Localizable.add.localized, localizedSubtitle: "New Configuration", icon: icon, userInfo: nil)
         case .recent:
             let config = UserDefaults.standard.value(forKey: .recentConfig) as? [String:String]
-            return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Recent", localizedSubtitle: config?[.configName], icon: icon, userInfo: config)
+            return UIMutableApplicationShortcutItem(type: type, localizedTitle: Localizable.recent.localized, localizedSubtitle: config?[.configName], icon: icon, userInfo: config)
         case .support:
-            return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Support", localizedSubtitle: "Donate/Review", icon: icon, userInfo: nil)
+            return UIMutableApplicationShortcutItem(type: type, localizedTitle: Localizable.support.localized, localizedSubtitle: Localizable.makeDonation.localized, icon: icon, userInfo: nil)
         case .home:
-            return UIMutableApplicationShortcutItem(type: type, localizedTitle: "Home", localizedSubtitle: "Saved Configurations", icon: icon, userInfo: nil)
+            return UIMutableApplicationShortcutItem(type: type, localizedTitle: Localizable.home.localized, localizedSubtitle: "Saved Configurations", icon: icon, userInfo: nil)
         }
     }
     

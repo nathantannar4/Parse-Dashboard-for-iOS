@@ -211,7 +211,7 @@ class FileViewController: UIViewController {
         actionSheet.addAction(UIAlertAction(title: "Document", style: .default, handler: { [weak self] _ in
             self?.presentDocumentPicker()
         }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil))
         actionSheet.popoverPresentationController?.permittedArrowDirections = .up
         actionSheet.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(actionSheet, animated: true, completion: nil)
@@ -285,13 +285,13 @@ class FileViewController: UIViewController {
     // MARK: - Error Handling
     
     func handleError(_ error: String?) {
-        let error = error ?? "Unexpected Error"
+        let error = error ?? Localizable.unknownError.localized
         print(error)
         Ping(text: error, style: .danger).show(animated: true, duration: 3)
     }
     
     func handleSuccess(_ message: String?) {
-        let message = message ?? "Success"
+        let message = message ?? Localizable.success.localized
         print(message)
         Ping(text: message, style: .info).show(animated: true, duration: 3)
     }

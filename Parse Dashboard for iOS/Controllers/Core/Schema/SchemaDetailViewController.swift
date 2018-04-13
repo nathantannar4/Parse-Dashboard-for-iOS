@@ -100,7 +100,7 @@ class SchemaDetailViewController: PFTableViewController {
                             style: .plain,
                             target: self,
                             action: #selector(toggleView(sender:))),
-            UIBarButtonItem(image: UIImage(named: "Delete"),
+            UIBarButtonItem(image: UIImage(named: Localizable.delete.localized),
                             style: .plain,
                             target: self,
                             action: #selector(deleteSchema))
@@ -131,7 +131,7 @@ class SchemaDetailViewController: PFTableViewController {
         let alert = UIAlertController(title: "Warning: Class contains objects", message: "Delete ALL objects and class?", preferredStyle: .alert)
         alert.configureView()
         
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+        let deleteAction = UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
             
             guard let classname = self?.schema.name else { return }
             self?.handleSuccess("Deleting objects in class \(classname)")
@@ -151,7 +151,7 @@ class SchemaDetailViewController: PFTableViewController {
         })
         
         alert.addAction(deleteAction)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: Localizable.cancel.localized, style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     

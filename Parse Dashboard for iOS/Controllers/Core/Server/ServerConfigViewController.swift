@@ -117,7 +117,7 @@ class ServerConfigViewController: FormViewController {
             ]
             navigationItem.hidesSearchBarWhenScrolling = false
         }
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Localizable.cancel.localized,
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(cancelEdit))

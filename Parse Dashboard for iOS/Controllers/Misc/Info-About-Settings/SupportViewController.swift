@@ -35,8 +35,8 @@ class SupportViewController: UITableViewController {
     
     init() {
         super.init(style: .plain)
-        title = "Support"
-        tabBarItem = UITabBarItem(title: "Support", image: UIImage(named: "Support")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Support"))
+        title = Localizable.support.localized
+        tabBarItem = UITabBarItem(title: title, image: UIImage(named: "Support")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Support"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -143,13 +143,13 @@ class SupportViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = "Thank you for using Parse Dashboard for iOS! Like you I was developing apps that used Parse Server. I wanted an easy way to view my database on my phone so I developed my own mobile dashboard. I released this app for free with no ads. So please, if you enjoy it please donate and or leave a star on the Github Repo to show your support!"
+            cell.textLabel?.text = Localizable.supportInfo.localized
             cell.textLabel?.textColor = .darkGray
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
             cell.selectionStyle = .none
         case 1:
             if indexPath.row == 0 {
-                cell.textLabel?.text = "Make a Donation"
+                cell.textLabel?.text = Localizable.makeDonation.localized
                 cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 24)
                 cell.selectionStyle = .none
                 cell.imageView?.image = UIImage(named: "Money")?.scale(to: 30)
@@ -161,7 +161,7 @@ class SupportViewController: UITableViewController {
                 switch indexPath.row {
                 case 1:
                     cell.imageView?.image = UIImage(named: "Coffee")
-                    cell.textLabel?.text = "Buy me a Coffee"
+                    cell.textLabel?.text = IAPHandler.shared.iapProducts[indexPath.row-1].localizedTitle
                     cell.detailTextLabel?.text = IAPHandler.shared.iapPrices[0]
                     cell.imageView?.tintColor = .logoTint
                     cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
@@ -169,7 +169,7 @@ class SupportViewController: UITableViewController {
                     cell.accessoryType = .disclosureIndicator
                 case 2:
                     cell.imageView?.image = UIImage(named: "Beer")
-                    cell.textLabel?.text = "Buy me a Beer"
+                    cell.textLabel?.text = IAPHandler.shared.iapProducts[indexPath.row-1].localizedTitle
                     cell.detailTextLabel?.text = IAPHandler.shared.iapPrices[1]
                     cell.imageView?.tintColor = .darkPurpleAccent
                     cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
@@ -177,7 +177,7 @@ class SupportViewController: UITableViewController {
                     cell.accessoryType = .disclosureIndicator
                 case 3:
                     cell.imageView?.image = UIImage(named: "Meal")
-                    cell.textLabel?.text = "By me lunch"
+                    cell.textLabel?.text = IAPHandler.shared.iapProducts[indexPath.row-1].localizedTitle
                     cell.detailTextLabel?.text = IAPHandler.shared.iapPrices[2]
                     cell.imageView?.tintColor = .darkPurpleBackground
                     cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
@@ -193,7 +193,7 @@ class SupportViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                cell.textLabel?.text = "Show You're a Fan"
+                cell.textLabel?.text = Localizable.fanPrompt.localized
                 cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 24)
                 cell.selectionStyle = .none
                 cell.imageView?.image = UIImage(named: "Heart")?.scale(to: 30)
@@ -202,12 +202,12 @@ class SupportViewController: UITableViewController {
                 cell.contentView.addSubview(separatorView)
                 separatorView.anchor(cell.textLabel?.bottomAnchor, left: cell.contentView.leftAnchor, right: cell.contentView.rightAnchor, heightConstant: 0.5)
             case 1:
-                cell.textLabel?.text = "Rate on the App Store"
+                cell.textLabel?.text = Localizable.ratePrompt.localized
                 cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
                 cell.imageView?.image = UIImage(named: "Rating")
                 cell.accessoryType = .disclosureIndicator
             case 2:
-                cell.textLabel?.text = "Star GitHub Repo"
+                cell.textLabel?.text = Localizable.starRepoPrompt.localized
                 cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
                 cell.imageView?.image = UIImage(named: "Star")
                 cell.accessoryType = .disclosureIndicator

@@ -243,7 +243,7 @@ class QueryBuilderViewController: FormViewController {
         }
         
         let section = SectionFormer(rowFormer: fieldRow, typeRow, valueRow)
-        let deleteRow = labelRow(title: "Cancel").onSelected { [weak self] _ in
+        let deleteRow = labelRow(title: Localizable.cancel.localized).onSelected { [weak self] _ in
             self?.former.deselect(animated: true)
             self?.former.removeUpdate(sectionFormer: section, rowAnimation: .top)
         }
@@ -269,7 +269,7 @@ class QueryBuilderViewController: FormViewController {
             self?.former.removeUpdate(sectionFormer: section, rowAnimation: .top)
         }
         row.cell.titleLabel.textColor = .darkGray
-        let deleteRow = labelRow(title: "Delete").onSelected { [weak self] _ in
+        let deleteRow = labelRow(title: Localizable.delete.localized).onSelected { [weak self] _ in
             self?.former.deselect(animated: true)
             if let index = self?.constraints.index(of: constraint) {
                 // Delete from array

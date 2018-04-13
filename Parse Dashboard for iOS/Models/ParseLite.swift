@@ -40,7 +40,7 @@ class ParseLite: NSObject {
     
     public private(set) var currentConfiguration: ParseServerConfig? {
         didSet {
-            let hashedConfig: [String:String?] = [
+            let hashedConfig: [String:String] = [
                 .configName     : currentConfiguration?.name ?? "App",
                 .applicationId  : currentConfiguration?.applicationId ?? "",
                 .masterKey      : currentConfiguration?.masterKey ?? "",
@@ -66,11 +66,11 @@ class ParseLite: NSObject {
     func get(_ endpoint: String, query: String = "", completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
-            return completion((false, "Network Connection Unavailable"), nil)
+            return completion((false, Localizable.noNetwork.localized), nil)
         }
         
         guard let serverURL = currentConfiguration?.serverUrl else {
-            return completion((false, "Invalid Server URL"), nil)
+            return completion((false, Localizable.invalidURL.localized), nil)
         }
         
         var urlString = serverURL + endpoint
@@ -87,7 +87,7 @@ class ParseLite: NSObject {
         }
         
         guard let url = URL(string: urlString) else {
-            return completion((false, "Invalid Server URL"), nil)
+            return completion((false, Localizable.invalidURL.localized), nil)
         }
 
         var request = PFRequest(url: url)
@@ -122,11 +122,11 @@ class ParseLite: NSObject {
     func post(_ endpoint: String, data: Data? = nil, completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
-            return completion((false, "Network Connection Unavailable"), nil)
+            return completion((false, Localizable.noNetwork.localized), nil)
         }
         
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
-            return completion((false, "Invalid Server URL"), nil)
+            return completion((false, Localizable.invalidURL.localized), nil)
         }
         
         
@@ -169,7 +169,7 @@ class ParseLite: NSObject {
     func delete(_ endpoint: String, completion: @escaping PFCompletionBlock) {
         
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
-            return completion((false, "Invalid Server URL"), nil)
+            return completion((false, Localizable.invalidURL.localized), nil)
         }
         delete(url: url, completion: completion)
     }
@@ -177,7 +177,7 @@ class ParseLite: NSObject {
     func delete(url: URL, completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
-            return completion((false, "Network Connection Unavailable"), nil)
+            return completion((false, Localizable.noNetwork.localized), nil)
         }
         
         var request = PFRequest(url: url)
@@ -213,12 +213,12 @@ class ParseLite: NSObject {
               completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
-            return completion((false, "Network Connection Unavailable"), nil)
+            return completion((false, Localizable.noNetwork.localized), nil)
         }
         
         let name = key + "." + fileType
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + "/files/" + name) else {
-            return completion((false, "Invalid Server URL"), nil)
+            return completion((false, Localizable.invalidURL.localized), nil)
         }
 
         var request = PFRequest(url: url)
@@ -274,11 +274,11 @@ class ParseLite: NSObject {
     func put(_ endpoint: String, data: Data, completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
-            return completion((false, "Network Connection Unavailable"), nil)
+            return completion((false, Localizable.noNetwork.localized), nil)
         }
         
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + endpoint) else {
-            return completion((false, "Invalid Server URL"), nil)
+            return completion((false, Localizable.invalidURL.localized), nil)
         }
 
         var request = PFRequest(url: url)
@@ -325,11 +325,11 @@ class ParseLite: NSObject {
     func push(payload: Data, completion: @escaping PFCompletionBlock) {
         
         guard UIApplication.shared.isConnectedToNetwork else {
-            return completion((false, "Network Connection Unavailable"), nil)
+            return completion((false, Localizable.noNetwork.localized), nil)
         }
         
         guard let serverURL = currentConfiguration?.serverUrl, let url = URL(string: serverURL + "/push") else {
-            return completion((false, "Invalid Server URL"), nil)
+            return completion((false, Localizable.invalidURL.localized), nil)
         }
         
         var request = PFRequest(url: url)

@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  Parse Dashboard for iOS
+
+  Created by Nathan Tannar on 4/11/18.
+  Copyright © 2018 Nathan Tannar. All rights reserved.
+*/
+
+"Search"="搜索";
+"About"="关于";
+"Cancel"="取消";
+"Share"="分享";
+"ShareCaption"="嘿 看看这个真棒手机 Parse Dashboard 客户端 iOS";
+"MoreOptions"="更多的选择";
+"Continue"="继续";
+"GetStarted"="开始使用";
+"OpenSource"="开源";
+"OpenSourceInfo"= "有兴趣查看此应用的代码？ 这个程序是开源的！ 点击GitHub标志查看回购";
+"DataSecurity"="数据安全";
+"DataSecurityInfo"="隐私和数据保护很重要。 知道您的Parse Server的应用程序标识符和主密钥只存储在您的设备核心数据上";
+"AppDescription"="一个美丽的非官方移动客户端，用于管理您的Parse应用程序，同时您在旅途中！ 现在，您可以像使用官方桌面客户端一样方便地查看和修改数据";
+"Success"="成功";
+"UnknownError"="未知错误";
+"Support"="支持";
+"SupportInfo"="感谢您使用适用于iOS的Parse Dashboard 像你一样，我正在开发使用Parse Server的应用程序。 我想要一个简单的方法在手机上查看我的数据库，所以我开发了我自己的移动仪表板。 我免费发布这个应用程序，没有广告。 因此，如果你喜欢它，请捐赠或者在Github Repo上留下明星，以表示你的支持";
+"MakeDonation"="做捐献";
+"FanPrompt"="显示你是粉丝";
+"RatePrompt"="在App Store上评分";
+"StarRepoPrompt"="星 GitHub";
+"Settings"="设置";
+"Home"="家";
+"Add"="加";
+"Recent"="最近";
+"IAPDisabled"="您的设备中的购买功能已被禁用！";
+"IAPRestored"="您已成功恢复购买！";
+"IAPPurchased"="您已成功购买此次购买！";
+"NoNetwork"="网络连接不可用";
+"InvalidURL"="无效的服务器网址";
+"Edit"="编辑";
+"Duplicate"="重复";
+"Export"="出口";
+"Delete"="删除";
+"Actions"="操作";
+"Servers"="服务器";
+"Save"="保存";
+"Details"="细节";

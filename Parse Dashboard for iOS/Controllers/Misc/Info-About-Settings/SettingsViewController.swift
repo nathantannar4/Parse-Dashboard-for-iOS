@@ -37,8 +37,8 @@ class SettingsViewController: FormViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        title = "Settings"
-        tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "Settings")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Settings"))
+        title = Localizable.settings.localized
+        tabBarItem = UITabBarItem(title: title, image: UIImage(named: "Settings")?.withRenderingMode(.alwaysTemplate), selectedImage: UIImage(named: "Settings"))
     }
     
     required init?(coder aDecoder: NSCoder) {

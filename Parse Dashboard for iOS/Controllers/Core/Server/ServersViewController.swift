@@ -108,7 +108,7 @@ class ServersViewController: PFCollectionViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Logo")?.scale(to: 30), style: .plain, target: self, action: #selector(showMore))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addServer))
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Servers", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: Localizable.servers.localized, style: .plain, target: nil, action: nil)
     }
     
     func adjustConsoleView() {
@@ -228,23 +228,23 @@ class ServersViewController: PFCollectionViewController {
         
         guard let cell = collectionView?.cellForItem(at: indexPath) else { return }
         
-        let actionSheet = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: Localizable.actions.localized, message: nil, preferredStyle: .actionSheet)
         actionSheet.configureView()
         
         let actions = [
-            UIAlertAction(title: "Edit", style: .default, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.edit.localized, style: .default, handler: { [weak self] _ in
                 self?.editServer(at: indexPath)
             }),
-            UIAlertAction(title: "Duplicate", style: .default, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.duplicate.localized, style: .default, handler: { [weak self] _ in
                 self?.duplicateServer(at: indexPath)
             }),
-            UIAlertAction(title: "Export", style: .default, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.export.localized, style: .default, handler: { [weak self] _ in
                 self?.exportServer(at: indexPath)
             }),
-            UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
                 self?.deleteServer(at: indexPath)
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil)
         ]
         
         actions.forEach { actionSheet.addAction($0) }
@@ -309,7 +309,7 @@ class ServersViewController: PFCollectionViewController {
         alert.configureView()
         
         let actions = [
-            UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
                 guard let context = self?.context, let server = self?.servers[indexPath.row] else { return }
                 context.delete(server)
                 do {
@@ -321,7 +321,7 @@ class ServersViewController: PFCollectionViewController {
                     self?.handleError(error.localizedDescription)
                 }
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil)
         ]
         actions.forEach { alert.addAction($0) }
         present(alert, animated: true, completion: nil)

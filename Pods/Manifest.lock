@@ -1,6 +1,7 @@
 PODS:
   - AcknowList (1.6)
   - AlertHUDKit (1.0.1)
+  - BartyCrouch (3.11.1)
   - BiometricAuthentication (1.0.5)
   - Bolts/Tasks (1.9.0)
   - Crashlytics (3.10.1):
@@ -24,6 +25,7 @@ PODS:
 DEPENDENCIES:
   - AcknowList
   - AlertHUDKit
+  - BartyCrouch
   - BiometricAuthentication
   - Crashlytics
   - DynamicTabBarController
@@ -41,6 +43,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AcknowList
     - AlertHUDKit
+    - BartyCrouch
     - BiometricAuthentication
     - Bolts
     - Crashlytics
@@ -59,6 +62,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AcknowList: 2b27ccc75110be58be37424c4b08b07bdec628b4
   AlertHUDKit: 795605364a6b73f980a65fc9b9176bb5d8157806
+  BartyCrouch: 14986f4adc676174f28c93bcf3bb53885d9f7c84
   BiometricAuthentication: e80e99bf1fe871ab624172eb91f1ddbbc47499b5
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
@@ -74,6 +78,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
 
-PODFILE CHECKSUM: a85ef41ade11fdfe8c8c5b95fbcca0f202c6990c
+PODFILE CHECKSUM: bea764826c87469b4f407a83e40b6cd9b8a9ae5e
 
 COCOAPODS: 1.5.0

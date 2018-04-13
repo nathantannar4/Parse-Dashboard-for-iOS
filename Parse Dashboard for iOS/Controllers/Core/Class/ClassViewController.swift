@@ -44,7 +44,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     private lazy var searchController: UISearchController = { [weak self] in
         let searchController = UISearchController(searchResultsController: nil)
         searchController.delegate = self
-        searchController.searchBar.placeholder = "Search Objects"
+        searchController.searchBar.placeholder = Localizable.search.localized + " Objects"
         searchController.searchBar.tintColor = .logoTint
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
@@ -214,7 +214,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
             }
         })
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: Localizable.cancel.localized, style: .destructive, handler: nil))
         alert.addAction(saveAction)
         alert.addTextField { $0.placeholder = "Title" }
         alert.addTextField { $0.placeholder = "Message" }
@@ -294,10 +294,10 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         actionSheet.configureView()
         
         let actions = [
-            UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
                 self?.deleteObject(at: indexPath)
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil)
         ]
         
         actions.forEach { actionSheet.addAction($0) }
@@ -315,7 +315,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
         alert.configureView()
         
         let actions = [
-            UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+            UIAlertAction(title: Localizable.delete.localized, style: .destructive, handler: { [weak self] _ in
                 
                 guard let classname = self?.schema.name else { return }
                 ParseLite.shared.delete("/classes/\(classname)/\(object.id)", completion: { [weak self] (result, json) in
@@ -341,7 +341,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
                     }
                 })
             }),
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil),
+            UIAlertAction(title: Localizable.cancel.localized, style: .cancel, handler: nil),
             ]
         actions.forEach { alert.addAction($0) }
         present(alert, animated: true, completion: nil)

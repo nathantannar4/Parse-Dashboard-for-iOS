@@ -83,13 +83,13 @@ class PFCollectionViewController: UICollectionViewController, UICollectionViewDe
     }
     
     func handleError(_ error: String?) {
-        let error = error ?? "Unexpected Error"
+        let error = error ?? Localizable.unknownError.localized
         print(error)
         Ping(text: error, style: .danger).show(animated: true, duration: 3)
     }
     
     func handleSuccess(_ message: String?) {
-        let message = message ?? "Success"
+        let message = message ?? Localizable.success.localized
         print(message)
         Ping(text: message, style: .info).show(animated: true, duration: 3)
     }

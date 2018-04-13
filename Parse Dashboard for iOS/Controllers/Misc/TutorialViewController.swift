@@ -47,7 +47,7 @@ class TutorialViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .lightBlueAccent
         button.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
-        button.setTitle("OK", for: .normal)
+        button.setTitle(Localizable.continue.localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
         return button
