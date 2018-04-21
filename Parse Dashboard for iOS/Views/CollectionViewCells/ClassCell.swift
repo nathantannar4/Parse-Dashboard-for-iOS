@@ -35,7 +35,7 @@ class ClassCell: PFCollectionViewCell {
         return "ClassCell"
     }
     
-    var object: PFObject? {
+    var object: ParseLiteObject? {
         didSet {
             middleLabel.text = object?.createdAt
             bottomLabel.text = object?.updatedAt

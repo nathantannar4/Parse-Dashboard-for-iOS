@@ -1,0 +1,43 @@
+/* Localizable.strings
+  Parse Dashboard for iOS
+
+  Created by Nathan Tannar on 4/11/18.
+  Copyright © 2018 Nathan Tannar. All rights reserved. */
+"Search" = "Buscar";
+"About" = "About";
+"Cancel" = "Cancel";
+"Share" = "Enviar";
+"ShareCaption" = "Echa un vistazo a este increíble cliente móvil de Tablero de Tabletas para iOS";
+"MoreOptions" = "Más opciones";
+"Continue" = "Continuar";
+"GetStarted" = "Empezar";
+"OpenSource" = "Código Libre";
+"OpenSourceInfo" = "¿Interesado en ver el código de esta aplicación? ¡Esta aplicación es de código abierto! Toque el logotipo de GitHub para ver el repositorio.";
+"DataSecurity" = "Seguridad de datos";
+"DataSecurityInfo" = "La privacidad y la protección de datos es importante. Sepa que el ID de aplicación y la clave maestra de su servidor Parse solo se almacenan en los datos centrales de su dispositivo";
+"AppDescription" = "¡Un hermoso cliente móvil no oficial para administrar tus aplicaciones Parse mientras estás en movimiento! Ahora puede ver y modificar fácilmente sus datos de la misma manera que lo haría en el cliente de escritorio oficial.";
+"Success" = "Éxito";
+"UnknownError" = "Error desconocido";
+"Support" = "Apoyo";
+"SupportInfo" = "¡Gracias por usar Parse Dashboard para iOS! Como tú, estaba desarrollando aplicaciones que usaban Parse Server. Quería una manera fácil de ver mi base de datos en mi teléfono, así que desarrollé mi propio tablero móvil. Lancé esta aplicación de forma gratuita sin anuncios. Entonces, por favor, si lo disfrutas, ¡dona y / o deja una estrella en Github Repo para mostrar tu apoyo!";
+"MakeDonation" = "Haz una donación";
+"FanPrompt" = "Muestra que eres un fan";
+"RatePrompt" = "Califica en el App Store";
+"StarRepoPrompt" = "Star GitHub Repo";
+"Settings" = "Ajustes";
+"Home" = "Casa";
+"Add" = "Añadir";
+"Recent" = "Reciente";
+"IAPDisabled" = "¡Las compras están deshabilitadas en tu dispositivo!";
+"IAPRestored" = "¡Has restaurado tu compra con éxito!";
+"IAPPurchased" = "¡Has comprado esta compra con éxito!";
+"NoNetwork" = "Conexión de red indisponible";
+"InvalidURL" = "URL del servidor inválido";
+"Edit" = "Editar";
+"Duplicate" = "Duplicar";
+"Export" = "Exportar";
+"Delete" = "Borra";
+"Actions" = "Accio";
+"Servers" = "Servidores";
+"Save" = "Salvar";
+"Details" = "Detalles";

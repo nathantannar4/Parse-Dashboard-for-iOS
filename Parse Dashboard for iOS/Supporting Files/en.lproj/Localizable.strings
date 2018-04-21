@@ -17,7 +17,7 @@
 "OpenSource"="Open Source";
 "OpenSourceInfo"= "Interested in viewing the code for this app? This app is open source! Tap the GitHub logo to view the repo.";
 "DataSecurity"="Data Security";
-"DataSecurityInfo"="Privacy and data protection is important. Know that your Parse Server's application identifier and master key are only stored on your devices core data";
+"DataSecurityInfo"="Privacy and data protection is important. Know that your Parse Server's application ID and master key are only stored on your devices core data";
 "AppDescription"="A beautiful unofficial mobile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.";
 "Success"="Success";
 "UnknownError"="Unknown Error";

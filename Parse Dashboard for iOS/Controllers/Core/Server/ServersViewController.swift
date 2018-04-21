@@ -42,11 +42,23 @@ class ServersViewController: PFCollectionViewController {
         return (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
     }
     
+    lazy var supportButton: RippleButton = {
+        let button = RippleButton()
+        button.setImage(#imageLiteral(resourceName: "Support"), for: .normal)
+        button.setTitle(Localizable.support.localized, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        button.backgroundColor = .logoTint
+        button.addTarget(self, action: #selector(showSupportPage), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .darkBlueBackground
+        view.addSubview(supportButton)
+        supportButton.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 60)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,8 +72,7 @@ class ServersViewController: PFCollectionViewController {
             let whatsNew = WhatsNewViewController(items: [
                 WhatsNewItem.image(title: "Donations", subtitle: "Show your support for this project", image: #imageLiteral(resourceName: "Money")),
                 WhatsNewItem.image(title: "Reviews", subtitle: "Dont want to donate? It's now easier to write a review", image: #imageLiteral(resourceName: "Star")),
-                WhatsNewItem.image(title: "Crash Analytics", subtitle: "Fabric has been added to swiftly address bugs", image: #imageLiteral(resourceName: "Settings")),
-                WhatsNewItem.image(title: "Coming Soon", subtitle: "Language localization settings", image: #imageLiteral(resourceName: "Logo"))
+                WhatsNewItem.image(title: "Language Localization", subtitle: "Language support for based on your devices locale", image: #imageLiteral(resourceName: "Globe"))
                 ])
             whatsNew.titleColor = .logoTint
             whatsNew.itemTitleColor = .primaryColor
@@ -114,6 +125,8 @@ class ServersViewController: PFCollectionViewController {
     func adjustConsoleView() {
         
         let isConsoleHidden = UserDefaults.standard.bool(forKey: .isConsoleHidden)
+        supportButton.imageEdgeInsets.bottom = isConsoleHidden ? 15 : 0
+        supportButton.titleEdgeInsets.bottom = isConsoleHidden ? 15 : 0
         if isConsoleHidden && dynamicTabBarController != nil {
             
             // Remove for later possible use
@@ -202,6 +215,11 @@ class ServersViewController: PFCollectionViewController {
     }
     
     // MARK: - User Actions
+    
+    @objc
+    func showSupportPage() {
+        showMore(atIndex: 1)
+    }
     
     func showSchemasForConfig(_ config: ParseServerConfig) {
         ParseLite.shared.initialize(with: config)

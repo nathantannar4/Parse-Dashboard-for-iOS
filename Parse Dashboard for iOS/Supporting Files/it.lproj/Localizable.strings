@@ -1,0 +1,43 @@
+/* Localizable.strings
+  Parse Dashboard for iOS
+
+  Created by Nathan Tannar on 4/11/18.
+  Copyright © 2018 Nathan Tannar. All rights reserved. */
+"Search" = "Cerca";
+"About" = "Di";
+"Cancel" = "Annulla";
+"Share" = "Condividi";
+"ShareCaption" = "Dai un'occhiata a questo fantastico client Parse Dashboard per dispositivi mobili per iOS";
+"MoreOptions" = "Più Opzioni";
+"Continue" = "Continua";
+"GetStarted" = "Iniziare";
+"OpenSource" = "Open Source";
+"OpenSourceInfo" = "Interessato a visualizzare il codice per questa app? Questa app è open source! Toccare il logo GitHub per visualizzare il repository.";
+"DataSecurity" = "La sicurezza dei dati";
+"DataSecurityInfo" = "La privacy e la protezione dei dati sono importanti. Sappi che l'ID dell'applicazione e la chiave master del tuo server di analisi sono memorizzati solo nei dati principali dei tuoi dispositivi";
+"AppDescription" = "Un bellissimo client mobile non ufficiale per gestire le tue app di Parse mentre sei in movimento! Ora puoi facilmente visualizzare e modificare i tuoi dati nello stesso modo in cui faresti sul client desktop ufficiale.";
+"Success" = "Successo";
+"UnknownError" = "Errore sconosciuto";
+"Support" = "Supporto";
+"SupportInfo" = "Grazie per aver utilizzato Parse Dashboard per iOS! Come te, stavo sviluppando app che utilizzavano Parse Server. Volevo un modo semplice per visualizzare il mio database sul mio telefono, così ho sviluppato il mio cruscotto mobile. Ho rilasciato questa app gratuitamente senza pubblicità. Quindi, per favore, se ti diverti, per favore dona e lascia una stella sul Github Repo per mostrare il tuo sostegno!";
+"MakeDonation" = "Fai una donazione";
+"FanPrompt" = "Mostra che sei un fan";
+"RatePrompt" = "Vota su App Store";
+"StarRepoPrompt" = "Star GitHub Repo";
+"Settings" = "impostazioni";
+"Home" = "Casa";
+"Add" = "Aggiungi";
+"Recent" = "Recente";
+"IAPDisabled" = "Gli acquisti sono disabilitati nel tuo dispositivo!";
+"IAPRestored" = "Hai ripristinato il tuo acquisto con successo!";
+"IAPPurchased" = "Hai comprato con successo questo acquisto!";
+"NoNetwork" = "Connessione di rete non disponibile";
+"InvalidURL" = "URL del server non valido";
+"Edit" = "Modifica";
+"Duplicate" = "Duplica";
+"Export" = "Esporta";
+"Delete" = "Elimina";
+"Actions" = "Azioni";
+"Servers" = "server";
+"Save" = "Salva";
+"Details" = "Dettagli";

@@ -169,7 +169,8 @@ class SchemaViewController: PFCollectionViewController {
     // MARK: - UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewController = ClassViewController(schemas[indexPath.row])
+        let object = isFiltering() ? filteredSchemas[indexPath.row] : schemas[indexPath.row]
+        let viewController = ClassViewController(object)
         navigationController?.pushViewController(viewController, animated: true)
     }
     

@@ -118,7 +118,7 @@ class ArrayViewController: PFTableViewController {
                         self?.handleError(result.error)
                         return
                     }
-                    let object = PFObject(objectJSON)
+                    let object = ParseLiteObject(objectJSON)
                     object.schema = PFSchema(schemaJSON)
                     self?.navigationController?.pushViewController(ObjectViewController(object), animated: true)
                 })

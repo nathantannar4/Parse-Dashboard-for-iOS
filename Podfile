@@ -21,6 +21,5 @@ target 'Parse Dashboard for iOS' do
   pod 'Crashlytics'
   pod 'FTLinearActivityIndicator'
   pod 'Parse'
-  pod 'BartyCrouch'
 
 end

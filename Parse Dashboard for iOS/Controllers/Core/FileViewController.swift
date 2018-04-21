@@ -233,7 +233,7 @@ class FileViewController: UIViewController {
         // Update the current url
         ParseLite.shared.get("/classes/\(schema.name)/\(objectId)") { [weak self] result, json in
             guard let json = json, let key = self?.key else { return }
-            let updatedObject = PFObject(json)
+            let updatedObject = ParseLiteObject(json)
             if let urlString = (updatedObject.value(forKey: key) as? [String:String])?["url"] {
                 self?.url = URL(string: urlString)
             }

@@ -1,5 +1,5 @@
 //
-//  PFObject.swift
+//  ParseLiteObject.swift
 //  Parse Dashboard for iOS
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -28,7 +28,7 @@
 import Foundation
 import SwiftyJSON
 
-class PFObject {
+class ParseLiteObject {
     
     // MARK: - Properties
     

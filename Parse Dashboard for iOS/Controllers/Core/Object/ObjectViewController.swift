@@ -40,12 +40,12 @@ class ObjectViewController: PFTableViewController {
         case json, formatted
     }
     
-    private var object: PFObject
+    private var object: ParseLiteObject
     private var viewStyle = ViewStyle.formatted
     
     // MARK: - Initialization
     
-    init(_ obj: PFObject) {
+    init(_ obj: ParseLiteObject) {
         object = obj
         super.init(nibName: nil, bundle: nil)
     }
@@ -91,7 +91,7 @@ class ObjectViewController: PFTableViewController {
                 return
             }
             let schema = self?.object.schema
-            self?.object = PFObject(json)
+            self?.object = ParseLiteObject(json)
             self?.object.schema = schema
             self?.tableView.reloadData()
             self?.tableView.refreshControl?.endRefreshing()
@@ -411,7 +411,7 @@ class ObjectViewController: PFTableViewController {
                                     self?.handleError(result.error)
                                     return
                                 }
-                                let object = PFObject(objectJSON)
+                                let object = ParseLiteObject(objectJSON)
                                 object.schema = PFSchema(schemaJSON)
                                 self?.navigationController?.pushViewController(ObjectViewController(object), animated: true)
                             })
@@ -442,7 +442,7 @@ class ObjectViewController: PFTableViewController {
             } else if let array = value as? NSArray {
                 
                 // Array of objects
-                // For ease of reuse we will create a new PFObject from the arrays components and resuse ObjectViewController
+                // For ease of reuse we will create a new ParseLiteObject from the arrays components and resuse ObjectViewController
                 //                        let dictionary: [String:AnyObject] = [:]
                 let viewController = ArrayViewController(array, fieldName: object.keys[indexPath.row])
                 self.navigationController?.pushViewController(viewController, animated: true)
@@ -704,7 +704,7 @@ class ObjectViewController: PFTableViewController {
 
 extension ObjectViewController: ObjectSelectorViewControllerDelegate {
     
-    func didSelectObject(_ object: PFObject, for key: String) {
+    func didSelectObject(_ object: ParseLiteObject, for key: String) {
         
         guard let type = self.object.schema?.typeForField(key) else { return }
 

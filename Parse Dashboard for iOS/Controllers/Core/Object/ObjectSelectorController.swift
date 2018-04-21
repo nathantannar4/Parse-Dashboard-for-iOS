@@ -29,7 +29,7 @@ import UIKit
 
 protocol ObjectSelectorViewControllerDelegate: AnyObject {
     
-    func didSelectObject(_ object: PFObject, for key: String)
+    func didSelectObject(_ object: ParseLiteObject, for key: String)
 }
 
 class ObjectSelectorViewController: ClassViewController {

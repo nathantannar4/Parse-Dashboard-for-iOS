@@ -399,7 +399,7 @@ class ObjectBuilderViewController: FormViewController {
                     self?.handleError(result.error)
                     return
                 }
-                let newObject = PFObject(json)
+                let newObject = ParseLiteObject(json)
                 self?.handleSuccess("Object \(newObject.id) Created")
                 self?.dismiss(animated: true, completion: nil)
             })
@@ -412,7 +412,7 @@ class ObjectBuilderViewController: FormViewController {
 
 extension ObjectBuilderViewController: ObjectSelectorViewControllerDelegate {
     
-    func didSelectObject(_ object: PFObject, for key: String) {
+    func didSelectObject(_ object: ParseLiteObject, for key: String) {
         
         guard let type = schema.typeForField(key) else { return }
         

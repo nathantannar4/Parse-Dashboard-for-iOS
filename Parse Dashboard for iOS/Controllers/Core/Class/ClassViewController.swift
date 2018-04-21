@@ -36,8 +36,8 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     
     var schema: PFSchema
     
-    var objects = [PFObject]()
-    var filteredObjects = [PFObject]()
+    var objects = [ParseLiteObject]()
+    var filteredObjects = [ParseLiteObject]()
     
     var searchKey: String = .objectId
     
@@ -106,7 +106,7 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
                 return
             }
             self?.objects = results.map {
-                let newObject = PFObject($0)
+                let newObject = ParseLiteObject($0)
                 newObject.schema = self?.schema
                 return newObject
             }
@@ -276,7 +276,8 @@ class ClassViewController: PFCollectionViewController, QueryDelegate {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewController = ObjectViewController(objects[indexPath.row])
+        let object = isFiltering() ? filteredObjects[indexPath.row] : objects[indexPath.row]
+        let viewController = ObjectViewController(object)
         navigationController?.pushViewController(viewController, animated: true)
     }
     

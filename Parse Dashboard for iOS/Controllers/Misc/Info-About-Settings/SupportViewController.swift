@@ -101,7 +101,11 @@ class SupportViewController: UITableViewController {
             }
         } else if indexPath.section == 2 {
             if indexPath.row == 1 {
-                SwiftRater.rateApp()
+                let appId = "1212141622"
+                guard let url = URL(string : "itms-apps:itunes.apple.com/us/app/apple-store/id\(appId)?mt=8&action=write-review") else {
+                    return
+                }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
                 guard let url = URL(string: "https://github.com/nathantannar4/Parse-Dashboard-for-iOS") else {
                     return
@@ -144,7 +148,6 @@ class SupportViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel?.text = Localizable.supportInfo.localized
-            cell.textLabel?.textColor = .darkGray
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
             cell.selectionStyle = .none
         case 1:

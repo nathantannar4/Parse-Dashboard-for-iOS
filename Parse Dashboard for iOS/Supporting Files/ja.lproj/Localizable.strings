@@ -1,0 +1,43 @@
+/* Localizable.strings
+  Parse Dashboard for iOS
+
+  Created by Nathan Tannar on 4/11/18.
+  Copyright © 2018 Nathan Tannar. All rights reserved. */
+"Search" = "調査";
+"About" = "概略";
+"Cancel" = "取消";
+"Share" = "共有";
+"ShareCaption" = "この素晴らしいiOS向けモバイルパースダッシュボードクライアントをチェックしてください";
+"MoreOptions" = "詳細オプション";
+"Continue" = "続行";
+"GetStarted" = "始める";
+"OpenSource" = "オープンソース";
+"OpenSourceInfo" = "このアプリのコードを表示したいですか？このアプリはオープンソースです！レポを見るには、GitHubロゴをタップします。";
+"DataSecurity" = "データセキュリティ";
+"DataSecurityInfo" = "プライバシーとデータ保護は重要です。 Parse ServerのアプリケーションIDとマスターキーがデバイスのコアデータにのみ格納されていることを確認してください";
+"AppDescription" = "あなたが外出先でParseアプリケーションを管理するための美しい非公式モバイルクライアント！これで、公式のデスクトップクライアントと同じ方法で、データを簡単に表示および変更できます。";
+"Success" = "成功";
+"UnknownError" = "不明なエラー";
+"Support" = "サポート";
+"SupportInfo" = "Parse Dashboard for iOSをご利用いただきありがとうございます！あなたと同じように、Parse Serverを使ったアプリケーションを開発していました。自分の携帯電話で自分のデータベースを簡単に見ることができたので、自分のモバイルダッシュボードを開発しました。私は広告なしでこのアプリを無料でリリースしました。だから楽しんでいただければ、Github Repoに寄付をしてください。";
+"MakeDonation" = "寄付をします";
+"FanPrompt" = "あなたはファンです";
+"RatePrompt" = "App Storeでのレート";
+"StarRepoPrompt" = "スターGitHubレポ";
+"Settings" = "設定";
+"Home" = "ホーム";
+"Add" = "追加";
+"Recent" = "新着";
+"IAPDisabled" = "お使いの端末で購入が無効になっています。";
+"IAPRestored" = "あなたは正常にあなたの購入を復元しました！";
+"IAPPurchased" = "この購入に成功しました！";
+"NoNetwork" = "ネットワーク接続が利用できない";
+"InvalidURL" = "無効なサーバーURL";
+"Edit" = "編集";
+"Duplicate" = "重複";
+"Export" = "エクスポート";
+"Delete" = "削除";
+"Actions" = "行動";
+"Servers" = "サーバー";
+"Save" = "保存";
+"Details" = "詳細";

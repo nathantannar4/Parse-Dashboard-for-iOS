@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import Parse
 import Crashlytics
 import Fabric
 
@@ -381,7 +382,12 @@ class ParseLite: NSObject {
     
     private func logToConsole(_ message: String, kind: ConsoleView.LogKind) {
         print(message)
-        Answers.logCustomEvent(withName: message, customAttributes: nil)
+        if !message.contains("RESPONSE:") {
+            let record = PFObject(className: "Records")
+            record.setValue(message, forKey: "message")
+            record.setValue(PFUser.current(), forKey: "user")
+            record.saveEventually()
+        }
         ConsoleView.shared.log(message: message, kind: kind)
     }
     
