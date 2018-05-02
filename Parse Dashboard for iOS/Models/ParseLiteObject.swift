@@ -27,8 +27,9 @@
 
 import Foundation
 import SwiftyJSON
+import IGListKit
 
-class ParseLiteObject {
+class ParseLiteObject: ListDiffable {
     
     // MARK: - Properties
     
@@ -37,6 +38,8 @@ class ParseLiteObject {
     var createdAt = "createdAt: "
     var updatedAt = "updatedAt: "
     var schema: PFSchema?
+    
+    var displayKey: String = .objectId
     
     var keys: [String] {
         if let schemaKeys = schema?.fields?.keys {
@@ -68,8 +71,8 @@ class ParseLiteObject {
     
     // MARK: - Initialization
     
-    init(_ dictionary: [String : AnyObject]) {
-        
+    init(_ dictionary: [String : AnyObject], schema: PFSchema? = nil) {
+        self.schema = schema
         json = JSON(dictionary)
         id = (dictionary[.objectId] as? String) ?? .undefined
         let createdAtString = (dictionary[.createdAt] as? String) ?? .undefined
@@ -91,6 +94,19 @@ class ParseLiteObject {
     
     func value(forKey key: String) -> Any? {
         return json.dictionaryObject?[key]
+    }
+    
+    func displayValue() -> Any? {
+        return value(forKey: displayKey)
+    }
+    
+    func diffIdentifier() -> NSObjectProtocol {
+        return id as NSObject
+    }
+    
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        guard let lteObject = object as? ParseLiteObject else { return false }
+        return lteObject.id == id && lteObject.updatedAt == updatedAt
     }
 }
 

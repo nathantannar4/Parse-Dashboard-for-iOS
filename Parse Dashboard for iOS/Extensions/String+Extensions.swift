@@ -111,7 +111,7 @@ extension String {
     }
     
     static var isNew: String {
-        return "isNew"
+        return "isNew_5.0.0"
     }
     
     static var isSetup: String {

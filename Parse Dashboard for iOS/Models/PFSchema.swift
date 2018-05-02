@@ -27,8 +27,9 @@
 
 import Foundation
 import SwiftyJSON
+import IGListKit
 
-class PFSchema {
+class PFSchema: ListDiffable {
     
     // MARK: - Properties
     
@@ -88,5 +89,14 @@ class PFSchema {
             keys.remove(at: index)
         }
         return keys
+    }
+    
+    func diffIdentifier() -> NSObjectProtocol {
+        return name as NSObjectProtocol
+    }
+    
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        guard let schema = object as? PFSchema else { return false }
+        return schema.name == name
     }
 }

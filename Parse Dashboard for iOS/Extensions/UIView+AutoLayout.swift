@@ -115,12 +115,9 @@ public extension UIView {
     }
     
     func removeAllConstraints() {
-        var view: UIView? = self
-        while let currentView = view {
-            currentView.removeConstraints(currentView.constraints.filter {
-                return $0.firstItem as? UIView == self || $0.secondItem as? UIView == self
-            })
-            view = view?.superview
+        for constraint in constraints {
+            NSLayoutConstraint.deactivate([constraint])
+            removeConstraint(constraint)
         }
     }
 }

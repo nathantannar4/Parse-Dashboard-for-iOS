@@ -26,48 +26,27 @@
 //
 
 import UIKit
+import IGListKit
 
-class ClassCell: PFCollectionViewCell {
+final class ClassCell: CollectionViewCell, ListBindable {
     
     // MARK: - Properties
     
-    class var reuseIdentifier: String {
-        return "ClassCell"
-    }
-    
-    var object: ParseLiteObject? {
-        didSet {
-            middleLabel.text = object?.createdAt
-            bottomLabel.text = object?.updatedAt
-        }
-    }
-    
-    var searchKey: String? {
-        didSet {
-            guard let searchKey = searchKey else {
-                topLabel.text = .undefined
-                return
-            }
-            guard let value = object?.value(forKey: searchKey) else { return }
-            topLabel.text = String(describing: value)
-        }
-    }
-    
-    let topLabel: UILabel = {
+    private let topLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.textColor = .white
         return label
     }()
     
-    let middleLabel: UILabel = {
+    private let middleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = .white
         return label
     }()
     
-    let bottomLabel: UILabel = {
+    private let bottomLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = .white
@@ -76,23 +55,28 @@ class ClassCell: PFCollectionViewCell {
     
     // MARK: - Methods
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        object = nil
-        searchKey = nil
-    }
-    
     override func setupViews() {
         super.setupViews()
         
-        backgroundColor = .darkPurpleAccent
-        highlightedBackgroundColor = UIColor.darkPurpleAccent.darker()
         contentView.backgroundColor = .darkPurpleAccent
         
         let stackView = UIStackView(arrangedSubviews: [topLabel, middleLabel, bottomLabel])
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         contentView.addSubview(stackView)
-        stackView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 4, leftConstant: 12, bottomConstant: 4, rightConstant: 12)
+        stackView.anchor(contentView.topAnchor, left: contentView.layoutMarginsGuide.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 4, leftConstant: 4, bottomConstant: 4, rightConstant: 4)
+    }
+    
+    // MARK: - ListBindle
+    
+    func bindViewModel(_ viewModel: Any) {
+        guard let object = viewModel as? ParseLiteObject else { return }
+        if let value = object.displayValue() {
+            topLabel.text = String(describing: value)
+        } else {
+            topLabel.text = .undefined
+        }
+        middleLabel.text = object.createdAt
+        bottomLabel.text = object.updatedAt
     }
 }

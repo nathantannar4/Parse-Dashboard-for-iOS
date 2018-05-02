@@ -37,21 +37,11 @@
                                             <constraint firstAttribute="height" constant="130" id="uyY-JL-rgM"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parse Dashboard for iOS" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEa-dd-1pH">
-                                        <rect key="frame" x="20" y="161.66666666666666" width="335" height="28.333333333333343"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="23.5"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="JEa-dd-1pH" secondAttribute="bottom" constant="10" id="1Ex-Bg-2CZ"/>
                                     <constraint firstItem="zdE-I7-E3f" firstAttribute="centerX" secondItem="Iyw-gh-k4L" secondAttribute="centerX" id="29B-1m-NW4"/>
-                                    <constraint firstItem="JEa-dd-1pH" firstAttribute="leading" secondItem="Iyw-gh-k4L" secondAttribute="leading" constant="20" id="RrA-Dd-NYN"/>
                                     <constraint firstItem="zdE-I7-E3f" firstAttribute="centerY" secondItem="Iyw-gh-k4L" secondAttribute="centerY" id="WN3-5e-UKL"/>
-                                    <constraint firstAttribute="trailing" secondItem="JEa-dd-1pH" secondAttribute="trailing" constant="20" id="fvR-oA-ZxW"/>
-                                    <constraint firstItem="JEa-dd-1pH" firstAttribute="leading" secondItem="Iyw-gh-k4L" secondAttribute="leading" constant="20" id="iII-iU-h2l"/>
                                     <constraint firstAttribute="height" constant="200" id="zWi-zF-7Pz"/>
                                 </constraints>
                             </view>
@@ -84,7 +74,6 @@
                         <outlet property="logoView" destination="zdE-I7-E3f" id="QOt-xR-oiT"/>
                         <outlet property="logoViewHeightConstraint" destination="uyY-JL-rgM" id="uWR-vT-r52"/>
                         <outlet property="logoViewWidthConstraint" destination="rK6-3U-kMs" id="IJK-fX-yRS"/>
-                        <outlet property="titleLabel" destination="JEa-dd-1pH" id="WIs-wA-wtX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7S2-C9-PcC" userLabel="First Responder" sceneMemberID="firstResponder"/>

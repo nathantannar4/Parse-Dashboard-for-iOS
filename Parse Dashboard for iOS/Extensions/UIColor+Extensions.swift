@@ -85,10 +85,6 @@ extension UIColor {
         }
     }
     
-    func withAlpha(_ alpha: CGFloat) -> UIColor {
-        return self.withAlphaComponent(alpha)
-    }
-    
     func isDarker(than color: UIColor) -> Bool {
         return self.luminance < color.luminance
     }

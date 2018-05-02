@@ -27,7 +27,7 @@
 
 import UIKit
 
-class QueryHelpCell: UITableViewCell {
+final class QueryHelpCell: UITableViewCell {
     
     // MARK: - Properties
     

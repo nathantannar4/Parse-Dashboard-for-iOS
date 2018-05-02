@@ -29,6 +29,7 @@ import UIKit
 import Parse
 import Crashlytics
 import Fabric
+import SVProgressHUD
 
 typealias PFResult = (success: Bool, error: String?)
 typealias PFCompletionBlock = (PFResult, [String:AnyObject]?) -> Void
@@ -91,11 +92,13 @@ class ParseLite: NSObject {
             return completion((false, Localizable.invalidURL.localized), nil)
         }
 
-        var request = PFRequest(url: url)
+        beginRequest()
+        var request = Request(url: url)
         request.httpMethod = "GET"
         logToConsole("GET: " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
+            self.endRequest()
             guard let data = data, error == nil else {
                 self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
@@ -130,13 +133,14 @@ class ParseLite: NSObject {
             return completion((false, Localizable.invalidURL.localized), nil)
         }
         
-        
-        var request = PFRequest(url: url)
+        beginRequest()
+        var request = Request(url: url)
         request.httpMethod = "POST"
         request.httpBody = data
         logToConsole("POST: \(data?.count ?? 0) bytes to" + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
+            self.endRequest()
             guard let data = data, error == nil else {
                 self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
@@ -181,11 +185,13 @@ class ParseLite: NSObject {
             return completion((false, Localizable.noNetwork.localized), nil)
         }
         
-        var request = PFRequest(url: url)
+        beginRequest()
+        var request = Request(url: url)
         request.httpMethod = "DELETE"
         logToConsole("DELETE: " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
+            self.endRequest()
             guard let data = data, error == nil else {
                 self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
@@ -222,13 +228,15 @@ class ParseLite: NSObject {
             return completion((false, Localizable.invalidURL.localized), nil)
         }
 
-        var request = PFRequest(url: url)
+        beginRequest()
+        var request = Request(url: url)
         request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = data
         logToConsole("POST: \(data?.count ?? 0) bytes to " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
+            self.endRequest()
             guard let data = data, error == nil else {
                 self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
@@ -282,12 +290,14 @@ class ParseLite: NSObject {
             return completion((false, Localizable.invalidURL.localized), nil)
         }
 
-        var request = PFRequest(url: url)
+        beginRequest()
+        var request = Request(url: url)
         request.httpMethod = "PUT"
         request.httpBody = data
         logToConsole("PUT: \(data.count) bytes to " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
+            self.endRequest()
             guard let data = data, error == nil else {
                 self.logToConsole(error.debugDescription, kind: .error)
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
@@ -333,12 +343,14 @@ class ParseLite: NSObject {
             return completion((false, Localizable.invalidURL.localized), nil)
         }
         
-        var request = PFRequest(url: url)
+        beginRequest()
+        var request = Request(url: url)
         request.httpMethod = "POST"
         request.httpBody = payload
         logToConsole("POST: \(payload.count) to " + url.absoluteString, kind: .info)
         URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             
+            self.endRequest()
             guard let data = data, error == nil else {
                 DispatchQueue.main.sync { completion((false, error?.localizedDescription), nil) }
                 return
@@ -370,7 +382,7 @@ class ParseLite: NSObject {
     
     // MARK: - Methods [Private]
     
-    private func PFRequest(url: URL) -> URLRequest {
+    private func Request(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         let applicationId = currentConfiguration?.applicationId ?? ""
         let masterKey = currentConfiguration?.masterKey ?? ""
@@ -378,6 +390,14 @@ class ParseLite: NSObject {
         request.setValue(masterKey, forHTTPHeaderField: "X-Parse-Master-Key")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         return request
+    }
+    
+    private func beginRequest() {
+        SVProgressHUD.show()
+    }
+    
+    private func endRequest() {
+        SVProgressHUD.dismiss()
     }
     
     private func logToConsole(_ message: String, kind: ConsoleView.LogKind) {

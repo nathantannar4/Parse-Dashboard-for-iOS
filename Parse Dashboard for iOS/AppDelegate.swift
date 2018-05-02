@@ -27,14 +27,14 @@
 
 import UIKit
 import AlertHUDKit
-import FTLinearActivityIndicator
 import DynamicTabBarController
 import CoreData
 import Parse
 import UserNotifications
 import Fabric
 import Crashlytics
-import SwiftRater
+import EggRating
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -74,14 +74,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Alert.Defaults.Font.Danger = .boldSystemFont(ofSize: 14)
         Alert.Defaults.Font.Success = .boldSystemFont(ofSize: 14)
         
-        // Configure SwiftRater
-        SwiftRater.useStoreKitIfAvailable = true
-        SwiftRater.daysUntilPrompt = 7
-        SwiftRater.usesUntilPrompt = 5
-        SwiftRater.daysBeforeReminding = 1
-        SwiftRater.showLaterButton = true
-        SwiftRater.debugMode = false
-        SwiftRater.appLaunched()
+        // Configure SVProgressHUD
+        SVProgressHUD.setBackgroundColor(.white)
+        
+        // Configure EggRating
+        EggRating.itunesId = "1212141622"
+        EggRating.minRatingToAppStore = 3.5
+        EggRating.starFillColor = .logoTint
+        EggRating.starBorderColor = .logoTint
+        EggRating.delegate = self
         
         // Configure Parse
         setupParse()
@@ -93,7 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         UIApplication.shared.applicationIconBadgeNumber = 0
-        UIApplication.configureLinearNetworkActivityIndicatorIfNeeded()
         
         setupWindow()
         if let item = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {
@@ -180,6 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .white
         let launchScreen = UIStoryboard(name: "LaunchScreenCopy", bundle: nil).instantiateInitialViewController() as! LaunchScreenViewController
         window?.rootViewController = launchScreen
+//        window?.rootViewController = NavigationController(rootViewController: ServersViewController())
         window?.makeKeyAndVisible() // Required when not using storyboards
     }
     
@@ -201,7 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case DeepLink.add.type:
             // Add a new server configuration
             navigationController.popToRootViewController(animated: false)
-            serverVC.addServer()
+            serverVC.addNewServer()
         case DeepLink.recent.type:
             // Go to the schema view of the most recently viewed server
             guard let configHash = shortcutItem.userInfo as? [String:String] else { return }
@@ -211,11 +212,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             config.masterKey = configHash[.masterKey]
             config.serverUrl = configHash[.serverUrl]
             navigationController.popToRootViewController(animated: false)
-            serverVC.showSchemasForConfig(config)
+            ParseLite.shared.initialize(with: config)
+            let shemasViewController = SchemaViewController()
+            serverVC.navigationController?.pushViewController(shemasViewController, animated: false)
         case DeepLink.support.type:
             // Show the support page
             navigationController.popToRootViewController(animated: false)
-            serverVC.showMore(atIndex: 1) // Index 1 is the SupportViewController
+            serverVC.presentSupportViewController()
         case DeepLink.home.type:
             // Go to main server config list page
             serverVC.viewWillAppear(false)
@@ -339,5 +342,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFUser.current()?.setValue(Locale.current.languageCode, forKey: "locale")
         PFUser.current()?.saveInBackground()
     }
+    
+}
+
+extension AppDelegate: EggRatingDelegate {
+    
+    func didIgnoreToRate() {
+        Ping(text: "Please consider rating or donating to this project", style: .info).show()
+    }
+    
+    func didRateOnAppStore() {
+        Ping(text: "Thanks for submitting your feedback!", style: .info).show()
+    }
+    
+    func didIgnoreToRateOnAppStore() {
+        Ping(text: "Please consider rating or donating to this project", style: .info).show()
+    }
+    
+    func didRate(rating rate: Double) {
+        Ping(text: "Thanks for your feedback!", style: .info).show()
+    }
+    
 }
 

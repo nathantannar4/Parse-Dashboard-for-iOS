@@ -26,22 +26,13 @@
 //
 
 import UIKit
+import IGListKit
 
-class SchemaCell: PFCollectionViewCell {
+final class SchemaCell: CollectionViewCell, ListBindable {
     
     // MARK: - Properties
-    
-    class var reuseIdentifier: String {
-        return "SchemaCell"
-    }
-    
-    var schema: PFSchema? {
-        didSet {
-            label.text = schema?.name
-        }
-    }
-    
-    let label: UILabel = {
+
+    private let label: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.textColor = .white
@@ -50,20 +41,20 @@ class SchemaCell: PFCollectionViewCell {
     
     // MARK: - Methods
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        schema = nil
-    }
-    
     override func setupViews() {
         super.setupViews()
         
-        backgroundColor = .lightBlueAccent
-        highlightedBackgroundColor = UIColor.lightBlueAccent.darker()
         contentView.backgroundColor = .lightBlueAccent
         
         contentView.addSubview(label)
-        label.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 4, leftConstant: 12, bottomConstant: 4, rightConstant: 12)
+        label.anchor(contentView.topAnchor, left: contentView.layoutMarginsGuide.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 4, leftConstant: 4, bottomConstant: 4, rightConstant: 4)
+    }
+    
+    // MARK: - ListBindable
+    
+    func bindViewModel(_ viewModel: Any) {
+        guard let schema = viewModel as? PFSchema else { return }
+        label.text = schema.name
     }
 }
 

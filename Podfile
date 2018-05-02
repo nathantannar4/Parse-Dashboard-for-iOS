@@ -16,10 +16,12 @@ target 'Parse Dashboard for iOS' do
   pod 'AcknowList'
   pod 'PDFReader'
   pod 'WhatsNew'
-  pod 'SwiftRater'
+  pod 'EggRating'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'FTLinearActivityIndicator'
   pod 'Parse'
+  pod 'IGListKit'
+  pod 'SVProgressHUD'
+  pod 'FeedbackGenerator'
 
 end

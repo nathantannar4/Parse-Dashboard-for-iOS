@@ -26,29 +26,13 @@
 //
 
 import UIKit
+import IGListKit
 
-class ServerCell: PFCollectionViewCell {
+final class ServerCell: CollectionViewCell, ListBindable {
     
-    // MARK: - Properties
+    // MARK: - Subviews
     
-    class var reuseIdentifier: String {
-        return "ServerCell"
-    }
-    
-    var server: ParseServerConfig? {
-        didSet {
-            nameLabel.text = server?.name
-            if let imageData = server?.icon as Data?  {
-                iconImageView.image = UIImage(data: imageData)
-            } else {
-                iconImageView.image = nil
-            }
-            applicationIdLabel.text = server?.applicationId
-            serverUrlLabel.text = server?.serverUrl
-        }
-    }
-    
-    let iconImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .darkBlueBackground
         imageView.layer.cornerRadius = 5
@@ -57,14 +41,14 @@ class ServerCell: PFCollectionViewCell {
         return imageView
     }()
     
-    let nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         return label
     }()
     
-    let applicationIdLabel: UILabel = {
+    private let applicationIdLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
@@ -72,7 +56,7 @@ class ServerCell: PFCollectionViewCell {
         return label
     }()
     
-    let serverUrlLabel: UILabel = {
+    private let serverUrlLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
@@ -82,25 +66,32 @@ class ServerCell: PFCollectionViewCell {
     
     // MARK: - Methods
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        server = nil
-    }
-    
     override func setupViews() {
         super.setupViews()
         
-        backgroundColor = .darkBlueAccent
-        highlightedBackgroundColor = .logoTint
         contentView.backgroundColor = .darkBlueAccent
         
         contentView.addSubview(iconImageView)
-        iconImageView.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: nil, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 0)
+        iconImageView.anchor(contentView.topAnchor, left: contentView.layoutMarginsGuide.leftAnchor, bottom: contentView.bottomAnchor, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 0)
         iconImageView.anchorAspectRatio()
         
         let stackView = UIStackView(arrangedSubviews: [nameLabel, applicationIdLabel, serverUrlLabel])
         stackView.axis = .vertical
         contentView.addSubview(stackView)
-        stackView.anchor(contentView.topAnchor, left: iconImageView.rightAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 8)
+        stackView.anchor(contentView.topAnchor, left: iconImageView.rightAnchor, bottom: contentView.bottomAnchor, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 0)
+    }
+    
+    // MARK: - ListBindable
+    
+    func bindViewModel(_ viewModel: Any) {
+        guard let config = viewModel as? ParseServerConfig else { return }
+        nameLabel.text = config.name
+        if let imageData = config.icon  {
+            iconImageView.image = UIImage(data: imageData)
+        } else {
+            iconImageView.image = nil
+        }
+        applicationIdLabel.text = config.applicationId
+        serverUrlLabel.text = config.serverUrl
     }
 }
