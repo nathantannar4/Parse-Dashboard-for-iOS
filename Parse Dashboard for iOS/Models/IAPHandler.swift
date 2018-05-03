@@ -49,11 +49,12 @@ class IAPHandler: NSObject {
     enum IAPProductId: String  {
         case tier1 = "tier_a_tip"
         case tier2 = "tier_b_tip"
+        case tier3 = "tier_c_tip"
     }
     
     static let shared = IAPHandler()
     
-    fileprivate var productIDs = [IAPProductId.tier1.rawValue, IAPProductId.tier2.rawValue]
+    fileprivate var productIDs = [IAPProductId.tier1.rawValue, IAPProductId.tier2.rawValue, IAPProductId.tier3.rawValue]
     fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
     
@@ -149,6 +150,10 @@ extension IAPHandler: SKPaymentTransactionObserver {
     
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         purchaseStatusBlock?(.restored)
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+        return true
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
