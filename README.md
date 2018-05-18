@@ -1,11 +1,9 @@
-## 4000+ Downloads, Four 5-Star Reviews
-
 # Parse Dashboard for iOS
-> Updated to Swift 4, iOS 11 and iPhone X Support
+> 5000+ Downloads
 
 ###### A beautiful moile client for managing your Parse apps while you are on the go! Now you can easily view and modify your data in the same way you would on the offical desktop client.
-
-[Download On the App Store](https://itunes.apple.com/us/app/parse-dashboard/id1212141622)
+ 
+ <a href="https://itunes.apple.com/us/app/parse-dashboard/id1212141622"><img src="https://raw.githubusercontent.com/nathantannar4/Parse-Dashboard-for-iOS/master/AppStoreBadge.png" width="170" height="50" alt="Download on the App Store"></a>
 
 ## Feature Breakdown
 
