@@ -39,11 +39,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>FTLinearActivityIndicator.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>FeedbackGenerator-FeedbackAssets.xcscheme</key>
 		<dict>
 			<key>isShown</key>

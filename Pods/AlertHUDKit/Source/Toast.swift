@@ -49,7 +49,7 @@ open class Toast: UIView {
     
     open var rippleAnimationTime: TimeInterval = 0.75
     
-    open var ripplePercent: CGFloat = 150 {
+    open var ripplePercent: CGFloat = 0.9 {
         didSet {
             layoutRippleView()
         }
@@ -77,9 +77,9 @@ open class Toast: UIView {
     
     open let textLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.2
+        label.minimumScaleFactor = 0.75
         label.textColor = .white
         label.font = Alert.Defaults.Font.Info
         return label
@@ -89,6 +89,7 @@ open class Toast: UIView {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(UIColor(white: 1, alpha: 0.3), for: .highlighted)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.contentHorizontalAlignment = .center
         return button
     }()
@@ -125,15 +126,15 @@ open class Toast: UIView {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(Toast.didTap(gesture:))))
         actionButton.addTarget(self, action: #selector(Toast.didTapActionButton(button:)), for: .touchUpInside)
         backgroundColor = UIColor(red: 97/255, green: 97/255, blue: 97/255, alpha: 1)
-        layer.shadowRadius = 2
-        layer.shadowOffset = CGSize(width: 0, height: -1)
+        layer.shadowRadius = 3
+//        layer.shadowOffset = CGSize(width: 0, height: -1)
         layer.shadowOpacity = 0.3
-        layer.shadowColor = UIColor.darkGray.cgColor
+        layer.shadowColor = UIColor.lightGray.cgColor
     }
     
     private func layoutRippleView() {
         
-        let size: CGFloat = bounds.width * ripplePercent / 100
+        let size: CGFloat = bounds.width * ripplePercent
         let x: CGFloat = (bounds.width/2) - (size/2)
         let y: CGFloat = (bounds.height/2) - (size/2)
         let corner: CGFloat = size/2
@@ -269,7 +270,7 @@ open class Toast: UIView {
             self.rippleBackgroundView.alpha = 1
         }, completion: nil)
         rippleView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-        UIView.animate(withDuration: 0.7, delay: 0, options: [.curveEaseOut, .allowUserInteraction],
+        UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseOut, .allowUserInteraction],
                        animations: {
                         self.rippleView.transform = CGAffineTransform.identity
         }, completion: nil)

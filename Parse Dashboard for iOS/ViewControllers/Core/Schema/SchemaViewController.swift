@@ -27,7 +27,7 @@ final class SchemaViewController: ListSearchViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setToolbarHidden(true, animated: animated)
+        navigationController?.setToolbarHidden(true, animated: false)
     }
     
     // MARK: - Networking

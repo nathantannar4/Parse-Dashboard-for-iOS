@@ -74,7 +74,9 @@ class ObjectViewController: TableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if object.schema?.name == "_User" {
-            navigationController?.setToolbarHidden(true, animated: animated)
+            if !(navigationController?.viewControllers.last is ClassViewController) {
+                navigationController?.setToolbarHidden(true, animated: animated)
+            }
         }
     }
 

@@ -93,7 +93,7 @@ final class PushNotificationController: UIAlertController {
         
         do {
             let data = try body.rawData()
-            ParseLite.shared.push(payload: data, completion: { [weak self] result, json in
+            ParseLite.shared.push(payload: data, completion: { result, json in
                 guard result.success else {
                     Ping(text: result.error ?? "Delivery Failed", style: .danger).show()
                     return
@@ -101,7 +101,7 @@ final class PushNotificationController: UIAlertController {
                 Ping(text: "Push Notification Delivered", style: .success).show()
             })
         } catch let error {
-            Ping(text: error.localizedDescription ?? "Unexpected Error", style: .danger).show()
+            Ping(text: error.localizedDescription, style: .danger).show()
         }
     }
     

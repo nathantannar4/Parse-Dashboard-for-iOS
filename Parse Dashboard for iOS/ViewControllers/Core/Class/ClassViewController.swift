@@ -59,7 +59,7 @@ final class ClassViewController: ListSearchViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if schema.name == "_Installation" {
+        if schema.name == "_User" {
             setupToolbar()
             navigationController?.setToolbarHidden(false, animated: animated)
         }
@@ -67,7 +67,9 @@ final class ClassViewController: ListSearchViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setToolbarHidden(true, animated: animated)
+        if navigationController?.viewControllers.last == self {
+            navigationController?.setToolbarHidden(true, animated: animated)
+        }
     }
     
     // MARK: - Networking

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C0B38FC99FCF33471AA9E536FF0D5FFB"
+               BlueprintIdentifier = "D8738E1666EC4047C85D5BDF6677F1CA"
                BlueprintName = "AlertHUDKit"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "AlertHUDKit.framework">
