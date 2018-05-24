@@ -54,6 +54,12 @@
 
 **Nathan Tannar** - [https://nathantannar.me](https://nathantannar.me)
 
+## Parse Dashboard for Android
+
+[@bitterbit](https://github.com/bitterbit) is currently working on an Android version of this concept. It is still a work in progress thats details can be found at [bitterbit/Parse-Dashboard-Android](https://github.com/bitterbit/Parse-Dashboard-Android)
+
+<a href='https://play.google.com/store/apps/details?id=com.galtashma.parsedashboard&utm_source=github&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'> <img alt='Get it on Google Play' width=200 src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
 ## License
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
