@@ -169,7 +169,7 @@ class ObjectViewController: TableViewController {
                 self?.navigationController?.popViewController(animated: true)
             })
         }
-        let alertPromptViewController = AlertPromptViewController(title: "Create Class", initialValue: nil, placeholder: "Classname", action: action)
+        let alertPromptViewController = AlertPromptViewController(title: "Delete Object", initialValue: nil, placeholder: nil, action: action)
         present(alertPromptViewController, animated: true, completion: nil)
     }
     
